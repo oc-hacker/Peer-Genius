@@ -5,17 +5,17 @@ var CompressionPlugin = require('compression-webpack-plugin');
 module.exports = {
 	devtool: 'cheap-module-source-map',
 	entry: [
-		'./react/main.js'
+		'./client/react/main.js'
 	],
 	output: {
-		path: path.resolve(__dirname, '../public'),
+		path: path.resolve(__dirname, 'public'),
 		filename: 'app.js'
 	},
 	module: {
 		loaders: [{
 			test: /\.jsx?$/,
 			exclude: /(node_modules|bower_components)/,
-			loader: 'babel'
+			loader: 'babel-loader'
 		}]
 	},
 	plugins: [
@@ -24,7 +24,6 @@ module.exports = {
 	    		'NODE_ENV': JSON.stringify('production')
 	    	}
 	    }),
-	    new webpack.optimize.DedupePlugin(),
 	    new webpack.optimize.UglifyJsPlugin({
 	    	mangle: true,
 	    	compress: {
