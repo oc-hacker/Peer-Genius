@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import Model from 'sequelize/lib/model';
 
-import config from '../../config';
+import config from '../../core/config';
 import {
 	sequelizeAdmin as admin
 } from '../reference';

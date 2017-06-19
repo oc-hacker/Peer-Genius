@@ -1,45 +1,48 @@
-console.log('Loading server...');
 import express from 'express';
-const app = express();
 import cors from 'cors';
-
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
-import { serverPort } from './config.json';
-
-import { logger, sendIndex, end } from '../functions/serverUtil.js';
-import api from '../routers/apiRouter.js';
+import config from './config';
 
 const corsOptions = {
-	origin: 'http://peergenius.io',
+	origin: 'https://peer-genius.io', // TODO
 	allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 	credentials: true
 };
+
+const app = express();
+
+// TODO initMailer();
 
 app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));
 
 app.get('*.js', function (req, res, next) {
-  req.url = req.url + '.gz';
-  res.set('Content-Encoding', 'gzip');
-  next();
+	req.url = req.url + '.gz';
+	res.set('Content-Encoding', 'gzip');
+	next();
 });
 
 app.use(bodyParser.json());
 
 app.use(cookieParser());
 
-app.use(logger);
+app.use((request, response, next) => {
+	console.log(new Date().toUTCString() , "Request received at" , request.originalUrl);
+	next();
+});
 
-app.use(express.static('public'));
+app.use(express.static('./public'));
 
-app.use('/api', api.router);
+// TODO app.use('/api', api.router);
 
-app.get(/^\/(?!api)/, sendIndex);
+// TODO app.get(/^\/(?!api)/, sendIndex);
 
-app.use(end);
+// TODO app.use(end);
 
-app.listen(serverPort, function () {
-	console.log("Listening on port " + serverPort + "!");
+// TODO app.use(errorHandler);
+
+app.listen(config.serverPort, () => {
+	console.log("Listening on port " + config.serverPort + "!");
 });

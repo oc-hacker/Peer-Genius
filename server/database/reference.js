@@ -3,7 +3,7 @@ import mysql from 'mysql';
 import RowData from 'mysql/lib/protocol/packets/RowDataPacket';
 import Sequelize from 'sequelize';
 
-import config from '../config';
+import config from '../core/config';
 
 const pool = mysql.createPool({
 	host: 'localhost',

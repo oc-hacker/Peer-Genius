@@ -1,48 +1,56 @@
 import fs from 'fs';
+import _ from 'lodash';
 
-import logger from '../log/logger';
-
-let defaultValues = {
+export default {
 	mysqlDatabase: '',
 	mysqlUser: '',
 	mysqlPassword: '',
-	serverPort: 8080,
-	backupPath: 'backup/',
-	logLevel: 2
+	sessionJWTKey: '',
+	sessionJWTExpire: '1d',
+	serverPort: 80,
+	backupPath: '',
+	betaMode: false
 };
 
+let configPath = './core/config.json';
+
 export const loadConfig = async () => {
-	let config = {};
+	console.log("Accessing config...");
 	
-	// Try to load the file
-	logger.info("Accessing config...");
+	let fileReadSuccess = true;
+	let config = {};
 	try {
-		let fsConstants = fs.constants || fs;
-		await fs.accessSync('./server/core/config.json', fsConstants.R_OK | fsConstants.W_OK);
-		config = await JSON.parse(await fs.readFileSync('./server/core/config.json'));
-		
-		let changed = false;
-		// Initialize all config values not initialized in the config file
-		for (let option in defaultValues) {
-			if (defaultValues.hasOwnProperty(option) && !config.hasOwnProperty(option)) {
-				config[option] = defaultValues[option];
-				changed = true;
-			}
-		}
-		if (changed) {
-			// Save the config file again
-			fs.writeFileSync('./server/core/config.json', await JSON.stringify(config, null, '\t'));
-		}
-		
-		logger.info("Config loaded.");
-		logger.level = config.logLevel;
+		// Load file
+		let fsConstants = fs.constants || fs; // Different node versions have different definitions.
+		await fs.accessSync(configPath, fsConstants.R_OK | fsConstants.W_OK);
+		config = await JSON.parse(await fs.readFileSync(configPath))
 	}
 	catch (error) {
-		logger.info("Config not accessible or corrupted, (re-)creating config file...");
-		config = defaultValues;
-		fs.writeFileSync('./server/core/config.json', await JSON.stringify(config, null, '\t'));
+		fileReadSuccess = false;
+		console.log('Config file missing or corrupted. Resetting file...');
+		fs.writeFile(configPath, await JSON.stringify(exports.default, null, '\t'))
 	}
 	
-	logger.trace(await JSON.stringify(config, null, '\t'));
-	module.exports = config;
+	if (fileReadSuccess) {
+		let changed = false; // Keeps track of whether the config file needs to be changed.
+		for (let key in exports.default) {
+			if (exports.default.hasOwnProperty(key)) {
+				if (key in config) {
+					exports.default[key] = config[key];
+				}
+				else {
+					// New entry
+					changed = true;
+				}
+			}
+		}
+		
+		if (changed) {
+			// Save the config file again
+			fs.writeFileSync(configPath, await JSON.stringify(exports.default, null, '\t'));
+		}
+		
+		console.log('Config loaded.');
+	}
 };
+
