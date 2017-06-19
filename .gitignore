@@ -104,6 +104,7 @@ crashlytics-build.properties
 fabric.properties
 
 # Created by .ignore support plugin (hsz.mobi)
-/public/*.js
+/public/app.js
+/public/app.js.gz
 /server/config.json
 /private/
