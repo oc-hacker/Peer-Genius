@@ -78,6 +78,6 @@ export const sequelizeAdmin = new Sequelize(
 		host: 'localhost',
 		dialect: 'mysql',
 		logging: false,
-		timezone: '+00'
+		timezone: '+00:00'
 	}
 );

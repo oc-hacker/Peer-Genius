@@ -1,9 +1,11 @@
 import express from 'express';
+import path from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
 import config from './config';
+import apiRouter from '../router/api';
 
 const corsOptions = {
 	origin: 'https://peer-genius.io', // TODO
@@ -28,20 +30,27 @@ app.use(bodyParser.json());
 
 app.use(cookieParser());
 
+// Logger
 app.use((request, response, next) => {
-	console.log(new Date().toUTCString() , "Request received at" , request.originalUrl);
+	console.log(new Date().toUTCString() , 'Request received at' , request.originalUrl);
 	next();
 });
 
-app.use(express.static('./public'));
+// Assets
+app.use(express.static('../public'));
 
-// TODO app.use('/api', api.router);
+app.use('/api', apiRouter);
 
-// TODO app.get(/^\/(?!api)/, sendIndex);
+// Send index
+app.get(/^\/(?!api)/, (request, response, next) => {
+	response.sendFile(path.resolve(__dirname,'../../public/index.html'));
+});
 
-// TODO app.use(end);
-
-// TODO app.use(errorHandler);
+// Errors
+app.use((error, request, response, next) => {
+	console.error('Unexpected error when handling request at', request.originalUrl);
+	response.status(500).end();
+});
 
 app.listen(config.serverPort, () => {
 	console.log("Listening on port " + config.serverPort + "!");
