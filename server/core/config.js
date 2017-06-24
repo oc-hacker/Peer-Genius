@@ -9,7 +9,7 @@ export default {
 	sessionJWTExpire: '1d',
 	serverPort: 80,
 	backupPath: '',
-	betaMode: false
+	devMode: false
 };
 
 let configPath = './core/config.json';

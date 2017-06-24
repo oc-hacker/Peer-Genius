@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
 import config from './config';
+import { logger, sendIndex, endResponse } from '../router/misc/utils';
 import apiRouter from '../router/api';
 
 const corsOptions = {
@@ -31,10 +32,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Logger
-app.use((request, response, next) => {
-	console.log(new Date().toUTCString() , 'Request received at' , request.originalUrl);
-	next();
-});
+app.use(logger);
 
 // Assets
 app.use(express.static('../public'));
@@ -42,9 +40,10 @@ app.use(express.static('../public'));
 app.use('/api', apiRouter);
 
 // Send index
-app.get(/^\/(?!api)/, (request, response, next) => {
-	response.sendFile(path.resolve(__dirname,'../../public/index.html'));
-});
+app.get(/^\/(?!api)/, sendIndex);
+
+// Ensure responses is ended
+app.use(endResponse);
 
 // Errors
 app.use((error, request, response, next) => {

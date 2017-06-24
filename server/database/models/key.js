@@ -1,6 +1,5 @@
-import Sequelize, {DataTypes} from 'sequelize';
+import Sequelize, { DataTypes } from 'sequelize';
 import Model from 'sequelize/lib/model';
-import argon2 from 'argon2'
 
 import config from '../../core/config';
 import {
@@ -19,25 +18,15 @@ const attributes = {
 		},
 		primaryKey: true
 	},
-	email: {
-		type: DataTypes.STRING,
+	verifyEmailKey: {
+		type: DataTypes.CHAR(15),
 		allowNull: false,
 		unique: true
-	},
-	password: {
-		type: DataTypes.STRING,
-		allowNull: false,
-		set(val) {
-			// Use setter
-			argon2.hash(val).then(hash => {
-				this.setDataValue('password', hash)
-			})
-		}
 	}
 };
 
 /** @typedef {Model} */
-const model = admin.define('accounts', attributes);
-model.sync({alter: config.devMode}); // Alter when in development mode
+const model = admin.define('keys', attributes);
+model.sync({alter: config.betaMode}); // Alter when in beta mode
 
 export default model
