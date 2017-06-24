@@ -5,14 +5,6 @@ import jwt from 'jsonwebtoken';
 
 import config from '../../core/config.js';
 
-export const createHash = async (password) => {
-	return await argon2.hash(password, await argon2.generateSalt());
-};
-
-export const verifyHash = async (hash, input) => {
-	return await argon2.verify(hash, input);
-};
-
 const secret = new Buffer(config.sessionJWTKey, 'base64');
 
 export const createSessionToken = function (uuid) {
