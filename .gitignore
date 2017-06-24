@@ -107,4 +107,5 @@ fabric.properties
 /public/app.js
 /public/app.js.gz
 /server/core/config.json
+/client/config.js
 /private/

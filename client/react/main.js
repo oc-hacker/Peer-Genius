@@ -15,6 +15,8 @@ import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 const muiTheme = getMuiTheme(baseTheme);
 
+import Home from './home.js';
+
 class App extends React.Component {
 	// This is needed for MUI.
 	static childContextTypes = {
@@ -36,10 +38,9 @@ class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<p>Hello World!</p>
+				{this.props.children}
 			</div>
 		);
-
 	}
 }
 
@@ -50,7 +51,9 @@ let syncedHistory = syncHistoryWithStore(browserHistory, store);
 const routes = (
 	<Provider store={store}>
 		<Router history={syncedHistory}>
-			<Route path="/" component={App} />
+			<Route path="/" component={App}>
+				<IndexRoute component={Home} />
+			</Route>
 		</Router>
 	</Provider>
 );
