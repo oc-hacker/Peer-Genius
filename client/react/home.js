@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
@@ -10,22 +12,34 @@ import TextFieldPassword from './util/materialUI/TextFieldPassword.js';
 import { login } from '../redux/actions/session.js';
 
 const style = {
+	container: {
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
 	center: {
 		textAlign: 'center'
-	},	
+	},
 	title: {
-		textAlign: 'center',
 		fontSize: '2em'
 	},
 	subtitle: {
-		textAlign: 'center',
 		fontSize: '1.75em'
+	},
+	button: {
+		margin: 20
 	}
 }
 
-@connect(null, {
-	login
-})
+@connect(null, dispatch => ({
+	login: () => {
+		dispatch(login());
+	},
+	pushToCreateAccount: () => {
+		dispatch(push('/createAccount'));
+	}
+}))
 export default class Home extends React.Component {
 	constructor(props) {
 		super(props);
@@ -50,23 +64,26 @@ export default class Home extends React.Component {
 	render() {
 		return (
 			<div>
-				<p style={style.title}>Peer Genius</p>
-				<p style={style.subtitle}>Eliminate the Grind</p>
+				<div style={style.container}>
+					<p style={style.title}>Peer Genius</p>
+					<p style={style.subtitle}>Eliminate the Grind</p>
 
-				<RaisedButton
-					primary={true}
-					label={"Create an Account"}
-					onTouchTap={this.props.pushToCreateAccount}
-				/>
+					<RaisedButton
+						primary={true}
+						label={"Create an Account"}
+						onTouchTap={this.props.pushToCreateAccount}
+						style={style.button}
+					/>
 
-				<RaisedButton
-					primary={true}
-					label={"Login"}
-					onTouchTap={this._openLoginDialog}
-				/>
+					<RaisedButton
+						primary={true}
+						label={"Login"}
+						onTouchTap={this._openLogin}
+						style={style.button}
+					/>
+				</div>
 
 				<Dialog
-		        	title="Login"
 		        	modal={false}
 		        	open={this.state.loginOpen}
 		        	onRequestClose={this._closeLogin}
@@ -77,11 +94,11 @@ export default class Home extends React.Component {
 		        		nextFunc={this.props.login}
 		        		nextStyle={style.center}
 		        	>
-		        		<TextField varName={"username"} hintText={"Username"} isRequired={true} />
+		        		<TextField varName={"email"} hintText={"Email"} isRequired={true} />
 		        		<TextFieldPassword varName={"password"} hintText={"Password"} isRequired={true} />
 		        	</Form>
         		</Dialog>
-			</div>
+        	</div>
 		);
 	}
 }
