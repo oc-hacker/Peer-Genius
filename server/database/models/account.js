@@ -33,6 +33,10 @@ const attributes = {
 				this.setDataValue('password', hash)
 			})
 		}
+	},
+	verified: {
+		type: DataTypes.BOOLEAN,
+		defaultValue: false
 	}
 };
 

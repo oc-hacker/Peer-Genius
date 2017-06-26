@@ -8,11 +8,45 @@ export default {
 	sessionJWTKey: '',
 	sessionJWTExpire: '1d',
 	serverPort: 80,
-	backupPath: '',
-	devMode: false
+	backupPath: 'backup',
+	devMode: false,
+	mailerXOAuth2: {
+	
+	}
 };
 
 let configPath = './core/config.json';
+
+/**
+ * Transfers data from <code>source</code> to <code>sink</code>.
+ * @param source
+ * @param sink
+ * @return changed Whether the sink's expectations have changed.
+ */
+const transfer = async (source, sink) => {
+	let changed = false;
+	
+	for (let key in sink) {
+		if (sink.hasOwnProperty(key)) {
+			if (key in source) {
+				// Check for deep copy
+				if (typeof sink[key] === 'object') {
+					if (typeof source[key] === 'object') {
+						changed = (await transfer(source, sink)) || changed;
+					}
+				}
+				else {
+					sink[key] = source[key];
+				}
+			}
+			else {
+				changed = true;
+			}
+		}
+	}
+	
+	return changed;
+};
 
 export const loadConfig = async () => {
 	console.log("Accessing config...");
@@ -32,18 +66,7 @@ export const loadConfig = async () => {
 	}
 	
 	if (fileReadSuccess) {
-		let changed = false; // Keeps track of whether the config file needs to be changed.
-		for (let key in exports.default) {
-			if (exports.default.hasOwnProperty(key)) {
-				if (key in config) {
-					exports.default[key] = config[key];
-				}
-				else {
-					// New entry
-					changed = true;
-				}
-			}
-		}
+		let changed = await transfer(config, exports.default);
 		
 		if (changed) {
 			// Save the config file again

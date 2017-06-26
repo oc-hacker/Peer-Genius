@@ -1,4 +1,6 @@
 import path from 'path';
+import _ from 'lodash/core';
+
 import models from '../../database/index';
 import { createSessionToken, verifySessionToken } from './auth';
 
@@ -16,7 +18,6 @@ export const endResponse = (request, response) => {
 };
 
 export const buildInitialStore = async id => {
-	// If id is set, it is an existing user. Otherwise it is a new user.
 	let user;
 	if (id) {
 		user = await models.user.find({
@@ -29,6 +30,14 @@ export const buildInitialStore = async id => {
 		user = await models.user.create();
 	}
 	
+	let store = {};
+	
+	store.user = _.pick(user, Object.keys(user.attributes));
+	
 	// TODO finish building store
+	return {
+		user,
+		store
+	};
 };
 

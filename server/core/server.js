@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
 import config from './config';
+import { initMailer } from '../email/mailer';
 import { logger, sendIndex, endResponse } from '../router/misc/utils';
 import apiRouter from '../router/api';
 
@@ -16,7 +17,7 @@ const corsOptions = {
 
 const app = express();
 
-// TODO initMailer();
+initMailer();
 
 app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));

@@ -1,5 +1,6 @@
 import httpStatus from 'http-status-codes';
 import argon2 from 'argon2';
+import randomstring from 'randomstring';
 
 import { buildInitialStore } from '../misc/utils';
 import models from '../../database/index';
@@ -23,7 +24,16 @@ export const createAccount = async (request, response) => {
 		response.status(httpStatus.CONFLICT).end();
 	} else {
 		// OK
-		response.status(httpStatus.OK).json(await buildInitialStore());
+		let {user, store} = await buildInitialStore();
+		models.account.create({
+			user: user.id,
+			email: request.body.email,
+			password: request.body.password
+		});
+		
+		response.status(httpStatus.OK).json(store);
+		let key = await models.key.uniqueRandom('verifyEmailKey')
+		// TODO send mail
 	}
 };
 

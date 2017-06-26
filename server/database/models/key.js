@@ -1,5 +1,6 @@
 import Sequelize, { DataTypes } from 'sequelize';
 import Model from 'sequelize/lib/model';
+import randomstring from 'randomstring';
 
 import config from '../../core/config';
 import {
@@ -19,14 +20,29 @@ const attributes = {
 		primaryKey: true
 	},
 	verifyEmailKey: {
-		type: DataTypes.CHAR(15),
-		allowNull: false,
+		type: DataTypes.CHAR(32),
+		allowNull: true,
 		unique: true
-	}
+	},
 };
 
 /** @typedef {Model} */
 const model = admin.define('keys', attributes);
-model.sync({alter: config.betaMode}); // Alter when in beta mode
+model.sync({alter: config.devMode}); // Alter when in development mode
+
+// Extra utility methods
+/**
+ * Generates a key that is guaranteed to be unique for the specified field.
+ * TODO test the method
+ * @param column The column of the database to generate the key for. It should be a CHAR(32) column.
+ * @return {Promise.<string>}
+ */
+model.uniqueRandom = async column => {
+	let key;
+	do {
+		key = randomstring.generate();
+	} while ((await model.find({where: {[column]: key}})));
+	return key;
+};
 
 export default model
