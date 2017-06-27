@@ -1,5 +1,4 @@
 import fs from 'fs';
-import _ from 'lodash';
 
 export default {
 	mysqlDatabase: '',
@@ -32,7 +31,10 @@ const transfer = async (source, sink) => {
 				// Check for deep copy
 				if (typeof sink[key] === 'object') {
 					if (typeof source[key] === 'object') {
-						changed = (await transfer(source, sink)) || changed;
+						changed = (await transfer(source[key], sink[key])) || changed;
+					}
+					else {
+						changed = true;
 					}
 				}
 				else {
@@ -50,6 +52,7 @@ const transfer = async (source, sink) => {
 
 export const loadConfig = async () => {
 	console.log("Accessing config...");
+	// console.log(fs);
 	
 	let fileReadSuccess = true;
 	let config = {};
