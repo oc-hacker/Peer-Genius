@@ -10,7 +10,6 @@ import models from '../../database/index';
 /**
  * @param {{body: {email: String, password: String}}} request
  * @param response
- * @return {Promise.<void>}
  */
 export const createAccount = async (request, response) => {
 	let account = await models.account.find({
@@ -60,4 +59,18 @@ export const verifyLogin = async (request, response) => {
 	else {
 		response.status(httpStatus.BAD_REQUEST).end();
 	}
+};
+
+/**
+ * @param {{body: {email: String}}} request
+ * @param response
+ */
+export const checkEmail = async (request, response) => {
+	let account = await models.account.find({
+		where: {
+			email: request.body.email
+		}
+	});
+	
+	response.status(200).json({taken: !!account})
 };

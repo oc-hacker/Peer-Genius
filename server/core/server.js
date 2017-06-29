@@ -10,7 +10,7 @@ import { logger, sendIndex, endResponse } from '../router/misc/utils';
 import apiRouter from '../router/api';
 
 const corsOptions = {
-	origin: 'https://peer-genius.io', // TODO
+	origin: 'https://peer-genius.io', // TODO confirm url
 	allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 	credentials: true
 };

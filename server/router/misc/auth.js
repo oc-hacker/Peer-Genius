@@ -7,8 +7,8 @@ import config from '../../core/config.js';
 
 const secret = new Buffer(config.sessionJWTKey, 'base64');
 
-export const createSessionToken = function (uuid) {
-	return jwt.sign({uuid: uuid}, secret, {expiresIn: config.sessionJWTExpire});
+export const createSessionToken = id => {
+	return jwt.sign({id}, secret, {expiresIn: config.sessionJWTExpire});
 };
 
 export const verifySessionToken = function (request, response, next) {
@@ -18,7 +18,7 @@ export const verifySessionToken = function (request, response, next) {
 		next();
 	} catch (err) {
 		console.log(err.message);
-		response.status(httpStatus.BAD_REQUEST);
+		response.status(httpStatus.UNAUTHORIZED).json({reason: 'Invalid session'});
 		next('Invalid session');
 	}
 };

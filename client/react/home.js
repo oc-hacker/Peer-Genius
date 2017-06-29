@@ -30,7 +30,7 @@ const style = {
 	button: {
 		margin: 20
 	}
-}
+};
 
 @connect(null, dispatch => ({
 	login: () => {
@@ -53,13 +53,13 @@ export default class Home extends React.Component {
 		this.setState({
 			loginOpen: true
 		});
-	}
+	};
 
 	_closeLogin = () => {
 		this.setState({
 			loginOpen: false
 		});
-	}
+	};
 
 	render() {
 		return (
