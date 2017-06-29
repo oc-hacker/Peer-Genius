@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Sequelize, { DataTypes } from 'sequelize';
 import Model from 'sequelize/lib/model';
 
@@ -6,14 +7,32 @@ import {
 	sequelizeAdmin as admin
 } from '../reference';
 
-const attributes = {
+export const attributes = {
 	id: {
 		type: DataTypes.UUID,
 		defaultValue: DataTypes.UUIDV4,
 		primaryKey: true
+	},
+	firstName: {
+		type: DataTypes.STRING,
+		allowNull: false,
+		defaultValue: ''
+	},
+	lastName: {
+		type: DataTypes.STRING,
+		allowNull: false,
+		defaultValue: ''
+	},
+	birthday: {
+		type: DataTypes.DATEONLY,
+		allowNull: true,
+		set(val) {
+			this.setDataValue('birthday', new Date(Date.UTC(val.year, val.month, val.day)))
+		}
 	}
-	// TODO more fields
 };
+
+export const exposedAttributes = _.without(Object.keys(attributes), 'id');
 
 /** @typedef {Model} */
 const model = admin.define('users', attributes);

@@ -2,6 +2,7 @@ import path from 'path';
 import _ from 'lodash/core';
 
 import models from '../../database/index';
+import { exposedAttributes as userAttributes } from '../../database/models/user';
 import { createSessionToken, verifySessionToken } from './auth';
 
 export const logger = (request, response, next) => {
@@ -17,27 +18,36 @@ export const endResponse = (request, response) => {
 	response.end();
 };
 
-export const buildInitialStore = async id => {
-	let user;
-	if (id) {
-		user = await models.user.find({
+/**
+ * Note: account.verified indicates whether the account's email has been verified.
+ *
+ * @param id
+ * @param [user]
+ * @param [account]
+ * @return {Promise.<{
+ *     account: {email: String, verified: Boolean},
+ *     user: {firstName, lastName, birthday},
+ *     sessionJWT: String
+ * }>}
+ */
+export const buildInitialStore = async (id, user, account) => {
+	user = user || await models.user.find({
 			where: {
 				id
 			}
 		});
-	}
-	else {
-		user = await models.user.create();
-	}
+	account = account || await models.account.find({
+			where: {
+				user: id
+			}
+		});
 	
 	let store = {};
 	
-	store.user = _.pick(user, Object.keys(user.attributes));
+	store.account = _.pick(account, ['email', 'verified']);
+	store.user = _.pick(user, userAttributes);
+	store.sessionJWT = createSessionToken(id);
 	
-	// TODO finish building store
-	return {
-		user,
-		store
-	};
+	return store;
 };
 

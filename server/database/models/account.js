@@ -28,7 +28,6 @@ const attributes = {
 		type: DataTypes.STRING,
 		allowNull: false,
 		set(val) {
-			// Use setter
 			argon2.hash(val).then(hash => {
 				this.setDataValue('password', hash)
 			})

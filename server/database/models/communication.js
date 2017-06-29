@@ -7,6 +7,8 @@ import {
 } from '../reference';
 import user from './user';
 
+export const methods = ['whatsapp', 'hangout', 'messenger','imessage'];
+
 const attributes = {
 	user: {
 		type: DataTypes.UUID,
@@ -19,7 +21,7 @@ const attributes = {
 		primaryKey: true
 	},
 	method: {
-		type: DataTypes.ENUM(['whatsapp', 'hangout', 'messenger','imessage']),
+		type: DataTypes.ENUM(methods),
 		allowNull: false
 	}
 };
