@@ -8,9 +8,12 @@ import communicationRouter from './communication';
 
 const router = express.Router();
 
+// For expected response, see docs for the buildInitialStore method in misc/utils
 router.post('/createAccount', functions.createAccount);
 router.post('/login', functions.verifyLogin);
+router.post('/checkEmail', functions.checkEmail);
 
+// If JWT token is  verifying session token will give UNAUTHORIZED and return {reason: 'Invalid session'}
 router.use('/account', verifySessionToken);
 router.use('/account', accountRouter);
 router.use('/user', verifySessionToken);
