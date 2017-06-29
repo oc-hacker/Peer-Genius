@@ -32,15 +32,18 @@ export const createAccount = () => async dispatch => {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				username: accountForm.username,
-				password: accountForm.password
+				email: accountForm.email,
+				password: accountForm.password,
+				firstName: accountForm.firstName,
+				lastName: accountForm.lastName,
+				birthdate: accountForm.birthdate
 			})
 		});
 
 		if (response.ok) {
 			// Initialize all of the information from the server.
 			let json = await response.json();
-			dispatch(initUserInfo({}, 'student'));
+			dispatch(initUserInfo(json.userInfo));
 
 			// Store the session JWT as a cookie.
 			await cookie.save('sessionJWT', json.sessionJWT);

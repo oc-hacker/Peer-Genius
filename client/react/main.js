@@ -15,7 +15,12 @@ import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 const muiTheme = getMuiTheme(baseTheme);
 
-import Home from './home.js';
+import AppBar from './AppBar.js';
+import FrontPage from './frontPage.js';
+
+import CreateAccount from './account/create.js';
+import EditAccount from './account/edit.js';
+import AccountSettings from './account.settings.js';
 
 class App extends React.Component {
 	// This is needed for MUI.
@@ -36,11 +41,21 @@ class App extends React.Component {
 	}
 
 	render() {
-		return (
-			<div>
-				{this.props.children}
-			</div>
-		);
+		if (this.props.inSession) {
+			return (
+				<div>
+					<AppBar />
+
+					{this.props.children}
+				</div>
+			)
+		} else {
+			return (
+				<div>
+					{this.props.children}
+				</div>
+			);
+		}
 	}
 }
 
@@ -53,6 +68,16 @@ const routes = (
 		<Router history={syncedHistory}>
 			<Route path="/" component={App}>
 				<IndexRoute component={Home} />
+
+				<Route path="frontPage" component={FrontPage} />
+
+				<Route path="account">
+					<Route path="create" component={CreateAccount} />
+
+					<Route path="edit" component={EditAccount} />
+
+					<Route path="settings" component={AccountSettings} />
+				</Route>
 			</Route>
 		</Router>
 	</Provider>

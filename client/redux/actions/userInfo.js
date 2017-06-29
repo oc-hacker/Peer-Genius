@@ -8,13 +8,11 @@ import { types } from '../../reference/actionTypes.js';
  * Redux action generator for initializing user info.
  * 
  * @param  {Object} [userInfo] The user info object
- * @param  {String} [type] The account type; either 'student' or 'parent'
  * @return {Action} The initialize user info action
  */
-export const initUserInfo = (userInfo, type) => ({
+export const initUserInfo = (userInfo) => ({
 	type: types.INIT_USER_INFO,
 	userInfo: {
-		type: type ? type : userInfo.type,
 		...userInfo
 	}
 });

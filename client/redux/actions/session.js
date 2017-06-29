@@ -140,8 +140,6 @@ export const refreshSession = () => async dispatch => {
 
 /**
  * Thunk action creator for logging in.
- *
- * @return [String] The session JWT if successful, or null otherwise
  */
 export const login = () => async dispatch => {
 	// Get the credentials from the Redux store 'login' form.
@@ -178,12 +176,14 @@ export const login = () => async dispatch => {
 			await cookie.save('sessionJWT', json.sessionJWT);
 			
 			// Initialize all account info in the Redux store
-			dispatch(initUserInfo(json.info));
+			dispatch(initUserInfo(json.userInfo));
 			
 			// Set a session refresh to happen right before the JWT expires
 			setTimeout(() => {
 				dispatch(refreshSession());
 			}, sessionJWTExpire * 9 / 10);
+
+			dispatch(push('/'))
 		} else {
 			dispatch({
 				type: types.LOGIN,
@@ -208,8 +208,10 @@ export const logout = () => async dispatch => {
 		type: types.RESET
 	});
 	
-	// Dispatch an action to refresh the session, and then push to login.
+	// Dispatch an action to refresh the session, and then push to front page.
 	dispatch({
 		type: types.LOGOUT
 	});
+
+	dispatch(push('/frontPage'));
 };
