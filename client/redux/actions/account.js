@@ -50,7 +50,7 @@ export const createAccount = () => async dispatch => {
 
 			// Refresh the session and push to the account page.
 			await dispatch(verifySession());
-			dispatch(push('/'));
+			dispatch(push('/home'));
 
 			dispatch({
 				type: types.CREATE,

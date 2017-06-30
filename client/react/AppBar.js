@@ -57,9 +57,11 @@ const style = {
 /**
  * @classdesc The AppBar at the top of the page
  */
-@connect(null, dispatch => ({
+@connect(state => ({
+	inSession: state.inSession
+}), dispatch => ({
 	pushToHome: () => {
-		dispatch(push('/'));
+		dispatch(push('/home'));
 	},
 	pushToEditAccount: () => {
 		dispatch(push('/account/edit'));
@@ -80,7 +82,7 @@ export default class AppBar extends React.Component {
 	}
 
 	render() {
-		return (
+		return this.props.inSession ? (
 			<MuiAppBar
 				iconElementLeft={<img src="/logo.svg" width={64} height={45} />}
 				titleStyle={style.title} style={style.appBar}
@@ -101,6 +103,12 @@ export default class AppBar extends React.Component {
 					<MenuItem value={2} primaryText="Logout" />
 				</IconMenu>
 			</MuiAppBar>
-		);
+		) : (
+			<MuiAppBar
+				iconElementLeft={<img src="/logo.svg" width={64} height={45} />}
+				titleStyle={style.title} style={style.appBar}
+				onLeftIconButtonTouchTap={this.props.pushToHome}
+			/>
+		)
 	}
 };

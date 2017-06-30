@@ -17,10 +17,18 @@ const muiTheme = getMuiTheme(baseTheme);
 
 import AppBar from './AppBar.js';
 import FrontPage from './frontPage.js';
+import Home from './home.js';
 
 import CreateAccount from './account/create.js';
 import EditAccount from './account/edit.js';
-import AccountSettings from './account.settings.js';
+import AccountSettings from './account/settings.js';
+
+const style = {
+	content: {
+		height: '100%',
+		paddingTop: 64
+	}
+}
 
 class App extends React.Component {
 	// This is needed for MUI.
@@ -41,21 +49,15 @@ class App extends React.Component {
 	}
 
 	render() {
-		if (this.props.inSession) {
-			return (
-				<div>
-					<AppBar />
+		return (
+			<div>
+				<AppBar />
 
+				<div style={style.content}>
 					{this.props.children}
 				</div>
-			)
-		} else {
-			return (
-				<div>
-					{this.props.children}
-				</div>
-			);
-		}
+			</div>
+		)
 	}
 }
 
@@ -67,9 +69,9 @@ const routes = (
 	<Provider store={store}>
 		<Router history={syncedHistory}>
 			<Route path="/" component={App}>
-				<IndexRoute component={Home} />
+				<IndexRoute component={FrontPage} />
 
-				<Route path="frontPage" component={FrontPage} />
+				<Route path="home" component={Home} />
 
 				<Route path="account">
 					<Route path="create" component={CreateAccount} />

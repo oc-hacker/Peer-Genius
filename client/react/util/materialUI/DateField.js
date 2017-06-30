@@ -133,7 +133,7 @@ export default class DateField extends React.Component {
 	constructor(props) {
 		super(props);
 
-		if (props.date) {
+		if (props.date.getDate()) {
 			this.state = {
 				month: props.date.getMonth() + 1,
 				day: props.date.getDate(),

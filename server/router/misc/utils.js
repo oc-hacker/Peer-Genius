@@ -11,7 +11,7 @@ export const logger = (request, response, next) => {
 };
 
 export const sendIndex = (request, response, next) => {
-	response.sendFile(path.resolve(__dirname, '../../public/index.html'));
+	response.sendFile(path.resolve(__dirname, '../../../public/index.html'));
 };
 
 export const endResponse = (request, response) => {

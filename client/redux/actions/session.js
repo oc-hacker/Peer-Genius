@@ -183,7 +183,7 @@ export const login = () => async dispatch => {
 				dispatch(refreshSession());
 			}, sessionJWTExpire * 9 / 10);
 
-			dispatch(push('/'))
+			dispatch(push('/home'))
 		} else {
 			dispatch({
 				type: types.LOGIN,
@@ -213,5 +213,5 @@ export const logout = () => async dispatch => {
 		type: types.LOGOUT
 	});
 
-	dispatch(push('/frontPage'));
+	dispatch(push('/'));
 };

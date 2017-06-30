@@ -13,8 +13,7 @@ import { verifyText } from './verifyField.js';
 const style = {
 	container: {
 		position: 'relative',
-		width: '100%',
-		height: '100%'
+		width: '100%'
 	},
 	iconButton: {
 		position: 'absolute',
