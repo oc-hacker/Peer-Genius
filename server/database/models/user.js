@@ -6,12 +6,21 @@ import config from '../../core/config';
 import {
 	sequelizeAdmin as admin
 } from '../reference';
+import { ProhibitedEditError } from '../errors';
 
 export const attributes = {
 	id: {
 		type: DataTypes.UUID,
 		defaultValue: DataTypes.UUIDV4,
-		primaryKey: true
+		primaryKey: true,
+		set(value) {
+			if (this.getDataValue('id')) {
+				throw new ProhibitedEditError('Editing the id PK of users table is prohibited.')
+			}
+			else {
+				this.setDataValue('id', value)
+			}
+		}
 	},
 	firstName: {
 		type: DataTypes.STRING,
@@ -26,8 +35,8 @@ export const attributes = {
 	birthday: {
 		type: DataTypes.DATEONLY,
 		allowNull: true,
-		set(val) {
-			this.setDataValue('birthday', new Date(Date.UTC(val.year, val.month, val.day)))
+		set(value) {
+			this.setDataValue('birthday', new Date(Date.UTC(value.year, value.month, value.day)))
 		}
 	}
 };

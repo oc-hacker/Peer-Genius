@@ -1,8 +1,10 @@
 import path from 'path';
-import _ from 'lodash/core';
+import _ from 'lodash';
+import httpStatus from 'http-status-codes';
 
 import models from '../../database/index';
 import { exposedAttributes as userAttributes } from '../../database/models/user';
+import { ProhibitedEditError } from '../../database/errors';
 import { createSessionToken, verifySessionToken } from './auth';
 
 export const logger = (request, response, next) => {
@@ -12,6 +14,19 @@ export const logger = (request, response, next) => {
 
 export const sendIndex = (request, response, next) => {
 	response.sendFile(path.resolve(__dirname, '../../../public/index.html'));
+};
+
+export const errorHandler = (error, request, response, next) => {
+	if (error instanceof ProhibitedEditError) {
+		console.warn(`Request at ${request.originalUrl} attempted make a forbidden edit. The request processing has been aborted.`);
+		console.warn(`Error message: ${error.message}`);
+		console.warn(`Request details:\n${JSON.stringify(request, null, '\t')}`);
+		response.status(httpStatus.FORBIDDEN).end()
+	}
+	else {
+		console.error('Unexpected error when handling request at', request.originalUrl);
+		response.status(httpStatus.INTERNAL_SERVER_ERROR).end();
+	}
 };
 
 export const endResponse = (request, response) => {

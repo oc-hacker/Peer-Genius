@@ -1,4 +1,4 @@
-import Sequelize, {DataTypes} from 'sequelize';
+import Sequelize, { DataTypes } from 'sequelize';
 import Model from 'sequelize/lib/model';
 import argon2 from 'argon2'
 
@@ -7,6 +7,7 @@ import {
 	sequelizeAdmin as admin
 } from '../reference';
 import user from './user';
+import { ProhibitedEditError } from '../errors';
 
 const attributes = {
 	user: {
@@ -17,18 +18,30 @@ const attributes = {
 			onUpdate: 'cascade',
 			onDelete: 'cascade'
 		},
-		primaryKey: true
+		primaryKey: true,
+		set(value) {
+			if (this.getDataValue('user')) {
+				throw new ProhibitedEditError('Editing the user FK of accounts table is prohibited.')
+			}
+			else {
+				this.setDataValue('user', value)
+			}
+		}
 	},
 	email: {
 		type: DataTypes.STRING,
 		allowNull: false,
-		unique: true
+		unique: true,
+		set(value) {
+			this.setDataValue('email', value);
+			this.setDataValue('verified', false);
+		}
 	},
 	password: {
 		type: DataTypes.STRING,
 		allowNull: false,
-		set(val) {
-			argon2.hash(val).then(hash => {
+		set(value) {
+			argon2.hash(value).then(hash => {
 				this.setDataValue('password', hash)
 			})
 		}
