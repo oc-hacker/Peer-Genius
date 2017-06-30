@@ -26,8 +26,8 @@ export const attributes = {
 	birthday: {
 		type: DataTypes.DATEONLY,
 		allowNull: true,
-		set(val) {
-			this.setDataValue('birthday', new Date(Date.UTC(val.year, val.month, val.day)))
+		set(value) {
+			this.setDataValue('birthday', new Date(Date.UTC(value.year, value.month, value.day)))
 		}
 	}
 };

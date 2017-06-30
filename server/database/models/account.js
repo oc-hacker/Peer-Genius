@@ -1,4 +1,4 @@
-import Sequelize, {DataTypes} from 'sequelize';
+import Sequelize, { DataTypes } from 'sequelize';
 import Model from 'sequelize/lib/model';
 import argon2 from 'argon2'
 
@@ -22,13 +22,17 @@ const attributes = {
 	email: {
 		type: DataTypes.STRING,
 		allowNull: false,
-		unique: true
+		unique: true,
+		set(value) {
+			this.setDataValue('email', value);
+			this.verified = false;
+		}
 	},
 	password: {
 		type: DataTypes.STRING,
 		allowNull: false,
-		set(val) {
-			argon2.hash(val).then(hash => {
+		set(value) {
+			argon2.hash(value).then(hash => {
 				this.setDataValue('password', hash)
 			})
 		}
