@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 
 import config from './config';
 import { initMailer } from '../email/mailer';
-import { logger, sendIndex, endResponse } from '../router/misc/utils';
+import { logger, sendIndex, endResponse, errorHandler } from '../router/misc/utils';
 import apiRouter from '../router/api';
 
 const corsOptions = {
@@ -47,10 +47,7 @@ app.get(/^\/(?!api)/, sendIndex);
 app.use(endResponse);
 
 // Errors
-app.use((error, request, response, next) => {
-	console.error('Unexpected error when handling request at', request.originalUrl);
-	response.status(500).end();
-});
+app.use(errorHandler);
 
 app.listen(config.serverPort, () => {
 	console.log("Listening on port " + config.serverPort + "!");

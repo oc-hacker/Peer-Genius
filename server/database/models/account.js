@@ -7,6 +7,7 @@ import {
 	sequelizeAdmin as admin
 } from '../reference';
 import user from './user';
+import { ProhibitedEditError } from '../errors';
 
 const attributes = {
 	user: {
@@ -17,7 +18,15 @@ const attributes = {
 			onUpdate: 'cascade',
 			onDelete: 'cascade'
 		},
-		primaryKey: true
+		primaryKey: true,
+		set(value) {
+			if (this.getDataValue('user')) {
+				throw new ProhibitedEditError('Editing the user FK of accounts table is prohibited.')
+			}
+			else {
+				this.setDataValue('user', value)
+			}
+		}
 	},
 	email: {
 		type: DataTypes.STRING,
@@ -25,7 +34,7 @@ const attributes = {
 		unique: true,
 		set(value) {
 			this.setDataValue('email', value);
-			this.verified = false;
+			this.setDataValue('verified', false);
 		}
 	},
 	password: {
