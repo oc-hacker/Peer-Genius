@@ -26,7 +26,8 @@ import AccountSettings from './account/settings.js';
 const style = {
 	content: {
 		height: '100%',
-		paddingTop: 64
+		paddingTop: 64,
+		textAlight: 'center'
 	}
 }
 

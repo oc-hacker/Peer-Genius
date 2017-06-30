@@ -95,8 +95,8 @@ export default class FrontPage extends React.Component {
 		        		nextFunc={this.props.login}
 		        		nextStyle={style.center}
 		        	>
-		        		<TextField varName={"email"} hintText={"Email"} isRequired={true} />
-		        		<TextFieldPassword varName={"password"} hintText={"Password"} isRequired={true} />
+		        		<TextField varName={"email"} hintText={"Email"} />
+		        		<TextFieldPassword varName={"password"} hintText={"Password"} />
 		        	</Form>
         		</Dialog>
         	</div>

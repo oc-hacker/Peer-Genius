@@ -9,6 +9,7 @@ import TextField from '../util/materialUI/TextField.js';
 import TextFieldConfirm from '../util/materialUI/TextFieldConfirm.js';
 import TextFieldConfirmPassword from '../util/materialUI/TextFieldConfirmPassword.js';
 import DateField from '../util/materialUI/DateField.js';
+import { verifyEmailText } from '../util/materialUI/verifyField.js';
 
 import { createAccount } from '../../redux/actions/account.js';
 
@@ -39,11 +40,11 @@ export default class CreateAccount extends React.Component {
 	        		nextFunc={this.props.createAccount}
 	        		width={500}
 	        	>
-	        		<TextField varName="firstName" hintText="First Name" isRequired={true} />
-	        		<TextField varName="lastName" hintText="Last Name" isRequired={true} />
-	        		<TextFieldConfirm varName="email" hintText="Email" isRequired={true} />
-	        		<TextFieldConfirmPassword varName="password" hintText="Password" isRequired={true} />
-	        		<DateField varName="birthdate" floatingLabelText="Birth Date" isRequired={true} minAge={13} maxAge={19} />
+	        		<TextField varName="firstName" hintText="First Name" />
+	        		<TextField varName="lastName" hintText="Last Name" />
+	        		<TextFieldConfirm varName="email" hintText="Email" verifyFunc={verifyEmailText} />
+	        		<TextFieldConfirmPassword varName="password" hintText="Password" />
+	        		<DateField varName="birthdate" floatingLabelText="Birth Date" minAge={13} maxAge={19} />
 	        	</Form>
         	</div>
 		);
