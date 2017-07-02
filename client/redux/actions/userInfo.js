@@ -24,7 +24,7 @@ export const initUserInfoForm = () => async dispatch => {
 	console.log('Initializing User Info Form');
 	// Copy everything from the userInfo object to the userInfo form
 	dispatch(sendFormVars('userInfo', store.getState().userInfo));
-}
+};
 
 /**
  * Redux action generator for updating the user info.

@@ -47,7 +47,7 @@ export const createAccount = () => async dispatch => {
 		if (response.ok) {
 			// Initialize all of the information from the server.
 			let json = await response.json();
-			dispatch(initUserInfo(json.userInfo));
+			dispatch(initUserInfo({...json.account, ...json.user}));
 			
 			// Store the session JWT as a cookie.
 			await cookie.save('sessionJWT', json.sessionJWT);
