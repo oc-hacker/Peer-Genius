@@ -28,7 +28,12 @@ export const attributes = {
 		type: DataTypes.DATEONLY,
 		allowNull: true,
 		set(value) {
-			this.setDataValue('birthday', new Date(Date.UTC(value.year, value.month, value.day)))
+			if (value.year && value.month && value.date) {
+				this.setDataValue('birthday', new Date(Date.UTC(value.year, value.month, value.date, 12))) // hour = 12 because things are weird when it's set to midnight.
+			}
+			else {
+				this.setDataValue('birthday', value)
+			}
 		}
 	}
 };

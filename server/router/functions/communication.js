@@ -1,3 +1,5 @@
+import httpStatus from 'http-status-codes';
+
 import models from '../../database/index';
 
 /**
@@ -40,5 +42,5 @@ export const update = async (request, response) => {
 	await communication.update(_.omit(request.body, 'user'));
 	await communication.save();
 	
-	response.status(200).end();
+	response.status(httpStatus.OK).end();
 };

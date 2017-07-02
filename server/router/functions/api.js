@@ -84,5 +84,5 @@ export const checkEmail = async (request, response) => {
 		}
 	});
 	
-	response.status(200).json({taken: !!account})
+	response.status(httpStatus.OK).json({taken: !!account})
 };

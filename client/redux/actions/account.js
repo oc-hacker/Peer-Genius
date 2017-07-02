@@ -23,7 +23,7 @@ export const createAccount = () => async dispatch => {
 			type: types.CREATE_ACCOUNT,
 			status: types.REQUEST
 		});
-
+		
 		// Send a POST request to create the account.
 		const response = await fetch(serverURL + '/api/createAccount', {
 			method: 'POST',
@@ -36,22 +36,26 @@ export const createAccount = () => async dispatch => {
 				password: accountForm.password,
 				firstName: accountForm.firstName,
 				lastName: accountForm.lastName,
-				birthdate: accountForm.birthdate
+				birthday: {
+					year: accountForm.birthdate.getFullYear(),
+					month: accountForm.birthdate.getMonth(),
+					date: accountForm.birthdate.getDate()
+				}
 			})
 		});
-
+		
 		if (response.ok) {
 			// Initialize all of the information from the server.
 			let json = await response.json();
 			dispatch(initUserInfo(json.userInfo));
-
+			
 			// Store the session JWT as a cookie.
 			await cookie.save('sessionJWT', json.sessionJWT);
-
+			
 			// Refresh the session and push to the account page.
 			await dispatch(verifySession());
 			dispatch(push('/home'));
-
+			
 			dispatch({
 				type: types.CREATE,
 				status: types.SUCCESS,
@@ -59,8 +63,8 @@ export const createAccount = () => async dispatch => {
 			});
 		} else {
 			// If the account is not created successfully, dispatch an action to inform the user that the email has been taken.
-			dispatch(sendFormErr('create', 'email', 'This email has been taken.'));
-
+			dispatch(sendFormErr('createAccount', 'email', 'This email has been taken.'));
+			
 			dispatch({
 				type: types.CREATE,
 				status: types.FAILURE
@@ -75,19 +79,19 @@ export const createAccount = () => async dispatch => {
 export const sendEdit = () => async dispatch => {
 	let oldInfo = store.getState().userInfo;
 	let newInfo = store.getState().forms.userInfo;
-
+	
 	if (oldInfo && newInfo) {
 		dispatch({
 			type: types.SEND_EDIT,
 			status: types.REQUEST
 		});
-
+		
 		// Create an object with only the changed values from the user info form object
 		let info = {};
 		for (let varName in newInfo) {
 			info[varName] = newInfo[varName];
 		}
-
+		
 		// Send a POST request to the server to send the edits
 		const response = await fetch(serverURL + '/api/account/edit', {
 			method: 'POST',
@@ -100,11 +104,11 @@ export const sendEdit = () => async dispatch => {
 			}),
 			credentials: 'include'
 		});
-
+		
 		if (response.ok) {
 			// Upon success, update the user info object with the new info
 			dispatch(updateUserInfo(newInfo));
-
+			
 			dispatch({
 				type: types.SEND_EDIT,
 				status: types.SUCCESS,
@@ -130,9 +134,9 @@ export const editPassword = () => async dispatch => {
 		type: types.SEND_EDIT,
 		status: types.REQUEST
 	});
-
+	
 	let form = store.getState().forms.editPassword;
-
+	
 	// Send a POST request to edit the password.
 	const response = await fetch(serverURL + '/api/account/editPassword', {
 		method: 'POST',
@@ -146,27 +150,27 @@ export const editPassword = () => async dispatch => {
 		}),
 		credentials: 'include'
 	});
-
+	
 	if (response.ok) {
 		// Upon success clear the form.
 		dispatch(createForm('editPassword'));
-
+		
 		dispatch({
 			type: types.SEND_EDIT,
 			status: types.SUCCESS,
 			successText: 'Saved!'
 		});
-
+		
 		return true;
 	} else {
 		// Upon failure send an incorrect password error to the form.
 		dispatch(sendFormErr('editPassword', 'oldPassword', 'Incorrect password.'));
-
+		
 		dispatch({
 			type: types.SEND_EDIT,
 			status: types.FAILURE
 		});
-
+		
 		return false;
 	}
 };
@@ -179,9 +183,9 @@ export const editEmail = () => async dispatch => {
 		type: types.SEND_EDIT,
 		status: types.REQUEST
 	});
-
+	
 	let form = store.getState().forms.editEmail;
-
+	
 	// Send a POSt request to edit the email.
 	const response = await fetch(serverURL + '/api/account/editEmail', {
 		method: 'POST',
@@ -195,11 +199,11 @@ export const editEmail = () => async dispatch => {
 		}),
 		credentials: 'include'
 	});
-
+	
 	if (response.ok) {
 		// Upon success clear the form.
 		dispatch(createForm('editEmail'));
-
+		
 		dispatch({
 			type: types.SEND_EDIT,
 			status: types.SUCCESS,
@@ -208,7 +212,7 @@ export const editEmail = () => async dispatch => {
 	} else {
 		// Upon failure send an incorrect password error to the form.
 		dispatch(sendFormErr('editEmail', 'password', 'Incorrect password.'));
-
+		
 		dispatch({
 			type: types.SEND_EDIT,
 			status: types.FAILURE

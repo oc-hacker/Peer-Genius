@@ -54,7 +54,7 @@ export const verifySession = requestInfo => async dispatch => {
 			const json = await response.json();
 			
 			// Initialize all account info
-			dispatch(initUserInfo(json.info));
+			dispatch(initUserInfo({...json.account, ...json.user}));
 		}
 		
 		dispatch({
@@ -182,7 +182,7 @@ export const login = () => async dispatch => {
 			setTimeout(() => {
 				dispatch(refreshSession());
 			}, sessionJWTExpire * 9 / 10);
-
+			
 			dispatch(push('/home'))
 		} else {
 			dispatch({
@@ -202,7 +202,7 @@ export const login = () => async dispatch => {
 export const logout = () => async dispatch => {
 	// Remove the session JWT cookie.
 	await cookie.remove('sessionJWT');
-
+	
 	// Dispatch an action to reset the redux store to be blank.
 	dispatch({
 		type: types.RESET
@@ -212,6 +212,6 @@ export const logout = () => async dispatch => {
 	dispatch({
 		type: types.LOGOUT
 	});
-
+	
 	dispatch(push('/'));
 };
