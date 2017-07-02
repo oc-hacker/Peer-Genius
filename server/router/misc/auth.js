@@ -19,6 +19,5 @@ export const verifySessionToken = function (request, response, next) {
 	} catch (err) {
 		console.log(err.message);
 		response.status(httpStatus.UNAUTHORIZED).json({reason: 'Invalid session'});
-		next('Invalid session');
 	}
 };

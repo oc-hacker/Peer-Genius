@@ -18,15 +18,7 @@ const attributes = {
 			onUpdate: 'cascade',
 			onDelete: 'cascade'
 		},
-		primaryKey: true,
-		set(value) {
-			if (this.getDataValue('user')) {
-				throw new ProhibitedEditError('Editing the user FK of accounts table is prohibited.')
-			}
-			else {
-				this.setDataValue('user', value)
-			}
-		}
+		primaryKey: true
 	},
 	email: {
 		type: DataTypes.STRING,
@@ -39,12 +31,7 @@ const attributes = {
 	},
 	password: {
 		type: DataTypes.STRING,
-		allowNull: false,
-		set(value) {
-			argon2.hash(value).then(hash => {
-				this.setDataValue('password', hash)
-			})
-		}
+		allowNull: false
 	},
 	verified: {
 		type: DataTypes.BOOLEAN,
@@ -52,8 +39,22 @@ const attributes = {
 	}
 };
 
+const blockUserEdit = instance => {
+	if (instance.changed('user')) {
+		throw new ProhibitedEditError('Editing the user FK of accounts table is prohibited.')
+	}
+};
+
+const hashPassword = instance => {
+	if (instance.changed('password')) {
+		return argon2.hash(instance.password).then(hash => instance.password = hash);
+	}
+};
+
 /** @typedef {Model} */
 const model = admin.define('accounts', attributes);
+model.beforeCreate(hashPassword);
+model.beforeUpdate([blockUserEdit, hashPassword]);
 model.sync({alter: config.devMode}); // Alter when in development mode
 
 export default model

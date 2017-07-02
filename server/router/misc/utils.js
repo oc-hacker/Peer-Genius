@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs';
 import _ from 'lodash';
 import httpStatus from 'http-status-codes';
 
@@ -16,15 +17,35 @@ export const sendIndex = (request, response, next) => {
 	response.sendFile(path.resolve(__dirname, '../../../public/index.html'));
 };
 
+const errorLogPath = './errors.log';
+// Clear up error log on start
+fs.writeFileSync(errorLogPath, '');
+
 export const errorHandler = (error, request, response, next) => {
 	if (error instanceof ProhibitedEditError) {
-		console.warn(`Request at ${request.originalUrl} attempted make a forbidden edit. The request processing has been aborted.`);
-		console.warn(`Error message: ${error.message}`);
-		console.warn(`Request details:\n${JSON.stringify(request, null, '\t')}`);
+		console.warn([
+			`[${new Date().toUTCString()}]`,
+			`Request at ${request.originalUrl} attempted make a forbidden edit. The request processing has been aborted.`,
+			`Error message: ${error.message}`,
+			'Details available in error log.'
+		].join('\n'));
+		fs.appendFileSync(errorLogPath, [
+			`[${new Date().toUTCString()}] Blocked edit request:`,
+			JSON.stringify(request.body, null, '\t'),
+			''
+		].join('\n'));
 		response.status(httpStatus.FORBIDDEN).end()
 	}
 	else {
 		console.error('Unexpected error when handling request at', request.originalUrl);
+		fs.appendFileSync(errorLogPath, [
+			`[${new Date().toUTCString()}] Server handling error!`,
+			`Error message:`,
+			`${error}`,
+			`Request details:`,
+			JSON.stringify(request.body, null, '\t'),
+			''
+		].join('\n'));
 		response.status(httpStatus.INTERNAL_SERVER_ERROR).end();
 	}
 };
@@ -64,5 +85,14 @@ export const buildInitialStore = async (id, user, account) => {
 	store.sessionJWT = createSessionToken(id);
 	
 	return store;
+};
+
+export const wrapTryCatch = handler => async (request, response, next) => {
+	try {
+		await handler(request, response, next)
+	}
+	catch (error) {
+		next(error)
+	}
 };
 

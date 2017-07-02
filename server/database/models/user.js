@@ -12,15 +12,7 @@ export const attributes = {
 	id: {
 		type: DataTypes.UUID,
 		defaultValue: DataTypes.UUIDV4,
-		primaryKey: true,
-		set(value) {
-			if (this.getDataValue('id')) {
-				throw new ProhibitedEditError('Editing the id PK of users table is prohibited.')
-			}
-			else {
-				this.setDataValue('id', value)
-			}
-		}
+		primaryKey: true
 	},
 	firstName: {
 		type: DataTypes.STRING,
@@ -43,8 +35,15 @@ export const attributes = {
 
 export const exposedAttributes = _.without(Object.keys(attributes), 'id');
 
+const blockIdEdit = instance => {
+	if (instance.changed('id')) {
+		throw new ProhibitedEditError('Editing the id PK of users table is prohibited.');
+	}
+};
+
 /** @typedef {Model} */
 const model = admin.define('users', attributes);
+model.beforeUpdate(blockIdEdit);
 model.sync({alter: config.devMode}); // Alter when in development mode
 
 export default model

@@ -19,14 +19,6 @@ const attributes = {
 			onDelete: 'cascade'
 		},
 		primaryKey: true,
-		set(value) {
-			if (this.getDataValue('user')) {
-				throw new ProhibitedEditError('Editing the user FK of keys table is prohibited.')
-			}
-			else {
-				this.setDataValue('user', value)
-			}
-		}
 	},
 	verifyEmailKey: {
 		type: DataTypes.CHAR(32),
@@ -35,8 +27,15 @@ const attributes = {
 	},
 };
 
+const blockUserEdit = instance => {
+	if (instance.changed('user')) {
+		throw new ProhibitedEditError('Editing the user FK of keys table is prohibited.')
+	}
+};
+
 /** @typedef {Model} */
 const model = admin.define('keys', attributes);
+model.beforeUpdate(blockUserEdit);
 model.sync({alter: config.devMode}); // Alter when in development mode
 
 // Extra utility methods

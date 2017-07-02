@@ -18,14 +18,39 @@ const attributes = {
 		},
 		primaryKey: true
 	},
-	subject: {
-		type: DataTypes.ENUM(['biology', 'geometry', 'algebra2', 'spanish']), // TODO expand
-		allowNull: false
+	biology: {
+		type: DataTypes.BOOLEAN,
+		defaultValue: false
+	},
+	geometry: {
+		type: DataTypes.BOOLEAN,
+		defaultValue: false
+	},
+	algebra2: {
+		type: DataTypes.BOOLEAN,
+		defaultValue: false
+	},
+	spanish: {
+		type: DataTypes.BOOLEAN,
+		defaultValue: false
+	},
+	// TODO More subjects
+	
+	// subject: {
+	// 	type: DataTypes.ENUM(['biology', 'geometry', 'algebra2', 'spanish']), // TODO expand
+	// 	allowNull: false
+	// }
+};
+
+const blockUserEdit = instance => {
+	if (instance.changed('user')) {
+		throw new ProhibitedEditError('Editing the user FK of mentors table is prohibited.')
 	}
 };
 
 /** @typedef {Model} */
 const model = admin.define('mentors', attributes);
+model.beforeUpdate(blockUserEdit);
 model.sync({alter: config.devMode}); // Alter when in development mode
 
 export default model
