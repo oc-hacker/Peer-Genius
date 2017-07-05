@@ -9,5 +9,6 @@ const router = express.Router();
 router.post('/edit', wrapTryCatch(functions.edit));
 router.post('/verify', wrapTryCatch(functions.verify));
 router.post('/info', wrapTryCatch(functions.info));
+router.post('/refresh', wrapTryCatch(functions.refresh));
 
 export default router;

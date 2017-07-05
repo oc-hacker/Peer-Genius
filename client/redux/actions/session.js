@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 
-import cookie from 'react-cookie';
+import cookie from 'js-cookie';
 import { push } from 'react-router-redux';
 
 import store from '../store.js';
@@ -25,7 +25,7 @@ export const verifySession = requestInfo => async dispatch => {
 	});
 	
 	// Load the sessionJWT cookie.
-	let sessionJWT = cookie.load('sessionJWT');
+	let sessionJWT = cookie.get('sessionJWT');
 	
 	if (!sessionJWT) {
 		// If there is no cookie, then the user is not in session; dispatch an action marking the failure and return false.
@@ -85,7 +85,7 @@ export const refreshSession = () => async dispatch => {
 	});
 	
 	// Load the sessionJWT cookie.
-	let sessionJWT = cookie.load('sessionJWT');
+	let sessionJWT = cookie.get('sessionJWT');
 	
 	if (!sessionJWT) {
 		// If there is no cookie, then the user is not in session; dispatch an action marking the failure.
@@ -106,12 +106,13 @@ export const refreshSession = () => async dispatch => {
 		},
 		credentials: 'include'
 	});
+	console.log(response);
 	
 	if (response.ok) {
 		let json = await response.json();
 		
 		// If the check succeeded, save the cookie.
-		await cookie.save('sessionJWT', json.sessionJWT);
+		await cookie.set('sessionJWT', json.sessionJWT, {expires: sessionJWTExpire});
 		
 		// Dispatch an action to mark the success and store the session JWT.
 		dispatch({
@@ -173,7 +174,7 @@ export const login = () => async dispatch => {
 			});
 			
 			// If the login succeeds, save the cookie.
-			await cookie.save('sessionJWT', json.sessionJWT);
+			await cookie.set('sessionJWT', json.sessionJWT, {expires: sessionJWTExpire});
 			
 			// Initialize all account info in the Redux store
 			dispatch(initUserInfo(json.userInfo));

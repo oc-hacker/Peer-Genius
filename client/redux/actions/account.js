@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 
-import cookie from 'react-cookie';
+import cookie from 'js-cookie';
 import { push } from 'react-router-redux';
 
 import store from '../store.js';
@@ -50,14 +50,14 @@ export const createAccount = () => async dispatch => {
 			dispatch(initUserInfo({...json.account, ...json.user}));
 			
 			// Store the session JWT as a cookie.
-			await cookie.save('sessionJWT', json.sessionJWT);
+			await cookie.set('sessionJWT', json.sessionJWT);
 			
 			// Refresh the session and push to the account page.
 			await dispatch(verifySession());
 			dispatch(push('/home'));
 			
 			dispatch({
-				type: types.CREATE,
+				type: types.CREATE_ACCOUNT,
 				status: types.SUCCESS,
 				successText: 'Account Created!'
 			});
@@ -66,7 +66,7 @@ export const createAccount = () => async dispatch => {
 			dispatch(sendFormErr('createAccount', 'email', 'This email has been taken.'));
 			
 			dispatch({
-				type: types.CREATE,
+				type: types.CREATE_ACCOUNT,
 				status: types.FAILURE
 			});
 		}
