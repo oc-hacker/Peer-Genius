@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import httpStatus from 'http-status-codes';
 
 import cookie from 'js-cookie';
 import { push } from 'react-router-redux';
@@ -61,7 +62,7 @@ export const createAccount = () => async dispatch => {
 				status: types.SUCCESS,
 				successText: 'Account Created!'
 			});
-		} else {
+		} else if (response.status === httpStatus.conflict) {
 			// If the account is not created successfully, dispatch an action to inform the user that the email has been taken.
 			dispatch(sendFormErr('createAccount', 'email', 'This email has been taken.'));
 			
@@ -69,6 +70,8 @@ export const createAccount = () => async dispatch => {
 				type: types.CREATE_ACCOUNT,
 				status: types.FAILURE
 			});
+		} else {
+
 		}
 	}
 };

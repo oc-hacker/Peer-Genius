@@ -9,6 +9,9 @@ import { grey100, grey400 } from 'material-ui/styles/colors';
 import MuiAppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+
 import IconButton from 'material-ui/IconButton';
 import Badge from 'material-ui/Badge';
 import AccountIcon from 'material-ui/svg-icons/action/account-circle.js';
@@ -61,7 +64,7 @@ const style = {
 	inSession: state.inSession
 }), dispatch => ({
 	pushToHome: () => {
-		dispatch(push('/home'));
+		dispatch(push('/'));
 	},
 	pushToEditAccount: () => {
 		dispatch(push('/account/edit'));
@@ -92,6 +95,7 @@ export default class AppBar extends React.Component {
 
 				<IconMenu
 					iconButtonElement={<IconButton><AccountIcon /></IconButton>}
+					onChange={this._accountHandler}
 					anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
 					targetOrigin={{horizontal: 'right', vertical: 'top'}}
 					style={style.iconButton}
