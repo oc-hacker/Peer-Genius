@@ -17,7 +17,7 @@ const corsOptions = {
 
 const app = express();
 
-//initMailer();
+initMailer();
 
 app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));
@@ -43,7 +43,6 @@ app.use('/api', apiRouter);
 // Send index
 app.get(/^\/(?!api)/, sendIndex);
 
-// Ensure responses is ended
 app.use(endResponse);
 
 // Errors
