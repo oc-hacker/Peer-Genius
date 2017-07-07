@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 
 export default {
 	mysqlDatabase: '',
@@ -14,7 +15,7 @@ export default {
 	}
 };
 
-let configPath = './core/config.json';
+let configPath = path.join(__dirname, './config.json');
 
 /**
  * Transfers data from <code>source</code> to <code>sink</code>.
@@ -51,7 +52,7 @@ const transfer = async (source, sink) => {
 };
 
 export const loadConfig = async () => {
-	console.log("Accessing config...");
+	console.log(`Accessing config at path ${configPath}`);
 	// console.log(fs);
 	
 	let fileReadSuccess = true;

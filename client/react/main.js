@@ -1,14 +1,14 @@
 import 'babel-polyfill';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import { Provider, connect } from 'react-redux';
-import { Route, Router, Link, browserHistory, IndexRoute, IndexRedirect } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
+import { Route } from 'react-router';
+import { ConnectedRouter } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
 
-import store from '../redux/store.js';
+import store, {browserHistory} from '../redux/store.js';
 
 // MaterialUI Theme
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
@@ -29,62 +29,85 @@ const style = {
 		paddingTop: 64,
 		textAlight: 'center'
 	}
-}
+};
+
+// This is here for reference
+const useless = (<div>
+	<Router history={syncedHistory}>
+		<Route path="/" component={App}>
+			<IndexRoute component={FrontPage}/>
+			
+			<Route path="home" component={Home}/>
+			
+			<Route path="account">
+				<Route path="create" component={CreateAccount}/>
+				
+				<Route path="edit" component={EditAccount}/>
+				
+				<Route path="settings" component={AccountSettings}/>
+			</Route>
+		</Route>
+	</Router>
+</div>);
+
+const AccountRouter = () => (
+	<div>
+		<Route path="create" component={CreateAccount}/>
+		<Route path="edit" component={EditAccount}/>
+		<Route path="settings" component={AccountSettings}/>
+	</div>
+);
+
+const AppRouter = () => (
+	<div style={style.content}>
+		<Route exact path="" component={FrontPage}/>
+		<Route path="home" component={Home}/>
+		<Route path="account" component={AccountRouter}/>
+	</div>
+);
 
 class App extends React.Component {
 	// This is needed for MUI.
 	static childContextTypes = {
 		muiTheme: React.PropTypes.object.isRequired
 	};
-
+	
 	constructor(props, context) {
 		super(props, context);
-
+		
 		// This is needed for MUI.
 		injectTapEventPlugin();
 	}
-
+	
 	// This is needed for MUI.
 	getChildContext = () => {
-		return { muiTheme };
-	}
-
+		return {muiTheme};
+	};
+	
 	render() {
 		return (
 			<div>
 				<AppBar />
-
-				<div style={style.content}>
-					{this.props.children}
-				</div>
+				
+				<AppRouter/>
 			</div>
 		)
 	}
 }
 
-// Sync browser history with the store
-let syncedHistory = syncHistoryWithStore(browserHistory, store);
-
 /** Routes */
-const routes = (
+const MasterRouter = () => (
+	<ConnectedRouter history={browserHistory}>
+		<div>
+			<Route path="/" component={App}/>
+		</div>
+	</ConnectedRouter>
+);
+
+const Main = (
 	<Provider store={store}>
-		<Router history={syncedHistory}>
-			<Route path="/" component={App}>
-				<IndexRoute component={FrontPage} />
-
-				<Route path="home" component={Home} />
-
-				<Route path="account">
-					<Route path="create" component={CreateAccount} />
-
-					<Route path="edit" component={EditAccount} />
-
-					<Route path="settings" component={AccountSettings} />
-				</Route>
-			</Route>
-		</Router>
+		<MasterRouter/>
 	</Provider>
 );
 
-// Render the app.
-ReactDOM.render(routes, document.getElementById('app'));
+export default Main;

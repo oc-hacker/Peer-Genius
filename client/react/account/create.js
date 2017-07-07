@@ -18,7 +18,7 @@ const style = {
 		display: 'flex',
 		justifyContent: 'center'
 	}
-}
+};
 
 @connect(null, dispatch => ({
 	createAccount: () => {
@@ -38,6 +38,12 @@ export default class CreateAccount extends React.Component {
 	        		numInputs={5}
 	        		nextText="Create"
 	        		nextFunc={this.props.createAccount}
+			        backText="Back"
+			        backFunc={this.props.pushToFrontPage}
+			        backStyle={{
+			        	position: 'relative',
+				        bottom: -200
+			        }}
 	        		width={500}
 	        	>
 	        		<TextField varName="firstName" hintText="First Name" />

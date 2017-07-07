@@ -10,7 +10,7 @@ import { logger, sendIndex, endResponse, errorHandler } from '../router/misc/uti
 import apiRouter from '../router/api';
 
 const corsOptions = {
-	origin: 'https://peer-genius.io', // TODO confirm url
+	origin: 'https://peergenius.io',
 	allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 	credentials: true
 };

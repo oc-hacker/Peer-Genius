@@ -3,16 +3,18 @@ import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
 import cookie from 'js-cookie';
-import { browserHistory } from 'react-router';
 import { routerMiddleware, push } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
 
 import appReducer from './reducer.js';
+
+export const browserHistory = createHistory();
 
 const composeWithDevtools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 // Create and export the store with the initial structure.
 let store = createStore(appReducer, {
-	inSession: -1,
+	// inSession: -1,
 	fetching: false,
 	success: {
 		show: false,

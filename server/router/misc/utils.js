@@ -17,7 +17,7 @@ export const sendIndex = (request, response, next) => {
 	response.sendFile(path.resolve(__dirname, '../../../public/index.html'));
 };
 
-const errorLogPath = './errors.log';
+const errorLogPath = path.resolve(__dirname, '../../errors.log');
 // Clear up error log on start
 fs.writeFileSync(errorLogPath, '');
 
