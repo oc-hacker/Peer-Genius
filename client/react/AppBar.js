@@ -85,7 +85,7 @@ export default class AppBar extends React.Component {
 	}
 
 	render() {
-		return this.props.inSession ? (
+		return this.props.inSession === 1 ? (
 			<MuiAppBar
 				iconElementLeft={<img src="/logo.svg" width={64} height={45} />}
 				titleStyle={style.title} style={style.appBar}

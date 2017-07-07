@@ -11,9 +11,10 @@ import userInfo from './reducers/userInfo.js';
 // Create and export the main reducer from combining all sub-reducers.
 const appReducer = combineReducers({
 	inSession,
-	forms,
 	fetching,
 	success,
+	forms,
+	userInfo,
 	routing
 });
 

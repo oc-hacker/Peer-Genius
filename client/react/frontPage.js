@@ -37,7 +37,7 @@ const style = {
 		dispatch(login());
 	},
 	pushToCreateAccount: () => {
-		dispatch(push('/account/create'));
+		dispatch(push('/createAccount'));
 	}
 }))
 export default class FrontPage extends React.Component {

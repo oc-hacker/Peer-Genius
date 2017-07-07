@@ -14,7 +14,7 @@ const composeWithDevtools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compo
 
 // Create and export the store with the initial structure.
 let store = createStore(appReducer, {
-	// inSession: -1,
+	inSession: -1,
 	fetching: false,
 	success: {
 		show: false,
