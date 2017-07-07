@@ -15,56 +15,8 @@ import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 const muiTheme = getMuiTheme(baseTheme);
 
+import AppRouter from './AppRouter.js';
 import AppBar from './AppBar.js';
-import FrontPage from './frontPage.js';
-import Home from './home.js';
-
-import CreateAccount from './account/create.js';
-import EditAccount from './account/edit.js';
-import AccountSettings from './account/settings.js';
-
-const style = {
-	content: {
-		height: '100%',
-		paddingTop: 64,
-		textAlight: 'center'
-	}
-};
-
-// This is here for reference
-const useless = (<div>
-	<Router history={syncedHistory}>
-		<Route path="/" component={App}>
-			<IndexRoute component={FrontPage}/>
-			
-			<Route path="home" component={Home}/>
-			
-			<Route path="account">
-				<Route path="create" component={CreateAccount}/>
-				
-				<Route path="edit" component={EditAccount}/>
-				
-				<Route path="settings" component={AccountSettings}/>
-			</Route>
-		</Route>
-	</Router>
-</div>);
-
-const AccountRouter = () => (
-	<div>
-		<Route path="create" component={CreateAccount}/>
-		<Route path="edit" component={EditAccount}/>
-		<Route path="settings" component={AccountSettings}/>
-	</div>
-);
-
-const AppRouter = () => (
-	<div style={style.content}>
-		<Route exact path="" component={FrontPage}/>
-		<Route path="home" component={Home}/>
-		<Route path="account" component={AccountRouter}/>
-	</div>
-);
 
 class App extends React.Component {
 	// This is needed for MUI.
