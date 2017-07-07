@@ -17,13 +17,14 @@ const style = {
 	}
 };
 
+// Weird, now router needs to have the full path to work, no matter where.
 class AccountRouter extends React.Component {
 	render() {
 		return (
 			<div>
-				<Route path="create" component={CreateAccount}/>
-				<Route path="edit" component={EditAccount}/>
-				<Route path="settings" component={AccountSettings}/>
+				<Route path="/account/create" component={CreateAccount}/>
+				<Route path="/account/edit" component={EditAccount}/>
+				<Route path="/account/settings" component={AccountSettings}/>
 			</div>
 		);
 	}
@@ -34,8 +35,8 @@ export default class AppRouter extends React.Component {
 	 	return (
 			<div style={style.content}>
 				<Route exact path="/" component={FrontPage}/>
-				<Route path="home" component={Home}/>
-				<Route path="account" component={AccountRouter}/>
+				<Route path="/home" component={Home}/>
+				<Route path="/account" component={AccountRouter}/>
 			</div>
 		);
 	}

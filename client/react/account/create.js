@@ -42,7 +42,7 @@ export default class CreateAccount extends React.Component {
 			        backFunc={this.props.pushToFrontPage}
 			        backStyle={{
 			        	position: 'relative',
-				        bottom: -200
+				        bottom: -680
 			        }}
 	        		width={500}
 	        	>

@@ -10,21 +10,32 @@ import webpackConfig from '../../webpack.dev';
 
 if (config.devMode) {
 	const app = express();
-	const webpackCompiler = webpack(webpackConfig);
+	const webpackCompiler = webpack(webpackConfig, (error, stats) => {
+		if (error) {
+			console.error('Error when compiling:');
+			console.error(error);
+		}
+		else {
+			console.log(stats.toString({
+				chunks: false,
+				colors: true
+			}))
+		}
+	});
 	
 	app.use(webpackDevMiddleware(webpackCompiler));
 	
 	app.use(webpackHotMiddleware(webpackCompiler));
 	
-	app.get('*', function(req, res) {
+	app.get('*', (req, res) => {
 		res.sendFile(path.resolve(__dirname, '../../public/index.html'));
 	});
 	
-	app.listen(8081, function(err) {
-		if(err) {
-			return console.log(err);
+	app.listen(config.devServerPort, error => {
+		if (error) {
+			return console.error(error);
 		}
 		
-		console.log('Server running on port: 8081');
+		console.log(`Webpack dev server running on port: ${config.devServerPort}`);
 	})
 }

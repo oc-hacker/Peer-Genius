@@ -8,7 +8,7 @@ module.exports = {
 		'babel-polyfill',
 		'react-hot-loader/patch',
 		'webpack-hot-middleware/client?quiet=true',
-		'./client/index.js'
+		path.resolve(__dirname, './client/index.js')
 	],
 	output: {
 		path: path.resolve(__dirname, 'public'),

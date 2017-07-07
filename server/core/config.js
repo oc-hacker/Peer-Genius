@@ -8,6 +8,7 @@ export default {
 	sessionJWTKey: '',
 	sessionJWTExpire: '1d',
 	serverPort: 80,
+	devServerPort: 8081,
 	backupPath: 'backup',
 	devMode: false,
 	mailerXOAuth2: {
