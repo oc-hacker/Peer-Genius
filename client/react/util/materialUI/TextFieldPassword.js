@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { sendFormVar } from '../../../redux/actions/forms.js';
 
 import MuiTextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
-import Visibility from 'material-ui/svg-icons/action/visibility.js';
-import VisibilityOff from 'material-ui/svg-icons/action/visibility-off.js';
+import Visibility from 'material-ui/svg-icons/action/visibility';
+import VisibilityOff from 'material-ui/svg-icons/action/visibility-off';
 
 import { verifyText } from './verifyField.js';
 
@@ -25,7 +26,7 @@ const style = {
 		marginLeft: 20,
 		paddingRight: 40
 	}
-}
+};
 
 /**
  * @classdesc TextField component for passwords (includes hide/unhide button).
@@ -52,17 +53,17 @@ const style = {
 })
 export default class TextFieldPassword extends React.Component {
 	static propTypes = {
-		formName: React.PropTypes.string.isRequired,	// The name of the form in the Redux store.
-		varName: React.PropTypes.string.isRequired,		// The name of the variable in the Redux store.
-		hintText: React.PropTypes.string.isRequired,	// The hint text to display.
-		floatingLabelText: React.PropTypes.string,		// The label text floating above the field (defaults to the hint text).
-		underlineShow: React.PropTypes.bool,			// Whether to show an underline underneath the field (defaults to false).
-		required: React.PropTypes.bool,					// Whether the field is required (defaults to true).
-		onEnterPress: React.PropTypes.func.isRequired,	// The function to call on pressing enter.
-		verifyFunc: React.PropTypes.func,				// The function used to verify the field (defauls to simply checking required).
-		markRequired: React.PropTypes.bool.isRequired,	// Whether the field should be marked as required if it is.
-		showErrors: React.PropTypes.bool,				// Whether to show errors (defaults to true).
-		width: React.PropTypes.number.isRequired		// The width of the  field.
+		formName: PropTypes.string.isRequired,	// The name of the form in the Redux store.
+		varName: PropTypes.string.isRequired,		// The name of the variable in the Redux store.
+		hintText: PropTypes.string.isRequired,	// The hint text to display.
+		floatingLabelText: PropTypes.string,		// The label text floating above the field (defaults to the hint text).
+		underlineShow: PropTypes.bool,			// Whether to show an underline underneath the field (defaults to false).
+		required: PropTypes.bool,					// Whether the field is required (defaults to true).
+		onEnterPress: PropTypes.func.isRequired,	// The function to call on pressing enter.
+		verifyFunc: PropTypes.func,				// The function used to verify the field (defauls to simply checking required).
+		markRequired: PropTypes.bool.isRequired,	// Whether the field should be marked as required if it is.
+		showErrors: PropTypes.bool,				// Whether to show errors (defaults to true).
+		width: PropTypes.number.isRequired		// The width of the  field.
 	};
 
 	static defaultProps = {
@@ -86,13 +87,13 @@ export default class TextFieldPassword extends React.Component {
 		if (nextProps.checkErrors && !this.props.checkErrors) {
 			this._onBlur(null, nextProps)
 		}
-	}
+	};
 
 	_onChange = event => {
 		this.setState({
 			text: event.target.value
 		});
-	}
+	};
 
 	_onBlur = (event, props=this.props) => {
 		let newErr = this.props.verifyFunc(this.state.text, props.required);
@@ -100,13 +101,13 @@ export default class TextFieldPassword extends React.Component {
 		if (this.state.text !== props.text || newErr !== props.err) {
 			props.sendFormVar(props.formName, props.varName, this.state.text, newErr);
 		}
-	}
+	};
 
 	_onKeyPress = event => {
 		if (event.key === 'Enter') {
 			this.props.onEnterPress();
 		}
-	}
+	};
 
 	/**
 	 * @return {React.Component} The IconButton to show for the hide/unhide button

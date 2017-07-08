@@ -38,11 +38,11 @@ export default class CreateAccount extends React.Component {
 	        		numInputs={5}
 	        		nextText="Create"
 	        		nextFunc={this.props.createAccount}
-			        backText="Back"
+			        backText="Cancel"
 			        backFunc={this.props.pushToFrontPage}
 			        backStyle={{
-			        	position: 'relative',
-				        bottom: -680
+			        	position: 'absolute',
+				        bottom: 0
 			        }}
 	        		width={500}
 	        	>

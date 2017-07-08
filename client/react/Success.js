@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
@@ -28,8 +29,8 @@ export default class Success extends React.Component {
 	}
 	
 	static propTypes = {
-		successText: React.PropTypes.string.isRequired,	// The text to be displayed in the dialog
-		showSuccess: React.PropTypes.bool.isRequired		// Whether the dialog should be visible
+		successText: PropTypes.string.isRequired,	// The text to be displayed in the dialog
+		showSuccess: PropTypes.bool.isRequired		// Whether the dialog should be visible
 	};
 
 	render = () => {

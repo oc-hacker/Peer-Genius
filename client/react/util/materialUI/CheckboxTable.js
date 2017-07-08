@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import update from 'react-addons-update';
 import { connect } from 'react-redux';
 
@@ -36,9 +37,9 @@ const style = {
 })
 export default class CheckboxTable extends React.Component {
 	static propTypes = {
-		varName: React.PropTypes.string.isRequired,								// The variable name stored in the Redux store.
-		rowHeaders: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,	// The array of row headers to display.
-		colHeaders: React.PropTypes.arrayOf(React.PropTypes.string).isRequired	// The array of columne headers to display.
+		varName: PropTypes.string.isRequired,								// The variable name stored in the Redux store.
+		rowHeaders: PropTypes.arrayOf(PropTypes.string).isRequired,	// The array of row headers to display.
+		colHeaders: PropTypes.arrayOf(PropTypes.string).isRequired	// The array of columne headers to display.
 	};
 
 	/** @class */

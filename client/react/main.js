@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Provider, connect } from 'react-redux';
 import { Route } from 'react-router';
 import { ConnectedRouter } from 'react-router-redux';
@@ -28,7 +29,7 @@ import Success from './Success.js';
 class App extends React.Component {
 	// This is needed for MUI.
 	static childContextTypes = {
-		muiTheme: React.PropTypes.object.isRequired
+		muiTheme: PropTypes.object.isRequired
 	};
 	
 	// This is needed for MUI.
@@ -64,7 +65,7 @@ class App extends React.Component {
 /** Routes */
 const MasterRouter = () => (
 	<ConnectedRouter history={browserHistory}>
-		<div>
+		<div style={{width: '100vw', height: '100vh'}}>
 			<Route path="/" component={App}/>
 		</div>
 	</ConnectedRouter>

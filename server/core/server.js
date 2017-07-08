@@ -10,7 +10,17 @@ import { logger, sendIndex, endResponse, errorHandler } from '../router/misc/uti
 import apiRouter from '../router/api';
 
 const corsOptions = {
-	origin: ['https://peergenius.io', 'http://localhost:' + config.devServerPort],
+	origin: (origin, cb) => {
+		if (origin === 'https://peergenius.io') {
+			cb(null, true);
+		}
+		else if (config.devMode && origin === `http://localhost:${config.devServerPort}`) {
+			cb(null, true);
+		}
+		else {
+			cb(new Error(`Request from ${origin} blocked by CORS.`))
+		}
+	},
 	allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 	credentials: true
 };
