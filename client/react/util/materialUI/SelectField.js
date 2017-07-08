@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { sendFormVar } from '../../../redux/actions/forms.js';
@@ -35,17 +36,17 @@ const style = {
 })
 export default class SelectField extends React.Component {
 	static propTypes = {
-		varName: React.PropTypes.string.isRequired,				// The variable name in the Redux store.
-		items: React.PropTypes.arrayOf(React.PropTypes.shape({	// The items to display under the SelectField.
-			value: React.PropTypes.any,							// The value of the item (can be anything).
-			text: React.PropTypes.string						// The text to show in the SelectField.
+		varName: PropTypes.string.isRequired,				// The variable name in the Redux store.
+		items: PropTypes.arrayOf(PropTypes.shape({	// The items to display under the SelectField.
+			value: PropTypes.any,							// The value of the item (can be anything).
+			text: PropTypes.string						// The text to show in the SelectField.
 		})).isRequired,
-		hintText: React.PropTypes.string.isRequired,			// The hint text to display.
-		floatingLabelText: React.PropTypes.string,				// The label floating above the field (defaults to the hint text).
-		required: React.PropTypes.bool,							// Whether the field is required.
-		markRequired: React.PropTypes.bool.isRequired,			// Whether to mark the field as required.
-		showErrors: React.PropTypes.bool,						// Whether to show the errors.
-		width: React.PropTypes.number.isRequired				// The width of the field.
+		hintText: PropTypes.string.isRequired,			// The hint text to display.
+		floatingLabelText: PropTypes.string,				// The label floating above the field (defaults to the hint text).
+		required: PropTypes.bool,							// Whether the field is required.
+		markRequired: PropTypes.bool.isRequired,			// Whether to mark the field as required.
+		showErrors: PropTypes.bool,						// Whether to show the errors.
+		width: PropTypes.number.isRequired				// The width of the field.
 	};
 
 	static defaultProps = {

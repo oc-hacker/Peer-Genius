@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { sendFormVar } from '../../../redux/actions/forms.js';
@@ -109,17 +110,17 @@ const style = {
 })
 export default class DateField extends React.Component {
 	static propTypes = {
-		formName: React.PropTypes.string.isRequired,			// The name of the form in the Redux store.
-		varName: React.PropTypes.string.isRequired,				// The name of the variable in the Redux store.
-		floatingLabelText: React.PropTypes.string.isRequired,	// The label text floating above the field.
-		underlineShow: React.PropTypes.bool,					// Whether to show an underline underneath the field (defaults to false).
-		required: React.PropTypes.bool,							// Whether the field is required (defaults to true).
-		onEnterPress: React.PropTypes.func.isRequired,			// The function to call on pressing enter.
-		verifyFunc: React.PropTypes.func,						// The function used to verify the field (defauls to simply checking required).
-		markRequired: React.PropTypes.bool.isRequired,			// Whether the field should be marked as required if it is.
-		showErrors: React.PropTypes.bool,						// Whether to show errors (defaults to true).
-		minAge: React.PropTypes.number.isRequired,
-		maxAge: React.PropTypes.number.isRequired
+		formName: PropTypes.string.isRequired,			// The name of the form in the Redux store.
+		varName: PropTypes.string.isRequired,				// The name of the variable in the Redux store.
+		floatingLabelText: PropTypes.string.isRequired,	// The label text floating above the field.
+		underlineShow: PropTypes.bool,					// Whether to show an underline underneath the field (defaults to false).
+		required: PropTypes.bool,							// Whether the field is required (defaults to true).
+		onEnterPress: PropTypes.func.isRequired,			// The function to call on pressing enter.
+		verifyFunc: PropTypes.func,						// The function used to verify the field (defauls to simply checking required).
+		markRequired: PropTypes.bool.isRequired,			// Whether the field should be marked as required if it is.
+		showErrors: PropTypes.bool,						// Whether to show errors (defaults to true).
+		minAge: PropTypes.number.isRequired,
+		maxAge: PropTypes.number.isRequired
 	};
 
 	static defaultProps = {

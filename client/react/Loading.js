@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
@@ -28,7 +29,7 @@ export default class Loading extends React.Component {
 	}
 	
 	static propTypes = {
-		fetching: React.PropTypes.bool.isRequired		// Whether the client is currently fetching to the server
+		fetching: PropTypes.bool.isRequired		// Whether the client is currently fetching to the server
 	};
 
 	render = () => {

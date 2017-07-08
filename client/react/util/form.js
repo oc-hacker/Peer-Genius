@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { createForm, refreshForm, clearForm, formLoaded, startFormCheck, endFormCheck } from '../../redux/actions/forms.js';
@@ -13,7 +14,7 @@ const style = {
 	button: {
 		margin: 20
 	}
-}
+};
 
 /**
  * @classdesc The component in each Form component that handles checking the form fields.
@@ -38,9 +39,9 @@ const style = {
 })
 class FormChecker extends React.Component {
 	static propTypes = {
-		formName: React.PropTypes.string.isRequired,	// The name of the form object in the Redux store.
-		submit: React.PropTypes.func.isRequired,		// The function to called when the form check is successful.
-		numToCheck: React.PropTypes.number.isRequired	// The number of fields to check.
+		formName: PropTypes.string.isRequired,	// The name of the form object in the Redux store.
+		submit: PropTypes.func.isRequired,		// The function to called when the form check is successful.
+		numToCheck: PropTypes.number.isRequired	// The number of fields to check.
 	};
 	
 	constructor(props) {
@@ -96,17 +97,17 @@ class FormChecker extends React.Component {
 })
 export default class Form extends React.Component {
 	static propTypes = {
-		formName: React.PropTypes.string.isRequired, 	// The name of the form object in the Redux store.
-		numInputs: React.PropTypes.number.isRequired,	// The number of inputs in the form.
-		header: React.PropTypes.string,					// The header to display
-		nextText: React.PropTypes.string,				// The text to display on the next button; defaults to 'Submit'.
-		backText: React.PropTypes.string,				// The text to display on the back button
-		nextFunc: React.PropTypes.func.isRequired,		// The function to call when the next button is pressed.
-		backFunc: React.PropTypes.func,					// The function to call when the back button is pressed.
-		nextStyle: React.PropTypes.object,				// The style for the next button; defaults to right-aligned
-		backStyle: React.PropTypes.object,				// The style for the back button; defaults to none
-		width: React.PropTypes.number,					// The width of the form; defaults to 500.
-		markRequired: React.PropTypes.bool 				// Whether to put * after required fields; defaults to true.
+		formName: PropTypes.string.isRequired, 	// The name of the form object in the Redux store.
+		numInputs: PropTypes.number.isRequired,	// The number of inputs in the form.
+		header: PropTypes.string,					// The header to display
+		nextText: PropTypes.string,				// The text to display on the next button; defaults to 'Submit'.
+		backText: PropTypes.string,				// The text to display on the back button
+		nextFunc: PropTypes.func.isRequired,		// The function to call when the next button is pressed.
+		backFunc: PropTypes.func,					// The function to call when the back button is pressed.
+		nextStyle: PropTypes.object,				// The style for the next button; defaults to right-aligned
+		backStyle: PropTypes.object,				// The style for the back button; defaults to none
+		width: PropTypes.number,					// The width of the form; defaults to 500.
+		markRequired: PropTypes.bool 				// Whether to put * after required fields; defaults to true.
 	};
 
 	static defaultProps = {
