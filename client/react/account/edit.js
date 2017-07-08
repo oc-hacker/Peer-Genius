@@ -83,9 +83,9 @@ export default class EditAccount extends React.Component {
 				<div style={style.vertFlex}>
 					<Paper style={style.margin}>
 						<Form formName="userInfo" header="User Info" nextText="Save" backText="" nextFunc={this.props.sendEdit} numInputs={3}>
-							<TextField varName="firstName" hintText="First Name" required={false} />
-							<TextField varName="lastName" hintText="Last Name" required={false} />
-							<DateField varName="birthdate" floatingLabelText="Birth Date" required={false} minAge={10} maxAge={19} />
+							<TextField varName="firstName" hintText="First Name" />
+							<TextField varName="lastName" hintText="Last Name" />
+							<DateField varName="birthdate" floatingLabelText="Birth Date" minAge={10} maxAge={19} />
 						</Form>
 					</Paper>
 					<div style={style.grow} />
@@ -101,7 +101,6 @@ export default class EditAccount extends React.Component {
 
 					<Paper style={style.margin}>
 						<Form formName="editEmail" header="Edit Email" nextText="Save" nextFunc={this._submitEmail} numInputs={2}>
-							<p style={style.margin}>Please note that, after editing your email, you must confirm it before the change is applied.</p>
 							<TextFieldPassword varName="password" hintText="Password" />
 							<TextFieldConfirm varName="email" hintText="New Email" verifyFunc={verifyEmailText} />
 						</Form>

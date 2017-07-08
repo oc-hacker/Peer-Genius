@@ -45,7 +45,6 @@ class LoggedInRoute extends React.Component {
 })
 class LoggedOutRoute extends React.Component {
 	componentWillMount() {
-		console.log('Checking logged out...')
 		if (this.props.inSession === 1) {
 			this.props.push('/home');
 		} else {

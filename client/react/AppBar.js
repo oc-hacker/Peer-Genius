@@ -63,8 +63,11 @@ const style = {
 @connect(state => ({
 	inSession: state.inSession
 }), dispatch => ({
-	pushToHome: () => {
+	pushToFrontPage: () => {
 		dispatch(push('/'));
+	},
+	pushToHome: () => {
+		dispatch(push('/home'))
 	},
 	pushToEditAccount: () => {
 		dispatch(push('/account/edit'));
@@ -111,7 +114,7 @@ export default class AppBar extends React.Component {
 			<MuiAppBar
 				iconElementLeft={<img src="/logo.svg" width={64} height={45} />}
 				titleStyle={style.title} style={style.appBar}
-				onLeftIconButtonTouchTap={this.props.pushToHome}
+				onLeftIconButtonTouchTap={this.props.pushToFrontPage}
 			/>
 		)
 	}

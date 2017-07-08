@@ -38,7 +38,7 @@ class App extends React.Component {
 
 	componentWillMount() {
 		if (this.props.inSession === -1) {
-			this.props.verifySession();
+			this.props.verifySession(true);
 		}
 	}
 	

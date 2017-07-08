@@ -141,14 +141,14 @@ export const editPassword = () => async dispatch => {
 	let form = store.getState().forms.editPassword;
 	
 	// Send a POST request to edit the password.
-	const response = await fetch(serverURL + '/api/account/editPassword', {
+	const response = await fetch(serverURL + '/api/account/edit', {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
-			oldPassword: form.oldPassword,
+			password: form.oldPassword,
 			newPassword: form.newPassword
 		}),
 		credentials: 'include'
@@ -190,7 +190,7 @@ export const editEmail = () => async dispatch => {
 	let form = store.getState().forms.editEmail;
 	
 	// Send a POSt request to edit the email.
-	const response = await fetch(serverURL + '/api/account/editEmail', {
+	const response = await fetch(serverURL + '/api/account/edit', {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
