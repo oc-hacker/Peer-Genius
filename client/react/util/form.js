@@ -172,7 +172,7 @@ export default class Form extends React.Component {
 			}
 
 			return (
-				<div style={{width: this.props.width}}>
+				<div style={{width: this.props.width, position: 'relative'}}>
 					{/* Form checker. */}
 					<FormChecker formName={this.props.formName} submit={this.props.nextFunc} numToCheck={this.props.numInputs} />
 					

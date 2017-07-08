@@ -65,7 +65,7 @@ class App extends React.Component {
 /** Routes */
 const MasterRouter = () => (
 	<ConnectedRouter history={browserHistory}>
-		<div>
+		<div style={{width: '100vw', height: '100vh'}}>
 			<Route path="/" component={App}/>
 		</div>
 	</ConnectedRouter>

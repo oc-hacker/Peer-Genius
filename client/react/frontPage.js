@@ -16,7 +16,10 @@ const style = {
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		width: '100%',
+		height: '100%',
+		overflow: 'hidden'
 	},
 	center: {
 		textAlign: 'center'
@@ -29,6 +32,11 @@ const style = {
 	},
 	button: {
 		margin: 20
+	},
+	buttonContainer: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'stretch'
 	}
 };
 
@@ -43,63 +51,66 @@ const style = {
 export default class FrontPage extends React.Component {
 	constructor(props) {
 		super(props);
-
+		
 		this.state = {
 			loginOpen: false
 		};
 	}
-
+	
 	_openLogin = () => {
 		this.setState({
 			loginOpen: true
 		});
 	};
-
+	
 	_closeLogin = () => {
 		this.setState({
 			loginOpen: false
 		});
 	};
-
+	
 	render() {
 		return (
 			<div>
 				<div style={style.container}>
 					<p style={style.title}>Peer Genius</p>
 					<p style={style.subtitle}>Eliminate the Grind</p>
-
+					
+					{/*<div style={style.buttonContainer}>*/}
 					<RaisedButton
 						primary={true}
 						label={"Create an Account"}
 						onTouchTap={this.props.pushToCreateAccount}
 						style={style.button}
 					/>
-
+					
 					<RaisedButton
 						primary={true}
-						label={"Login"}
+						label={"Log In"}
 						onTouchTap={this._openLogin}
 						style={style.button}
 					/>
+					{/*</div>*/}
 				</div>
-
+				
 				<Dialog
-		        	modal={false}
-		        	open={this.state.loginOpen}
-		        	onRequestClose={this._closeLogin}
-		        >
-		        	<Form
-		        		formName={"login"}
-	        			numInputs={2}
-		        		nextText={"Login"}
-		        		nextFunc={this.props.login}
-		        		nextStyle={style.center}
-		        	>
-		        		<TextField varName={"email"} hintText={"Email"} />
-		        		<TextFieldPassword varName={"password"} hintText={"Password"} />
-		        	</Form>
-        		</Dialog>
-        	</div>
+					modal={false}
+					open={this.state.loginOpen}
+					onRequestClose={this._closeLogin}
+				>
+					<Form
+						header="Log In"
+						formName={"login"}
+						numInputs={2}
+						nextText={"Log in"}
+						nextFunc={this.props.login}
+						nextStyle={style.center}
+					>
+						<TextField varName={"email"} hintText={"Email"}/>
+						<TextFieldPassword varName={"password"} hintText={"Password"}/>
+					</Form>
+				</Dialog>
+			</div>
 		);
 	}
 }

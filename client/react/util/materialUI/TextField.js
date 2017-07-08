@@ -69,7 +69,8 @@ export default class TextField extends React.Component {
 		super(props);
 
 		this.state = {
-			text: this.props.text || ''
+			text: this.props.text || '',
+			focused: false
 		}
 	}
 
@@ -78,7 +79,7 @@ export default class TextField extends React.Component {
 		if (nextProps.checkErrors && !this.props.checkErrors) {
 			this._onBlur(null, nextProps);
 		}
-	}
+	};
 
 	/**
 	 * Event handler for when the text changes.
@@ -89,8 +90,15 @@ export default class TextField extends React.Component {
 		this.setState({
 			text: event.target.value
 		});
-	}
+	};
 
+	_onFocus = () => {
+		// Focused
+		this.setState({
+			focused: true
+		});
+	};
+	
 	/**
 	 * Event handler for when the field loses focus.
 	 *
@@ -107,7 +115,12 @@ export default class TextField extends React.Component {
 		if (this.state.text !== props.text || newErr !== props.err) {
 			props.sendFormVar(props.formName, props.varName, this.state.text, newErr);
 		}
-	}
+		
+		// Not focused anymore
+		this.setState({
+			focused: false
+		})
+	};
 
 	/**
 	 * Event handler for when a key is pressed.
@@ -120,7 +133,7 @@ export default class TextField extends React.Component {
 		if (event.key === 'Enter' && !this.props.multiLine) {
 			this.props.onEnterPress();
 		}
-	}
+	};
 
 	render = () => {
 		return (
@@ -128,13 +141,14 @@ export default class TextField extends React.Component {
 				value={this.state.text}
 				hintText={this.props.hintText}
 				floatingLabelText={(this.props.floatingLabelText || this.props.hintText) + (this.props.required && this.props.markRequired ? '*' : '')}
-				errorText={this.props.showErrors ? this.props.err : ''}
+				errorText={this.props.showErrors && !this.state.focused ? this.props.err : ''}
 				underlineShow={this.props.underlineShow}
 				inputStyle={style.text}
 				hintStyle={style.text}
 				floatingLabelStyle={style.text}
 				errorStyle={style.text}
 				onChange={this._onChange}
+				onFocus={this._onFocus}
 				onBlur={this._onBlur}
 				onKeyPress={this._onKeyPress}
 				fullWidth={true}
