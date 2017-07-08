@@ -76,21 +76,21 @@ export default class FrontPage extends React.Component {
 					<p style={style.title}>Peer Genius</p>
 					<p style={style.subtitle}>Eliminate the Grind</p>
 					
-					{/*<div style={style.buttonContainer}>*/}
-					<RaisedButton
-						primary={true}
-						label={"Create an Account"}
-						onTouchTap={this.props.pushToCreateAccount}
-						style={style.button}
-					/>
-					
-					<RaisedButton
-						primary={true}
-						label={"Log In"}
-						onTouchTap={this._openLogin}
-						style={style.button}
-					/>
-					{/*</div>*/}
+					<div style={style.buttonContainer}>
+						<RaisedButton
+							primary={true}
+							label={"Create an Account"}
+							onTouchTap={this.props.pushToCreateAccount}
+							style={style.button}
+						/>
+						
+						<RaisedButton
+							primary={true}
+							label={"Log In"}
+							onTouchTap={this._openLogin}
+							style={style.button}
+						/>
+					</div>
 				</div>
 				
 				<Dialog
