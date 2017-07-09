@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router';
 import { push } from 'react-router-redux';
 
+import AppBar from './AppBar.js';
+
 import FrontPage from './frontPage.js';
 import Home from './home.js';
 
@@ -70,17 +72,32 @@ class AccountRouter extends React.Component {
 	}
 }
 
-export default class AppRouter extends React.Component {
+class LoggedInRouter extends React.Component {
 	render() {
 	 	return (
-			<div style={style.content}>
+	 		<div>
+	 			<AppRouter />
+				<div style={style.content}>
+					<Switch>
+						<Route path="/home" component={Home}/>
+						<Route path="/account" component={AccountRouter}/>
+					</Switch>
+				</div>
+			</div>
+		);
+	}
+}
+
+export default class AppRouter extends React.Component {
+	render() {
+		return (
+			<div>
 				<Switch>
 					<LoggedOutRoute exact path="/" component={FrontPage}/>
 					<LoggedOutRoute path="/createAccount" component={CreateAccount}/>
-					<LoggedInRoute path="/home" component={Home}/>
-					<LoggedInRoute path="/account" component={AccountRouter}/>
+					<LoggedInRoute path="/" component={LoggedInRouter}/>
 				</Switch>
 			</div>
-		);
+		)
 	}
 }

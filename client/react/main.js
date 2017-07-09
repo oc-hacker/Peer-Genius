@@ -53,8 +53,6 @@ class App extends React.Component {
 			<div>
 				<Loading />
 				<Success />
-
-				<AppBar />
 				
 				<AppRouter/>
 			</div>
