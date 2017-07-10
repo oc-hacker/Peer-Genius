@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 
 import { sendFormVar } from '../../../redux/actions/forms.js';
@@ -37,20 +38,20 @@ const style = {
 })
 export default class TextField extends React.Component {
 	static propTypes = {
-		formName: React.PropTypes.string.isRequired,	// The name of the form in the Redux store.
-		varName: React.PropTypes.string.isRequired,		// The name of the variable in the Redux store.
-		hintText: React.PropTypes.string.isRequired,	// The hint text to display.
-		floatingLabelText: React.PropTypes.string,		// The label text floating above the field (defaults to the hint text).
-		underlineShow: React.PropTypes.bool,			// Whether to show an underline underneath the field (defaults to false).
-		required: React.PropTypes.bool,					// Whether the field is required (defaults to true).
-		onEnterPress: React.PropTypes.func.isRequired,	// The function to call on pressing enter.
-		verifyFunc: React.PropTypes.func,				// The function used to verify the field (defauls to simply checking required).
-		markRequired: React.PropTypes.bool.isRequired,	// Whether the field should be marked as required if it is.
-		showErrors: React.PropTypes.bool,				// Whether to show errors (defaults to true).
-		multiLine: React.PropTypes.bool,				// Whether the text field is multi-line (defaults to false).
-		width: React.PropTypes.number.isRequired,		// The width of the field.
-		rows: React.PropTypes.number,					// The number of initial rows to display
-		rowsMax: React.PropTypes.number					// The maximum number of allowed rows
+		formName: PropTypes.string.isRequired,	// The name of the form in the Redux store.
+		varName: PropTypes.string.isRequired,		// The name of the variable in the Redux store.
+		hintText: PropTypes.string.isRequired,	// The hint text to display.
+		floatingLabelText: PropTypes.string,		// The label text floating above the field (defaults to the hint text).
+		underlineShow: PropTypes.bool,			// Whether to show an underline underneath the field (defaults to false).
+		required: PropTypes.bool,					// Whether the field is required (defaults to true).
+		onEnterPress: PropTypes.func.isRequired,	// The function to call on pressing enter.
+		verifyFunc: PropTypes.func,				// The function used to verify the field (defauls to simply checking required).
+		markRequired: PropTypes.bool.isRequired,	// Whether the field should be marked as required if it is.
+		showErrors: PropTypes.bool,				// Whether to show errors (defaults to true).
+		multiLine: PropTypes.bool,				// Whether the text field is multi-line (defaults to false).
+		width: PropTypes.number.isRequired,		// The width of the field.
+		rows: PropTypes.number,					// The number of initial rows to display
+		rowsMax: PropTypes.number					// The maximum number of allowed rows
 	};
 
 	static defaultProps = {
@@ -68,7 +69,8 @@ export default class TextField extends React.Component {
 		super(props);
 
 		this.state = {
-			text: this.props.text || ''
+			text: this.props.text || '',
+			focused: false
 		}
 	}
 
@@ -77,7 +79,7 @@ export default class TextField extends React.Component {
 		if (nextProps.checkErrors && !this.props.checkErrors) {
 			this._onBlur(null, nextProps);
 		}
-	}
+	};
 
 	/**
 	 * Event handler for when the text changes.
@@ -88,8 +90,15 @@ export default class TextField extends React.Component {
 		this.setState({
 			text: event.target.value
 		});
-	}
+	};
 
+	_onFocus = () => {
+		// Focused
+		this.setState({
+			focused: true
+		});
+	};
+	
 	/**
 	 * Event handler for when the field loses focus.
 	 *
@@ -106,7 +115,12 @@ export default class TextField extends React.Component {
 		if (this.state.text !== props.text || newErr !== props.err) {
 			props.sendFormVar(props.formName, props.varName, this.state.text, newErr);
 		}
-	}
+		
+		// Not focused anymore
+		this.setState({
+			focused: false
+		})
+	};
 
 	/**
 	 * Event handler for when a key is pressed.
@@ -119,7 +133,7 @@ export default class TextField extends React.Component {
 		if (event.key === 'Enter' && !this.props.multiLine) {
 			this.props.onEnterPress();
 		}
-	}
+	};
 
 	render = () => {
 		return (
@@ -127,13 +141,14 @@ export default class TextField extends React.Component {
 				value={this.state.text}
 				hintText={this.props.hintText}
 				floatingLabelText={(this.props.floatingLabelText || this.props.hintText) + (this.props.required && this.props.markRequired ? '*' : '')}
-				errorText={this.props.showErrors ? this.props.err : ''}
+				errorText={this.props.showErrors && !this.state.focused ? this.props.err : ''}
 				underlineShow={this.props.underlineShow}
 				inputStyle={style.text}
 				hintStyle={style.text}
 				floatingLabelStyle={style.text}
 				errorStyle={style.text}
 				onChange={this._onChange}
+				onFocus={this._onFocus}
 				onBlur={this._onBlur}
 				onKeyPress={this._onKeyPress}
 				fullWidth={true}

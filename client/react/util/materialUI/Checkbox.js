@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { sendFormVar } from '../../../redux/actions/forms.js';
@@ -35,11 +36,11 @@ const style = {
 })
 export default class CheckBox extends React.Component {
 	static propTypes = {
-		formName: React.PropTypes.string.isRequired,	// The name of the form object in the Redux store.
-		varName: React.PropTypes.string.isRequired,		// The name of the form variable in the form object.
-		label: React.PropTypes.string.isRequired,		// The label to display on the checkbox.
-		required: React.PropTypes.bool,					// Whether the checkbox must be checked; defaults to true.
-		leftLabel: React.PropTypes.bool 				// Whether to place the label on the left or right
+		formName: PropTypes.string.isRequired,	// The name of the form object in the Redux store.
+		varName: PropTypes.string.isRequired,		// The name of the form variable in the form object.
+		label: PropTypes.string.isRequired,		// The label to display on the checkbox.
+		required: PropTypes.bool,					// Whether the checkbox must be checked; defaults to true.
+		leftLabel: PropTypes.bool 				// Whether to place the label on the left or right
 	};
 
 	static defaultProps = {

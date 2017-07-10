@@ -1,90 +1,78 @@
 import 'babel-polyfill';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-
+import PropTypes from 'prop-types';
 import { Provider, connect } from 'react-redux';
-import { Route, Router, Link, browserHistory, IndexRoute, IndexRedirect } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
+import { Route } from 'react-router';
+import { ConnectedRouter } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
 
-import store from '../redux/store.js';
+import store, { browserHistory } from '../redux/store.js';
+import { verifySession } from '../redux/actions/session.js';
 
 // MaterialUI Theme
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 const muiTheme = getMuiTheme(baseTheme);
 
+import AppRouter from './AppRouter.js';
 import AppBar from './AppBar.js';
-import FrontPage from './frontPage.js';
-import Home from './home.js';
 
-import CreateAccount from './account/create.js';
-import EditAccount from './account/edit.js';
-import AccountSettings from './account/settings.js';
+import Loading from './Loading.js';
+import Success from './Success.js';
 
-const style = {
-	content: {
-		height: '100%',
-		paddingTop: 64,
-		textAlight: 'center'
-	}
-}
-
+@connect(state => ({
+	inSession: state.inSession
+}), {
+	verifySession
+})
 class App extends React.Component {
 	// This is needed for MUI.
 	static childContextTypes = {
-		muiTheme: React.PropTypes.object.isRequired
+		muiTheme: PropTypes.object.isRequired
 	};
-
-	constructor(props, context) {
-		super(props, context);
-
-		// This is needed for MUI.
-		injectTapEventPlugin();
-	}
-
+	
 	// This is needed for MUI.
 	getChildContext = () => {
-		return { muiTheme };
+		return {muiTheme};
+	};
+
+	componentWillMount() {
+		if (this.props.inSession === -1) {
+			this.props.verifySession(true);
+		}
 	}
-
+	
 	render() {
-		return (
+		return this.props.inSession === -1 ? (
 			<div>
-				<AppBar />
-
-				<div style={style.content}>
-					{this.props.children}
-				</div>
+				<Loading />
+				<Success />
 			</div>
-		)
+		) : (
+			<div>
+				<Loading />
+				<Success />
+				
+				<AppRouter/>
+			</div>
+		);
 	}
 }
 
-// Sync browser history with the store
-let syncedHistory = syncHistoryWithStore(browserHistory, store);
-
 /** Routes */
-const routes = (
+const MasterRouter = () => (
+	<ConnectedRouter history={browserHistory}>
+		<div style={{top: 0, left: 0, width: '100vw', height: '97.5vh', transform: 'translateX(-1vw) translateY(-1.5vh)'}}>
+			<Route path="/" component={App}/>
+		</div>
+	</ConnectedRouter>
+);
+
+const Main = (
 	<Provider store={store}>
-		<Router history={syncedHistory}>
-			<Route path="/" component={App}>
-				<IndexRoute component={FrontPage} />
-
-				<Route path="home" component={Home} />
-
-				<Route path="account">
-					<Route path="create" component={CreateAccount} />
-
-					<Route path="edit" component={EditAccount} />
-
-					<Route path="settings" component={AccountSettings} />
-				</Route>
-			</Route>
-		</Router>
+		<MasterRouter/>
 	</Provider>
 );
 
-// Render the app.
-ReactDOM.render(routes, document.getElementById('app'));
+export default Main;

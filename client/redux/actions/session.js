@@ -192,7 +192,15 @@ export const login = () => async dispatch => {
 			});
 			
 			// If login fails, send an error to the form.
-			dispatch(sendFormErr('login', 'password', 'Wrong username or password.'));
+			if (response.status === 400) {
+				dispatch(sendFormErr('login', 'email', 'No account with this email exists.'))
+			}
+			else if (response.status === 401) {
+				dispatch(sendFormErr('login', 'password', 'Wrong password.'));
+			}
+			else {
+				dispatch(sendFormErr('login', 'email', 'Unexpected error when contacting server.'))
+			}
 		}
 	}
 };

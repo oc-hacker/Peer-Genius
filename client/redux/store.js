@@ -3,10 +3,12 @@ import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
 import cookie from 'js-cookie';
-import { browserHistory } from 'react-router';
 import { routerMiddleware, push } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
 
 import appReducer from './reducer.js';
+
+export const browserHistory = createHistory();
 
 const composeWithDevtools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

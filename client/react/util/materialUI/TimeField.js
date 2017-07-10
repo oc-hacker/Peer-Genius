@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { sendFormVar } from '../../../redux/actions/forms.js';
@@ -27,7 +28,7 @@ const style = {
 	minute: {
 		width: 80
 	}
-}
+};
 
 /**
  * @classdesc Wrapper component for Material UI TextFields.
@@ -53,15 +54,15 @@ const style = {
 })
 export default class TimeField extends React.Component {
 	static propTypes = {
-		formName: React.PropTypes.string.isRequired,			// The name of the form in the Redux store.
-		varName: React.PropTypes.string.isRequired,				// The name of the variable in the Redux store.
-		floatingLabelText: React.PropTypes.string.isRequired,	// The label text floating above the field.
-		underlineShow: React.PropTypes.bool,					// Whether to show an underline underneath the field (defaults to false).
-		required: React.PropTypes.bool,							// Whether the field is required (defaults to true).
-		onEnterPress: React.PropTypes.func.isRequired,			// The function to call on pressing enter.
-		verifyFunc: React.PropTypes.func,						// The function used to verify the field (defauls to simply checking required).
-		markRequired: React.PropTypes.bool.isRequired,			// Whether the field should be marked as required if it is.
-		showErrors: React.PropTypes.bool						// Whether to show errors (defaults to true).
+		formName: PropTypes.string.isRequired,			// The name of the form in the Redux store.
+		varName: PropTypes.string.isRequired,				// The name of the variable in the Redux store.
+		floatingLabelText: PropTypes.string.isRequired,	// The label text floating above the field.
+		underlineShow: PropTypes.bool,					// Whether to show an underline underneath the field (defaults to false).
+		required: PropTypes.bool,							// Whether the field is required (defaults to true).
+		onEnterPress: PropTypes.func.isRequired,			// The function to call on pressing enter.
+		verifyFunc: PropTypes.func,						// The function used to verify the field (defauls to simply checking required).
+		markRequired: PropTypes.bool.isRequired,			// Whether the field should be marked as required if it is.
+		showErrors: PropTypes.bool						// Whether to show errors (defaults to true).
 	};
 
 	static defaultProps = {
@@ -206,7 +207,6 @@ export default class TimeField extends React.Component {
 					inputStyle={style.text}
 					hintStyle={style.text}
 					labelStyle={style.text}
-					floatingLabelStyle={style.text}
 					errorStyle={style.text}
 					onChange={this._onHourChange}
 					onBlur={this._onBlur}
@@ -220,7 +220,6 @@ export default class TimeField extends React.Component {
 					floatingLabelText=" "
 					underlineShow={this.props.underlineShow}
 					inputStyle={style.text}
-					hintStyle={style.text}
 					labelStyle={style.text}
 					hintStyle={style.text}
 					floatingLabelStyle={style.text}

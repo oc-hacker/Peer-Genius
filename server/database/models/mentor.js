@@ -35,11 +35,6 @@ const attributes = {
 		defaultValue: false
 	},
 	// TODO More subjects
-	
-	// subject: {
-	// 	type: DataTypes.ENUM(['biology', 'geometry', 'algebra2', 'spanish']), // TODO expand
-	// 	allowNull: false
-	// }
 };
 
 const blockUserEdit = instance => {

@@ -31,8 +31,12 @@ const style = {
 		right: 0,
 		display: 'flex'
 	},
+	transparentAppBar: {
+		backgroundColor: 'transparent',
+		boxShadow: 'none',
+	},
 	title: {
-		cursor: 'pointer',
+		// cursor: 'pointer',
 		flexGrow: 0.2
 	},
 	button: {
@@ -52,10 +56,13 @@ const style = {
 		height: 40,
 		width: 40
 	},
+	logo: {
+		cursor: 'pointer'
+	},
 	badge: {
 		padding: 0
 	}
-}
+};
 
 /**
  * @classdesc The AppBar at the top of the page
@@ -63,8 +70,11 @@ const style = {
 @connect(state => ({
 	inSession: state.inSession
 }), dispatch => ({
-	pushToHome: () => {
+	pushToFrontPage: () => {
 		dispatch(push('/'));
+	},
+	pushToHome: () => {
+		dispatch(push('/home'))
 	},
 	pushToEditAccount: () => {
 		dispatch(push('/account/edit'));
@@ -78,21 +88,22 @@ export default class AppBar extends React.Component {
 		if (value === 0) {
 			this.props.pushToEditAccount();
 		} else if (value === 1) {
-
+		
 		} else if (value === 2) {
 			this.props.logout();
 		}
 	}
-
+	
 	render() {
-		return this.props.inSession ? (
+		return this.props.inSession === 1 ? (
 			<MuiAppBar
-				iconElementLeft={<img src="/logo.svg" width={64} height={45} />}
-				titleStyle={style.title} style={style.appBar}
+				iconElementLeft={<img src="/logo.svg" style={style.logo} width={64} height={45}/>}
+				style={style.appBar}
+				titleStyle={style.title}
 				onLeftIconButtonTouchTap={this.props.pushToHome}
 			>
-				<div style={{flexGrow: 2}} />
-
+				<div style={{flexGrow: 2}}/>
+				
 				<IconMenu
 					iconButtonElement={<IconButton><AccountIcon /></IconButton>}
 					onChange={this._accountHandler}
@@ -102,15 +113,16 @@ export default class AppBar extends React.Component {
 					iconStyle={style.icon}
 					tooltip="Account"
 				>
-					<MenuItem value={0} primaryText="Edit Profile" />
-					<MenuItem value={1} primaryText="Account Settings" />
-					<MenuItem value={2} primaryText="Logout" />
+					<MenuItem value={0} primaryText="Edit Profile"/>
+					<MenuItem value={1} primaryText="Account Settings"/>
+					<MenuItem value={2} primaryText="Logout"/>
 				</IconMenu>
 			</MuiAppBar>
 		) : (
 			<MuiAppBar
-				iconElementLeft={<img src="/logo.svg" width={64} height={45} />}
-				titleStyle={style.title} style={style.appBar}
+				iconElementLeft={<img src="/logo.svg" style={style.logo} width={64} height={45}/>}
+				style={{...style.appBar, ...style.transparentAppBar}}
+				titleStyle={style.title}
 				onLeftIconButtonTouchTap={this.props.pushToHome}
 			/>
 		)
