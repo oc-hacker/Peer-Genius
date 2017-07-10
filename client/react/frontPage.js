@@ -382,6 +382,8 @@ const backgrounds = [
 	'yellow'
 ]
 
+let lock = false;
+
 export default class FrontPage extends React.Component {
 	constructor(props) {
 		super(props);
@@ -412,10 +414,27 @@ export default class FrontPage extends React.Component {
 			});
 		}
 	}
+
+	_handleScroll = event => {
+		if (!lock) {
+			lock = true;
+			
+			if (event.deltaY < 0) {
+				this._prevPage();
+			}
+			else {
+				this._nextPage();
+			}
+
+			setTimeout(() => {
+				lock = false;
+			}, 1000)
+		}
+	}
 	
 	render() {
 		return (
-			<div>
+			<div onWheel={this._handleScroll}>
 				<div style={{
 					display: 'flex',
 					flexDirection: 'column',
