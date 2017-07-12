@@ -19,7 +19,7 @@ const corsOptions = {
 			cb(null, true);
 		}
 		else {
-			cb(new Error(`Request from ${origin} blocked by CORS.`))
+			cb(`Request blocked by CORS.`);
 		}
 	},
 	allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],

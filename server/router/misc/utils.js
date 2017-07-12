@@ -36,6 +36,9 @@ export const errorHandler = (error, request, response, next) => {
 		].join('\n'));
 		response.status(httpStatus.FORBIDDEN).end()
 	}
+	else if (error === 'Request blocked by CORS.') {
+		response.status(httpStatus.BAD_REQUEST).end()
+	}
 	else {
 		console.error('Unexpected error when handling request at', request.originalUrl);
 		fs.appendFileSync(errorLogPath, [
