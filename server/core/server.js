@@ -11,14 +11,15 @@ import apiRouter from '../router/api';
 
 const corsOptions = {
 	origin: (origin, cb) => {
-		if (origin === 'https://peergenius.io') {
+		// If origin is null or peergenius.io, it's good.
+		if (!origin || origin === 'https://peergenius.io') {
 			cb(null, true);
 		}
 		else if (config.devMode && origin === `http://localhost:${config.devServerPort}`) {
 			cb(null, true);
 		}
 		else {
-			cb(new Error(`Request from ${origin} blocked by CORS.`))
+			cb(`Request blocked by CORS.`);
 		}
 	},
 	allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
@@ -53,6 +54,7 @@ app.use('/api', apiRouter);
 // Send index
 app.get(/^\/(?!api)/, sendIndex);
 
+// Ensure responses is ended
 app.use(endResponse);
 
 // Errors
