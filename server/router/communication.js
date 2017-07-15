@@ -1,12 +1,10 @@
-import express from 'express';
-
-import * as functions from './functions/communication';
-import { wrapTryCatch } from './misc/utils';
-
-const router = express.Router();
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const functions = require("./functions/communication");
+const utils_1 = require("./misc/utils");
+const router = express_1.Router();
 // Reminder: remember to use wrapTryCatch to enable express error handling on promise rejection errors!
-
-router.post('/update', wrapTryCatch(functions.update));
-
-export default router;
-
+router.post('/update', utils_1.wrapTryCatch(functions.update));
+exports.default = router;
+//# sourceMappingURL=communication.js.map

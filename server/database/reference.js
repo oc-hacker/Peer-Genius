@@ -1,83 +1,86 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 // File for setting up node mysql
-import mysql from 'mysql';
-import RowData from 'mysql/lib/protocol/packets/RowDataPacket';
-import Sequelize from 'sequelize';
-
-import config from '../core/config';
-
+const mysql = require("mysql");
+const Sequelize = require("sequelize");
+const config_1 = require("../core/config");
 const pool = mysql.createPool({
-	host: 'localhost',
-	user: config.mysqlUser,
-	password: config.mysqlPassword,
-	database: config.mysqlDatabase,
-	timezone: '+00'
+    host: 'localhost',
+    user: config_1.default.mysqlUser,
+    password: config_1.default.mysqlPassword,
+    database: config_1.default.mysqlDatabase,
+    timezone: '+00'
 });
-
-// Add async function
-pool.asyncConnection = async () => {
-	return new Promise((resolve, reject) => {
-		pool.getConnection((error, connection) => {
-			if (error) {
-				reject(error);
-			}
-			else {
-				resolve(connection);
-			}
-		})
-	})
+// Async connection creation
+const asyncConnection = () => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((error, connection) => {
+            if (error) {
+                reject(error);
+            }
+            else {
+                resolve(connection);
+            }
+        });
+    });
 };
-
-export const newConnection = async (logSQL) => {
-	let connection = await pool.asyncConnection();
-	
-	// Add promise functions to work with async
-	/**
-	 *
-	 * @param query
-	 * @param values
-	 * @returns {Promise.<RowData>}
-	 */
-	connection.asyncQuery = (query, values) => {
-		if (logSQL) {
-			console.log('[SQL Query Start]');
-			console.log(query);
-			console.log('[SQL Query End]')
-		}
-		return new Promise((resolve, reject) => {
-			if (values) {
-				connection.query(query, values, (err, results, fields) => {
-					if (err) {
-						reject(Error(['Unexpected error: ' + err.message, 'Query:', query].join('\n')));
-					}
-					else {
-						resolve(results);
-					}
-				});
-			}
-			else {
-				connection.query(query, (err, result, fields) => {
-					if (err) {
-						reject(err);
-					}
-					else {
-						resolve(result);
-					}
-				});
-			}
-		})
-	};
-	
-	return connection;
-};
-
-export const sequelizeAdmin = new Sequelize(
-	config.mysqlDatabase,
-	config.mysqlUser,
-	config.mysqlPassword,
-	{
-		host: 'localhost',
-		dialect: 'mysql',
-		logging: false,
-		timezone: '+00:00'
-	}
-);
+exports.newConnection = (logSQL) => __awaiter(this, void 0, void 0, function* () {
+    const connection = yield asyncConnection();
+    return {
+        /**
+         *
+         * @param query
+         * @param values
+         * @returns {Promise.<RowData>}
+         */
+        query: (query, values) => {
+            if (logSQL) {
+                console.log([
+                    '[SQL Query Start]',
+                    query,
+                    '[SQL Query End]'
+                ].join('\n'));
+            }
+            return new Promise((resolve, reject) => {
+                if (values) {
+                    connection.query(query, values, (err, results, fields) => {
+                        if (err) {
+                            reject(Error(['Unexpected error: ' + err.message, 'Query:', query].join('\n')));
+                        }
+                        else {
+                            resolve(results);
+                        }
+                    });
+                }
+                else {
+                    connection.query(query, (err, result, fields) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve(result);
+                        }
+                    });
+                }
+            });
+        },
+        release: () => {
+            connection.release();
+        }
+    };
+});
+exports.sequelizeAdmin = new Sequelize(config_1.default.mysqlDatabase, config_1.default.mysqlUser, config_1.default.mysqlPassword, {
+    host: 'localhost',
+    dialect: 'mysql',
+    logging: false,
+    timezone: '+00:00'
+});
+//# sourceMappingURL=reference.js.map
