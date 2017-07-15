@@ -1,23 +1,20 @@
-import express from 'express';
-import httpStatus from 'http-status-codes';
-import argon2 from 'argon2';
-import jwt from 'jsonwebtoken';
-
-import config from '../../core/config.js';
-
-const secret = new Buffer(config.sessionJWTKey, 'base64');
-
-export const createSessionToken = id => {
-	return jwt.sign({id}, secret, {expiresIn: config.sessionJWTExpire});
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const httpStatus = require("http-status-codes");
+const jwt = require("jsonwebtoken");
+const config_1 = require("../../core/config");
+const secret = new Buffer(config_1.default.sessionJWTKey, 'base64');
+exports.createSessionToken = id => {
+    return jwt.sign({ id }, secret, { expiresIn: config_1.default.sessionJWTExpire });
 };
-
-export const verifySessionToken = function (request, response, next) {
-	try {
-		request.body.user = jwt.verify(request.cookies.sessionJWT, secret);
-		
-		next();
-	} catch (err) {
-		console.log(err.message);
-		response.status(httpStatus.UNAUTHORIZED).json({reason: 'Invalid session'});
-	}
+exports.verifySessionToken = function (request, response, next) {
+    try {
+        request.body.user = jwt.verify(request.cookies.sessionJWT, secret);
+        next();
+    }
+    catch (err) {
+        console.log(err.message);
+        response.status(httpStatus.UNAUTHORIZED).json({ reason: 'Invalid session' });
+    }
 };
+//# sourceMappingURL=auth.js.map

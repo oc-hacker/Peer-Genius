@@ -1,43 +1,48 @@
-import Sequelize, { DataTypes } from 'sequelize';
-import Model from 'sequelize/lib/model';
-import randomstring from 'randomstring';
-
-import config from '../../core/config';
-import {
-	sequelizeAdmin as admin
-} from '../reference';
-import user from './user';
-import { ProhibitedEditError } from '../errors';
-
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const Sequelize = require("sequelize");
+const randomstring = require("randomstring");
+const config_1 = require("../../core/config");
+const reference_1 = require("../reference");
+const user_1 = require("./user");
+const errors_1 = require("../errors");
 const attributes = {
-	user: {
-		type: DataTypes.UUID,
-		references: {
-			model: user,
-			key: 'id',
-			onUpdate: 'cascade',
-			onDelete: 'cascade'
-		},
-		primaryKey: true,
-	},
-	verifyEmailKey: {
-		type: DataTypes.CHAR(32),
-		allowNull: true,
-		unique: true
-	},
+    user: {
+        type: Sequelize.UUID,
+        references: {
+            model: user_1.default,
+            key: 'id',
+            onUpdate: 'cascade',
+            onDelete: 'cascade'
+        },
+        primaryKey: true,
+    },
+    verifyEmailKey: {
+        type: Sequelize.CHAR(32),
+        allowNull: true,
+        unique: true
+    },
+    nextEmail: {
+        type: Sequelize.STRING,
+        allowNull: true
+    }
 };
-
-const blockUserEdit = instance => {
-	if (instance.changed('user')) {
-		throw new ProhibitedEditError('Editing the user FK of keys table is prohibited.')
-	}
+const blockUserEdit = (instance) => {
+    if (instance.changed('user')) {
+        throw new errors_1.ProhibitedEditError('Editing the user FK of keys table is prohibited.');
+    }
 };
-
-/** @typedef {Model} */
-const model = admin.define('keys', attributes);
+const model = reference_1.sequelizeAdmin.define('keys', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync({alter: config.devMode}); // Alter when in development mode
-
+model.sync({ alter: config_1.default.devMode }); // Alter when in development mode
 // Extra utility methods
 /**
  * Generates a key that is guaranteed to be unique for the specified field.
@@ -45,12 +50,12 @@ model.sync({alter: config.devMode}); // Alter when in development mode
  * @param column The column of the database to generate the key for. It should be a CHAR(32) column.
  * @return {Promise.<string>}
  */
-model.uniqueRandom = async column => {
-	let key;
-	do {
-		key = randomstring.generate();
-	} while ((await model.find({where: {[column]: key}})));
-	return key;
-};
-
-export default model
+exports.uniqueRandom = (column) => __awaiter(this, void 0, void 0, function* () {
+    let key;
+    do {
+        key = randomstring.generate();
+    } while ((yield model.find({ where: { [column]: key } })));
+    return key;
+});
+exports.default = model;
+//# sourceMappingURL=key.js.map

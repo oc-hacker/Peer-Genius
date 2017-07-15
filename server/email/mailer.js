@@ -1,27 +1,26 @@
-import nodemailer from 'nodemailer';
-import xoauth2 from 'xoauth2';
-
-import config from '../core/config.js';
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const nodemailer = require("nodemailer");
+const xoauth2_1 = require("xoauth2");
+const config_1 = require("../core/config");
 let transport;
-
-export function initMailer() {
+function initMailer() {
     transport = nodemailer.createTransport({
         service: "Gmail",
         auth: {
-            xoauth2: xoauth2.createXOAuth2Generator(config.mailerXOAuth2)
+            xoauth2: xoauth2_1.createXOAuth2Generator(config_1.default.mailerXOAuth2)
         }
     });
-
-    console.log('Mailer initialized.')
+    console.log('Mailer initialized.');
 }
-
-export function send(mailOptions) {
-    transport.sendMail(mailOptions, function(error, response) {
+exports.initMailer = initMailer;
+function send(mailOptions) {
+    transport.sendMail(mailOptions, function (error, response) {
         if (error) {
             console.log(error);
         }
-
         console.log('Message sent:', response);
     });
 }
+exports.send = send;
+//# sourceMappingURL=mailer.js.map
