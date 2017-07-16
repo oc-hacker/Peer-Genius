@@ -1,25 +1,37 @@
-import _ from 'lodash';
-import httpStatus from 'http-status-codes';
-import argon2 from 'argon2';
-import randomstring from 'randomstring';
+import { pick } from "lodash";
+import * as httpStatus from "http-status-codes";
+import * as argon2 from "argon2";
 
-import { buildInitialStore } from '../misc/utils';
-import models from '../../database/models/index';
-import { exposedAttributes as userAttributes } from '../../database/models/user';
+import { buildInitialStore } from "../misc/utils";
+import * as models from "../../database/models";
+import { uniqueRandom as uniqueRandomKey } from "../../database/models/key";
+import { exposedAttributes as userAttributes } from "../../database/models/user";
+
+import { Request, Response } from "@types/express";
+import { Store } from "../../types";
 
 // Note: only use next() if you are not handling the request!
 
+interface CreateAccountRequest extends Request {
+	body: {
+		email: string,
+		password: string,
+		firstName: string,
+		lastName: string,
+		birthday: {
+			year: number,
+			month: number,
+			day: number
+		}
+	}
+}
+
 /**
- * @param {{body: {
- *     email: String,
- *     password: String,
- *     firstName: String,
- *     lastName: String,
- *     birthday: {year, month, day}
- * }}} request
- * @param response
+ * Response:
+ * OK - account creation successful. An initial store will be sent. See <code>Store</code> interface defined in <code>server/types.ts</code> for details.
+ * CONFLICT - email already used
  */
-export const createAccount = async (request, response) => {
+export const createAccount = async (request: CreateAccountRequest, response: Response) => {
 	let account = await models.account.find({
 		where: {
 			email: request.body.email
@@ -31,29 +43,35 @@ export const createAccount = async (request, response) => {
 		response.status(httpStatus.CONFLICT).end();
 	} else {
 		// OK
-		let user = await models.user.create(_.pick(request.body, userAttributes));
+		let user = await models.user.create(pick(request.body, userAttributes));
 		let account = await models.account.create({
 			user: user.id,
 			email: request.body.email,
 			password: request.body.password
 		});
 		
-		let store = await buildInitialStore(user.id, user, account);
+		let store: Store = await buildInitialStore(user.id, user, account);
 		
 		response.status(httpStatus.OK).json(store);
-		let key = await models.key.uniqueRandom('verifyEmailKey')
+		let key = await uniqueRandomKey('verifyEmailKey')
 		// TODO send email
 	}
 };
 
+interface LoginRequest extends Request {
+	body: {
+		email: string,
+		password: string
+	}
+}
+
 /**
- * This method will send UNAUTHORIZED if email and password do not match, and BAD_REQUEST if email is not in the database.
- *
- * @param {{body: {email: String, password: String}}} request
- * @param response
- * @return {Promise.<void>}
+ * Response:
+ * OK - login successful. An initial store will be sent. See <code>Store</code> interface defined in <code>server/types.ts</code> for details.
+ * UNAUTHORIZED - bad password
+ * BAD_REQUEST - email is not found in database
  */
-export const verifyLogin = async (request, response) => {
+export const verifyLogin = async (request: LoginRequest, response: Response) => {
 	let account = await models.account.find({
 		where: {
 			email: request.body.email
@@ -73,11 +91,18 @@ export const verifyLogin = async (request, response) => {
 	}
 };
 
+interface CheckEmailRequest extends Request {
+	body: {
+		email: string
+	}
+}
+
 /**
- * @param {{body: {email: String}}} request
- * @param response
+ * Checks whether an email is in use.
+ * Response:
+ * OK - the request will always be OK. Field <code>taken</code> in response body will indicate whether the email has been taken.
  */
-export const checkEmail = async (request, response) => {
+export const checkEmail = async (request: CheckEmailRequest, response: Response) => {
 	let account = await models.account.find({
 		where: {
 			email: request.body.email

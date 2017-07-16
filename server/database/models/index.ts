@@ -1,9 +1,9 @@
 // Import and re-export all models for better management.
 export { default as account } from './account';
-import user from './user';
-import key from './key';
-import communication from './communication';
-import mentor from './mentor';
+export { default as communication } from './communication';
+export { default as key } from './key';
+export { default as mentor } from './mentor';
+export { default as user } from './user';
 
 /*
  Database architecture:

@@ -12,7 +12,7 @@ const path = require("path");
 const fs = require("fs");
 const lodash_1 = require("lodash");
 const httpStatus = require("http-status-codes");
-const index_1 = require("../../database/models/index");
+const models = require("../../database/models/index");
 const user_1 = require("../../database/models/user");
 const errors_1 = require("../../database/errors");
 const auth_1 = require("./auth");
@@ -20,7 +20,7 @@ exports.logger = (request, response, next) => {
     console.log(`[${new Date().toUTCString()}]`, 'Request received at', request.originalUrl);
     next();
 };
-exports.sendIndex = (request, response, next) => {
+exports.sendIndex = (request, response) => {
     response.sendFile(path.resolve(__dirname, '../../../public/index.html'));
 };
 const errorLogPath = path.resolve(__dirname, '../../errors.log');
@@ -42,12 +42,14 @@ exports.errorHandler = (error, request, response, next) => {
         response.status(httpStatus.FORBIDDEN).end();
     }
     else if (error === 'Request blocked by CORS.') {
+        console.warn(`Request at ${request.originalUrl} blocked by CORS.`);
         response.status(httpStatus.BAD_REQUEST).end();
     }
     else {
-        console.error('Unexpected error when handling request at', request.originalUrl);
+        const timeStamp = new Date().toUTCString();
+        console.error(`${timeStamp}Unexpected error when handling request at`, request.originalUrl, '\nDetails will be logged to error log.');
         fs.appendFileSync(errorLogPath, [
-            `[${new Date().toUTCString()}] Server handling error!`,
+            `[${timeStamp}] Server handling error!`,
             `Error message:`,
             `${error}`,
             `Request details:`,
@@ -73,12 +75,12 @@ exports.endResponse = (request, response) => {
  * }>}
  */
 exports.buildInitialStore = (id, user, account) => __awaiter(this, void 0, void 0, function* () {
-    user = user || (yield index_1.default.user.find({
+    user = user || (yield models.user.find({
         where: {
             id
         }
     }));
-    account = account || (yield index_1.default.account.find({
+    account = account || (yield models.account.find({
         where: {
             user: id
         }
@@ -89,7 +91,10 @@ exports.buildInitialStore = (id, user, account) => __awaiter(this, void 0, void 
     store.sessionJWT = auth_1.createSessionToken(id);
     return store;
 });
-exports.wrapTryCatch = handler => (request, response, next) => __awaiter(this, void 0, void 0, function* () {
+/**
+ * Wraps the handler in a higher order function to catch any error that the handler throws and pass it to express's error handler.
+ */
+exports.wrapTryCatch = (handler) => (request, response, next) => __awaiter(this, void 0, void 0, function* () {
     try {
         yield handler(request, response, next);
     }

@@ -8,8 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const http_status_codes_1 = require("http-status-codes");
-const index_1 = require("../../database/models/index");
+const lodash_1 = require("lodash");
+const httpStatus = require("http-status-codes");
+const models = require("../../database/models/index");
 /**
  * @param request
  * @param {Object.<string, boolean>} request.body.methods An object of boolean values describing which methods are preferred
@@ -17,37 +18,13 @@ const index_1 = require("../../database/models/index");
  * @return {Promise.<void>}
  */
 exports.update = (request, response) => __awaiter(this, void 0, void 0, function* () {
-    // for (let method of communicationMethods) {
-    // 	if (request.body.methods[method]) {
-    // 		models.communication.findOrCreate({
-    // 			where: {
-    // 				user: request.body.user.id
-    // 			},
-    // 			defaults: {
-    // 				method
-    // 			}
-    // 		});
-    // 	}
-    // 	else {
-    // 		models.communication.find({
-    // 			where: {
-    // 				user: request.body.user.id,
-    // 				method
-    // 			}
-    // 		}).then(row => {
-    // 			if (row) {
-    // 				row.destroy();
-    // 			}
-    // 		})
-    // 	}
-    // }
-    let communication = yield index_1.default.communication.find({
+    let communication = yield models.communication.find({
         where: {
             user: request.body.user.id
         }
     });
-    yield communication.update(_.omit(request.body, 'user'));
+    yield communication.update(lodash_1.omit(request.body, 'user'));
     yield communication.save();
-    response.status(http_status_codes_1.default.OK).end();
+    response.status(httpStatus.OK).end();
 });
 //# sourceMappingURL=communication.js.map

@@ -1,20 +1,33 @@
-import _ from 'lodash';
-import httpStatus from 'http-status-codes';
+import * as httpStatus from 'http-status-codes';
 
-import models from '../../database/models/index';
+import * as models from '../../database/models/index';
 import { exposedAttributes as userAttributes } from '../../database/models/user';
+
+import { Response } from "@types/express";
+import { VerifiedRequest } from "../../types";
+
+interface EditUserRequest extends VerifiedRequest {
+	body: {
+		user: {
+			id: string
+		}
+		firstName: string,
+		lastName: string,
+		birthday: {
+			year: number,
+			month: number,
+			day: number
+		}
+	}
+}
 
 // One function for all user editing
 /**
- * @param {{ body: {
- *     firstName: String,
- *     lastName: String,
- *     birthday: {year, month, day},
- * }}} request
- * @param response
- * @return {Promise.<void>}
+ * Response:
+ * OK - edit successful
+ * BAD_REQUEST - user not found (should not happen)
  */
-export const edit = async (request, response) => {
+export const edit = async (request: EditUserRequest, response: Response) => {
 	let user = await models.user.find({
 		where: {
 			id: request.body.user.id

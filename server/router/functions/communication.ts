@@ -1,6 +1,22 @@
-import httpStatus from 'http-status-codes';
+import { omit } from "lodash";
+import * as httpStatus from "http-status-codes";
 
-import models from '../../database/models/index';
+import * as models from "../../database/models/index";
+
+import { Response } from "@types/express";
+import { VerifiedRequest } from "../../types";
+
+interface UpdateCommunicationRequest extends VerifiedRequest {
+	body: {
+		user: {
+			id: string
+		},
+		whatsapp: boolean,
+		hangout: boolean,
+		messenger: boolean,
+		imessage: boolean
+	}
+}
 
 /**
  * @param request
@@ -8,38 +24,14 @@ import models from '../../database/models/index';
  * @param response
  * @return {Promise.<void>}
  */
-export const update = async (request, response) => {
-	// for (let method of communicationMethods) {
-	// 	if (request.body.methods[method]) {
-	// 		models.communication.findOrCreate({
-	// 			where: {
-	// 				user: request.body.user.id
-	// 			},
-	// 			defaults: {
-	// 				method
-	// 			}
-	// 		});
-	// 	}
-	// 	else {
-	// 		models.communication.find({
-	// 			where: {
-	// 				user: request.body.user.id,
-	// 				method
-	// 			}
-	// 		}).then(row => {
-	// 			if (row) {
-	// 				row.destroy();
-	// 			}
-	// 		})
-	// 	}
-	// }
+export const update = async (request: UpdateCommunicationRequest, response: Response) => {
 	let communication = await models.communication.find({
 		where: {
 			user: request.body.user.id
 		}
 	});
 	
-	await communication.update(_.omit(request.body, 'user'));
+	await communication.update(omit(request.body, 'user'));
 	await communication.save();
 	
 	response.status(httpStatus.OK).end();

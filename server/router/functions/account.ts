@@ -1,20 +1,35 @@
-import httpStatus from 'http-status-codes';
-import argon2 from 'argon2';
+import * as httpStatus from 'http-status-codes';
+import * as argon2 from 'argon2';
 
-import models from '../../database/models/index';
+import * as models from '../../database/models/index';
 import { createSessionToken } from '../misc/auth';
 import { buildInitialStore } from '../misc/utils';
 
+import { Response } from '@types/express';
+import { VerifiedRequest } from "../../types";
+
+interface EditAccountRequest extends VerifiedRequest {
+	body: {
+		user: {
+			id: string
+		},
+		password: string,
+		newEmail: string,
+		newPassword: string
+	}
+}
+
 // One function for all account editing
 /**
- * @param {{body: {
- *     password: String,
- *     newEmail: String?,
- *     newPassword: String
- * }}} request
+ * Response:
+ * OK - edit successful
+ * UNAUTHORIZED - bad password
+ * BAD_REQUEST - account does not exist (usually should not happen)
+ *
+ * @param {EditAccountRequest} request
  * @param response
  */
-export const edit = async (request, response) => {
+export const edit = async (request: EditAccountRequest, response: Response) => {
 	let account = await models.account.find({
 		where: {
 			user: request.body.user.id
@@ -39,23 +54,27 @@ export const edit = async (request, response) => {
  * Just OKs the request.
  * Invalid JWT would be caught by an earlier handler. If the request reached here then it's ok.
  */
-export const verify = async (request, response) => {
+export const verify = async (request: VerifiedRequest, response: Response) => {
 	response.status(httpStatus.OK).end();
 };
 
 /**
  * Sends information to the client.
+ * Response format: see <code>Store</code> interface defined in <code>server/types.ts</code>
+ *
  * @param request
  * @param response
- * @return {Promise.<void>}
  */
-export const info = async (request, response) => {
+export const info = async (request: VerifiedRequest, response: Response) => {
 	response.status(httpStatus.OK).json(await buildInitialStore(request.body.user.id))
 };
 
 /**
  * Refreshes the session JWT of the client.
+ * Response format: {
+ * 	sessionJWT: string // The new session JWT
+ * }
  */
-export const refresh = async (request, response) => {
+export const refresh = async (request: VerifiedRequest, response: Response) => {
 	response.status(httpStatus.OK).json({sessionJWT: createSessionToken(request.body.user.id)})
 };
