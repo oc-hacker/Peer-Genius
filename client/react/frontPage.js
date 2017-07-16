@@ -88,7 +88,7 @@ class PageOne extends React.Component {
 					onTouchTap={this.props.nextPage}
 					style={{
 						position: 'absolute',
-						backgroundColor: 'blue',
+						backgroundColor: 'rgb(1,147,172)',
 						width: '100%',
 						height: 50,
 						top: '100vh',
@@ -376,10 +376,10 @@ const pages = [
 
 const backgrounds = [
 	'white',
-	'blue',
-	'yellow',
-	'blue',
-	'yellow'
+	'rgb(1,147,172)',
+	'rgb(249,202,120)',
+	'rgb(1,147,172)',
+	'rgb(249,202,120)'
 ]
 
 let lock = false;
