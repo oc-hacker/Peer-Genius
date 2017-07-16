@@ -8,21 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const http_status_codes_1 = require("http-status-codes");
-const index_1 = require("../../database/models/index");
+const httpStatus = require("http-status-codes");
+const models = require("../../database/models/index");
 const user_1 = require("../../database/models/user");
 // One function for all user editing
 /**
- * @param {{ body: {
- *     firstName: String,
- *     lastName: String,
- *     birthday: {year, month, day},
- * }}} request
- * @param response
- * @return {Promise.<void>}
+ * Response:
+ * OK - edit successful
+ * BAD_REQUEST - user not found (should not happen)
  */
 exports.edit = (request, response) => __awaiter(this, void 0, void 0, function* () {
-    let user = yield index_1.default.user.find({
+    let user = yield models.user.find({
         where: {
             id: request.body.user.id
         }
@@ -30,10 +26,10 @@ exports.edit = (request, response) => __awaiter(this, void 0, void 0, function* 
     if (user) {
         yield user.update(request.body);
         user.save({ fields: user_1.exposedAttributes });
-        response.status(http_status_codes_1.default.OK).end();
+        response.status(httpStatus.OK).end();
     }
     else {
-        response.status(http_status_codes_1.default.BAD_REQUEST).end();
+        response.status(httpStatus.BAD_REQUEST).end();
     }
 });
 //# sourceMappingURL=user.js.map

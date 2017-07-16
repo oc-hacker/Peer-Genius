@@ -6,10 +6,10 @@ import { sequelizeAdmin as admin } from "../reference";
 import { ProhibitedEditError } from "../errors";
 
 export interface UserAttributes {
-	id: string,
-	firstName: string,
-	lastName: string,
-	birthday: Date
+	id?: string,
+	firstName?: string,
+	lastName?: string,
+	birthday?: Date
 }
 
 export interface UserInstance extends Sequelize.Instance<UserAttributes> {

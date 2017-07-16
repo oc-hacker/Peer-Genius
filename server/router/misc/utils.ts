@@ -3,17 +3,21 @@ import * as fs from "fs";
 import { pick } from "lodash";
 import * as httpStatus from "http-status-codes";
 
-import models from "../../database/models/index";
-import { exposedAttributes as userAttributes } from "../../database/models/user";
+import * as models from "../../database/models/index";
+import { exposedAttributes as userAttributes, UserInstance } from "../../database/models/user";
 import { ProhibitedEditError } from "../../database/errors";
 import { createSessionToken } from "./auth";
+import { AccountInstance } from "../../database/models/account";
+
+import { Handler, Request, Response } from "@types/express";
+import { Store } from "../../types";
 
 export const logger = (request, response, next) => {
 	console.log(`[${new Date().toUTCString()}]`, 'Request received at', request.originalUrl);
 	next();
 };
 
-export const sendIndex = (request, response, next) => {
+export const sendIndex = (request: Request, response: Response) => {
 	response.sendFile(path.resolve(__dirname, '../../../public/index.html'));
 };
 
@@ -21,7 +25,7 @@ const errorLogPath = path.resolve(__dirname, '../../errors.log');
 // Clear up error log on start
 fs.writeFileSync(errorLogPath, '');
 
-export const errorHandler = (error, request, response, next) => {
+export const errorHandler = (error: Error | string, request: Request, response: Response, next: Function) => {
 	if (error instanceof ProhibitedEditError) {
 		console.warn([
 			`[${new Date().toUTCString()}]`,
@@ -37,12 +41,14 @@ export const errorHandler = (error, request, response, next) => {
 		response.status(httpStatus.FORBIDDEN).end()
 	}
 	else if (error === 'Request blocked by CORS.') {
+		console.warn(`Request at ${request.originalUrl} blocked by CORS.`);
 		response.status(httpStatus.BAD_REQUEST).end()
 	}
 	else {
-		console.error('Unexpected error when handling request at', request.originalUrl);
+		const timeStamp: string = new Date().toUTCString();
+		console.error(`${timeStamp}Unexpected error when handling request at`, request.originalUrl, '\nDetails will be logged to error log.');
 		fs.appendFileSync(errorLogPath, [
-			`[${new Date().toUTCString()}] Server handling error!`,
+			`[${timeStamp}] Server handling error!`,
 			`Error message:`,
 			`${error}`,
 			`Request details:`,
@@ -53,7 +59,7 @@ export const errorHandler = (error, request, response, next) => {
 	}
 };
 
-export const endResponse = (request, response) => {
+export const endResponse = (request: Request, response: Response) => {
 	response.end();
 };
 
@@ -69,7 +75,7 @@ export const endResponse = (request, response) => {
  *     sessionJWT: String
  * }>}
  */
-export const buildInitialStore = async (id, user, account) => {
+export const buildInitialStore = async (id: string, user?: UserInstance, account?: AccountInstance): Promise<Store> => {
 	user = user || await models.user.find({
 			where: {
 				id
@@ -87,10 +93,13 @@ export const buildInitialStore = async (id, user, account) => {
 	store.user = pick(user, userAttributes);
 	store.sessionJWT = createSessionToken(id);
 	
-	return store;
+	return <Store>store;
 };
 
-export const wrapTryCatch = handler => async (request, response, next) => {
+/**
+ * Wraps the handler in a higher order function to catch any error that the handler throws and pass it to express's error handler.
+ */
+export const wrapTryCatch = (handler: Handler): Handler => async (request, response, next) => {
 	try {
 		await handler(request, response, next)
 	}
