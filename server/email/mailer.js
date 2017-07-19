@@ -6,7 +6,7 @@ const config_1 = require("../core/config");
 let transport;
 function initMailer() {
     transport = nodemailer.createTransport({
-        service: "Gmail",
+        service: 'Gmail',
         auth: {
             xoauth2: xoauth2_1.createXOAuth2Generator(config_1.default.mailerXOAuth2)
         }

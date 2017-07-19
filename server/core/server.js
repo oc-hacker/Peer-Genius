@@ -50,6 +50,6 @@ app.use(utils_1.endResponse);
 // Errors
 app.use(utils_1.errorHandler);
 app.listen(config_1.default.serverPort, () => {
-    console.log("Listening on port " + config_1.default.serverPort + "!");
+    console.log('Listening on port ' + config_1.default.serverPort + '!');
 });
 //# sourceMappingURL=server.js.map

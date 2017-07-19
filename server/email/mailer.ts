@@ -7,7 +7,7 @@ let transport;
 
 export function initMailer() {
 	transport = nodemailer.createTransport(<object>{
-		service: "Gmail",
+		service: 'Gmail',
 		auth: {
 			xoauth2: createXOAuth2Generator(config.mailerXOAuth2)
 		}

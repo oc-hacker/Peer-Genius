@@ -3,8 +3,8 @@ import * as httpStatus from 'http-status-codes';
 import * as models from '../../database/models/index';
 import { exposedAttributes as userAttributes } from '../../database/models/user';
 
-import { Response } from "@types/express";
-import { VerifiedRequest } from "../../types";
+import { Response } from 'express';
+import { VerifiedRequest } from '../../types';
 
 interface EditUserRequest extends VerifiedRequest {
 	body: {

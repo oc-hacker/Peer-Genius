@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken';
 
 import config from '../../core/config';
 
-import { Request, Response } from "@types/express";
+import { Request, Response } from 'express';
 
 const secret = new Buffer(config.sessionJWTKey, 'base64');
 

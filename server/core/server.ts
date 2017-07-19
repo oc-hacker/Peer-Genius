@@ -17,7 +17,7 @@ const corsOptions = {
 		}
 		else if (config.devMode
 			&& (origin === `http://localhost${config.serverPort === 80 ? '' : `:${config.serverPort}`}`
-			|| origin === `http://localhost${config.devServerPort === 80 ? '' : `:${config.devServerPort}`}`)
+				|| origin === `http://localhost${config.devServerPort === 80 ? '' : `:${config.devServerPort}`}`)
 		) {
 			cb(null, true);
 		}
@@ -64,5 +64,5 @@ app.use(endResponse);
 app.use(errorHandler);
 
 app.listen(config.serverPort, () => {
-	console.log("Listening on port " + config.serverPort + "!");
+	console.log('Listening on port ' + config.serverPort + '!');
 });

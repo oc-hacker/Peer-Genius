@@ -1,9 +1,9 @@
-import * as Sequelize from "sequelize";
-import { ProhibitedEditError } from "../errors";
+import * as Sequelize from 'sequelize';
+import { ProhibitedEditError } from '../errors';
 
-import config from "../../core/config";
-import { sequelizeAdmin as admin } from "../reference";
-import user from "./user";
+import config from '../../core/config';
+import { sequelizeAdmin as admin } from '../reference';
+import user from './user';
 
 export interface MentorAttributes {
 	user: string,

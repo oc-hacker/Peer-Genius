@@ -1,9 +1,9 @@
-import * as Sequelize from "sequelize";
+import * as Sequelize from 'sequelize';
 
-import config from "../../core/config";
-import { sequelizeAdmin as admin } from "../reference";
-import user from "./user";
-import { ProhibitedEditError } from "../errors";
+import config from '../../core/config';
+import { sequelizeAdmin as admin } from '../reference';
+import user from './user';
+import { ProhibitedEditError } from '../errors';
 
 export interface CommunicationAttributes {
 	user: string,

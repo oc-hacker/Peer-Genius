@@ -1,16 +1,16 @@
-import * as path from "path";
-import * as fs from "fs";
-import { pick } from "lodash";
-import * as httpStatus from "http-status-codes";
+import * as path from 'path';
+import * as fs from 'fs';
+import { pick } from 'lodash';
+import * as httpStatus from 'http-status-codes';
 
-import * as models from "../../database/models/index";
-import { exposedAttributes as userAttributes, UserInstance } from "../../database/models/user";
-import { ProhibitedEditError } from "../../database/errors";
-import { createSessionToken } from "./auth";
-import { AccountInstance } from "../../database/models/account";
+import * as models from '../../database/models/index';
+import { exposedAttributes as userAttributes, UserInstance } from '../../database/models/user';
+import { ProhibitedEditError } from '../../database/errors';
+import { createSessionToken } from './auth';
+import { AccountInstance } from '../../database/models/account';
 
-import { Handler, Request, Response } from "@types/express";
-import { Store } from "../../types";
+import { Handler, NextFunction, Request, Response } from 'express';
+import { Store } from '../../types';
 
 export const logger = (request, response, next) => {
 	console.log(`[${new Date().toUTCString()}]`, 'Request received at', request.originalUrl);
@@ -46,7 +46,7 @@ export const errorHandler = (error: Error | string, request: Request, response: 
 	}
 	else {
 		const timeStamp: string = new Date().toUTCString();
-		console.error(`${timeStamp}Unexpected error when handling request at`, request.originalUrl, '\nDetails will be logged to error log.');
+		console.error(`[${timeStamp}] Unexpected error when handling request at`, request.originalUrl, '\nDetails will be logged to error log.');
 		fs.appendFileSync(errorLogPath, [
 			`[${timeStamp}] Server handling error!`,
 			`Error message:`,
@@ -69,23 +69,19 @@ export const endResponse = (request: Request, response: Response) => {
  * @param id
  * @param [user]
  * @param [account]
- * @return {Promise.<{
- *     account: {email: String, verified: Boolean},
- *     user: {firstName, lastName, birthday},
- *     sessionJWT: String
- * }>}
+ * @return {Promise.<Store>}
  */
 export const buildInitialStore = async (id: string, user?: UserInstance, account?: AccountInstance): Promise<Store> => {
 	user = user || await models.user.find({
-			where: {
-				id
-			}
-		});
+		where: {
+			id
+		}
+	});
 	account = account || await models.account.find({
-			where: {
-				user: id
-			}
-		});
+		where: {
+			user: id
+		}
+	});
 	
 	let store: any = {};
 	
@@ -99,7 +95,7 @@ export const buildInitialStore = async (id: string, user?: UserInstance, account
 /**
  * Wraps the handler in a higher order function to catch any error that the handler throws and pass it to express's error handler.
  */
-export const wrapTryCatch = (handler: Handler): Handler => async (request, response, next) => {
+export const wrapTryCatch = (handler: (Request, Response, NextFunction) => Promise<any>): Handler => async (request: Request, response: Response, next: NextFunction) => {
 	try {
 		await handler(request, response, next)
 	}

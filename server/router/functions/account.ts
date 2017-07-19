@@ -5,8 +5,8 @@ import * as models from '../../database/models/index';
 import { createSessionToken } from '../misc/auth';
 import { buildInitialStore } from '../misc/utils';
 
-import { Response } from '@types/express';
-import { VerifiedRequest } from "../../types";
+import { Response } from 'express';
+import { VerifiedRequest } from '../../types';
 
 interface EditAccountRequest extends VerifiedRequest {
 	body: {

@@ -47,7 +47,7 @@ exports.errorHandler = (error, request, response, next) => {
     }
     else {
         const timeStamp = new Date().toUTCString();
-        console.error(`${timeStamp}Unexpected error when handling request at`, request.originalUrl, '\nDetails will be logged to error log.');
+        console.error(`[${timeStamp}] Unexpected error when handling request at`, request.originalUrl, '\nDetails will be logged to error log.');
         fs.appendFileSync(errorLogPath, [
             `[${timeStamp}] Server handling error!`,
             `Error message:`,
@@ -68,11 +68,7 @@ exports.endResponse = (request, response) => {
  * @param id
  * @param [user]
  * @param [account]
- * @return {Promise.<{
- *     account: {email: String, verified: Boolean},
- *     user: {firstName, lastName, birthday},
- *     sessionJWT: String
- * }>}
+ * @return {Promise.<Store>}
  */
 exports.buildInitialStore = (id, user, account) => __awaiter(this, void 0, void 0, function* () {
     user = user || (yield models.user.find({
