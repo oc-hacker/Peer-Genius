@@ -1,10 +1,10 @@
-import * as Sequelize from "sequelize";
-import { hash } from "argon2";
+import * as Sequelize from 'sequelize';
+import { hash } from 'argon2';
 
-import config from "../../core/config";
-import { sequelizeAdmin as admin } from "../reference";
-import user from "./user";
-import { ProhibitedEditError } from "../errors";
+import config from '../../core/config';
+import { sequelizeAdmin as admin } from '../reference';
+import user from './user';
+import { ProhibitedEditError } from '../errors';
 
 export interface AccountAttributes {
 	user: string,
@@ -65,7 +65,7 @@ const hashPassword = (instance: AccountInstance) => {
 	}
 };
 
-const model: Sequelize.Model<AccountInstance,AccountAttributes> = admin.define<AccountInstance, AccountAttributes>('accounts', attributes);
+const model: Sequelize.Model<AccountInstance, AccountAttributes> = admin.define<AccountInstance, AccountAttributes>('accounts', attributes);
 model.beforeCreate(hashPassword);
 model.beforeUpdate('blockUserEdit', blockUserEdit);
 model.beforeUpdate('hashPassword', hashPassword);

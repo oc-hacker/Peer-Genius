@@ -1,14 +1,14 @@
-import { pick } from "lodash";
-import * as httpStatus from "http-status-codes";
-import * as argon2 from "argon2";
+import { pick } from 'lodash';
+import * as httpStatus from 'http-status-codes';
+import * as argon2 from 'argon2';
 
-import { buildInitialStore } from "../misc/utils";
-import * as models from "../../database/models";
-import { uniqueRandom as uniqueRandomKey } from "../../database/models/key";
-import { exposedAttributes as userAttributes } from "../../database/models/user";
+import { buildInitialStore } from '../misc/utils';
+import * as models from '../../database/models';
+import { uniqueRandom as uniqueRandomKey } from '../../database/models/key';
+import { exposedAttributes as userAttributes } from '../../database/models/user';
 
-import { Request, Response } from "@types/express";
-import { Store } from "../../types";
+import { Request, Response } from 'express';
+import { Store } from '../../types';
 
 // Note: only use next() if you are not handling the request!
 

@@ -1,10 +1,10 @@
-import { omit } from "lodash";
-import * as httpStatus from "http-status-codes";
+import { omit } from 'lodash';
+import * as httpStatus from 'http-status-codes';
 
-import * as models from "../../database/models/index";
+import * as models from '../../database/models/index';
 
-import { Response } from "@types/express";
-import { VerifiedRequest } from "../../types";
+import { Response } from 'express';
+import { VerifiedRequest } from '../../types';
 
 interface UpdateCommunicationRequest extends VerifiedRequest {
 	body: {
