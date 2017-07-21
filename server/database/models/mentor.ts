@@ -63,6 +63,6 @@ const blockUserEdit = (instance: MentorInstance) => {
 
 const model = admin.define('mentors', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync({alter: config.devMode}); // Alter when in development mode
+model.sync({ alter: config.devMode }); // Alter when in development mode
 
 export default model

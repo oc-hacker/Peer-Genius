@@ -51,7 +51,7 @@ const blockUserEdit = (instance: KeyInstance) => {
 
 const model: Sequelize.Model<KeyInstance, KeyAttributes> = admin.define<KeyInstance, KeyAttributes>('keys', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync({alter: config.devMode}); // Alter when in development mode
+model.sync({ alter: config.devMode }); // Alter when in development mode
 
 // Extra utility methods
 /**
@@ -64,7 +64,7 @@ export const uniqueRandom = async (column: string) => {
 	let key;
 	do {
 		key = randomstring.generate();
-	} while ((await model.find({where: {[column]: key}})));
+	} while ((await model.find({ where: { [column]: key } })));
 	return key;
 };
 

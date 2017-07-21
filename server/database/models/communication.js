@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const lodash_1 = require("lodash");
 const Sequelize = require("sequelize");
 const config_1 = require("../../core/config");
 const reference_1 = require("../reference");
@@ -34,6 +35,7 @@ const attributes = {
         defaultValue: false
     },
 };
+exports.communicationMethods = lodash_1.without(Object.keys(attributes), 'user');
 const blockUserEdit = (instance) => {
     if (instance.changed('user')) {
         throw new errors_1.ProhibitedEditError('Editing the user FK of accounts table is prohibited.');
