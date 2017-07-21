@@ -1,3 +1,4 @@
+import { without } from 'lodash';
 import * as Sequelize from 'sequelize';
 
 import config from '../../core/config';
@@ -58,6 +59,8 @@ const attributes = {
 	// }
 };
 
+export const communicationMethods: Array<string> = without(Object.keys(attributes), 'user');
+
 const blockUserEdit = (instance: CommunicationInstance) => {
 	if (instance.changed('user')) {
 		throw new ProhibitedEditError('Editing the user FK of accounts table is prohibited.')
@@ -67,6 +70,6 @@ const blockUserEdit = (instance: CommunicationInstance) => {
 /** @typedef {Model} */
 const model: Sequelize.Model<CommunicationInstance, CommunicationAttributes> = admin.define<CommunicationInstance, CommunicationAttributes>('communications', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync({alter: config.devMode}); // Alter when in development mode
+model.sync({ alter: config.devMode }); // Alter when in development mode
 
 export default model

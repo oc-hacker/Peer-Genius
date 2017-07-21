@@ -6,6 +6,7 @@ import { wrapTryCatch } from './misc/utils';
 import accountRouter from './account';
 import userRouter from './user';
 import communicationRouter from './communication';
+import mentorRouter from './mentor';
 
 const router = Router();
 // Reminder: remember to use wrapTryCatch to enable express error handling on promise rejection errors!
@@ -22,5 +23,7 @@ router.use('/user', verifySessionToken);
 router.use('/user', userRouter);
 router.use('/communication', verifySessionToken);
 router.use('/communication', communicationRouter);
+router.use('/mentor', verifySessionToken);
+router.use('/mentor', mentorRouter);
 
 export default router;

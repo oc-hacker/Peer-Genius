@@ -1,3 +1,5 @@
+// Some types that are used in many places will be placed here.
+
 export interface VerifiedRequest extends Request {
 	body: {
 		user: {
