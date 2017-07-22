@@ -50,6 +50,7 @@ export const review = async (request: ReviewSessionRequest, response: Response) 
 		}
 	});
 	
+	// TODO once a review has been recorded should it be editable?
 	if (!session) {
 		response.status(httpStatus.BAD_REQUEST).end();
 	}
