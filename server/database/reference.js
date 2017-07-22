@@ -34,14 +34,14 @@ const asyncConnection = () => {
 };
 exports.newConnection = (logSQL) => __awaiter(this, void 0, void 0, function* () {
     const connection = yield asyncConnection();
-    return {
+    return Object.assign({}, connection, { 
         /**
          *
          * @param query
          * @param values
          * @returns {Promise.<RowData>}
          */
-        query: (query, values) => {
+        asyncQuery: (query, values) => {
             if (logSQL) {
                 console.log([
                     '[SQL Query Start]',
@@ -71,11 +71,9 @@ exports.newConnection = (logSQL) => __awaiter(this, void 0, void 0, function* ()
                     });
                 }
             });
-        },
-        release: () => {
+        }, release: () => {
             connection.release();
-        }
-    };
+        } });
 });
 exports.sequelizeAdmin = new Sequelize(config_1.default.mysqlDatabase, config_1.default.mysqlUser, config_1.default.mysqlPassword, {
     host: 'localhost',
