@@ -92,7 +92,7 @@ export default class AppBar extends React.Component {
 		} else if (value === 2) {
 			this.props.logout();
 		}
-	}
+	};
 	
 	render() {
 		return this.props.inSession === 1 ? (

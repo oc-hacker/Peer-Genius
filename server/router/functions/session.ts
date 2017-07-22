@@ -21,6 +21,8 @@ interface CreateSessionRequest extends VerifiedRequest {
 
 export const create = async (request: CreateSessionRequest, response: Response) => {
 	// TODO should the mentee be creating sessions, or the mentor, or both?
+	// Mentor determines when session starts/ends
+	// May stop before original schedule, max 15 min overtime
 };
 
 // TODO find sessions
@@ -51,6 +53,10 @@ export const review = async (request: ReviewSessionRequest, response: Response) 
 	});
 	
 	// TODO once a review has been recorded should it be editable?
+	// Yes.
+	// Has to give a review
+	// Has to review right away
+	// If review pending take mentee to review page upon login
 	if (!session) {
 		response.status(httpStatus.BAD_REQUEST).end();
 	}
