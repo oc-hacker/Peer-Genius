@@ -27,8 +27,8 @@ const asyncConnection = (): Promise<mysql.IConnection> => {
 	});
 };
 
-export interface AsyncConnection {
-	query: (string, any?) => Promise<RowData[] | any | void>,
+export interface AsyncConnection extends mysql.IConnection {
+	asyncQuery: (string, any?) => Promise<RowData[] | any | void>,
 	release: () => void
 }
 
@@ -36,13 +36,15 @@ export const newConnection = async (logSQL?: boolean): Promise<AsyncConnection> 
 	const connection: mysql.IConnection = await asyncConnection();
 	
 	return {
+		...connection,
+		
 		/**
 		 *
 		 * @param query
 		 * @param values
 		 * @returns {Promise.<RowData>}
 		 */
-		query: (query: string, values?: any) => {
+		asyncQuery: (query: string, values?: any) => {
 			if (logSQL) {
 				console.log([
 					'[SQL Query Start]',
@@ -73,6 +75,7 @@ export const newConnection = async (logSQL?: boolean): Promise<AsyncConnection> 
 				}
 			})
 		},
+		
 		release: () => {
 			connection.release()
 		}
