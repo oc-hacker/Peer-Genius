@@ -18,15 +18,10 @@ router.post('/login', wrapTryCatch(functions.verifyLogin));
 router.post('/checkEmail', wrapTryCatch(functions.checkEmail));
 
 // If JWT token is  verifying session token will give UNAUTHORIZED and return {reason: 'Invalid session'}
-router.use('/account', verifySessionToken);
 router.use('/account', accountRouter);
-router.use('/communication', verifySessionToken);
 router.use('/communication', communicationRouter);
-router.use('/mentor', verifySessionToken);
 router.use('/mentor', mentorRouter);
-router.use('/session', verifySessionToken);
 router.use('/session', sessionRouter);
-router.use('/user', verifySessionToken);
 router.use('/user', userRouter);
 
 export default router;

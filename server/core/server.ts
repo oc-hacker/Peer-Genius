@@ -36,6 +36,7 @@ initMailer();
 // Logger
 app.use(logger);
 
+// CORS
 app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));
 

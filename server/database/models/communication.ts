@@ -8,10 +8,10 @@ import { ProhibitedEditError } from '../errors';
 
 export interface CommunicationAttributes {
 	user: string,
-	whatsapp: boolean,
-	hangout: boolean,
-	messenger: boolean,
-	imessage: boolean
+	whatsapp: string,
+	hangouts: string,
+	messenger: string,
+	imessage: string
 }
 
 export interface CommunicationInstance extends Sequelize.Instance<CommunicationAttributes> {
@@ -19,10 +19,10 @@ export interface CommunicationInstance extends Sequelize.Instance<CommunicationA
 	updatedAt: Date,
 	
 	user: string,
-	whatsapp: boolean,
-	hangout: boolean,
-	messenger: boolean,
-	imessage: boolean
+	whatsapp: string,
+	hangouts: string,
+	messenger: string,
+	imessage: string
 }
 
 const attributes = {
@@ -36,22 +36,51 @@ const attributes = {
 		},
 		primaryKey: true
 	},
-	// The following indicate whether the user is able to use each of these communication methods.
+	// If null, the user is not using this communication method. If set, the value points to the user's account in that app.
 	whatsapp: {
-		type: Sequelize.BOOLEAN,
-		defaultValue: false
+		type: Sequelize.STRING,
+		allowNull: true,
+		defaultValue: null
 	},
-	hangout: {
-		type: Sequelize.BOOLEAN,
-		defaultValue: false
+	hangouts: {
+		type: Sequelize.STRING,
+		allowNull: true,
+		defaultValue: null
 	},
 	messenger: {
-		type: Sequelize.BOOLEAN,
-		defaultValue: false
+		type: Sequelize.STRING,
+		allowNull: true,
+		defaultValue: null
 	},
 	imessage: {
-		type: Sequelize.BOOLEAN,
-		defaultValue: false
+		type: Sequelize.STRING,
+		allowNull: true,
+		defaultValue: null
+	},
+	skype: {
+		type: Sequelize.STRING,
+		allowNull: true,
+		defaultValue: null
+	},
+	viber: {
+		type: Sequelize.STRING,
+		allowNull: true,
+		defaultValue: null
+	},
+	tango: {
+		type: Sequelize.STRING,
+		allowNull: true,
+		defaultValue: null
+	},
+	aim: {
+		type: Sequelize.STRING,
+		allowNull: true,
+		defaultValue: null
+	},
+	oovoo: {
+		type: Sequelize.STRING,
+		allowNull: true,
+		defaultValue: null
 	},
 	// method: {
 	// 	type: DataTypes.ENUM(methods),

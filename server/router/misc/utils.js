@@ -47,7 +47,7 @@ exports.errorHandler = (error, request, response, next) => {
     }
     else {
         const timeStamp = new Date().toUTCString();
-        console.error(`[${timeStamp}] Unexpected error when handling request at`, request.originalUrl, '\nDetails will be logged to error log.');
+        console.error(`[${timeStamp}] Unexpected error when handling request at ${request.originalUrl}\nDetails will be logged to error log.`);
         fs.appendFileSync(errorLogPath, [
             `[${timeStamp}] Server handling error!`,
             `Error message:`,

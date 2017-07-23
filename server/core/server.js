@@ -31,6 +31,7 @@ const app = express();
 mailer_1.initMailer();
 // Logger
 app.use(utils_1.logger);
+// CORS
 app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));
 app.get('*.js', function (request, response, next) {
