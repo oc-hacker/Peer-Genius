@@ -1,80 +1,127 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://peergenius.io/
 
-# peer-genius
+# Peer Genius
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+Peer Genius is an online application that facilitates the search for peer tutors.
 
-## Questions Collection [/questions]
+## Server API [/api]
 
-### List All Questions [GET]
+All API related requests pass under the `/api` route.
 
-+ Response 200 (application/json)
+### Create Account [POST /api/createAccount]
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+Attempts to create an account using information given
 
 + Request (application/json)
 
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
+    + Attributes
+        + email
+        + password
+        + firstName
+        + lastName
+        + birthday
+            + year (number)
+            + month (number)
+            + day (number)
+        
++ Response 200 (application/json)
 
-+ Response 201 (application/json)
+    + Attributes (Store)
+    
+        Account creation successful
 
-    + Headers
++ Response 409
 
-            Location: /questions/2
+        The email is already associated with an account
+        
+### Log In [POST /api/login]
 
-    + Body
+Logs in the user using email and password given
 
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
++ Request (application/json)
+
+    + Attributes
+        + email
+        + password
+
++ Response 200 (application/json)
+
+    + Attributes (Store)
+    
+        Login successful
+        
++ Response 400
+
+        Email not found
+
++ Response 401
+
+        Incorrect password
+        
+## Account API [/api/account]
+
+All requests under this route will be subject to JWT inspection. If JWT is invalid, the response status will be 401 (UNAUTHORIZED). Response body will be
+
+{
+    "reason": "Invalid session"
+}
+
+### Edit Account [POST /api/account/edit]
+
+Edits account email and password
+
++ Request
+
+    + Attributes
+        + password - User's current password
+        + newEmail - [optional] The new email user wishes to use
+        + newPassword - [optional] The new password user wishes to use
+        
++ Response 200
+
+        Edit successful
+        
++ Response 401
+
+        Incorrect password
+
+### Verify [POST /api/account/verify]
+
+Verifies the validity of client's current JWT
+
++ Response 200
+
+### Info [POST /api/account/info]
+
+Retrieves information about the account
+
++ Response 200
+
+    + Attributes (Store)
+    
+### Refresh JWT [POST /api/account/refresh]
+
+Gives user a new JWT to extend  current session
+
++ Response 200
+
+    + Attributes
+        + sessionJWT (string) - a JSON Web Token to authenticate the user for future transactions
+        
+# Data Structures
+
+## Store (object) - Information to help the client initialize its redux store
+
++ account (object)
+    + email (string)
+    + verified (string) - whether the user's email has been verified
++ user (object)
+    + firstName (string)
+    + lastName (string)
+    + birthday (object)
++ sessionJWT (string) - a JSON Web Token to authenticate the user for future transactions
+
+## InvalidSession (object) - Response when JWT is invalid
+
++ reason (string) - Invalid session
