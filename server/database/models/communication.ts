@@ -8,10 +8,15 @@ import { ProhibitedEditError } from '../errors';
 
 export interface CommunicationAttributes {
 	user: string,
-	whatsapp: string,
+	skype: string,
 	hangouts: string,
 	messenger: string,
-	imessage: string
+	imessage: string,
+	whatsapp: string,
+	viber: string,
+	tango: string,
+	aim: string,
+	oovoo: string
 }
 
 export interface CommunicationInstance extends Sequelize.Instance<CommunicationAttributes> {
@@ -19,10 +24,15 @@ export interface CommunicationInstance extends Sequelize.Instance<CommunicationA
 	updatedAt: Date,
 	
 	user: string,
-	whatsapp: string,
+	skype: string,
 	hangouts: string,
 	messenger: string,
-	imessage: string
+	imessage: string,
+	whatsapp: string,
+	viber: string,
+	tango: string,
+	aim: string,
+	oovoo: string
 }
 
 const attributes = {
@@ -37,7 +47,7 @@ const attributes = {
 		primaryKey: true
 	},
 	// If null, the user is not using this communication method. If set, the value points to the user's account in that app.
-	whatsapp: {
+	skype: {
 		type: Sequelize.STRING,
 		allowNull: true,
 		defaultValue: null
@@ -57,7 +67,7 @@ const attributes = {
 		allowNull: true,
 		defaultValue: null
 	},
-	skype: {
+	whatsapp: {
 		type: Sequelize.STRING,
 		allowNull: true,
 		defaultValue: null
@@ -72,7 +82,7 @@ const attributes = {
 		allowNull: true,
 		defaultValue: null
 	},
-	aim: {
+	aim: { // AIM Video Chat
 		type: Sequelize.STRING,
 		allowNull: true,
 		defaultValue: null
@@ -81,11 +91,7 @@ const attributes = {
 		type: Sequelize.STRING,
 		allowNull: true,
 		defaultValue: null
-	},
-	// method: {
-	// 	type: DataTypes.ENUM(methods),
-	// 	allowNull: false
-	// }
+	}
 };
 
 export const communicationMethods: Array<string> = without(Object.keys(attributes), 'user');

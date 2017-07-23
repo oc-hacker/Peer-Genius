@@ -18,7 +18,7 @@ const attributes = {
         primaryKey: true
     },
     // If null, the user is not using this communication method. If set, the value points to the user's account in that app.
-    whatsapp: {
+    skype: {
         type: Sequelize.STRING,
         allowNull: true,
         defaultValue: null
@@ -38,7 +38,7 @@ const attributes = {
         allowNull: true,
         defaultValue: null
     },
-    skype: {
+    whatsapp: {
         type: Sequelize.STRING,
         allowNull: true,
         defaultValue: null
@@ -62,7 +62,7 @@ const attributes = {
         type: Sequelize.STRING,
         allowNull: true,
         defaultValue: null
-    },
+    }
 };
 exports.communicationMethods = lodash_1.without(Object.keys(attributes), 'user');
 const blockUserEdit = (instance) => {
