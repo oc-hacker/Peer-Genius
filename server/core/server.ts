@@ -1,7 +1,9 @@
+import * as path from 'path';
 import * as express from 'express';
 import * as cors from 'cors';
 import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
+import * as serveStatic from 'serve-static';
 
 import config from './config';
 import { initMailer } from '../email/mailer';
@@ -9,8 +11,8 @@ import { logger, sendIndex, endResponse, errorHandler } from '../router/misc/uti
 import apiRouter from '../router/api';
 
 const corsOptions = {
-	origin: (origin, cb) => {
-		console.log(origin);
+	origin: (origin: string, cb: (any, boolean?) => any) => {
+		// console.log(origin);
 		// If origin is null or peergenius.io, it's good.
 		if (!origin || origin === 'https://peergenius.io') {
 			cb(null, true);
@@ -41,7 +43,7 @@ app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));
 
 app.get('*.js', function (request, response, next) {
-	request.url = request.url + '.gz';
+	request.url += '.gz';
 	response.set('Content-Encoding', 'gzip');
 	next();
 });
@@ -51,12 +53,11 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // Assets
-app.use(express.static('../public'));
+app.use(serveStatic(path.join(__dirname, '../../public')));
+
+app.get(/^\/(?!api)/, sendIndex);
 
 app.use('/api', apiRouter);
-
-// Send index
-app.get(/^\/(?!api)/, sendIndex);
 
 // Ensure responses is ended
 app.use(endResponse);

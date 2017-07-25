@@ -30,11 +30,11 @@ export const errorHandler = (error: Error | string, request: Request, response: 
 		console.warn([
 			`[${new Date().toUTCString()}]`,
 			`Request at ${request.originalUrl} attempted make a forbidden edit. The request processing has been aborted.`,
-			`Error message: ${error.message}`,
 			'Details available in error log.'
 		].join('\n'));
-		fs.appendFileSync(errorLogPath, [
+		fs.appendFile(errorLogPath, [
 			`[${new Date().toUTCString()}] Blocked edit request:`,
+			`Error message: ${error.message}`,
 			JSON.stringify(request.body, null, '\t'),
 			''
 		].join('\n'));
@@ -47,7 +47,7 @@ export const errorHandler = (error: Error | string, request: Request, response: 
 	else {
 		const timeStamp: string = new Date().toUTCString();
 		console.error(`[${timeStamp}] Unexpected error when handling request at ${request.originalUrl}\nDetails will be logged to error log.`);
-		fs.appendFileSync(errorLogPath, [
+		fs.appendFile(errorLogPath, [
 			`[${timeStamp}] Server handling error!`,
 			`Error message:`,
 			`${error}`,
@@ -85,7 +85,7 @@ export const buildInitialStore = async (id: string, user?: UserInstance, account
 	
 	let store: any = {};
 	
-	store.account = pick(account, ['email', 'verified']);
+	store.account = pick(account, [ 'email', 'verified' ]);
 	store.user = pick(user, userAttributes);
 	store.sessionJWT = createSessionToken(id);
 	

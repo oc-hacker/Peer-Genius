@@ -7,7 +7,8 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev:server": "nodemon --exec ts-node -- ./server/entry.ts",
 		"dev:client": "node client/devServerEntry",
-		"dev": "npm-run-all --parallel dev:*"
+		"dev": "npm-run-all --parallel dev:*",
+		"build": "gulp server && webpack"
 	},
 	"babel": {
 		"presets": [
@@ -66,6 +67,7 @@
 		"redux-logger": "^3.0.6",
 		"redux-thunk": "^2.2.0",
 		"sequelize": "^4.1.0",
+		"serve-static": "^1.12.3",
 		"xoauth2": "^1.2.0"
 	},
 	"devDependencies": {
@@ -89,9 +91,12 @@
 		"babel-preset-react": "^6.24.1",
 		"babel-preset-stage-0": "^6.24.1",
 		"compression-webpack-plugin": "^0.4.0",
+		"gulp": "^3.9.1",
+		"gulp-typescript": "^3.2.1",
 		"npm-run-all": "^4.0.2",
 		"path": "^0.12.7",
-		"ts-node": "^3.2.0",
+		"ts-loader": "^2.3.1",
+		"ts-node": "^3.3.0",
 		"typescript": "^2.4.1",
 		"webpack": "^2.6.1",
 		"webpack-dev-middleware": "^1.11.0",

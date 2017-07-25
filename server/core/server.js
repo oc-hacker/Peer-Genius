@@ -1,16 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const serveStatic = require("serve-static");
 const config_1 = require("./config");
 const mailer_1 = require("../email/mailer");
 const utils_1 = require("../router/misc/utils");
 const api_1 = require("../router/api");
 const corsOptions = {
     origin: (origin, cb) => {
-        console.log(origin);
+        // console.log(origin);
         // If origin is null or peergenius.io, it's good.
         if (!origin || origin === 'https://peergenius.io') {
             cb(null, true);
@@ -35,17 +37,16 @@ app.use(utils_1.logger);
 app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));
 app.get('*.js', function (request, response, next) {
-    request.url = request.url + '.gz';
+    request.url += '.gz';
     response.set('Content-Encoding', 'gzip');
     next();
 });
 app.use(bodyParser.json());
 app.use(cookieParser());
 // Assets
-app.use(express.static('../public'));
-app.use('/api', api_1.default);
-// Send index
+app.use(serveStatic(path.join(__dirname, '../../public')));
 app.get(/^\/(?!api)/, utils_1.sendIndex);
+app.use('/api', api_1.default);
 // Ensure responses is ended
 app.use(utils_1.endResponse);
 // Errors

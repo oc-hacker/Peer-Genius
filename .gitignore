@@ -114,3 +114,4 @@ fabric.properties
 /public/app.js.map
 /server/**/*.js
 /server/**/*.js.map
+/build/

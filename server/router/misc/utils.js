@@ -31,11 +31,11 @@ exports.errorHandler = (error, request, response, next) => {
         console.warn([
             `[${new Date().toUTCString()}]`,
             `Request at ${request.originalUrl} attempted make a forbidden edit. The request processing has been aborted.`,
-            `Error message: ${error.message}`,
             'Details available in error log.'
         ].join('\n'));
-        fs.appendFileSync(errorLogPath, [
+        fs.appendFile(errorLogPath, [
             `[${new Date().toUTCString()}] Blocked edit request:`,
+            `Error message: ${error.message}`,
             JSON.stringify(request.body, null, '\t'),
             ''
         ].join('\n'));
@@ -48,7 +48,7 @@ exports.errorHandler = (error, request, response, next) => {
     else {
         const timeStamp = new Date().toUTCString();
         console.error(`[${timeStamp}] Unexpected error when handling request at ${request.originalUrl}\nDetails will be logged to error log.`);
-        fs.appendFileSync(errorLogPath, [
+        fs.appendFile(errorLogPath, [
             `[${timeStamp}] Server handling error!`,
             `Error message:`,
             `${error}`,

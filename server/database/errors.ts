@@ -1,5 +1,5 @@
 export class ProhibitedEditError extends Error {
-	constructor(message) {
+	constructor(message?: string) {
 		super(message)
 	}
 }
