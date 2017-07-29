@@ -9,23 +9,58 @@ import { ProhibitedEditError } from '../../database/errors';
 import { createSessionToken } from './auth';
 import { AccountInstance } from '../../database/models/account';
 
-import { Handler, NextFunction, Request, Response } from 'express';
-import { Store } from '../../types';
+import { Handler, ErrorRequestHandler, NextFunction, Request, Response } from 'express';
+import { Store, VerifiedRequest } from '../../types';
 
-export const logger = (request, response, next) => {
+export const logger: Handler = (request, response, next) => {
 	console.log(`[${new Date().toUTCString()}]`, 'Request received at', request.originalUrl);
 	next();
 };
 
-export const sendIndex = (request: Request, response: Response) => {
+let currentCount = 0;
+const limit = 1200; // Per minute
+
+export const throttle: Handler = (request, response, next) => {
+	if (currentCount >= limit) {
+		console.log(`[THROTTLE] Refused request at ${request.originalUrl}`);
+		response.status(418).end();
+		return;
+	}
+	currentCount++;
+	setTimeout(() => {
+		currentCount--;
+	}, 60 * 1000);
+	next();
+};
+
+export const sendIndex: Handler = (request, response) => {
 	response.sendFile(path.resolve(__dirname, '../../../public/index.html'));
+};
+
+export const checkReview = async (request: VerifiedRequest, response: Response, next: NextFunction) => {
+	let unfinishedReview = await models.session.find({
+		where: {
+			mentee: request.body.user.id
+		}
+	});
+	
+	if (unfinishedReview) {
+		response.status(httpStatus.FORBIDDEN).json({
+			reason: 'Review required.',
+			session: unfinishedReview.id
+		});
+		return;
+	}
+	else {
+		next();
+	}
 };
 
 const errorLogPath = path.resolve(__dirname, '../../errors.log');
 // Clear up error log on start
 fs.writeFileSync(errorLogPath, '');
 
-export const errorHandler = (error: Error | string, request: Request, response: Response, next: Function) => {
+export const errorHandler: ErrorRequestHandler = (error: Error | string, request, response, next) => {
 	if (error instanceof ProhibitedEditError) {
 		console.warn([
 			`[${new Date().toUTCString()}]`,
@@ -59,7 +94,7 @@ export const errorHandler = (error: Error | string, request: Request, response: 
 	}
 };
 
-export const endResponse = (request: Request, response: Response) => {
+export const endResponse: Handler = (request, response) => {
 	response.end();
 };
 

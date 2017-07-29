@@ -7,9 +7,9 @@ import user from './user';
 import { ProhibitedEditError } from '../errors';
 
 export interface AccountAttributes {
-	user: string,
-	email: string,
-	password: string,
+	user?: string,
+	email?: string,
+	password?: string,
 	verified?: boolean
 }
 

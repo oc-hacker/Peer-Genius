@@ -27,58 +27,54 @@ const asyncConnection = (): Promise<mysql.IConnection> => {
 	});
 };
 
+interface QueryResults extends Array<RowData> {
+	affectedRows: number,
+	changedRows: number,
+	threadId: number
+}
+
 export interface AsyncConnection extends mysql.IConnection {
-	asyncQuery: (string, any?) => Promise<RowData[] | any | void>,
-	release: () => void
+	asyncQuery: (string, any?) => Promise<QueryResults>
 }
 
 export const newConnection = async (logSQL?: boolean): Promise<AsyncConnection> => {
 	const connection: mysql.IConnection = await asyncConnection();
 	
+	const asyncQuery = (query: string, values?: any): Promise<QueryResults> => {
+		if (logSQL) {
+			console.log([
+				'[SQL Query Start]',
+				query,
+				'[SQL Query End]'
+			].join('\n'));
+		}
+		return new Promise((resolve, reject) => {
+			if (values) {
+				connection.query(query, values, (err, results, fields) => {
+					if (err) {
+						reject(Error([ 'Unexpected error: ' + err.message, 'Query:', query ].join('\n')));
+					}
+					else {
+						resolve(results);
+					}
+				});
+			}
+			else {
+				connection.query(query, (err, result, fields) => {
+					if (err) {
+						reject(err);
+					}
+					else {
+						resolve(result);
+					}
+				});
+			}
+		});
+	};
+	
 	return {
 		...connection,
-		
-		/**
-		 *
-		 * @param query
-		 * @param values
-		 * @returns {Promise.<RowData>}
-		 */
-		asyncQuery: (query: string, values?: any) => {
-			if (logSQL) {
-				console.log([
-					'[SQL Query Start]',
-					query,
-					'[SQL Query End]'
-				].join('\n'));
-			}
-			return new Promise((resolve, reject) => {
-				if (values) {
-					connection.query(query, values, (err, results, fields) => {
-						if (err) {
-							reject(Error(['Unexpected error: ' + err.message, 'Query:', query].join('\n')));
-						}
-						else {
-							resolve(results);
-						}
-					});
-				}
-				else {
-					connection.query(query, (err, result, fields) => {
-						if (err) {
-							reject(err);
-						}
-						else {
-							resolve(result);
-						}
-					});
-				}
-			})
-		},
-		
-		release: () => {
-			connection.release()
-		}
+		asyncQuery
 	}
 };
 

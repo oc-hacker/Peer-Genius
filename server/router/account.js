@@ -7,9 +7,10 @@ const auth_1 = require("./misc/auth");
 const router = express_1.Router();
 // Reminder: remember to use wrapTryCatch to enable express error handling on promise rejection errors!
 router.use('/', auth_1.verifySessionToken);
-router.post('/edit', utils_1.wrapTryCatch(functions.edit));
 router.post('/verify', utils_1.wrapTryCatch(functions.verify));
 router.post('/info', utils_1.wrapTryCatch(functions.info));
 router.post('/refresh', utils_1.wrapTryCatch(functions.refresh));
+router.use('/', utils_1.wrapTryCatch(utils_1.checkReview));
+router.post('/edit', utils_1.wrapTryCatch(functions.edit));
 exports.default = router;
 //# sourceMappingURL=account.js.map

@@ -7,9 +7,9 @@ import user from './user';
 import { ProhibitedEditError } from '../errors';
 
 export interface KeyAttributes {
-	user: string,
-	verifyEmailKey: string,
-	nextEmail: string
+	user?: string,
+	verifyEmailKey?: string,
+	nextEmail?: string
 }
 
 export interface KeyInstance extends Sequelize.Instance<KeyAttributes> {

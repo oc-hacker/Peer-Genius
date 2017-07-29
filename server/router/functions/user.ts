@@ -36,7 +36,7 @@ export const edit = async (request: EditUserRequest, response: Response) => {
 	
 	if (user) {
 		await user.update(request.body);
-		user.save({fields: userAttributes});
+		await user.save({fields: userAttributes});
 		response.status(httpStatus.OK).end()
 	}
 	else {

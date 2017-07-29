@@ -23,6 +23,17 @@ exports.update = (request, response) => __awaiter(this, void 0, void 0, function
             user: request.body.user.id
         }
     });
+    let updated = Object.assign({
+        whatsapp: null,
+        hangouts: null,
+        messenger: null,
+        imessage: null,
+        skype: null,
+        viber: null,
+        tango: null,
+        aim: null,
+        oovoo: null
+    }, request.body);
     yield communication.update(lodash_1.omit(request.body, ['user']));
     yield communication.save();
     response.status(httpStatus.OK).end();

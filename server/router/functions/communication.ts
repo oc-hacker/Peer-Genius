@@ -37,7 +37,22 @@ export const update = async (request: UpdateCommunicationRequest, response: Resp
 		}
 	});
 	
-	await communication.update(omit(request.body, ['user']));
+	let updated = Object.assign(
+		{
+			whatsapp: null,
+			hangouts: null,
+			messenger: null,
+			imessage: null,
+			skype: null,
+			viber: null,
+			tango: null,
+			aim: null,
+			oovoo: null
+		},
+		request.body
+	);
+	
+	await communication.update(omit(request.body, [ 'user' ]));
 	await communication.save();
 	
 	response.status(httpStatus.OK).end();

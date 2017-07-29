@@ -34,46 +34,38 @@ const asyncConnection = () => {
 };
 exports.newConnection = (logSQL) => __awaiter(this, void 0, void 0, function* () {
     const connection = yield asyncConnection();
-    return Object.assign({}, connection, { 
-        /**
-         *
-         * @param query
-         * @param values
-         * @returns {Promise.<RowData>}
-         */
-        asyncQuery: (query, values) => {
-            if (logSQL) {
-                console.log([
-                    '[SQL Query Start]',
-                    query,
-                    '[SQL Query End]'
-                ].join('\n'));
+    const asyncQuery = (query, values) => {
+        if (logSQL) {
+            console.log([
+                '[SQL Query Start]',
+                query,
+                '[SQL Query End]'
+            ].join('\n'));
+        }
+        return new Promise((resolve, reject) => {
+            if (values) {
+                connection.query(query, values, (err, results, fields) => {
+                    if (err) {
+                        reject(Error(['Unexpected error: ' + err.message, 'Query:', query].join('\n')));
+                    }
+                    else {
+                        resolve(results);
+                    }
+                });
             }
-            return new Promise((resolve, reject) => {
-                if (values) {
-                    connection.query(query, values, (err, results, fields) => {
-                        if (err) {
-                            reject(Error(['Unexpected error: ' + err.message, 'Query:', query].join('\n')));
-                        }
-                        else {
-                            resolve(results);
-                        }
-                    });
-                }
-                else {
-                    connection.query(query, (err, result, fields) => {
-                        if (err) {
-                            reject(err);
-                        }
-                        else {
-                            resolve(result);
-                        }
-                    });
-                }
-            });
-        }, release: () => {
-            connection.release();
-        } });
+            else {
+                connection.query(query, (err, result, fields) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(result);
+                    }
+                });
+            }
+        });
+    };
+    return Object.assign({}, connection, { asyncQuery });
 });
 exports.sequelizeAdmin = new Sequelize(config_1.default.mysqlDatabase, config_1.default.mysqlUser, config_1.default.mysqlPassword, {
     host: 'localhost',

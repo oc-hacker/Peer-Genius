@@ -6,13 +6,16 @@ import user from './user';
 import { ProhibitedEditError } from '../errors';
 
 export interface SessionAttributes {
-	id: string,
-	mentor: string,
-	mentee: string,
-	startTime: Date,
-	endTime: Date | null,
-	rating: number,
-	comment: string
+	id?: string,
+	mentee?: string,
+	mentor?: string,
+	subject?: string,
+	scheduledStart?: Date,
+	scheduledEnd?: Date,
+	startTime?: Date,
+	endTime?: Date,
+	rating?: number,
+	comment?: string
 }
 
 export interface SessionInstance extends Sequelize.Instance<SessionAttributes> {
@@ -20,12 +23,15 @@ export interface SessionInstance extends Sequelize.Instance<SessionAttributes> {
 	updatedAt: Date,
 	
 	id: string,
-	mentor: string,
 	mentee: string,
-	startTime: Date,
-	endTime: Date | null,
-	rating: number,
-	comment: string
+	mentor?: string,
+	subject: string,
+	scheduledStart: Date,
+	scheduledEnd: Date,
+	startTime?: Date,
+	endTime?: Date,
+	rating?: number,
+	comment?: string
 }
 
 const attributes = {
@@ -34,8 +40,9 @@ const attributes = {
 		defaultValue: Sequelize.UUIDV4,
 		primaryKey: true
 	},
-	mentor: {
+	mentee: {
 		type: Sequelize.UUID,
+		allowNull: false,
 		references: {
 			model: user,
 			key: 'id',
@@ -43,18 +50,29 @@ const attributes = {
 			onDelete: 'cascade'
 		}
 	},
-	mentee: {
+	mentor: {
 		type: Sequelize.UUID,
+		allowNull: true,
+		defaultValue: null,
 		references: {
 			model: user,
 			key: 'id',
 			onUpdate: 'cascade',
 			onDelete: 'cascade'
 		}
+	},
+	scheduledStart: {
+		type: Sequelize.DATE,
+		allowNull: false
+	},
+	scheduledEnd: {
+		type: Sequelize.DATE,
+		allowNull: false
 	},
 	startTime: {
 		type: Sequelize.DATE,
-		allowNull: false
+		allowNull: true,
+		defaultValue: null
 	},
 	endTime: {
 		type: Sequelize.DATE,

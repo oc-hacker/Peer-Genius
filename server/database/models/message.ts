@@ -6,10 +6,10 @@ import user from './user';
 import { ProhibitedEditError } from '../errors';
 
 export interface MessageAttributes {
-	id: string,
-	from: string,
-	to: string,
-	message: string
+	id?: string,
+	from?: string,
+	to?: string,
+	message?: string
 }
 
 export interface MessageInstance extends Sequelize.Instance<MessageAttributes> {

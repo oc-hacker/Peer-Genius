@@ -33,6 +33,8 @@ const app = express();
 mailer_1.initMailer();
 // Logger
 app.use(utils_1.logger);
+// Throttle
+app.use(utils_1.throttle);
 // CORS
 app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));

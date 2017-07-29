@@ -25,7 +25,7 @@ exports.edit = (request, response) => __awaiter(this, void 0, void 0, function* 
     });
     if (user) {
         yield user.update(request.body);
-        user.save({ fields: user_1.exposedAttributes });
+        yield user.save({ fields: user_1.exposedAttributes });
         response.status(httpStatus.OK).end();
     }
     else {

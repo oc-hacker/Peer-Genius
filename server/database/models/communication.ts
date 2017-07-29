@@ -7,16 +7,16 @@ import user from './user';
 import { ProhibitedEditError } from '../errors';
 
 export interface CommunicationAttributes {
-	user: string,
-	skype: string,
-	hangouts: string,
-	messenger: string,
-	imessage: string,
-	whatsapp: string,
-	viber: string,
-	tango: string,
-	aim: string,
-	oovoo: string
+	user?: string,
+	skype?: string,
+	hangouts?: string,
+	messenger?: string,
+	imessage?: string,
+	whatsapp?: string,
+	viber?: string,
+	tango?: string,
+	aim?: string,
+	oovoo?: string
 }
 
 export interface CommunicationInstance extends Sequelize.Instance<CommunicationAttributes> {

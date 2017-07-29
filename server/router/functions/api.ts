@@ -22,6 +22,9 @@ interface CreateAccountRequest extends Request {
 			year: number,
 			month: number,
 			day: number
+		},
+		communications: {
+		
 		}
 	}
 }

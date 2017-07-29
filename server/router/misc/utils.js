@@ -20,9 +20,40 @@ exports.logger = (request, response, next) => {
     console.log(`[${new Date().toUTCString()}]`, 'Request received at', request.originalUrl);
     next();
 };
+let currentCount = 0;
+const limit = 1200; // Per minute
+exports.throttle = (request, response, next) => {
+    if (currentCount >= limit) {
+        console.log(`[THROTTLE] Refused request at ${request.originalUrl}`);
+        response.status(418).end();
+        return;
+    }
+    currentCount++;
+    setTimeout(() => {
+        currentCount--;
+    }, 60 * 1000);
+    next();
+};
 exports.sendIndex = (request, response) => {
     response.sendFile(path.resolve(__dirname, '../../../public/index.html'));
 };
+exports.checkReview = (request, response, next) => __awaiter(this, void 0, void 0, function* () {
+    let unfinishedReview = yield models.session.find({
+        where: {
+            mentee: request.body.user.id
+        }
+    });
+    if (unfinishedReview) {
+        response.status(httpStatus.FORBIDDEN).json({
+            reason: 'Review required.',
+            session: unfinishedReview.id
+        });
+        return;
+    }
+    else {
+        next();
+    }
+});
 const errorLogPath = path.resolve(__dirname, '../../errors.log');
 // Clear up error log on start
 fs.writeFileSync(errorLogPath, '');
