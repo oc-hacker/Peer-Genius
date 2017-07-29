@@ -23,8 +23,16 @@ interface CreateAccountRequest extends Request {
 			month: number,
 			day: number
 		},
-		communications: {
-		
+		communication: {
+			skype?: string,
+			hangouts?: string,
+			messenger?: string,
+			imessage?: string,
+			whatsapp?: string,
+			viber?: string,
+			tango?: string,
+			aim?: string,
+			oovoo?: string
 		}
 	}
 }
@@ -41,6 +49,7 @@ export const createAccount = async (request: CreateAccountRequest, response: Res
 		}
 	});
 	
+	console.log(account);
 	if (account) {
 		// Email already exists.
 		response.status(httpStatus.CONFLICT).end();
@@ -51,6 +60,10 @@ export const createAccount = async (request: CreateAccountRequest, response: Res
 			user: user.id,
 			email: request.body.email,
 			password: request.body.password
+		});
+		await models.communication.create({
+			user: user.id,
+			...request.body.communication
 		});
 		
 		let store: Store = await buildInitialStore(user.id, user, account);

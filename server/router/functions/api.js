@@ -26,6 +26,7 @@ exports.createAccount = (request, response) => __awaiter(this, void 0, void 0, f
             email: request.body.email
         }
     });
+    console.log(account);
     if (account) {
         // Email already exists.
         response.status(httpStatus.CONFLICT).end();
@@ -38,6 +39,7 @@ exports.createAccount = (request, response) => __awaiter(this, void 0, void 0, f
             email: request.body.email,
             password: request.body.password
         });
+        yield models.communication.create(Object.assign({ user: user.id }, request.body.communication));
         let store = yield utils_1.buildInitialStore(user.id, user, account);
         response.status(httpStatus.OK).json(store);
         let key = yield key_1.uniqueRandom('verifyEmailKey');
