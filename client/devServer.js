@@ -19,7 +19,7 @@ const webpackCompiler = webpack(webpackConfig, (error, stats) => {
 		console.log(stats.toString({
 			chunks: false,
 			colors: true
-		}))
+		}));
 	}
 });
 
@@ -33,6 +33,9 @@ app.use(webpackDevMiddleware(webpackCompiler, {
 
 app.use(webpackHotMiddleware(webpackCompiler));
 
+app.get('*.css', (req, res) => {
+	res.sendFile(path.resolve(__dirname, '../public/style.css'))
+});
 app.get('*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, '../public/index.html'));
 });
