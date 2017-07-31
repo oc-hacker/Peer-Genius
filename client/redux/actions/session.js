@@ -2,8 +2,8 @@ import fetch from 'isomorphic-fetch';
 
 import cookie from 'js-cookie';
 import { push } from 'react-router-redux';
+import { SubmissionError } from 'redux-form';
 
-import store from '../store.js';
 import { sendFormErr } from './forms.js';
 import { initUserInfo } from './userInfo.js';
 
@@ -142,10 +142,7 @@ export const refreshSession = () => async dispatch => {
 /**
  * Thunk action creator for logging in.
  */
-export const login = () => async dispatch => {
-	// Get the credentials from the Redux store 'login' form.
-	let credentials = store.getState().forms.login;
-	if (credentials) {
+export const login = (credentials) => async dispatch => {
 		// If the credentials exists, dispatch an action marking the start of the login request.
 		dispatch({
 			type: types.LOGIN,
@@ -193,16 +190,21 @@ export const login = () => async dispatch => {
 			
 			// If login fails, send an error to the form.
 			if (response.status === 400) {
-				dispatch(sendFormErr('login', 'email', 'No account with this email exists.'))
+				throw new SubmissionError({
+					email: 'No account with this email exists.'
+				});
 			}
 			else if (response.status === 401) {
-				dispatch(sendFormErr('login', 'password', 'Wrong password.'));
+				throw new SubmissionError({
+					password: 'Wrong password.'
+				});
 			}
 			else {
-				dispatch(sendFormErr('login', 'email', 'Unexpected error when contacting server.'))
+				throw new SubmissionError({
+					email: 'Unexpected error when contacting server.'
+				});
 			}
 		}
-	}
 };
 
 /**

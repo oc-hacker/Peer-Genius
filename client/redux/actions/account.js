@@ -16,10 +16,8 @@ import { serverURL } from '../../config.js';
 /**
  * Redux Thunk action for creating a student account.
  */
-export const createAccount = () => async dispatch => {
+export const createAccount = (values) => async dispatch => {
 	// Get the 'createAccount' form stored in the Redux store.
-	let accountForm = store.getState().forms.createAccount;
-	if (accountForm) {
 		dispatch({
 			type: types.CREATE_ACCOUNT,
 			status: types.REQUEST
@@ -33,14 +31,14 @@ export const createAccount = () => async dispatch => {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				email: accountForm.email,
-				password: accountForm.password,
-				firstName: accountForm.firstName,
-				lastName: accountForm.lastName,
+				email: values.email,
+				password: values.password,
+				firstName: values.firstName,
+				lastName: values.lastName,
 				birthday: {
-					year: accountForm.birthdate.getFullYear(),
-					month: accountForm.birthdate.getMonth(),
-					date: accountForm.birthdate.getDate()
+					year: values.birthdate.getFullYear(),
+					month: values.birthdate.getMonth(),
+					date: values.birthdate.getDate()
 				}
 			})
 		});
@@ -62,7 +60,8 @@ export const createAccount = () => async dispatch => {
 				status: types.SUCCESS,
 				successText: 'Account Created!'
 			});
-		} else if (response.status === httpStatus.conflict) {
+		}
+		else if (response.status === httpStatus.CONFLICT) {
 			// If the account is not created successfully, dispatch an action to inform the user that the email has been taken.
 			dispatch(sendFormErr('createAccount', 'email', 'This email has been taken.'));
 			
@@ -73,7 +72,6 @@ export const createAccount = () => async dispatch => {
 		} else {
 
 		}
-	}
 };
 
 /**

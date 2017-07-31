@@ -5,12 +5,12 @@ import { push } from 'react-router-redux';
 
 import AppBar from './AppBar.js';
 
-import FrontPage from './frontPage.js';
+import FrontPage from './frontPage';
 import Home from './home.js';
 
-import CreateAccount from './account/create.js';
-import EditAccount from './account/edit.js';
-import AccountSettings from './account/settings.js';
+import CreateAccount from './account/create';
+import EditAccount from './account/edit';
+import AccountSettings from './account/settings';
 
 const style = {
 	content: {
@@ -29,13 +29,12 @@ class LoggedInRoute extends React.Component {
 	componentWillMount() {
 		if (this.props.inSession === 0) {
 			this.props.push('/');
-		} else {
 		}
 	}
-
+	
 	render() {
 		return (
-			<Route path={this.props.path} component={this.props.component} />
+			<Route {...this.props} />
 		);
 	}
 }
@@ -49,55 +48,42 @@ class LoggedOutRoute extends React.Component {
 	componentWillMount() {
 		if (this.props.inSession === 1) {
 			this.props.push('/home');
-		} else {
 		}
 	}
-
+	
 	render() {
 		return (
-			<Route path={this.props.path} component={this.props.component} />
+			<Route {...this.props} />
 		);
 	}
 }
 
 // Weird, now router needs to have the full path to work, no matter where.
-class AccountRouter extends React.Component {
-	render() {
-		return (
+const AccountRouter = props => (
+	<Switch>
+		<Route path={`${props.match.url}/edit`} component={EditAccount} />
+		<Route path={`${props.match.url}/settings`} component={AccountSettings} />
+	</Switch>
+);
+
+const LoggedInRouter = props => (
+	<div style={{ width: '100%', height: '100%' }}>
+		<AppBar />
+		<div style={style.content}>
 			<Switch>
-				<Route path="/account/edit" component={EditAccount}/>
-				<Route path="/account/settings" component={AccountSettings}/>
+				<Route path="/home" component={Home} />
+				<Route path="/account" render={AccountRouter} />
 			</Switch>
-		);
-	}
-}
+		</div>
+	</div>
+);
 
-class LoggedInRouter extends React.Component {
-	render() {
-	 	return (
-	 		<div>
-	 			<AppRouter />
-				<div style={style.content}>
-					<Switch>
-						<Route path="/home" component={Home}/>
-						<Route path="/account" component={AccountRouter}/>
-					</Switch>
-				</div>
-			</div>
-		);
-	}
-}
-
-export default class AppRouter extends React.Component {
-	render() {
-		return (
-			<div>
-				<Switch>
-					<LoggedOutRoute exact path="/" component={FrontPage}/>
-					<LoggedOutRoute path="/createAccount" component={CreateAccount}/>
-					<LoggedInRoute path="/" component={LoggedInRouter}/>
-				</Switch>
-			</div>
-		)
-	}
-}
+export default props => (
+	<div style={{ width: '100%', height: '100%' }}>
+		<Switch>
+			<LoggedOutRoute path="/" exact component={FrontPage} />
+			<LoggedOutRoute path="/createAccount" component={CreateAccount} />
+			<LoggedInRoute path="/" render={LoggedInRouter} />
+		</Switch>
+	</div>
+);

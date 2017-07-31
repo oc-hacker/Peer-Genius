@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var gulpts = require('gulp-typescript');
 
-gulp.task('configure', ['compile'], function () {
+gulp.task('configure', function () {
 	return gulp.src('server/**/*.json')
 		.pipe(gulp.dest('build'))
 });

@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 import { routerReducer as routing } from 'react-router-redux';
+import { reducer as formReducer } from 'redux-form';
 
 import inSession from './reducers/inSession.js';
 import forms from './reducers/forms.js';
@@ -15,7 +16,8 @@ const appReducer = combineReducers({
 	success,
 	forms,
 	userInfo,
-	routing
+	routing,
+	form: formReducer
 });
 
 export default appReducer;
