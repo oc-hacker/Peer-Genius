@@ -4,6 +4,7 @@ import stylesheet from 'react-jss';
 
 import RaisedButton from 'material-ui/RaisedButton';
 
+import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
 import Form, { Field } from '../components/form';
@@ -27,16 +28,17 @@ const styles = {
 	}
 };
 
-export default connect(null, { login })(stylesheet(styles)(props => {
-	let { open, login, onRequestClose, classes } = props;
+export default reduxForm({
+	form: 'login',
+	onSubmit: (values, dispatch) => dispatch(login(values))
+})(stylesheet(styles)(props => {
+	let { handleSubmit, open, onRequestClose, classes } = props;
 	
 	return (
 		<Form
 			dialog
-			open={open}
-			form="login"
-			onSubmit={login}
-			onRequestClose={onRequestClose}
+			dialogProps={{ open, onRequestClose }}
+			onSubmit={handleSubmit}
 		>
 			<p className={classes.title}>Log In</p>
 			<Field.Text

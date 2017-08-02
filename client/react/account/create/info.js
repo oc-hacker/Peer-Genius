@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Field from '../../components/form/field';
+import * as Field from '../../components/form/field';
 
 import { email, required, same } from '../../components/form/validator';
 
 export default props => (
-	<div key="stable" {...props}>
+	<div {...props}>
 		<Field.Text
 			name="firstName"
 			label="First Name"

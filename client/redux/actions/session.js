@@ -189,19 +189,14 @@ export const login = (credentials) => async dispatch => {
 			});
 			
 			// If login fails, send an error to the form.
-			if (response.status === 400) {
+			if (response.status === 401) {
 				throw new SubmissionError({
-					email: 'No account with this email exists.'
-				});
-			}
-			else if (response.status === 401) {
-				throw new SubmissionError({
-					password: 'Wrong password.'
+					password: 'Email and password mismatch.'
 				});
 			}
 			else {
 				throw new SubmissionError({
-					email: 'Unexpected error when contacting server.'
+					password: 'Unexpected error when contacting server.'
 				});
 			}
 		}

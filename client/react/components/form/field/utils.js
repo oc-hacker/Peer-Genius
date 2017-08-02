@@ -1,7 +1,8 @@
 import { orange500 } from 'material-ui/styles/colors';
 
-export const getErrors = (meta) => {
+export const getErrors = meta => {
 	let { touched, error, warning } = meta;
+	
 	if (touched) {
 		if (error) {
 			return {

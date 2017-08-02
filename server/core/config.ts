@@ -84,7 +84,7 @@ export const loadConfig = async () => {
 	catch (error) {
 		fileReadSuccess = false;
 		console.log('Config file missing or corrupted. Resetting file...');
-		fs.writeFile(configPath, await JSON.stringify(config, null, '\t'))
+		fs.writeFile(configPath, await JSON.stringify(config, null, '\t'), null);
 	}
 	
 	if (fileReadSuccess) {

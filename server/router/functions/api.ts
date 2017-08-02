@@ -84,8 +84,7 @@ interface LoginRequest extends Request {
 /**
  * Response:
  * OK - login successful. An initial store will be sent. See <code>Store</code> interface defined in <code>server/types.ts</code> for details.
- * UNAUTHORIZED - bad password
- * BAD_REQUEST - email is not found in database
+ * UNAUTHORIZED - bad email or password
  */
 export const verifyLogin = async (request: LoginRequest, response: Response) => {
 	let account = await models.account.find({
@@ -94,16 +93,11 @@ export const verifyLogin = async (request: LoginRequest, response: Response) => 
 		}
 	});
 	
-	if (account) {
-		if (await argon2.verify(account.password, request.body.password)) {
-			response.status(httpStatus.OK).json(await buildInitialStore(account.user, null, account));
-		}
-		else {
-			response.status(httpStatus.UNAUTHORIZED).end();
-		}
+	if (account && await argon2.verify(account.password, request.body.password)) {
+		response.status(httpStatus.OK).json(await buildInitialStore(account.user, null, account));
 	}
 	else {
-		response.status(httpStatus.BAD_REQUEST).end();
+		response.status(httpStatus.UNAUTHORIZED).end();
 	}
 };
 
@@ -125,5 +119,5 @@ export const checkEmail = async (request: CheckEmailRequest, response: Response)
 		}
 	});
 	
-	response.status(httpStatus.OK).json({taken: !!account})
+	response.status(httpStatus.OK).json({ taken: !!account })
 };

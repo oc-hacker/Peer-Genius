@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { Form, reduxForm } from 'redux-form';
+import { Form, reduxForm, formValueSelector, startAsyncValidation, stopAsyncValidation } from 'redux-form';
 
 import RaisedButton from 'material-ui/RaisedButton';
 
 import stylesheet from 'react-jss';
 
-// import Form from '../util/form.js';
-// import TextField from '../util/materialUI/TextField.js';
-// import TextFieldConfirm from '../util/materialUI/TextFieldConfirm.js';
-// import TextFieldConfirmPassword from '../util/materialUI/TextFieldConfirmPassword.js';
-// import DateField from '../util/materialUI/DateField.js';
-// import { verifyEmailText } from '../util/materialUI/verifyField.js';
 import InfoPage from './info';
 import CommPage from './comm';
 
 import { createAccount } from '../../../redux/actions/account.js';
+import { post } from '../../../reference/api';
 
 const transitionLength = 1;
 const styles = {
@@ -27,7 +22,9 @@ const styles = {
 		boxSizing: 'border-box',
 		display: 'flex',
 		flexDirection: 'column',
-		alignItems: 'center'
+		alignItems: 'center',
+		transition: 'all 0.3s ease',
+		animationDelay: `${transitionLength}s`
 	},
 	widthContainer: {
 		position: 'relative',
@@ -44,49 +41,20 @@ const styles = {
 	}
 };
 
-// @connect(null, dispatch => ({
-// 	createAccount: () => {
-// 		dispatch(createAccount());
-// 	},
-// 	pushToFrontPage: () => {
-// 		dispatch(push('/'));
-// 	}
-// }))
-// export default class CreateAccount extends React.Component {
-// 	render() {
-// 		return (
-// 			<div style={style.center}>
-// 				<Form
-// 	        		formName="createAccount"
-// 	        		header="Create Account"
-// 	        		numInputs={5}
-// 	        		nextText="Create"
-// 	        		nextFunc={this.props.createAccount}
-// 			        backText="Cancel"
-// 			        backFunc={this.props.pushToFrontPage}
-// 			        backStyle={{
-// 			        	position: 'absolute',
-// 				        bottom: 0
-// 			        }}
-// 	        		width={500}
-// 	        	>
-// 	        		<TextField varName="firstName" hintText="First Name" />
-// 	        		<TextField varName="lastName" hintText="Last Name" />
-// 	        		<TextFieldConfirm varName="email" hintText="Email" verifyFunc={verifyEmailText} />
-// 	        		<TextFieldConfirmPassword varName="password" hintText="Password" />
-// 	        		<DateField varName="birthdate" floatingLabelText="Birth Date" minAge={13} maxAge={19} />
-// 	        	</Form>
-//         	</div>
-// 		);
-// 	}
-// }
-@connect(null, dispatch => ({
+const offsetPercent = 110;
+
+const form = 'createAccount';
+@connect(state => ({
+	email: formValueSelector(form)(state, 'email')
+}), dispatch => ({
 	pushToFrontPage: () => {
 		dispatch(push('/'));
-	}
+	},
+	startAsyncValidation: () => dispatch(startAsyncValidation(form)),
+	stopAsyncValidation: (errors) => dispatch(stopAsyncValidation(form, errors))
 }))
 @reduxForm({
-	form: 'createAccount',
+	form,
 	onSubmit: (values, dispatch) => {
 		dispatch(createAccount(values));
 	}
@@ -101,6 +69,26 @@ export default class CreateAccount extends Component {
 		};
 	}
 	
+	onNext = async () => {
+		let { startAsyncValidation, stopAsyncValidation } = this.props;
+		startAsyncValidation();
+		let result = await post('/api/checkEmail', { email: this.props.email });
+		let json = await result.json();
+		
+		if (json.taken) {
+			// Email already taken, don't go to next page.
+			stopAsyncValidation({
+				email: 'Email already associated with an account.'
+			});
+		}
+		else {
+			stopAsyncValidation();
+			this.setState({
+				page: 1
+			});
+		}
+	};
+	
 	render() {
 		const { classes, handleSubmit } = this.props;
 		let { page } = this.state;
@@ -114,8 +102,8 @@ export default class CreateAccount extends Component {
 					className={classes.widthContainer}
 					onSubmit={handleSubmit}
 				>
-					<InfoPage style={{ transform: `translateX(-${page}00%)`, transition: `all ${transitionLength}s ease` }} />
-					<CommPage style={{ position: 'absolute', transform: `translateX(-${page - 1}00%)`, transition: `all ${transitionLength}s ease` }} />
+					<InfoPage style={{ transform: `translateX(${-page * offsetPercent}%)`, transition: `all ${transitionLength}s ease` }} />
+					<CommPage style={{ position: 'absolute', top: '2em', left: `${(1 - page) * offsetPercent}%`, transition: `all ${transitionLength}s ease` }} />
 				</Form>
 				<div style={{ flexGrow: 1 }} />
 				<div

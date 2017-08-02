@@ -10,13 +10,14 @@ import { getErrors } from './utils';
 
 const styles = {
 	date: {
+		position: 'relative',
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between'
 	}
 };
 
-const DateField = stylesheet(styles)(props => {
+const DateComponent = stylesheet(styles)(props => {
 	let {
 		input: { name, value, onChange },
 		meta,
@@ -61,6 +62,7 @@ const DateField = stylesheet(styles)(props => {
 			{!disableToday && (
 				<RaisedButton
 					primary
+					style={{ position: 'absolute', right: 0, bottom: 0 }}
 					onTouchTap={() => onChange(new Date().toISOString())}
 				>
 					Today
@@ -73,12 +75,12 @@ const DateField = stylesheet(styles)(props => {
 /**
  * All props passed will be given to <code>Field</code> from <code>redux-forms</code>. Any props not used by <code>Field</code> will be passed to <code>DatePicker</code> from <code>material-ui</code>.
  */
-const DateComponent = props => (<Field
-	component={DateField}
+const DateField = props => (<Field
+	component={DateComponent}
 	{...props}
 />);
 
-DateComponent.propTypes = {
+DateField.propTypes = {
 	name: PropTypes.string.isRequired,
 	label: PropTypes.string,
 	disableToday: PropTypes.bool,
@@ -86,4 +88,4 @@ DateComponent.propTypes = {
 	maxAge: PropTypes.number
 };
 
-export default DateComponent;
+export default DateField;

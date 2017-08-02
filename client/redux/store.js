@@ -27,7 +27,7 @@ let store = createStore(appReducer, {
 		// Use redux-thunk, react-router-redux, and redux-logger.
 		thunkMiddleware,
 		routerMiddleware(browserHistory),
-		createLogger()
+		// createLogger()
 	)
 ));
 
