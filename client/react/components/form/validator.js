@@ -17,11 +17,11 @@ const composeTemplate = (strings, insertions, validateParams, defaultMessage) =>
  */
 const validator = (validate, defaultMessage = 'Validation error.') => {
 	// Template string tag function syntax
-	const tag = (strings, ...insertions) => {
+	return (strings, ...insertions) => {
 		// Validator syntax
 		return (...params) => {
 			if (validate(...params)) {
-				return null;
+				return undefined;
 			}
 			else {
 				return Array.isArray(strings)
@@ -30,10 +30,6 @@ const validator = (validate, defaultMessage = 'Validation error.') => {
 			}
 		};
 	};
-	Object.defineProperty(tag, 'inverse', {
-		get: () => validator(value => !validate(value), defaultMessage)
-	});
-	return tag;
 };
 
 export const required = validator(value => value, 'Required');
@@ -42,14 +38,29 @@ export const number = validator(value => typeof value === 'number' || /^[\d\.]+$
 
 export const email = validator(value => /^[\w-]+(?:\.[\w-]+)*@(?:\w+\.)+[a-zA-Z]{2,4}$/.test(value), 'Not an email');
 
-export const range = (min = null, max = null, inclusive = [true, true]) => {
+/**
+ * @param min The minimum value the field can have
+ * @param max The maximum value the field can have
+ * @param {Array|boolean} [inclusive] Whether the range is inclusive on the two ends
+ * @param [compare] A custom comparator function. Its first parameter will be the field's value and the second parameter will be the min or max value you specified. It should return a negative value
+ * if the first parameter is considered smaller than the second parameter, 0 if equal, and positive if larger.
+ */
+export const range = (min = null, max = null, inclusive = [true, true], compare = null) => {
 	if (!Array.isArray(inclusive)) {
 		inclusive = [inclusive, inclusive];
 	}
-	return validator(value => {
-		return !(min !== null && (inclusive[0] ? value < min : value <= min)) // Doesn't fail min condition
-			&& !(max !== null && (inclusive[1] ? value > max : value >= max)); // Doesn't fail max condition
-	}, `Not in range ${inclusive[0] ? '[' : '('}${min}, ${max}${inclusive[1] ? ']' : ')'}`);
+	if (!compare) { // Default compare
+		return validator(value => {
+			return !(min !== null && (inclusive[0] ? value < min : value <= min)) // Doesn't fail min condition
+				&& !(max !== null && (inclusive[1] ? value > max : value >= max)); // Doesn't fail max condition
+		}, `Not in range ${inclusive[0] ? '[' : '('}${min}, ${max}${inclusive[1] ? ']' : ')'}`);
+	}
+	else { // Custom compare
+		return validator(value => {
+			return !(min !== null && (inclusive[0] ? compare(value, min) < 0 : compare(value, min) <= 0)) // Doesn't fail min condition
+				&& !(max !== null && (inclusive[1] ? compare(value, max) > 0 : compare(value, max) >= 0)); // Doesn't fail max condition
+		}, `Not in range ${inclusive[0] ? '[' : '('}${min}, ${max}${inclusive[1] ? ']' : ')'}`);
+	}
 };
 
 export const same = (...others) => {
@@ -64,7 +75,7 @@ export const same = (...others) => {
 			}
 		}
 		return true;
-	}, 'Fields must match.')
+	}, 'Fields must match.');
 };
 
 export default validator;

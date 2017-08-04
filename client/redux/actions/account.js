@@ -23,6 +23,8 @@ export const createAccount = (values) => async dispatch => {
 			status: types.REQUEST
 		});
 		
+		let birthdate = new Date(values.birthdate);
+		
 		// Send a POST request to create the account.
 		const response = await fetch(serverURL + '/api/createAccount', {
 			method: 'POST',
@@ -36,9 +38,9 @@ export const createAccount = (values) => async dispatch => {
 				firstName: values.firstName,
 				lastName: values.lastName,
 				birthday: {
-					year: values.birthdate.getFullYear(),
-					month: values.birthdate.getMonth(),
-					date: values.birthdate.getDate()
+					year: birthdate.getFullYear(),
+					month: birthdate.getMonth(),
+					date: birthdate.getDate()
 				}
 			})
 		});

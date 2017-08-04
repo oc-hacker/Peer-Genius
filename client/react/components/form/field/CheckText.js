@@ -111,8 +111,8 @@ CheckText.propTypes = {
 	label: PropTypes.string,
 	checkLabel: PropTypes.string,
 	textLabel: PropTypes.string,
-	checkStyle: PropTypes.string,
-	textStyle: PropTypes.string,
+	checkStyle: PropTypes.object,
+	textStyle: PropTypes.object,
 	uncheckedValue: PropTypes.any,
 	clearOnUncheck: PropTypes.bool,
 	startChecked: PropTypes.bool

@@ -24,7 +24,7 @@ let store = createStore(appReducer, {
 	userInfo: {}
 }, composeWithDevtools(
 	applyMiddleware(
-		// Use redux-thunk, react-router-redux, and redux-logger.
+		// Use redux-thunk and react-router-redux
 		thunkMiddleware,
 		routerMiddleware(browserHistory),
 		// createLogger()

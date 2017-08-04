@@ -70,7 +70,7 @@ exports.loadConfig = () => __awaiter(this, void 0, void 0, function* () {
     catch (error) {
         fileReadSuccess = false;
         console.log('Config file missing or corrupted. Resetting file...');
-        fs.writeFile(configPath, yield JSON.stringify(config, null, '\t'));
+        fs.writeFile(configPath, yield JSON.stringify(config, null, '\t'), null);
     }
     if (fileReadSuccess) {
         let changed = yield transfer(importedConfig, config);

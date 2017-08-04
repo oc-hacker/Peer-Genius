@@ -1,4 +1,8 @@
-### Validator usage:
+## MUI Redux Forms Integration
+
+Note: `redux-form@7.*` is buggy, so this implementation uses `redux-forms@6.8.0`.
+
+## Validator usage:
 
 The built-in validators are to be used as a template string tag. An example using `require`:
 ```jsx harmony

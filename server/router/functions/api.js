@@ -49,8 +49,7 @@ exports.createAccount = (request, response) => __awaiter(this, void 0, void 0, f
 /**
  * Response:
  * OK - login successful. An initial store will be sent. See <code>Store</code> interface defined in <code>server/types.ts</code> for details.
- * UNAUTHORIZED - bad password
- * BAD_REQUEST - email is not found in database
+ * UNAUTHORIZED - bad email or password
  */
 exports.verifyLogin = (request, response) => __awaiter(this, void 0, void 0, function* () {
     let account = yield models.account.find({
@@ -58,16 +57,11 @@ exports.verifyLogin = (request, response) => __awaiter(this, void 0, void 0, fun
             email: request.body.email
         }
     });
-    if (account) {
-        if (yield argon2.verify(account.password, request.body.password)) {
-            response.status(httpStatus.OK).json(yield utils_1.buildInitialStore(account.user, null, account));
-        }
-        else {
-            response.status(httpStatus.UNAUTHORIZED).end();
-        }
+    if (account && (yield argon2.verify(account.password, request.body.password))) {
+        response.status(httpStatus.OK).json(yield utils_1.buildInitialStore(account.user, null, account));
     }
     else {
-        response.status(httpStatus.BAD_REQUEST).end();
+        response.status(httpStatus.UNAUTHORIZED).end();
     }
 });
 /**

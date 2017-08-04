@@ -29,7 +29,6 @@ export default class Comm extends Component {
 					textLabel: key === 'imessage' ? 'Phone number' : 'Username' // TODO a better way?
 				});
 			}
-			console.log(methods);
 			this.setState({ methods });
 		}
 		catch (error) {
