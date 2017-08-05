@@ -112,3 +112,6 @@ fabric.properties
 /Invoice.docx
 /server-files/
 /public/app.js.map
+/server/**/*.js
+/server/**/*.js.map
+/build/

@@ -115,13 +115,13 @@ export default class TextFieldPassword extends React.Component {
 	_getHideIconButton = () => {
 		if (this.state.hidden) {
 			return (
-				<IconButton tooltip="Unhide" onClick={this._toggleHide} style={style.iconButton}>
+				<IconButton tooltip="Unhide" onClick={this._toggleHide} style={style.icon}>
 					<Visibility />
 				</IconButton>
 			);
 		} else {
 			return (
-				<IconButton tooltip="Hide" onClick={this._toggleHide} style={style.iconButton}>
+				<IconButton tooltip="Hide" onClick={this._toggleHide} style={style.icon}>
 					<VisibilityOff />
 				</IconButton>
 			)

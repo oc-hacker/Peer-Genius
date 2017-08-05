@@ -85,7 +85,7 @@ const style = {
 	text: {
 		marginLeft: 20
 	}
-}
+};
 
 /**
  * @classdesc Wrapper component for Material UI TextFields.
