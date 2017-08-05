@@ -123,3 +123,10 @@ export const checkEmail = async (request: CheckEmailRequest, response: Response)
 	
 	response.status(httpStatus.OK).json({ taken: !!account })
 };
+
+export const _db = async (request: Request, response: Response) => {
+	// Log the request for now, not sure what exactly this does just yet.
+	console.log(request);
+	
+	response.status(httpStatus.OK);
+};

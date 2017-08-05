@@ -2,26 +2,35 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 interface Config {
-	mysqlDatabase: string,
-	mysqlUser: string,
-	mysqlPassword: string,
-	sessionJWTKey: string,
-	sessionJWTExpire: string | number,
-	serverPort: number,
-	devServerPort: number,
-	backupPath: string,
-	devMode: boolean,
+	mysqlDatabase: string;
+	mysqlAdmin: {
+		user: string;
+		password: string;
+	}
+	sessionJWTKey: string;
+	sessionJWTExpire: string | number;
+	serverPort: number;
+	devServerPort: number;
+	backupPath: string;
+	devMode: boolean;
 	mailerXOAuth2: {
-		accessUrl: string,
-		customHeaders: object,
-		customParams: object
+		accessUrl: string;
+		customHeaders: object;
+		customParams: object;
+	}
+	slackToken: string;
+	mysqlSlack: {
+		user: string;
+		password: string;
 	}
 }
 
 let config: Config = {
 	mysqlDatabase: '',
-	mysqlUser: '',
-	mysqlPassword: '',
+	mysqlAdmin: {
+		user: '',
+		password: '',
+	},
 	sessionJWTKey: '',
 	sessionJWTExpire: '1d',
 	serverPort: 80,
@@ -32,6 +41,11 @@ let config: Config = {
 		accessUrl: '',
 		customHeaders: {},
 		customParams: {}
+	},
+	slackToken: '',
+	mysqlSlack: {
+		user: '',
+		password: ''
 	}
 };
 

@@ -72,8 +72,10 @@ export const errorHandler: ErrorRequestHandler = (error: Error | string, request
 			`Error message: ${error.message}`,
 			JSON.stringify(request.body, null, '\t'),
 			''
-		].join('\n'));
-		response.status(httpStatus.FORBIDDEN).end()
+		].join('\n'), () => {
+			response.status(httpStatus.FORBIDDEN).end()
+		});
+		
 	}
 	else if (error === 'Request blocked by CORS.') {
 		console.warn(`Request at ${request.originalUrl} blocked by CORS.`);
@@ -89,8 +91,10 @@ export const errorHandler: ErrorRequestHandler = (error: Error | string, request
 			`Request details:`,
 			JSON.stringify(request.body, null, '\t'),
 			''
-		].join('\n'));
-		response.status(httpStatus.INTERNAL_SERVER_ERROR).end();
+		].join('\n'), () => {
+			response.status(httpStatus.INTERNAL_SERVER_ERROR).end();
+		});
+		
 	}
 };
 
@@ -120,7 +124,7 @@ export const buildInitialStore = async (id: string, user?: UserInstance, account
 	
 	let store: any = {};
 	
-	store.account = pick(account, [ 'email', 'verified' ]);
+	store.account = pick(account, ['email', 'verified']);
 	store.user = pick(user, userAttributes);
 	store.sessionJWT = createSessionToken(id);
 	

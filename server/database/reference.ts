@@ -5,16 +5,20 @@ import * as Sequelize from 'sequelize';
 
 import config from '../core/config';
 
-const pool = mysql.createPool({
-	host: 'localhost',
-	user: config.mysqlUser,
-	password: config.mysqlPassword,
-	database: config.mysqlDatabase,
-	timezone: '+00'
-});
+interface QueryResults extends Array<RowData> {
+	affectedRows: number,
+	changedRows: number,
+	threadId: number
+}
 
-// Async connection creation
-const asyncConnection = (): Promise<mysql.IConnection> => {
+export interface AsyncConnection extends mysql.IConnection {
+	asyncQuery: (string, any?) => Promise<QueryResults>
+}
+
+type ConnectionFactory = (...args: any[]) => Promise<AsyncConnection>;
+
+// Promise-based connection creation
+const getConnection = (pool: mysql.IPool): Promise<mysql.IConnection> => {
 	return new Promise((resolve, reject) => {
 		pool.getConnection((error, connection) => {
 			if (error) {
@@ -27,18 +31,17 @@ const asyncConnection = (): Promise<mysql.IConnection> => {
 	});
 };
 
-interface QueryResults extends Array<RowData> {
-	affectedRows: number,
-	changedRows: number,
-	threadId: number
-}
+const adminPool = mysql.createPool({
+	host: 'localhost',
+	database: config.mysqlDatabase,
+	user: config.mysqlAdmin.user,
+	password: config.mysqlAdmin.password,
+	timezone: '+00'
+});
 
-export interface AsyncConnection extends mysql.IConnection {
-	asyncQuery: (string, any?) => Promise<QueryResults>
-}
 
-export const newConnection = async (logSQL?: boolean): Promise<AsyncConnection> => {
-	const connection: mysql.IConnection = await asyncConnection();
+export const newConnection: ConnectionFactory = async (logSQL?: boolean) => {
+	const connection: mysql.IConnection = await getConnection(adminPool);
 	
 	const asyncQuery = (query: string, values?: any): Promise<QueryResults> => {
 		if (logSQL) {
@@ -52,7 +55,7 @@ export const newConnection = async (logSQL?: boolean): Promise<AsyncConnection> 
 			if (values) {
 				connection.query(query, values, (err, results, fields) => {
 					if (err) {
-						reject(Error([ 'Unexpected error: ' + err.message, 'Query:', query ].join('\n')));
+						reject(Error(['Unexpected error: ' + err.message, 'Query:', query].join('\n')));
 					}
 					else {
 						resolve(results);
@@ -78,10 +81,40 @@ export const newConnection = async (logSQL?: boolean): Promise<AsyncConnection> 
 	}
 };
 
+const slackPool = mysql.createPool({
+	host: 'localhost',
+	database: config.mysqlDatabase,
+	user: config.mysqlSlack.user,
+	password: config.mysqlSlack.password,
+	timezone: '+00'
+});
+
+export const slackConnection: ConnectionFactory = async () => {
+	const connection: mysql.IConnection = await getConnection(slackPool);
+	
+	const asyncQuery = (query: string): Promise<QueryResults> => {
+		return new Promise((resolve, reject) => {
+			connection.query(query, (err, result, fields) => {
+				if (err) {
+					reject(err);
+				}
+				else {
+					resolve(result);
+				}
+			});
+		});
+	};
+	
+	return {
+		...connection,
+		asyncQuery
+	};
+};
+
 export const sequelizeAdmin: Sequelize.Sequelize = new Sequelize(
 	config.mysqlDatabase,
-	config.mysqlUser,
-	config.mysqlPassword,
+	config.mysqlAdmin.user,
+	config.mysqlAdmin.password,
 	{
 		host: 'localhost',
 		dialect: 'mysql',
