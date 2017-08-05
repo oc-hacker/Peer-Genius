@@ -46,7 +46,7 @@ export default props => {
 				validate={[same('password')`Passwords do not match.`]}
 			/>
 			<Field.Date
-				name="brithdate"
+				name="birthday"
 				label="Date of Birth"
 				disableToday
 				minAge={12}

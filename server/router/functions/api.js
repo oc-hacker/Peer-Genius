@@ -26,7 +26,6 @@ exports.createAccount = (request, response) => __awaiter(this, void 0, void 0, f
             email: request.body.email
         }
     });
-    console.log(account);
     if (account) {
         // Email already exists.
         response.status(httpStatus.CONFLICT).end();
@@ -57,6 +56,8 @@ exports.verifyLogin = (request, response) => __awaiter(this, void 0, void 0, fun
             email: request.body.email
         }
     });
+    console.log(request.body);
+    console.log(account);
     if (account && (yield argon2.verify(account.password, request.body.password))) {
         response.status(httpStatus.OK).json(yield utils_1.buildInitialStore(account.user, null, account));
     }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router';
 import { push } from 'react-router-redux';
 
-import AppBar from './AppBar.js';
+import AppBar from './appBar';
 
 import FrontPage from './frontPage';
 import Home from './home.js';
@@ -16,7 +16,9 @@ const style = {
 	content: {
 		height: '100%',
 		paddingTop: 64,
-		textAlight: 'center'
+		textAlight: 'center',
+		overflowX: 'hidden',
+		overflowY: 'initial',
 	}
 };
 

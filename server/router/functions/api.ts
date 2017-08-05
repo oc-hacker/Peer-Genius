@@ -49,7 +49,6 @@ export const createAccount = async (request: CreateAccountRequest, response: Res
 		}
 	});
 	
-	console.log(account);
 	if (account) {
 		// Email already exists.
 		response.status(httpStatus.CONFLICT).end();
@@ -92,6 +91,9 @@ export const verifyLogin = async (request: LoginRequest, response: Response) => 
 			email: request.body.email
 		}
 	});
+	
+	console.log(request.body);
+	console.log(account);
 	
 	if (account && await argon2.verify(account.password, request.body.password)) {
 		response.status(httpStatus.OK).json(await buildInitialStore(account.user, null, account));

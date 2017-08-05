@@ -157,7 +157,7 @@ export const login = (credentials) => async dispatch => {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				username: credentials.username,
+				email: credentials.email,
 				password: credentials.password
 			})
 		});
@@ -216,7 +216,7 @@ export const logout = () => async dispatch => {
 	
 	// Dispatch an action to refresh the session, and then push to front page.
 	dispatch({
-		type: types.LOGOUT
+		type: types.logout
 	});
 	
 	dispatch(push('/'));

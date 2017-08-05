@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
-import Form, { Field } from '../components/form';
+import { StyledForm,  Field } from '../components/form';
 import { email } from '../components/form/validator';
 
 import { login } from '../../redux/actions/session';
@@ -35,7 +35,7 @@ export default reduxForm({
 	let { handleSubmit, open, onRequestClose, classes } = props;
 	
 	return (
-		<Form
+		<StyledForm
 			dialog
 			dialogProps={{ open, onRequestClose }}
 			onSubmit={handleSubmit}
@@ -58,6 +58,6 @@ export default reduxForm({
 					label="Log In"
 				/>
 			</div>
-		</Form>
+		</StyledForm>
 	);
 }));

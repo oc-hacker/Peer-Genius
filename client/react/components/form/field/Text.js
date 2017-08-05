@@ -7,7 +7,7 @@ import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import Visibility from 'material-ui/svg-icons/action/visibility';
 import VisibilityOff from 'material-ui/svg-icons/action/visibility-off';
-import { orange500 } from 'material-ui/styles/colors';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import { getErrors } from './utils';
 
@@ -15,10 +15,9 @@ const styles = {
 	fieldContainer: {
 		position: 'relative'
 	},
-	iconButton: {
+	icon: {
 		position: 'absolute',
-		right: 0,
-		bottom: 0
+		right: 0
 	}
 };
 
@@ -49,6 +48,7 @@ class TextInputField extends PureComponent {
 			...fieldProps
 		} = this.props;
 		let { hidden } = this.state;
+		let { asyncValidating } = meta;
 		
 		let textFieldProps = {
 			floatingLabelText: label,
@@ -57,38 +57,40 @@ class TextInputField extends PureComponent {
 			fullWidth: fullWidth !== false,
 			...getErrors(meta)
 		};
+		let hasError = Boolean(textFieldProps.errorText);
 		
-		if (type === 'password') {
-			if (hidden) {
-				textFieldProps.type = type;
-			}
-			
-			return (<div className={classes.fieldContainer}>
-				<TextField
-					{...textFieldProps}
-					{...eventProps}
-					{...fieldProps}
-				/>
-				<IconButton
-					tooltip={hidden ? 'Unhide' : 'Hide'}
-					onClick={this._toggleHide}
-					style={styles.iconButton}
-					tabIndex={-1}
-				>
-					{hidden ? <Visibility /> : <VisibilityOff />}
-				</IconButton>
-			</div>);
-		}
-		else {
+		let isPassword = type === 'password';
+		if (!isPassword || hidden) {
 			textFieldProps.type = type;
-			return (
-				<TextField
-					{...textFieldProps}
-					{...eventProps}
-					{...fieldProps}
-				/>
-			);
 		}
+		
+		return (<div className={classes.fieldContainer}>
+			<TextField
+				{...textFieldProps}
+				{...eventProps}
+				{...fieldProps}
+			/>
+			{isPassword && <IconButton
+				tooltip={hidden ? 'Unhide' : 'Hide'}
+				onClick={this._toggleHide}
+				style={{
+					...styles.icon,
+					bottom: hasError ? 20 : 0
+				}}
+				tabIndex={-1}
+			>
+				{hidden ? <Visibility /> : <VisibilityOff />}
+			</IconButton>}
+			{asyncValidating && <CircularProgress
+				size={20}
+				thickness={2}
+				style={{
+					...styles.icon,
+					bottom: hasError ? 20 : 0,
+					right: 2
+				}}
+			/>}
+		</div>);
 	}
 }
 

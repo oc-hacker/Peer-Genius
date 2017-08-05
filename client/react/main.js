@@ -17,7 +17,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 const muiTheme = getMuiTheme(baseTheme);
 
 import AppRouter from './AppRouter.js';
-import AppBar from './AppBar.js';
 
 import Loading from './Loading.js';
 import Success from './Success.js';

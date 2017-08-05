@@ -41,7 +41,8 @@ export const createAccount = (values) => async dispatch => {
 					year: birthdate.getFullYear(),
 					month: birthdate.getMonth(),
 					date: birthdate.getDate()
-				}
+				},
+				communication: values.communication
 			})
 		});
 		

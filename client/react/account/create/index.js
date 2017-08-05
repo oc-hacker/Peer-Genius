@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { Form, reduxForm, formValueSelector, startAsyncValidation, stopAsyncValidation, submit, touch } from 'redux-form';
+import { Form, FormSection, reduxForm, formValueSelector, startAsyncValidation, stopAsyncValidation, submit, touch } from 'redux-form';
 
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -9,9 +9,11 @@ import stylesheet from 'react-jss';
 
 import InfoPage from './info';
 import CommPage from './comm';
+import HonorCode from './honorCode';
 
 import { createAccount } from '../../../redux/actions/account.js';
 import { post } from '../../../reference/api';
+import { serverURL } from '../../../config';
 
 const transitionLength = 1;
 const styles = {
@@ -46,22 +48,27 @@ const styles = {
 const offsetPercent = 110;
 
 const form = 'createAccount';
-const formSelector = formValueSelector(form);
 
 @reduxForm({
 	form,
 	onSubmit: async (values, dispatch) => {
 		await dispatch(createAccount(values));
+	},
+	asyncBlurFields: ['email'],
+	asyncValidate: async values => {
+		let result = await post('/api/checkEmail', { email: values.email });
+		let json = await result.json();
+		
+		if (json.taken) {
+			// Email already taken, don't go to next page.
+			throw {
+				email: 'This email is already associated with an account!'
+			}
+		}
 	}
 })
-@connect(state => ({
-	email: formSelector(state, 'email'),
-}), dispatch => ({
-	pushToFrontPage: () => {
-		dispatch(push('/'));
-	},
-	startAsyncValidation: () => dispatch(startAsyncValidation(form)),
-	stopAsyncValidation: errors => dispatch(stopAsyncValidation(form, errors)),
+@connect(null, dispatch => ({
+	pushToFrontPage: () => dispatch(push('/')),
 	submit: () => dispatch(submit(form)),
 	touchAll: (...fields) => dispatch(touch(form, ...fields))
 }))
@@ -71,38 +78,67 @@ export default class CreateAccount extends Component {
 		super(props);
 		
 		this.state = {
-			page: 0
+			page: 0,
+			methods: [],
+			honorCodeOpen: false
 		};
 	}
 	
 	onNext = async () => {
-		let { invalid, touchAll, startAsyncValidation, stopAsyncValidation } = this.props;
-		if (invalid) { // If sync validation fails, touch all fields to ensure errors are displayed.
+		let { invalid, touchAll } = this.props;
+		if (invalid) { // If validation fails, touch all fields to ensure errors are displayed.
 			touchAll('firstName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPassword', 'birthdate');
-			return;
-		}
-		
-		startAsyncValidation();
-		let result = await post('/api/checkEmail', { email: this.props.email });
-		let json = await result.json();
-		
-		if (json.taken) {
-			// Email already taken, don't go to next page.
-			stopAsyncValidation({
-				email: 'Email already associated with an account'
-			});
 		}
 		else {
-			stopAsyncValidation();
 			this.setState({
 				page: 1
 			});
 		}
 	};
 	
+	onFinish = () => {
+		this.setState({
+			honorCodeOpen: true
+		});
+	};
+	
+	onAccept = () => {
+		this.setState({
+			honorCodeOpen: false
+		});
+		this.props.submit();
+	};
+	
+	onDecline = () => {
+		this.setState({
+			honorCodeOpen: false
+		});
+	};
+	
+	async componentWillMount() {
+		try {
+			let response = await fetch(serverURL + '/loc/comms.json');
+			let json = await response.json();
+			
+			let methods = [];
+			for (let key in json) {
+				// noinspection JSUnfilteredForInLoop
+				methods.push({
+					name: key,
+					checkLabel: json[key],
+					textLabel: key === 'imessage' ? 'Phone number' : 'Username' // TODO a better way?
+				});
+			}
+			this.setState({ methods });
+		}
+		catch (error) {
+			console.error('Error when fetching methods:', error)
+		}
+	}
+	
 	render() {
 		const { classes, handleSubmit, pushToFrontPage, submit } = this.props;
-		let { page } = this.state;
+		let { page, methods, honorCodeOpen } = this.state;
 		
 		return (
 			<div className={classes.wrapper}>
@@ -114,7 +150,12 @@ export default class CreateAccount extends Component {
 					onSubmit={handleSubmit}
 				>
 					<InfoPage style={{ transform: `translateX(${-page * offsetPercent}%)`, transition: `all ${transitionLength}s ease` }} />
-					<CommPage style={{ position: 'absolute', top: '2em', left: `${(1 - page) * offsetPercent}%`, transition: `all ${transitionLength}s ease` }} />
+					<FormSection name="communication">
+						<CommPage
+							style={{ position: 'absolute', top: '2em', left: `${(1 - page) * offsetPercent}%`, transition: `all ${transitionLength}s ease` }}
+							methods={methods}
+						/>
+					</FormSection>
 				</Form>
 				<div style={{ flexGrow: 1 }} />
 				<div
@@ -158,10 +199,15 @@ export default class CreateAccount extends Component {
 						<RaisedButton
 							secondary
 							label="Confirm"
-							onTouchTap={submit}
+							onTouchTap={this.onFinish}
 						/>
 					</div>
 				</div>
+				<HonorCode
+					open={honorCodeOpen}
+					onAccept={this.onAccept}
+					onDecline={this.onDecline}
+				/>
 			</div>
 		);
 	}

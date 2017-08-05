@@ -101,10 +101,12 @@ class CheckTextComponent extends Component {
 /**
  * All props passed will be given to <code>Field</code> from <code>redux-forms</code>. Any props not used by <code>Field</code> will be passed to <code>TextField</code> from <code>material-ui</code>.
  */
-const CheckText = props => (<Field
-	component={CheckTextComponent}
-	{...props}
-/>);
+const CheckText = props => {
+	return (<Field
+		component={CheckTextComponent}
+		{...props}
+	/>);
+};
 
 CheckText.propTypes = {
 	name: PropTypes.string.isRequired,
