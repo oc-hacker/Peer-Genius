@@ -12,7 +12,7 @@ import CommPage from './comm';
 import HonorCode from './honorCode';
 
 import { createAccount } from '../../../redux/actions/account.js';
-import { post } from '../../../reference/api';
+import { get, post } from '../../../reference/api';
 import { serverURL } from '../../../config';
 
 const transitionLength = 1;
@@ -63,14 +63,14 @@ const form = 'createAccount';
 			// Email already taken, don't go to next page.
 			throw {
 				email: 'This email is already associated with an account!'
-			}
+			};
 		}
 	}
 })
 @connect(null, dispatch => ({
 	pushToFrontPage: () => dispatch(push('/')),
 	submit: () => dispatch(submit(form)),
-	touchAll: (...fields) => dispatch(touch(form, ...fields))
+	touch: (...fields) => dispatch(touch(form, ...fields))
 }))
 @stylesheet(styles)
 export default class CreateAccount extends Component {
@@ -84,10 +84,10 @@ export default class CreateAccount extends Component {
 		};
 	}
 	
-	onNext = async () => {
-		let { invalid, touchAll } = this.props;
+	_onNext = async () => {
+		let { invalid, touch } = this.props;
 		if (invalid) { // If validation fails, touch all fields to ensure errors are displayed.
-			touchAll('firstName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPassword', 'birthdate');
+			touch('firstName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPassword', 'birthdate');
 		}
 		else {
 			this.setState({
@@ -96,28 +96,29 @@ export default class CreateAccount extends Component {
 		}
 	};
 	
-	onFinish = () => {
+	_onFinish = () => {
 		this.setState({
 			honorCodeOpen: true
 		});
 	};
 	
-	onAccept = () => {
+	_onAccept = () => {
 		this.setState({
 			honorCodeOpen: false
 		});
 		this.props.submit();
 	};
 	
-	onDecline = () => {
+	_onDecline = () => {
 		this.setState({
 			honorCodeOpen: false
 		});
+		this.props.pushToFrontPage();
 	};
 	
 	async componentWillMount() {
 		try {
-			let response = await fetch(serverURL + '/loc/comms.json');
+			let response = await get('/loc/comms.json');
 			let json = await response.json();
 			
 			let methods = [];
@@ -132,7 +133,7 @@ export default class CreateAccount extends Component {
 			this.setState({ methods });
 		}
 		catch (error) {
-			console.error('Error when fetching methods:', error)
+			console.error('Error when fetching methods:', error);
 		}
 	}
 	
@@ -181,7 +182,7 @@ export default class CreateAccount extends Component {
 						<RaisedButton
 							primary
 							label="Next"
-							onTouchTap={this.onNext}
+							onTouchTap={this._onNext}
 						/>
 					</div>
 					<div
@@ -199,14 +200,14 @@ export default class CreateAccount extends Component {
 						<RaisedButton
 							secondary
 							label="Confirm"
-							onTouchTap={this.onFinish}
+							onTouchTap={this._onFinish}
 						/>
 					</div>
 				</div>
 				<HonorCode
 					open={honorCodeOpen}
-					onAccept={this.onAccept}
-					onDecline={this.onDecline}
+					onAccept={this._onAccept}
+					onDecline={this._onDecline}
 				/>
 			</div>
 		);

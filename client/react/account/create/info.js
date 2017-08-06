@@ -51,6 +51,7 @@ export default props => {
 				disableToday
 				minAge={12}
 				maxAge={20}
+				validate={[required`When were you born?`]}
 				warn={[range(minDate, maxDate, [true, true], (value, bound) => {
 					if (value) {
 						return new Date(value).getTime() - bound;

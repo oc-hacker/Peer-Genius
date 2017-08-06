@@ -6,32 +6,32 @@ import user from './user';
 import { ProhibitedEditError } from '../errors';
 
 export interface SessionAttributes {
-	id?: string,
-	mentee?: string,
-	mentor?: string,
-	subject?: string,
-	scheduledStart?: Date,
-	scheduledEnd?: Date,
-	startTime?: Date,
-	endTime?: Date,
-	rating?: number,
-	comment?: string
+	id?: string;
+	mentee?: string;
+	mentor?: string;
+	subject?: string;
+	scheduledStart?: Date;
+	scheduledEnd?: Date;
+	startTime?: Date;
+	endTime?: Date;
+	rating?: number;
+	comment?: string;
 }
 
 export interface SessionInstance extends Sequelize.Instance<SessionAttributes> {
-	createdAt: Date,
-	updatedAt: Date,
+	createdAt: Date;
+	updatedAt: Date;
 	
-	id: string,
-	mentee: string,
-	mentor?: string,
-	subject: string,
-	scheduledStart: Date,
-	scheduledEnd: Date,
-	startTime?: Date,
-	endTime?: Date,
+	id: string;
+	mentee: string;
+	mentor?: string;
+	subject: string;
+	scheduledStart: Date;
+	scheduledEnd: Date;
+	startTime?: Date;
+	endTime?: Date;
 	rating?: number,
-	comment?: string
+	comment?: string;
 }
 
 const attributes = {

@@ -26,9 +26,14 @@ export const edit = async (request: EditAccountRequest, response: Response) => {
 		}
 	});
 	
+	if (!account || !request.body.password) {
+		response.status(httpStatus.BAD_REQUEST).end();
+		return;
+	}
+	
 	if (await argon2.verify(account.password, request.body.password)) {
 		await account.update(request.body);
-		await account.save({ fields: [ 'email', 'password', 'verified' ] });
+		await account.save({ fields: ['email', 'password', 'verified'] });
 		response.status(httpStatus.OK).end();
 	}
 	else {

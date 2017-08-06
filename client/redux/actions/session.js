@@ -4,12 +4,13 @@ import cookie from 'js-cookie';
 import { push } from 'react-router-redux';
 import { SubmissionError } from 'redux-form';
 
-import { sendFormErr } from './forms.js';
-import { initUserInfo } from './userInfo.js';
+import { sendFormErr } from './forms';
+import { initUserInfo } from './userInfo';
 
-import { types } from '../../reference/actionTypes.js';
+import { types } from '../../reference/actionTypes';
 
-import { serverURL, sessionJWTExpire } from '../../config.js';
+import { serverURL, sessionJWTExpire } from '../../config';
+import { post } from '../../reference/api';
 
 /**
  * Thunk action creator for verifying sessions.
@@ -39,22 +40,14 @@ export const verifySession = requestInfo => async dispatch => {
 	
 	// Otherwise, fetch from the server to verify whether the JWT is valid.
 	// Use /api/account/info for info requests, and /api/account/verify for verification only.
-	let fetchURL = serverURL + (requestInfo ? '/api/account/info' : '/api/account/verify');
-	const response = await fetch(fetchURL, {
-		method: 'POST',
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json'
-		},
-		credentials: 'include'
-	});
+	const response = await post(requestInfo ? '/api/account/info' : '/api/account/verify');
 	
 	if (response.ok) {
 		if (requestInfo) {
 			const json = await response.json();
 			
 			// Initialize all account info
-			dispatch(initUserInfo({...json.account, ...json.user}));
+			dispatch(initUserInfo({ ...json.account, ...json.user }));
 		}
 		
 		dispatch({
@@ -98,21 +91,13 @@ export const refreshSession = () => async dispatch => {
 	}
 	
 	// Send a POST request to check the JWT
-	const response = await fetch(serverURL + '/api/account/refresh', {
-		method: 'POST',
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json'
-		},
-		credentials: 'include'
-	});
-	console.log(response);
+	const response = await post('/api/account/refresh');
 	
 	if (response.ok) {
 		let json = await response.json();
 		
 		// If the check succeeded, save the cookie.
-		await cookie.set('sessionJWT', json.sessionJWT, {expires: sessionJWTExpire});
+		await cookie.set('sessionJWT', json.sessionJWT, { expires: sessionJWTExpire });
 		
 		// Dispatch an action to mark the success and store the session JWT.
 		dispatch({
@@ -142,64 +127,58 @@ export const refreshSession = () => async dispatch => {
 /**
  * Thunk action creator for logging in.
  */
-export const login = (credentials) => async dispatch => {
-		// If the credentials exists, dispatch an action marking the start of the login request.
+export const login = credentials => async dispatch => {
+	// If the credentials exists, dispatch an action marking the start of the login request.
+	dispatch({
+		type: types.LOGIN,
+		status: types.REQUEST
+	});
+	
+	// Send a POST request to verify the login.
+	const response = await post('/api/login', {
+		email: credentials.email,
+		password: credentials.password
+	});
+	
+	if (response.ok) {
+		let json = await response.json();
+		
 		dispatch({
 			type: types.LOGIN,
-			status: types.REQUEST
+			status: types.SUCCESS
 		});
 		
-		// Send a POST request to verify the login.
-		const response = await fetch(serverURL + '/api/login', {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				email: credentials.email,
-				password: credentials.password
-			})
+		// If the login succeeds, save the cookie.
+		await cookie.set('sessionJWT', json.sessionJWT, { expires: sessionJWTExpire });
+		
+		// Initialize all account info in the Redux store
+		dispatch(initUserInfo(json.userInfo));
+		
+		// Set a session refresh to happen right before the JWT expires
+		setTimeout(() => {
+			dispatch(refreshSession());
+		}, sessionJWTExpire * 9 / 10);
+		
+		dispatch(push('/home'));
+	}
+	else {
+		dispatch({
+			type: types.LOGIN,
+			status: types.FAILURE
 		});
 		
-		if (response.ok) {
-			let json = await response.json();
-			
-			dispatch({
-				type: types.LOGIN,
-				status: types.SUCCESS
+		// If login fails, send an error to the form.
+		if (response.status === 401) {
+			throw new SubmissionError({
+				password: 'Email and password mismatch.'
 			});
-			
-			// If the login succeeds, save the cookie.
-			await cookie.set('sessionJWT', json.sessionJWT, {expires: sessionJWTExpire});
-			
-			// Initialize all account info in the Redux store
-			dispatch(initUserInfo(json.userInfo));
-			
-			// Set a session refresh to happen right before the JWT expires
-			setTimeout(() => {
-				dispatch(refreshSession());
-			}, sessionJWTExpire * 9 / 10);
-			
-			dispatch(push('/home'))
-		} else {
-			dispatch({
-				type: types.LOGIN,
-				status: types.FAILURE
-			});
-			
-			// If login fails, send an error to the form.
-			if (response.status === 401) {
-				throw new SubmissionError({
-					password: 'Email and password mismatch.'
-				});
-			}
-			else {
-				throw new SubmissionError({
-					password: 'Unexpected error when contacting server.'
-				});
-			}
 		}
+		else {
+			throw new SubmissionError({
+				password: 'Unexpected error when contacting server.'
+			});
+		}
+	}
 };
 
 /**
@@ -216,7 +195,7 @@ export const logout = () => async dispatch => {
 	
 	// Dispatch an action to refresh the session, and then push to front page.
 	dispatch({
-		type: types.logout
+		type: types.LOGOUT
 	});
 	
 	dispatch(push('/'));

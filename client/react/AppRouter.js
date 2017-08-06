@@ -9,8 +9,7 @@ import FrontPage from './frontPage';
 import Home from './home.js';
 
 import CreateAccount from './account/create';
-import EditAccount from './account/edit';
-import AccountSettings from './account/settings';
+import AccountRouter from './account/router';
 
 const style = {
 	content: {
@@ -59,14 +58,6 @@ class LoggedOutRoute extends React.Component {
 		);
 	}
 }
-
-// Weird, now router needs to have the full path to work, no matter where.
-const AccountRouter = props => (
-	<Switch>
-		<Route path={`${props.match.url}/edit`} component={EditAccount} />
-		<Route path={`${props.match.url}/settings`} component={AccountSettings} />
-	</Switch>
-);
 
 const LoggedInRouter = props => (
 	<div style={{ width: '100%', height: '100%' }}>

@@ -76,21 +76,24 @@ const style = {
 	pushToEditAccount: () => {
 		dispatch(push('/account/edit'));
 	},
-	logout: () => {
-		dispatch(logout());
+	pushToEditSettings: () => {
+		dispatch(push('/account/settings'))
+	},
+	logout: async () => {
+		await dispatch(logout());
+		dispatch(push('/'))
 	}
 }))
 export default class AppBar extends React.Component {
 	_accountHandler = (event, value) => {
-		const { pushToEditAccount, logout } = this.props;
+		const { pushToEditAccount, pushToEditSettings, logout } = this.props;
 		
 		switch (value) {
 			case accountOptions.editProfile: {
 				return pushToEditAccount();
 			}
 			case accountOptions.accountSettings: {
-				// TODO
-				return;
+				return pushToEditSettings();
 			}
 			case accountOptions.logout: {
 				return logout();

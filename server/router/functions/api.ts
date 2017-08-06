@@ -9,6 +9,8 @@ import { exposedAttributes as userAttributes } from '../../database/models/user'
 
 import { Request, Response } from 'express';
 import { Store } from '../../types';
+import config from '../../core/config';
+import { slackConnection } from '../../database/reference';
 
 // Note: only use next() if you are not handling the request!
 
@@ -92,9 +94,6 @@ export const verifyLogin = async (request: LoginRequest, response: Response) => 
 		}
 	});
 	
-	console.log(request.body);
-	console.log(account);
-	
 	if (account && await argon2.verify(account.password, request.body.password)) {
 		response.status(httpStatus.OK).json(await buildInitialStore(account.user, null, account));
 	}
@@ -124,9 +123,53 @@ export const checkEmail = async (request: CheckEmailRequest, response: Response)
 	response.status(httpStatus.OK).json({ taken: !!account })
 };
 
+interface SlackRequest extends Request {
+	body: {
+		token: string;
+		command: string;
+		text: string;
+		response_url: string;
+	}
+}
+
 export const _db = async (request: Request, response: Response) => {
-	// Log the request for now, not sure what exactly this does just yet.
-	console.log(request);
+	let { token, command, text } = request.body;
 	
-	response.status(httpStatus.OK);
+	if (token && token === config.slackToken) {
+		try {
+			// Parse command
+			let flags: string[] = text.match(/--\S+/g).map(flag => flag.substring(2));
+			let command: string = text.replace(/--\S+/g, '').replace(/\s+/, ' ');
+			
+			let [mode, ...rest] = command.split(' ');
+			let mainCommand: string = rest.join(' ');
+			
+			// Establish connection
+			let connection = await slackConnection();
+			
+			let results;
+			switch (mode.toLowerCase()) {
+				case 'overview': {
+					// language=MYSQL-SQL
+					results = await connection.asyncQuery(`SELECT COUNT(*) AS totalCount FROM users`);
+					let totalCount = results[0].totalCount;
+					// language=MYSQL-SQL
+					results = await connection.asyncQuery(`SELECT COUNT(*) AS mentorCount FROM users INNER JOIN mentors ON mentors.user = users.id`);
+					let mentorCount = results[0].mentorCount;
+					
+					response.status(httpStatus.OK).json({
+						text: `There are ${totalCount} registered users at Peer Genius, of which `
+					})
+				}
+			}
+			
+			connection.release();
+		}
+		catch (error) {
+			response.status(httpStatus.INTERNAL_SERVER_ERROR).json({error})
+		}
+	}
+	else {
+		response.status(httpStatus.UNAUTHORIZED).end();
+	}
 };

@@ -60,20 +60,13 @@ class App extends React.Component {
 	}
 }
 
-/** Routes */
-const MasterRouter = () => (
-	<ConnectedRouter history={browserHistory}>
-		<div style={{ width: '100vw', height: '100vh' }}>
-			<Route path="/" component={App} />
-		</div>
-	</ConnectedRouter>
-);
-
 const Main = (
 	<Provider store={store}>
-		<div style={{ overflow: 'hidden' }}>
-			<MasterRouter />
-		</div>
+		<ConnectedRouter history={browserHistory}>
+			<div style={{ overflow: 'hidden' }}>
+				<Route component={App} />
+			</div>
+		</ConnectedRouter>
 	</Provider>
 );
 
