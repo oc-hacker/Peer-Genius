@@ -8,10 +8,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import stylesheet from 'react-jss';
 
 import InfoPage from './info';
-import CommPage from './comm';
+import CommPage from '../../components/CommsFields';
 import HonorCode from './honorCode';
 
-import { createAccount } from '../../../redux/actions/account.js';
+import { createAccount } from '../../../redux/actions/account';
+import { initCommMethods } from '../../../redux/actions/communication';
 import { get, post } from '../../../reference/api';
 import { serverURL } from '../../../config';
 
@@ -67,10 +68,13 @@ const form = 'createAccount';
 		}
 	}
 })
-@connect(null, dispatch => ({
+@connect(state => ({
+	methods: state.commMethods
+}), dispatch => ({
 	pushToFrontPage: () => dispatch(push('/')),
 	submit: () => dispatch(submit(form)),
-	touch: (...fields) => dispatch(touch(form, ...fields))
+	touch: (...fields) => dispatch(touch(form, ...fields)),
+	initCommMethods: () => dispatch(initCommMethods())
 }))
 @stylesheet(styles)
 export default class CreateAccount extends Component {
@@ -116,24 +120,9 @@ export default class CreateAccount extends Component {
 		this.props.pushToFrontPage();
 	};
 	
-	async componentWillMount() {
-		try {
-			let response = await get('/loc/comms.json');
-			let json = await response.json();
-			
-			let methods = [];
-			for (let key in json) {
-				// noinspection JSUnfilteredForInLoop
-				methods.push({
-					name: key,
-					checkLabel: json[key],
-					textLabel: key === 'imessage' ? 'Phone number' : 'Username' // TODO a better way?
-				});
-			}
-			this.setState({ methods });
-		}
-		catch (error) {
-			console.error('Error when fetching methods:', error);
+	componentWillMount() {
+		if (this.props.commMethods.length === 0) {
+			this.props.initCommMethods();
 		}
 	}
 	
@@ -141,6 +130,7 @@ export default class CreateAccount extends Component {
 		const { classes, handleSubmit, pushToFrontPage, submit } = this.props;
 		let { page, methods, honorCodeOpen } = this.state;
 		
+		// TODO test that this didn't break
 		return (
 			<div className={classes.wrapper}>
 				<div style={{ fontSize: '2em' }}>
@@ -154,7 +144,6 @@ export default class CreateAccount extends Component {
 					<FormSection name="communication">
 						<CommPage
 							style={{ position: 'absolute', top: '2em', left: `${(1 - page) * offsetPercent}%`, transition: `all ${transitionLength}s ease` }}
-							methods={methods}
 						/>
 					</FormSection>
 				</Form>

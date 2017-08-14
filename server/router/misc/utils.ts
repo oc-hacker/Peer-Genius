@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import { pick } from 'lodash';
+import { pick, omit } from 'lodash';
 import * as httpStatus from 'http-status-codes';
 
 import * as models from '../../database/models/index';
@@ -11,25 +11,10 @@ import { AccountInstance } from '../../database/models/account';
 
 import { Handler, ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { Store, VerifiedRequest } from '../../types';
+import { CommunicationInstance } from '../../database/models/communication';
 
 export const logger: Handler = (request, response, next) => {
 	console.log(`[${new Date().toUTCString()}]`, 'Request received at', request.originalUrl);
-	next();
-};
-
-let currentCount = 0;
-const limit = 1200; // Per minute
-
-export const throttle: Handler = (request, response, next) => {
-	if (currentCount >= limit) {
-		console.log(`[THROTTLE] Refused request at ${request.originalUrl}`);
-		response.status(418).end();
-		return;
-	}
-	currentCount++;
-	setTimeout(() => {
-		currentCount--;
-	}, 60 * 1000);
 	next();
 };
 
@@ -102,15 +87,21 @@ export const endResponse: Handler = (request, response) => {
 	response.end();
 };
 
+interface LoadedModels {
+	user?: UserInstance,
+	account?: AccountInstance,
+	communication?: CommunicationInstance
+}
+
 /**
  * Note: account.verified indicates whether the account's email has been verified.
  *
  * @param id
- * @param [user]
- * @param [account]
+ * @param [loadedInstances] Instances that have already been loaded to skip searching the database for the instance.
  * @return {Promise.<Store>}
  */
-export const buildInitialStore = async (id: string, user?: UserInstance, account?: AccountInstance): Promise<Store> => {
+export const buildStore = async (id: string, loadedInstances: LoadedModels = {}): Promise<Store> => {
+	let { user, account, communication } = loadedInstances;
 	user = user || await models.user.find({
 		where: {
 			id
@@ -121,11 +112,17 @@ export const buildInitialStore = async (id: string, user?: UserInstance, account
 			user: id
 		}
 	});
+	communication = communication || await models.communication.find({
+		where: {
+			user: id
+		}
+	});
 	
 	let store: any = {};
 	
 	store.account = pick(account, ['email', 'verified']);
 	store.user = pick(user, userAttributes);
+	store.communication = omit(communication, ['user']);
 	store.sessionJWT = createSessionToken(id);
 	
 	return <Store>store;

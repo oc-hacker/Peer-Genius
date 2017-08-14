@@ -1,4 +1,5 @@
-import { types } from '../../reference/actionTypes.js';
+import types from '../actions/types.js';
+import status from '../../reference/status';
 
 /**
  * Reducer for the 'fetching' field in the Redux store.
@@ -6,9 +7,9 @@ import { types } from '../../reference/actionTypes.js';
 export default function fetching(state=false, action) {
 	switch(action.type) {
 		case types.REFRESH_SESSION:
-		case types.GET_HOURS:
-		case types.GET_NEW_NOTIFICATIONS:
-		case types.READ_NOTIFICATIONS:
+		// case types.GET_HOURS:
+		// case types.GET_NEW_NOTIFICATIONS:
+		// case types.READ_NOTIFICATIONS:
 			// Don't set fetching for refreshing the session or getting hours and notifications
 			return state;
 		
@@ -22,11 +23,11 @@ export default function fetching(state=false, action) {
 	}
 
 	switch (action.status) {
-		case types.REQUEST:
+		case status.REQUEST:
 			// Set fetching to true for all requests
 			return true;
-		case types.SUCCESS:
-		case types.FAILURE:
+		case status.SUCCESS:
+		case status.FAILURE:
 			// Set fetching to false for all successes and failures
 			return false;
 		default:

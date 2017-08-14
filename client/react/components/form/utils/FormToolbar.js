@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import { connect } from 'react-redux';
 
-const FormSubmitButton = stylesheet({
+const FormToolbar = stylesheet({
 	toolbar: {
 		display: 'flex'
 	},
@@ -32,10 +32,10 @@ const FormSubmitButton = stylesheet({
 	);
 });
 
-FormSubmitButton.propTypes = {
+FormToolbar.propTypes = {
 	label: PropTypes.string,
 	onTouchTap: PropTypes.string,
 	reset: PropTypes.func
 };
 
-export default FormSubmitButton;
+export default FormToolbar;

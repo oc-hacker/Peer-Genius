@@ -7,7 +7,7 @@ import * as serveStatic from 'serve-static';
 
 import config from './config';
 import { initMailer } from '../email/mailer';
-import { logger, throttle, sendIndex, endResponse, errorHandler } from '../router/misc/utils';
+import { logger, sendIndex, endResponse, errorHandler } from '../router/misc/utils';
 import apiRouter from '../router/api';
 
 const corsOptions = {
@@ -37,9 +37,6 @@ initMailer();
 
 // Logger
 app.use(logger);
-
-// Throttle
-app.use(throttle);
 
 // CORS
 app.options('*', cors(corsOptions));

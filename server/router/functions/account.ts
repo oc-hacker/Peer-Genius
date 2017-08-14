@@ -3,7 +3,7 @@ import * as argon2 from 'argon2';
 
 import * as models from '../../database/models/index';
 import { createSessionToken } from '../misc/auth';
-import { buildInitialStore } from '../misc/utils';
+import { buildStore } from '../misc/utils';
 
 import { Response } from 'express';
 import { VerifiedRequest } from '../../types';
@@ -46,7 +46,7 @@ export const verify = async (request: VerifiedRequest, response: Response) => {
 };
 
 export const info = async (request: VerifiedRequest, response: Response) => {
-	response.status(httpStatus.OK).json(await buildInitialStore(request.body.user.id))
+	response.status(httpStatus.OK).json(await buildStore(request.body.user.id))
 };
 
 export const refresh = async (request: VerifiedRequest, response: Response) => {

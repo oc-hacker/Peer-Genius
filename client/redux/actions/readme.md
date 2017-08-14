@@ -1,0 +1,1 @@
+Note: the Peer Genius react client uses redux-thunk, which allows async functions to be dispatched as redux actions. These `thunk`s take `dispatch` as their first argument.

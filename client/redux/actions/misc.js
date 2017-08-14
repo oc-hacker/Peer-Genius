@@ -5,7 +5,8 @@ import { push } from 'react-router-redux';
 import store from '../store.js';
 import { sendFormErr } from './forms.js';
 
-import { types } from '../../reference/actionTypes.js';
+import types from './types.js';
+import status from '../../reference/status';
 
 import { serverURL } from '../../config';
 import { post } from '../../reference/api';
@@ -18,7 +19,7 @@ import { post } from '../../reference/api';
 export const verifyEmail = key => async dispatch => {
 	dispatch({
 		type: types.VERIFY_EMAIL,
-		status: types.REQUEST
+		status: status.REQUEST
 	});
 	
 	// Send a POST request to the server to verify the email
@@ -27,7 +28,7 @@ export const verifyEmail = key => async dispatch => {
 	if (response.ok) {
 		dispatch({
 			type: types.VERIFY_EMAIL,
-			status: types.SUCCESS
+			status: status.SUCCESS
 		});
 	} else {
 		// Upon failure, push to home
@@ -35,7 +36,7 @@ export const verifyEmail = key => async dispatch => {
 		
 		dispatch({
 			type: types.VERIFY_EMAIL,
-			status: types.FAILURE
+			status: status.FAILURE
 		});
 	}
 };
@@ -46,7 +47,7 @@ export const verifyEmail = key => async dispatch => {
 export const resendVerificationEmail = () => async dispatch => {
 	dispatch({
 		type: types.RESEND_VERIFICATION_EMAIL,
-		status: types.REQUEST
+		status: status.REQUEST
 	});
 	
 	// Send a POST request to get the verification email resent.
@@ -55,13 +56,13 @@ export const resendVerificationEmail = () => async dispatch => {
 	if (response.ok) {
 		dispatch({
 			type: types.RESEND_VERIFICATION_EMAIL,
-			status: types.SUCCESS,
+			status: status.SUCCESS,
 			successText: 'Sent!'
 		});
 	} else {
 		dispatch({
 			type: types.RESEND_VERIFICATION_EMAIL,
-			status: types.FAILURE
+			status: status.FAILURE
 		});
 	}
 };
@@ -72,7 +73,7 @@ export const resendVerificationEmail = () => async dispatch => {
 export const requestReset = () => async dispatch => {
 	dispatch({
 		type: types.REQUEST_RESET,
-		status: types.REQUEST
+		status: status.REQUEST
 	});
 	
 	// Send a POST request to request a password reset.
@@ -86,7 +87,7 @@ export const requestReset = () => async dispatch => {
 		
 		dispatch({
 			type: types.REQUEST_RESET,
-			status: types.SUCCESS,
+			status: status.SUCCESS,
 			successText: 'Request Sent!'
 		});
 	} else {
@@ -95,7 +96,7 @@ export const requestReset = () => async dispatch => {
 		
 		dispatch({
 			type: types.REQUEST_RESET,
-			status: types.FAILURE
+			status: status.FAILURE
 		});
 	}
 };
@@ -108,7 +109,7 @@ export const requestReset = () => async dispatch => {
 export const checkReset = key => async dispatch => {
 	dispatch({
 		type: types.CHECK_RESET,
-		status: types.REQUEST
+		status: status.REQUEST
 	});
 	
 	// Send a POST request to check the password reset key.
@@ -117,7 +118,7 @@ export const checkReset = key => async dispatch => {
 	if (response.ok) {
 		dispatch({
 			type: types.CHECK_RESET,
-			status: types.SUCCESS
+			status: status.SUCCESS
 		});
 	} else {
 		// Upon failure push to home
@@ -125,7 +126,7 @@ export const checkReset = key => async dispatch => {
 		
 		dispatch({
 			type: types.CHECK_RESET,
-			status: types.FAILURE
+			status: status.FAILURE
 		});
 	}
 };
@@ -138,7 +139,7 @@ export const checkReset = key => async dispatch => {
 export const sendReset = key => async dispatch => {
 	dispatch({
 		type: types.SEND_RESET,
-		status: types.REQUEST
+		status: status.REQUEST
 	});
 	
 	// Send a POST request to reset the password
@@ -153,7 +154,7 @@ export const sendReset = key => async dispatch => {
 		
 		dispatch({
 			type: types.SEND_RESET,
-			status: types.SUCCESS,
+			status: status.SUCCESS,
 			successText: 'Reset Successful!'
 		});
 	} else {
@@ -162,7 +163,7 @@ export const sendReset = key => async dispatch => {
 		
 		dispatch({
 			type: types.SEND_RESET,
-			status: types.FAILURE
+			status: status.FAILURE
 		});
 	}
 };

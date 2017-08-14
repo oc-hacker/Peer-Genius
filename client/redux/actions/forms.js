@@ -1,4 +1,4 @@
-import { types } from '../../reference/actionTypes.js';
+import types from './types.js';
 
 /**
  * Redux action generator for creating forms in the Redux store.

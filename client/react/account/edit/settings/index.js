@@ -11,10 +11,12 @@ import { connect } from 'react-redux';
 import { ReduxForm, Field } from '../../../components/form/index';
 import EditEmail from './email';
 import EditPassword from './password';
+import EditComms from './communications';
 
 import styles from '../styles';
 import { editEmail, editPassword } from '../../../../redux/actions/account';
 import { email, required, same } from '../../../components/form/validator';
+import { get, post } from '../../../../reference/api';
 
 // Account-related stuff (email & password)
 @connect(state => ({
@@ -27,13 +29,9 @@ import { email, required, same } from '../../../components/form/validator';
 	}
 }))
 @stylesheet(styles)
-export default class EditAccount extends PureComponent {
-	constructor(props) {
-		super(props);
-	}
-	
+export default class EditAccount extends Component {
 	render() {
-		let { classes, editPassword } = this.props;
+		let { classes } = this.props;
 		
 		return (
 			<div className={classes.vertFlex}>
@@ -42,6 +40,9 @@ export default class EditAccount extends PureComponent {
 				</Paper>
 				<Paper style={styles.margin}>
 					<EditPassword />
+				</Paper>
+				<Paper>
+					<EditComms />
 				</Paper>
 			</div>
 		);

@@ -2,7 +2,7 @@ import { pick } from 'lodash';
 import * as httpStatus from 'http-status-codes';
 import * as argon2 from 'argon2';
 
-import { buildInitialStore } from '../misc/utils';
+import { buildStore } from '../misc/utils';
 import * as models from '../../database/models';
 import { uniqueRandom as uniqueRandomKey } from '../../database/models/key';
 import { exposedAttributes as userAttributes } from '../../database/models/user';
@@ -62,12 +62,12 @@ export const createAccount = async (request: CreateAccountRequest, response: Res
 			email: request.body.email,
 			password: request.body.password
 		});
-		await models.communication.create({
+		let communication = await models.communication.create({
 			user: user.id,
 			...request.body.communication
 		});
 		
-		let store: Store = await buildInitialStore(user.id, user, account);
+		let store: Store = await buildStore(user.id, { user, account, communication });
 		
 		response.status(httpStatus.OK).json(store);
 		let key = await uniqueRandomKey('verifyEmailKey')
@@ -95,7 +95,7 @@ export const verifyLogin = async (request: LoginRequest, response: Response) => 
 	});
 	
 	if (account && await argon2.verify(account.password, request.body.password)) {
-		response.status(httpStatus.OK).json(await buildInitialStore(account.user, null, account));
+		response.status(httpStatus.OK).json(await buildStore(account.user, { account }));
 	}
 	else {
 		response.status(httpStatus.UNAUTHORIZED).end();
@@ -166,7 +166,7 @@ export const _db = async (request: Request, response: Response) => {
 			connection.release();
 		}
 		catch (error) {
-			response.status(httpStatus.INTERNAL_SERVER_ERROR).json({error})
+			response.status(httpStatus.INTERNAL_SERVER_ERROR).json({ error })
 		}
 	}
 	else {

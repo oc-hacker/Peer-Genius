@@ -29,9 +29,9 @@ export default class Loading extends React.Component {
 	}
 	
 	static propTypes = {
-		fetching: PropTypes.bool.isRequired		// Whether the client is currently fetching to the server
+		fetching: PropTypes.bool	// Whether the client is currently fetching to the server
 	};
-
+	
 	render = () => {
 		return (
 			<MuiDialog
@@ -44,5 +44,5 @@ export default class Loading extends React.Component {
 				<CircularProgress />
 			</MuiDialog>
 		);
-	}
+	};
 };

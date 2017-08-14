@@ -1,4 +1,4 @@
-import { types } from '../../reference/actionTypes.js';
+import types from '../actions/types.js';
 
 /**
  * Reducer for the forms object in the Redux store.

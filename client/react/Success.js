@@ -29,8 +29,8 @@ export default class Success extends React.Component {
 	}
 	
 	static propTypes = {
-		successText: PropTypes.string.isRequired,	// The text to be displayed in the dialog
-		showSuccess: PropTypes.bool.isRequired		// Whether the dialog should be visible
+		successText: PropTypes.string,	// The text to be displayed in the dialog
+		showSuccess: PropTypes.bool		// Whether the dialog should be visible
 	};
 
 	render = () => {

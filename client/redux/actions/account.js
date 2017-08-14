@@ -7,12 +7,14 @@ import { push } from 'react-router-redux';
 import store from '../store.js';
 import { createForm, sendFormErr } from './forms.js';
 import { verifySession } from './session.js';
-import { initUserInfo, updateUserInfo, createUserInfoForm } from './userInfo.js';
+import { initUserInfo, updateUserInfo } from './userInfo.js';
 
-import { types } from '../../reference/actionTypes.js';
+import types from './types.js';
+import status from '../../reference/status';
 import { post } from '../../reference/api';
 
 import { serverURL } from '../../config.js';
+import { SubmissionError } from 'redux-form';
 
 /**
  * Redux Thunk action for creating a student account.
@@ -21,7 +23,7 @@ export const createAccount = (values) => async dispatch => {
 	// Get the 'createAccount' form stored in the Redux store.
 	dispatch({
 		type: types.CREATE_ACCOUNT,
-		status: types.REQUEST
+		status: status.REQUEST
 	});
 	
 	let birthdate = new Date(values.birthdate);
@@ -54,20 +56,20 @@ export const createAccount = (values) => async dispatch => {
 		
 		dispatch({
 			type: types.CREATE_ACCOUNT,
-			status: types.SUCCESS,
+			status: status.SUCCESS,
 			successText: 'Account Created!'
 		});
 	}
 	else if (response.status === httpStatus.CONFLICT) {
 		// If the account is not created successfully, dispatch an action to inform the user that the email has been taken.
-		dispatch(sendFormErr('createAccount', 'email', 'This email has been taken.'));
-		
 		dispatch({
 			type: types.CREATE_ACCOUNT,
-			status: types.FAILURE
+			status: status.FAILURE
 		});
-	} else {
-	
+		
+		throw new SubmissionError({
+			email: 'This email has been taken.'
+		});
 	}
 };
 
@@ -77,7 +79,7 @@ export const createAccount = (values) => async dispatch => {
 export const sendEdit = values => async dispatch => {
 	dispatch({
 		type: types.SEND_EDIT,
-		status: types.REQUEST
+		status: status.REQUEST
 	});
 	
 	// Send a POST request to the server to send the edits
@@ -89,14 +91,14 @@ export const sendEdit = values => async dispatch => {
 		
 		dispatch({
 			type: types.SEND_EDIT,
-			status: types.SUCCESS,
+			status: status.SUCCESS,
 			successText: 'Saved!'
 		});
 	}
 	else {
 		dispatch({
 			type: types.SEND_EDIT,
-			status: types.FAILURE
+			status: status.FAILURE
 		});
 	}
 };
@@ -109,7 +111,7 @@ export const sendEdit = values => async dispatch => {
 export const editPassword = values => async dispatch => {
 	dispatch({
 		type: types.SEND_EDIT,
-		status: types.REQUEST
+		status: status.REQUEST
 	});
 	
 	// Send a POST request to edit the password.
@@ -124,21 +126,21 @@ export const editPassword = values => async dispatch => {
 		
 		dispatch({
 			type: types.SEND_EDIT,
-			status: types.SUCCESS,
+			status: status.SUCCESS,
 			successText: 'Saved!'
 		});
 		
 		return true;
 	} else {
 		// Upon failure send an incorrect password error to the form.
-		dispatch(sendFormErr('editPassword', 'oldPassword', 'Incorrect password.'));
-		
 		dispatch({
 			type: types.SEND_EDIT,
-			status: types.FAILURE
+			status: status.FAILURE
 		});
 		
-		return false;
+		throw new SubmissionError({
+			oldPassword: 'Incorrect password.'
+		});
 	}
 };
 
@@ -148,7 +150,7 @@ export const editPassword = values => async dispatch => {
 export const editEmail = values => async dispatch => {
 	dispatch({
 		type: types.SEND_EDIT,
-		status: types.REQUEST
+		status: status.REQUEST
 	});
 	
 	// Send a POSt request to edit the email.
@@ -160,7 +162,7 @@ export const editEmail = values => async dispatch => {
 	if (response.ok) {
 		dispatch({
 			type: types.SEND_EDIT,
-			status: types.SUCCESS,
+			status: status.SUCCESS,
 			successText: 'Saved!'
 		});
 	} else {
@@ -169,7 +171,11 @@ export const editEmail = values => async dispatch => {
 		
 		dispatch({
 			type: types.SEND_EDIT,
-			status: types.FAILURE
+			status: status.FAILURE
+		});
+		
+		throw new SubmissionError({
+			password: 'Incorrect password.'
 		});
 	}
 };

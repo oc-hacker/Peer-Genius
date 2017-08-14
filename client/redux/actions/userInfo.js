@@ -2,7 +2,7 @@ import store from '../store.js';
 
 import { createForm, sendFormVars } from './forms.js';
 
-import { types } from '../../reference/actionTypes.js';
+import types from './types.js';
 
 /**
  * Redux action generator for initializing user info.
@@ -10,11 +10,9 @@ import { types } from '../../reference/actionTypes.js';
  * @param  {Object} [userInfo] The user info object
  * @return {Action} The initialize user info action
  */
-export const initUserInfo = (userInfo) => ({
+export const initUserInfo = userInfo => ({
 	type: types.INIT_USER_INFO,
-	userInfo: {
-		...userInfo
-	}
+	userInfo
 });
 
 /**

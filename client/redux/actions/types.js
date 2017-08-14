@@ -1,4 +1,4 @@
-export const types = {
+export default {
 	RESET: 'Reset',
 
 	CLOSE_SUCCESS: 'Close Success',
@@ -25,6 +25,10 @@ export const types = {
 
 	INIT_USER_INFO: 'Initialize User Info',
 	UPDATE_USER_INFO: 'Update User Info',
+	
+	INIT_COMMUNICATION_METHODS: 'Initialized Communication Methods',
+	INIT_COMMUNICATIONS: 'Initialize Communications',
+	UPDATE_COMMUNICATIONS: 'Update Communications',
 
 	REQUEST_RESET: 'Request Reset',
 	CHECK_RESET: 'Check Reset',

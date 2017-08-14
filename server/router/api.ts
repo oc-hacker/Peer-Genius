@@ -13,7 +13,7 @@ import { urlencoded } from 'body-parser';
 const router = Router();
 // Reminder: remember to use wrapTryCatch to enable express error handling on promise rejection errors!
 
-// For expected response, see docs for the buildInitialStore method in misc/utils
+// For expected response, see docs for the buildStore method in misc/utils
 router.post('/createAccount', wrapTryCatch(functions.createAccount));
 router.post('/login', wrapTryCatch(functions.verifyLogin));
 router.post('/checkEmail', wrapTryCatch(functions.checkEmail));

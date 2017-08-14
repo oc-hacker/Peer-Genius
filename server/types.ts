@@ -21,5 +21,8 @@ export interface Store {
 		lastName: string,
 		birthday: Date
 	},
+	communication: {
+		[method: string]: string | null
+	},
 	sessionJWT: string
 }

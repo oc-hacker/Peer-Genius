@@ -7,7 +7,8 @@ import { SubmissionError } from 'redux-form';
 import { sendFormErr } from './forms';
 import { initUserInfo } from './userInfo';
 
-import { types } from '../../reference/actionTypes';
+import types from './types';
+import status from '../../reference/status';
 
 import { serverURL, sessionJWTExpire } from '../../config';
 import { post } from '../../reference/api';
@@ -22,7 +23,7 @@ export const verifySession = requestInfo => async dispatch => {
 	// Dispatch action marking start of request.
 	dispatch({
 		type: types.VERIFY_SESSION,
-		status: types.REQUEST
+		status: status.REQUEST
 	});
 	
 	// Load the sessionJWT cookie.
@@ -32,7 +33,7 @@ export const verifySession = requestInfo => async dispatch => {
 		// If there is no cookie, then the user is not in session; dispatch an action marking the failure and return false.
 		dispatch({
 			type: types.VERIFY_SESSION,
-			status: types.FAILURE
+			status: status.FAILURE
 		});
 		
 		return false;
@@ -52,7 +53,7 @@ export const verifySession = requestInfo => async dispatch => {
 		
 		dispatch({
 			type: types.VERIFY_SESSION,
-			status: types.SUCCESS
+			status: status.SUCCESS
 		});
 		
 		// Refresh the session.
@@ -60,7 +61,7 @@ export const verifySession = requestInfo => async dispatch => {
 	} else {
 		dispatch({
 			type: types.VERIFY_SESSION,
-			status: types.FAILURE
+			status: status.FAILURE
 		});
 	}
 	
@@ -74,7 +75,7 @@ export const verifySession = requestInfo => async dispatch => {
 export const refreshSession = () => async dispatch => {
 	dispatch({
 		type: types.REFRESH_SESSION,
-		status: types.REQUEST
+		status: status.REQUEST
 	});
 	
 	// Load the sessionJWT cookie.
@@ -84,7 +85,7 @@ export const refreshSession = () => async dispatch => {
 		// If there is no cookie, then the user is not in session; dispatch an action marking the failure.
 		dispatch({
 			type: types.REFRESH_SESSION,
-			status: types.FAILURE
+			status: status.FAILURE
 		});
 		
 		return;
@@ -102,7 +103,7 @@ export const refreshSession = () => async dispatch => {
 		// Dispatch an action to mark the success and store the session JWT.
 		dispatch({
 			type: types.REFRESH_SESSION,
-			status: types.SUCCESS
+			status: status.SUCCESS
 		});
 		
 		// Set a session refresh to happen before the JWT expires
@@ -116,7 +117,7 @@ export const refreshSession = () => async dispatch => {
 		// Dispatch an action to mark the failure.
 		dispatch({
 			type: types.REFRESH_SESSION,
-			status: types.FAILURE
+			status: status.FAILURE
 		});
 		
 		// Call verify session to update
@@ -131,7 +132,7 @@ export const login = credentials => async dispatch => {
 	// If the credentials exists, dispatch an action marking the start of the login request.
 	dispatch({
 		type: types.LOGIN,
-		status: types.REQUEST
+		status: status.REQUEST
 	});
 	
 	// Send a POST request to verify the login.
@@ -145,14 +146,17 @@ export const login = credentials => async dispatch => {
 		
 		dispatch({
 			type: types.LOGIN,
-			status: types.SUCCESS
+			status: status.SUCCESS
 		});
 		
 		// If the login succeeds, save the cookie.
 		await cookie.set('sessionJWT', json.sessionJWT, { expires: sessionJWTExpire });
 		
 		// Initialize all account info in the Redux store
-		dispatch(initUserInfo(json.userInfo));
+		dispatch(initUserInfo({
+			...json.account,
+			...json.user
+		}));
 		
 		// Set a session refresh to happen right before the JWT expires
 		setTimeout(() => {
@@ -164,7 +168,7 @@ export const login = credentials => async dispatch => {
 	else {
 		dispatch({
 			type: types.LOGIN,
-			status: types.FAILURE
+			status: status.FAILURE
 		});
 		
 		// If login fails, send an error to the form.
