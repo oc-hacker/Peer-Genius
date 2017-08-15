@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import * as functions from './functions/session';
+import * as functions from './functions/lesson';
 import { checkReview, wrapTryCatch } from './misc/utils';
 import { verifySessionToken } from './misc/auth';
 

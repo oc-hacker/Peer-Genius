@@ -5,7 +5,7 @@ import { sequelizeAdmin as admin } from '../reference';
 import user from './user';
 import { ProhibitedEditError } from '../errors';
 
-export interface SessionAttributes {
+export interface LessonAttributes {
 	id?: string;
 	mentee?: string;
 	mentor?: string;
@@ -18,7 +18,7 @@ export interface SessionAttributes {
 	comment?: string;
 }
 
-export interface SessionInstance extends Sequelize.Instance<SessionAttributes> {
+export interface LessonInstance extends Sequelize.Instance<LessonAttributes> {
 	createdAt: Date;
 	updatedAt: Date;
 	
@@ -91,17 +91,17 @@ const attributes = {
 	}
 };
 
-const blockUserEdit = (instance: SessionInstance) => {
+const blockUserEdit = (instance: LessonInstance) => {
 	if (instance.changed('mentor')) {
-		throw new ProhibitedEditError('Editing the mentor FK of sessions table is prohibited.')
+		throw new ProhibitedEditError('Editing the mentor FK of lessons table is prohibited.')
 	}
 	if (instance.changed('mentee')) {
-		throw new ProhibitedEditError('Editing the mentee FK of sessions table is prohibited.')
+		throw new ProhibitedEditError('Editing the mentee FK of lessons table is prohibited.')
 	}
 };
 
-const model: Sequelize.Model<SessionInstance, SessionAttributes> = admin.define<SessionInstance, SessionAttributes>('sessions', attributes);
+const model: Sequelize.Model<LessonInstance, LessonAttributes> = admin.define<LessonInstance, LessonAttributes>('lessons', attributes);
 model.beforeUpdate(blockUserEdit);
 model.sync({ alter: config.devMode }); // Alter when in development mode
 
-export default model
+export default model;

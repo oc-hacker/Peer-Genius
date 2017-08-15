@@ -1,9 +1,9 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import { pick, omit } from 'lodash';
+import { pick } from 'lodash';
 import * as httpStatus from 'http-status-codes';
 
-import * as models from '../../database/models/index';
+import * as models from '../../database/models';
 import { exposedAttributes as userAttributes, UserInstance } from '../../database/models/user';
 import { ProhibitedEditError } from '../../database/errors';
 import { createSessionToken } from './auth';
@@ -11,7 +11,7 @@ import { AccountInstance } from '../../database/models/account';
 
 import { Handler, ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { Store, VerifiedRequest } from '../../types';
-import { CommunicationInstance } from '../../database/models/communication';
+import { CommunicationInstance, communicationMethods } from '../../database/models/communication';
 
 export const logger: Handler = (request, response, next) => {
 	console.log(`[${new Date().toUTCString()}]`, 'Request received at', request.originalUrl);
@@ -23,7 +23,7 @@ export const sendIndex: Handler = (request, response) => {
 };
 
 export const checkReview = async (request: VerifiedRequest, response: Response, next: NextFunction) => {
-	let unfinishedReview = await models.session.find({
+	let unfinishedReview = await models.lesson.find({
 		where: {
 			mentee: request.body.user.id
 		}
@@ -122,7 +122,7 @@ export const buildStore = async (id: string, loadedInstances: LoadedModels = {})
 	
 	store.account = pick(account, ['email', 'verified']);
 	store.user = pick(user, userAttributes);
-	store.communication = omit(communication, ['user']);
+	store.communication = pick(communication, communicationMethods);
 	store.sessionJWT = createSessionToken(id);
 	
 	return <Store>store;

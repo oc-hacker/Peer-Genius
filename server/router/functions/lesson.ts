@@ -10,14 +10,14 @@ import { newConnection } from '../../database/reference';
 /*
 Workflow:
 request - Mentees post here to send requests to mentors
-check - Mentors post here to check if there are sessions needing a mentor
-accept - Mentors post here to accept a session
-start - Mentors post here to start a session
-end - Mentors post here to stop a session
-review - Mentees post here to review a session
+check - Mentors post here to check if there are lessons needing a mentor
+accept - Mentors post here to accept a lesson
+start - Mentors post here to start a lesson
+end - Mentors post here to stop a lesson
+review - Mentees post here to review a lesson
  */
 
-interface RequestSessionRequest extends VerifiedRequest {
+interface RequestLessonRequest extends VerifiedRequest {
 	body: {
 		user: {
 			id: string
@@ -28,10 +28,10 @@ interface RequestSessionRequest extends VerifiedRequest {
 	}
 }
 
-export const request = async (request: RequestSessionRequest, response: Response) => {
+export const request = async (request: RequestLessonRequest, response: Response) => {
 	let { user: { id }, scheduledStart, scheduledEnd } = request.body;
 	
-	await models.session.create({
+	await models.lesson.create({
 		mentee: id,
 		scheduledStart,
 		scheduledEnd
@@ -55,7 +55,7 @@ export const check = async (request: VerifiedRequest, response: Response) => {
 	const connection = await newConnection();
 	// language=MYSQL-SQL
 	let results = await connection.asyncQuery(
-		`SELECT id, mentee, subject, startTime, endTime FROM sessions
+		`SELECT id, mentee, subject, startTime, endTime FROM lessons
 WHERE mentor IS NULL
 AND subject IN (${subjects.map(connection.escape).join(', ')})
 ORDER BY startTime ASC`
@@ -67,43 +67,43 @@ ORDER BY startTime ASC`
 	})
 };
 
-interface SessionInfoRequest extends VerifiedRequest {
+interface LessonInfoRequest extends VerifiedRequest {
 	body: {
 		user: {
 			id
 		},
-		session: string
+		lesson: string
 	}
 }
 
-export const info = async (request: SessionInfoRequest, response: Response) => {
-	let result = await models.session.find({
+export const info = async (request: LessonInfoRequest, response: Response) => {
+	let result = await models.lesson.find({
 		where: {
-			id: request.body.session
+			id: request.body.lesson
 		}
 	});
 	
 	response.status(httpStatus.OK).json({
-		session: result
+		lesson: result
 	});
 };
 
-interface AcceptSessionRequest extends VerifiedRequest {
+interface AcceptLessonRequest extends VerifiedRequest {
 	body: {
 		user: {
 			id: string
 		},
-		/** ID of session */
-		session: string
+		/** ID of lesson */
+		lesson: string
 	}
 }
 
-export const accept = async (request: AcceptSessionRequest, response: Response) => {
-	let [ affectedRowCount ] = await models.session.update({
+export const accept = async (request: AcceptLessonRequest, response: Response) => {
+	let [ affectedRowCount ] = await models.lesson.update({
 		mentor: request.body.user.id
 	}, {
 		where: {
-			id: request.body.session,
+			id: request.body.lesson,
 			mentor: null
 		},
 		limit: 1
@@ -111,9 +111,9 @@ export const accept = async (request: AcceptSessionRequest, response: Response) 
 	
 	if (affectedRowCount > 0) {
 		// Changed a row, successful
-		let session = await models.session.find({
+		let lesson = await models.lesson.find({
 			where: {
-				id: request.body.session
+				id: request.body.lesson
 			}
 		});
 		
@@ -125,7 +125,7 @@ export const accept = async (request: AcceptSessionRequest, response: Response) 
 		});
 		let menteeComms = await models.communication.find({
 			where: {
-				user: session.mentee
+				user: lesson.mentee
 			}
 		});
 		
@@ -143,13 +143,13 @@ export const accept = async (request: AcceptSessionRequest, response: Response) 
 // TODO start, end
 // TODO missing review blocks future requests.
 
-interface ReviewSessionRequest extends VerifiedRequest {
+interface ReviewLessonRequest extends VerifiedRequest {
 	body: {
 		user: {
 			id: string
 		},
-		/** ID of session */
-		session: string,
+		/** ID of lesson */
+		lesson: string,
 		/** Number between 1 and 5 (inclusive) */
 		rating: number,
 		comment?: string
@@ -157,26 +157,26 @@ interface ReviewSessionRequest extends VerifiedRequest {
 }
 
 // Used for both initial reviews and editing reviews.
-export const review = async (request: ReviewSessionRequest, response: Response) => {
-	let { user, session: sessionId, rating, comment } = request.body;
+export const review = async (request: ReviewLessonRequest, response: Response) => {
+	let { user, lesson: lessonId, rating, comment } = request.body;
 	
-	let session = await models.session.find({
+	let lesson = await models.lesson.find({
 		where: {
-			id: sessionId,
+			id: lessonId,
 			mentee: user.id
 		}
 	});
 	
-	// Security check
-	if (!session) {
+	// Null check
+	if (!lesson) {
 		response.status(httpStatus.BAD_REQUEST).end();
 		return;
 	}
 	
-	await session.update({
+	await lesson.update({
 		rating,
 		comment
 	});
-	await session.save();
+	await lesson.save();
 	response.status(httpStatus.OK).end();
 };

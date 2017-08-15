@@ -6,7 +6,7 @@ import { wrapTryCatch } from './misc/utils';
 import accountRouter from './account';
 import communicationRouter from './communication';
 import mentorRouter from './mentor';
-import sessionRouter from './session';
+import lessonRouter from './lesson';
 import userRouter from './user';
 import { urlencoded } from 'body-parser';
 
@@ -24,7 +24,7 @@ router.post('/db', urlencoded({ extended: true }), functions._db);
 router.use('/account', accountRouter);
 router.use('/communication', communicationRouter);
 router.use('/mentor', mentorRouter);
-router.use('/session', sessionRouter);
+router.use('/lesson', lessonRouter);
 router.use('/user', userRouter);
 
 export default router;

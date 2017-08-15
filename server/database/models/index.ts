@@ -3,7 +3,7 @@ export { default as account } from './account';
 export { default as communication } from './communication';
 export { default as key } from './key';
 export { default as mentor } from './mentor';
-export { default as session } from './session';
+export { default as lesson } from './lesson';
 export { default as user } from './user';
 
 /*
@@ -12,7 +12,7 @@ export { default as user } from './user';
  users - user's personal info
  communications - user's communication method preferences
  mentors - the subjects that user can be a mentor in
- sessions - represents a session of tutoring between mentor and mentee
+ lessons - represents a lesson of tutoring between mentor and mentee
  keys - stores generated keys and other temporary data for user
  */
 
