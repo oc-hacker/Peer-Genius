@@ -1,6 +1,6 @@
 import deepmerge from 'deepmerge';
 
-import { serverURL } from '../config';
+import { serverURL } from '../../config';
 
 /**
  * Sends a GET request to the defined route.

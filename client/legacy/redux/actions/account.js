@@ -15,6 +15,7 @@ import { post } from '../../reference/api';
 
 import { serverURL } from '../../config.js';
 import { SubmissionError } from 'redux-form';
+import { initCommMethods, initComms } from './communication';
 
 /**
  * Redux Thunk action for creating a student account.
@@ -46,11 +47,13 @@ export const createAccount = (values) => async dispatch => {
 		// Initialize all of the information from the server.
 		let json = await response.json();
 		dispatch(initUserInfo({ ...json.account, ...json.user }));
+		dispatch(initComms(json.communication));
+		dispatch(initCommMethods());
 		
-		// Store the session JWT as a cookie.
+		// Store the lesson JWT as a cookie.
 		await cookie.set('sessionJWT', json.sessionJWT);
 		
-		// Refresh the session and push to the account page.
+		// Refresh the lesson and push to the account page.
 		await dispatch(verifySession());
 		dispatch(push('/home'));
 		

@@ -75,7 +75,7 @@ class TextInputField extends PureComponent {
 				onClick={this._toggleHide}
 				style={{
 					...styles.icon,
-					bottom: hasError ? 20 : 0
+					bottom: hasError ? 30 : 0
 				}}
 				tabIndex={-1}
 			>

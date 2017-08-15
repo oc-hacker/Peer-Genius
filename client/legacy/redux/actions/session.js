@@ -12,12 +12,13 @@ import status from '../../reference/status';
 
 import { serverURL, sessionJWTExpire } from '../../config';
 import { post } from '../../reference/api';
+import { initCommMethods, initComms } from './communication';
 
 /**
  * Thunk action creator for verifying sessions.
  *
  * @param {Boolean} [requestInfo] Whether to request account info as well, or just to verify.  Requesting account info should only be done on initial loading of the page.
- * @return {Boolean} Whether the user is in session.
+ * @return {Boolean} Whether the user is in lesson.
  */
 export const verifySession = requestInfo => async dispatch => {
 	// Dispatch action marking start of request.
@@ -30,7 +31,7 @@ export const verifySession = requestInfo => async dispatch => {
 	let sessionJWT = cookie.get('sessionJWT');
 	
 	if (!sessionJWT) {
-		// If there is no cookie, then the user is not in session; dispatch an action marking the failure and return false.
+		// If there is no cookie, then the user is not in lesson; dispatch an action marking the failure and return false.
 		dispatch({
 			type: types.VERIFY_SESSION,
 			status: status.FAILURE
@@ -49,6 +50,8 @@ export const verifySession = requestInfo => async dispatch => {
 			
 			// Initialize all account info
 			dispatch(initUserInfo({ ...json.account, ...json.user }));
+			dispatch(initComms(json.communication));
+			dispatch(initCommMethods());
 		}
 		
 		dispatch({
@@ -56,7 +59,7 @@ export const verifySession = requestInfo => async dispatch => {
 			status: status.SUCCESS
 		});
 		
-		// Refresh the session.
+		// Refresh the lesson.
 		await dispatch(refreshSession());
 	} else {
 		dispatch({
@@ -65,7 +68,7 @@ export const verifySession = requestInfo => async dispatch => {
 		});
 	}
 	
-	// Return whether the session JWT was valid.
+	// Return whether the lesson JWT was valid.
 	return response.ok;
 };
 
@@ -82,7 +85,7 @@ export const refreshSession = () => async dispatch => {
 	let sessionJWT = cookie.get('sessionJWT');
 	
 	if (!sessionJWT) {
-		// If there is no cookie, then the user is not in session; dispatch an action marking the failure.
+		// If there is no cookie, then the user is not in lesson; dispatch an action marking the failure.
 		dispatch({
 			type: types.REFRESH_SESSION,
 			status: status.FAILURE
@@ -100,13 +103,13 @@ export const refreshSession = () => async dispatch => {
 		// If the check succeeded, save the cookie.
 		await cookie.set('sessionJWT', json.sessionJWT, { expires: sessionJWTExpire });
 		
-		// Dispatch an action to mark the success and store the session JWT.
+		// Dispatch an action to mark the success and store the lesson JWT.
 		dispatch({
 			type: types.REFRESH_SESSION,
 			status: status.SUCCESS
 		});
 		
-		// Set a session refresh to happen before the JWT expires
+		// Set a lesson refresh to happen before the JWT expires
 		setTimeout(() => {
 			dispatch(refreshSession());
 		}, sessionJWTExpire * 9 / 10);
@@ -120,7 +123,7 @@ export const refreshSession = () => async dispatch => {
 			status: status.FAILURE
 		});
 		
-		// Call verify session to update
+		// Call verify lesson to update
 		dispatch(verifySession());
 	}
 };
@@ -157,8 +160,10 @@ export const login = credentials => async dispatch => {
 			...json.account,
 			...json.user
 		}));
+		dispatch(initComms(json.communication));
+		dispatch(initCommMethods());
 		
-		// Set a session refresh to happen right before the JWT expires
+		// Set a lesson refresh to happen right before the JWT expires
 		setTimeout(() => {
 			dispatch(refreshSession());
 		}, sessionJWTExpire * 9 / 10);
@@ -189,7 +194,7 @@ export const login = credentials => async dispatch => {
  * Thunk action creator for logging out.
  */
 export const logout = () => async dispatch => {
-	// Remove the session JWT cookie.
+	// Remove the lesson JWT cookie.
 	await cookie.remove('sessionJWT');
 	
 	// Dispatch an action to reset the redux store to be blank.
@@ -197,7 +202,7 @@ export const logout = () => async dispatch => {
 		type: types.RESET
 	});
 	
-	// Dispatch an action to refresh the session, and then push to front page.
+	// Dispatch an action to refresh the lesson, and then push to front page.
 	dispatch({
 		type: types.LOGOUT
 	});
