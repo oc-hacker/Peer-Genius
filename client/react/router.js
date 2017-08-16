@@ -6,10 +6,12 @@ import { connect } from 'react-redux';
 
 import { Route } from './components';
 import FrontPage from './frontPage';
+import { initialize } from '../redux/actions/creators/init';
 
+@connect(null, { initialize })
 export default class MasterRouter extends Component {
-	constructor(props) {
-		super(props);
+	componentWillMount() {
+		this.props.initialize();
 	}
 	
 	render() {

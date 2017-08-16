@@ -9,6 +9,10 @@ import { connect } from 'react-redux';
 const styles = {
 	page: {
 		position: 'absolute',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
 		width: '100%',
 		height: '100%',
 		left: 0,
@@ -24,36 +28,23 @@ const styles = {
 @withStyles(styles)
 export default class Page extends Component {
 	static propTypes = {
+		className: PropTypes.string,
+		bg: PropTypes.string,
 		page: PropTypes.number.isRequired,
 		currentPage: PropTypes.number.isRequired
 	};
 	
 	render() {
-		const { classes, page, currentPage, ...divProps } = this.props;
+		const { className, classes, page, currentPage, bg, ...divProps } = this.props;
 		
-		switch (currentPage) {
-			case page: {
-				// Current page
-				return (
-					<div
-						className={classes.page}
-						{...divProps}
-					/>
-				);
-			}
-			case page - 1: {
-				// Prepare to scroll in from the bottom.
-				return (
-					<div
-						className={classNames(classes.page, classes.next)}
-						{...divProps}
-					/>
-				);
-			}
-			default: {
-				// Don't bother with rendering if don't need to
-				return null;
-			}
-		}
+		return (
+			<div
+				className={classNames({
+					[classes.page]: true,
+					[classes.next]: currentPage < page
+				}, className)}
+				{...divProps}
+			/>
+		);
 	}
 }

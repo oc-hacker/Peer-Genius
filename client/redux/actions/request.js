@@ -17,7 +17,7 @@ export const get = route => {
 	if (!route.startsWith('/')) {
 		route = '/' + route;
 	}
-	return fetch(serverUrl + route);
+	return fetch(serverURL + route);
 };
 
 
