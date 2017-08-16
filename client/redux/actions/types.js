@@ -1,0 +1,6 @@
+export default {
+	INIT_CONFIG: 'INIT_CONFIG',
+	
+	INIT_USER: 'INIT_USER',
+	CLEAR_USER: 'CLEAR_USER'
+};

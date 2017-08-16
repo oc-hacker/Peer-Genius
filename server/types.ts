@@ -6,23 +6,23 @@
 export interface VerifiedRequest extends Request {
 	body: {
 		user: {
-			id: string
+			id: string;
 		}
 	}
 }
 
 export interface Store {
 	account: {
-		email: string,
-		verified: boolean
-	},
+		email: string;
+		verified: boolean;
+	};
 	user: {
-		firstName: string,
-		lastName: string,
-		birthday: Date
-	},
+		firstName: string;
+		lastName: string;
+		birthday: Date;
+	};
 	communication: {
-		[method: string]: string | null
-	},
-	sessionJWT: string
+		[method: string]: string | null;
+	};
+	sessionJWT: string;
 }

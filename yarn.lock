@@ -1370,7 +1370,7 @@ babel-register@^6.24.1:
     mkdirp "^0.5.1"
     source-map-support "^0.4.2"
 
-babel-runtime@6.x.x, babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime@^6.20.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0, babel-runtime@^6.5.0, babel-runtime@^6.9.2:
+babel-runtime@6.x.x, babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime@^6.20.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0, babel-runtime@^6.25.0, babel-runtime@^6.5.0, babel-runtime@^6.9.2:
   version "6.25.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.25.0.tgz#33b98eaa5d482bb01a8d1aa6b437ad2b01aec41c"
   dependencies:
@@ -1532,6 +1532,10 @@ braces@^1.8.2:
 brcast@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/brcast/-/brcast-2.0.2.tgz#2db16de44140e418dc37fab10beec0369e78dcef"
+
+brcast@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/brcast/-/brcast-3.0.0.tgz#40b80dbb75086f0a32b2c2752dbecbbb34d8b197"
 
 brorand@^1.0.1:
   version "1.1.0"
@@ -2394,7 +2398,7 @@ doctrine@^2.0.0:
     esutils "^2.0.2"
     isarray "^1.0.0"
 
-dom-helpers@^3.2.0:
+dom-helpers@^3.2.0, dom-helpers@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.2.1.tgz#3203e07fed217bd1f424b019735582fc37b2825a"
 
@@ -3271,7 +3275,7 @@ global-prefix@^0.1.4:
     is-windows "^0.2.0"
     which "^1.2.12"
 
-global@^4.3.0, global@^4.3.2:
+global@^4.3.0, global@^4.3.2, global@~4.3.0:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/global/-/global-4.3.2.tgz#e76989268a6c74c38908b1305b10fc0e394e9d0f"
   dependencies:
@@ -3717,13 +3721,6 @@ inline-style-prefixer@^2.0.5:
   dependencies:
     bowser "^1.0.0"
     hyphenate-style-name "^1.0.1"
-
-inline-style-prefixer@^3.0.2:
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/inline-style-prefixer/-/inline-style-prefixer-3.0.6.tgz#b27fe309b4168a31eaf38c8e8c60ab9e7c11731f"
-  dependencies:
-    bowser "^1.6.0"
-    css-in-js-utils "^1.0.3"
 
 inline-style-prefixer@^3.0.6:
   version "3.0.7"
@@ -4516,7 +4513,7 @@ jws@^3.1.4:
     jwa "^1.1.4"
     safe-buffer "^5.0.1"
 
-keycode@^2.1.8:
+keycode@^2.1.8, keycode@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/keycode/-/keycode-2.1.9.tgz#964a23c54e4889405b4861a5c9f0480d45141dfa"
 
@@ -4758,10 +4755,6 @@ lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
 
-lodash.merge@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.0.tgz#69884ba144ac33fe699737a6086deffadd0f89c5"
-
 lodash.once@^4.0.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
@@ -4798,10 +4791,6 @@ lodash.templatesettings@^3.0.0:
   dependencies:
     lodash._reinterpolate "^3.0.0"
     lodash.escape "^3.0.0"
-
-lodash.throttle@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
 
 lodash.uniq@^4.5.0:
   version "4.5.0"
@@ -4912,20 +4901,33 @@ matchdep@^1.0.0:
     resolve "~1.1.6"
     stack-trace "0.0.9"
 
-material-ui@^0.18.7:
-  version "0.18.7"
-  resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-0.18.7.tgz#b87af16357e6966b36c23d489eb2ed70746d25f8"
+material-ui-icons@^1.0.0-alpha.19:
+  version "1.0.0-alpha.19"
+  resolved "https://registry.yarnpkg.com/material-ui-icons/-/material-ui-icons-1.0.0-alpha.19.tgz#a6c5db87be335bbc483189c56804d681b7ea6b54"
   dependencies:
-    babel-runtime "^6.23.0"
-    inline-style-prefixer "^3.0.2"
-    keycode "^2.1.8"
-    lodash.merge "^4.6.0"
-    lodash.throttle "^4.1.1"
-    prop-types "^15.5.7"
+    recompose "^0.23.5"
+
+material-ui@next:
+  version "1.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-1.0.0-beta.5.tgz#3e3f7a4b9d333f67411d0f5ce3b304655ac7528e"
+  dependencies:
+    babel-runtime "^6.25.0"
+    brcast "^3.0.0"
+    classnames "^2.2.5"
+    deepmerge "^1.5.0"
+    dom-helpers "^3.2.1"
+    hoist-non-react-statics "^1.2.0"
+    jss "^8.1.0"
+    jss-preset-default "^3.0.0"
+    keycode "^2.1.9"
+    lodash "^4.17.4"
+    prop-types "^15.5.10"
     react-event-listener "^0.4.5"
-    react-transition-group "^1.1.2"
-    recompose "0.24.0"
-    simple-assign "^0.1.0"
+    react-jss "^7.0.2"
+    react-scrollbar-size "^2.0.0"
+    react-transition-group "^2.2.0"
+    recompose "^0.24.0"
+    scroll "^2.0.0"
     warning "^3.0.0"
 
 math-expression-evaluator@^1.2.14:
@@ -6166,6 +6168,12 @@ radium@^0.19.0:
     inline-style-prefixer "^2.0.5"
     prop-types "^15.5.8"
 
+rafl@~1.2.1:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/rafl/-/rafl-1.2.2.tgz#fe930f758211020d47e38815f5196a8be4150740"
+  dependencies:
+    global "~4.3.0"
+
 randomatic@^1.1.3:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/randomatic/-/randomatic-1.1.7.tgz#c7abe9cc8b87c0baa876b19fde83fd464797e38c"
@@ -6359,6 +6367,14 @@ react-router@^4.0.0, react-router@^4.1.1:
     prop-types "^15.5.4"
     warning "^3.0.0"
 
+react-scrollbar-size@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-scrollbar-size/-/react-scrollbar-size-2.0.0.tgz#611215f4105db28f1f56ccace627c3fce137a2f3"
+  dependencies:
+    babel-runtime "^6.23.0"
+    prop-types "^15.5.10"
+    react-event-listener "^0.4.5"
+
 react-simple-di@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-simple-di/-/react-simple-di-1.2.0.tgz#dde0e5bf689f391ef2ab02c9043b213fe239c6d0"
@@ -6400,6 +6416,17 @@ react-transition-group@^1.1.2:
     dom-helpers "^3.2.0"
     loose-envify "^1.3.1"
     prop-types "^15.5.6"
+    warning "^3.0.0"
+
+react-transition-group@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.2.0.tgz#793bf8cb15bfe91b3101b24bce1c1d2891659575"
+  dependencies:
+    chain-function "^1.0.0"
+    classnames "^2.2.5"
+    dom-helpers "^3.2.0"
+    loose-envify "^1.3.1"
+    prop-types "^15.5.8"
     warning "^3.0.0"
 
 react-treebeard@^2.0.3:
@@ -6527,7 +6554,16 @@ rechoir@^0.6.2:
   dependencies:
     resolve "^1.1.6"
 
-recompose@0.24.0:
+recompose@^0.23.5:
+  version "0.23.5"
+  resolved "https://registry.yarnpkg.com/recompose/-/recompose-0.23.5.tgz#72ac8261246bec378235d187467d02a721e8b1de"
+  dependencies:
+    change-emitter "^0.1.2"
+    fbjs "^0.8.1"
+    hoist-non-react-statics "^1.0.0"
+    symbol-observable "^1.0.4"
+
+recompose@^0.24.0:
   version "0.24.0"
   resolved "https://registry.yarnpkg.com/recompose/-/recompose-0.24.0.tgz#262e93f974439eb17e7779824d88cce90492a5dd"
   dependencies:
@@ -6590,6 +6626,10 @@ redux-logger@^3.0.6:
   resolved "https://registry.yarnpkg.com/redux-logger/-/redux-logger-3.0.6.tgz#f7555966f3098f3c88604c449cf0baf5778274bf"
   dependencies:
     deep-diff "^0.3.5"
+
+redux-saga@^0.15.6:
+  version "0.15.6"
+  resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.15.6.tgz#8638dc522de6c6c0a496fe8b2b5466287ac2dc4d"
 
 redux-thunk@^2.2.0:
   version "2.2.0"
@@ -6730,6 +6770,10 @@ requires-port@1.0.x, requires-port@1.x.x:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
 
+reselect@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/reselect/-/reselect-3.0.1.tgz#efdaa98ea7451324d092b2b2163a6a1d7a9a2147"
+
 resolve-dir@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/resolve-dir/-/resolve-dir-0.1.1.tgz#b219259a5602fac5c5c496ad894a6e8cc430261e"
@@ -6811,6 +6855,12 @@ schema-utils@^0.3.0:
   resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-0.3.0.tgz#f5877222ce3e931edae039f17eb3716e7137f8cf"
   dependencies:
     ajv "^5.0.0"
+
+scroll@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/scroll/-/scroll-2.0.0.tgz#55cba0d84eb845d98fe3579a801e5722a6a3a81f"
+  dependencies:
+    rafl "~1.2.1"
 
 select-hose@^2.0.0:
   version "2.0.0"
@@ -6997,10 +7047,6 @@ sigmund@~1.0.0:
 signal-exit@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
-
-simple-assign@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/simple-assign/-/simple-assign-0.1.0.tgz#17fd3066a5f3d7738f50321bb0f14ca281cc4baa"
 
 slash@^1.0.0:
   version "1.0.0"

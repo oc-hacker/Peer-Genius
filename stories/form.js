@@ -1,8 +1,10 @@
 import React from 'react';
-import { reduxForm, SubmissionError } from 'redux-form';
-import RaisedButton from 'material-ui/RaisedButton';
+import { reduxForm, SubmissionError, Form } from 'redux-form';
 
-import Form, { Field } from '../client/react/components/form';
+import Button from 'material-ui/Button';
+
+import TextField from '../client/react/components/form/TextField';
+import validator, {required} from '../client/react/components/form/validator';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
@@ -10,47 +12,35 @@ import { withRedux, withTheme } from './decorators';
 
 const SimpleForm = reduxForm({
 	form: 'story',
-	onSubmit: () => new Promise((resolve, reject) => {
-		reject(new SubmissionError({text: 'Error!'}))
-	})
+	// onSubmit: () => new Promise((resolve, reject) => {
+	// 	reject(new SubmissionError({ text: 'Error!' }));
+	// })
+	onSubmit: action('submit')
 })(props => (
 	<Form onSubmit={props.handleSubmit}>
-		<Field.Checkbox
-			name="check"
-			label="Checkbox"
+		<TextField
+			name="test"
+			label="Test"
+			validate={[validator(value => value !== 'error')`Test error`]}
+			warn={[validator(value => value !=='warn')`Test warning`]}
 		/>
-		<Field.Text
-			name="text"
-			label="Text Field"
-		/>
-		<Field.Text
-			name="password"
+		<TextField
+			name="pw"
 			type="password"
-			label="Password Field"
+			label="Pass"
+			validate={[required`Need password.`]}
 		/>
-		<Field.CheckText
-			name="checked"
-			label="Checked Text"
-		/>
-		<Field.Date
-			name="date 1"
-			label="Date Field 1"
-		/>
-		<Field.Date
-			name="date2"
-			label="Date Field 2"
-			openToYearSelection={false}
-			disableToday
-		/>
-		<RaisedButton
+		<Button
+			raised
 			type="submit"
-			label="Submit"
-		/>
+		>
+			Submit
+		</Button>
 	</Form>
 ));
 
 storiesOf('Form', module)
 	.addDecorator(withRedux)
 	.addDecorator(withTheme)
-	.add('with fields', () => <SimpleForm/>);
+	.add('with fields', () => <SimpleForm />);
 

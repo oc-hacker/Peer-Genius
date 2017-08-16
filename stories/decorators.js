@@ -2,14 +2,14 @@ import React from 'react';
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { Provider as StoreProvider } from 'react-redux';
 import { reducer as formReducer } from 'redux-form';
-import ThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import injectTapPlugin from 'react-tap-event-plugin';
+import logger from 'redux-logger';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
 const composeWithDevtools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(combineReducers({
 	form: formReducer
 }), {}, composeWithDevtools(
-	applyMiddleware()
+	applyMiddleware(logger)
 ));
 
 export const withRedux = story => (
@@ -18,9 +18,8 @@ export const withRedux = story => (
 	</StoreProvider>
 );
 
-injectTapPlugin();
 export const withTheme = story => (
-	<ThemeProvider>
+	<MuiThemeProvider theme={createMuiTheme()}>
 		{story()}
-	</ThemeProvider>
+	</MuiThemeProvider>
 );
