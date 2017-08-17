@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { routerMiddleware } from 'react-router-redux';
+import { routerReducer, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import { reducer as formReducer } from 'redux-form';
 
@@ -17,6 +17,7 @@ const composeWithDevTools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compo
 let store = createStore(
 	combineReducers({
 		...reducers,
+		router: routerReducer,
 		form: formReducer
 	}),
 	{},

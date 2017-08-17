@@ -55,14 +55,14 @@ export default class PageRadio extends Component {
 					[classes.group]: true,
 					[classes.hidden]: currentPage === 0
 				})}
-				selectedValue={currentPage}
+				selectedValue={currentPage.toString()}
 				onChange={this._setPage}
 			>
-				<Radio value={0} className={classes.radio} />
-				<Radio value={1} className={classes.radio} />
-				<Radio value={2} className={classes.radio} />
-				<Radio value={3} className={classes.radio} />
-				<Radio value={4} className={classes.radio} />
+				<Radio value="0" className={classes.radio} />
+				<Radio value="1" className={classes.radio} />
+				<Radio value="2" className={classes.radio} />
+				<Radio value="3" className={classes.radio} />
+				<Radio value="4" className={classes.radio} />
 			</RadioGroup>
 		);
 	}

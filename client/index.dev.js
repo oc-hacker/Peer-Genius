@@ -5,8 +5,6 @@ import { AppContainer } from 'react-hot-loader';
 
 import App from './react/main';
 
-// Needed for MUI
-injectTapEventPlugin();
 // Render the app.
 ReactDOM.render(
 	<AppContainer>

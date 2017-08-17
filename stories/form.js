@@ -5,8 +5,12 @@ import Button from 'material-ui/Button';
 
 import ReduxForm from '../client/react/components/form/ReduxForm';
 import CheckboxField from '../client/react/components/form/CheckboxField';
+import CheckTextField from '../client/react/components/form/CheckTextField';
+import DateField from '../client/react/components/form/DateField';
 import TextField from '../client/react/components/form/TextField';
-import validator, {required} from '../client/react/components/form/validator';
+import SelectField from '../client/react/components/form/SelectField';
+import CommunicationFields from '../client/react/components/CommunicationFields';
+import validator, { required } from '../client/react/components/form/validator';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
@@ -24,7 +28,7 @@ const SimpleForm = reduxForm({
 			name="test"
 			label="Test"
 			validate={[validator(value => value !== 'error')`Test error`]}
-			warn={[validator(value => value !=='warn')`Test warning`]}
+			warn={[validator(value => value !== 'warn')`Test warning`]}
 		/>
 		<TextField
 			name="pw"
@@ -55,12 +59,36 @@ storiesOf('Form', module)
 				name="check1"
 				label="Check 1"
 			/>
+			<CheckTextField
+				name="checkText"
+				checkLabel="Check"
+				textLabel="Text"
+				validate={validator(value => value !== null)`Not null`}
+			/>
+			<SelectField
+				name="select"
+				label="Select"
+				options={{
+					o1: 'Option 1',
+					o2: 'Option 2'
+				}}
+				validate={validator(value => value !== 'o2')`Test error`}
+			/>
+			<DateField
+				name="date"
+				label="Date"
+			/>
 			<Button
 				raised
 				type="submit"
 			>
 				Submit
 			</Button>
+		</ReduxForm>
+	))
+	.add('comms form', () => (
+		<ReduxForm form="comms" onSubmit={console.log}>
+			<CommunicationFields />
 		</ReduxForm>
 	));
 

@@ -5,12 +5,7 @@ import { reducer as formReducer } from 'redux-form';
 import logger from 'redux-logger';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
-const composeWithDevtools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(combineReducers({
-	form: formReducer
-}), {}, composeWithDevtools(
-	applyMiddleware(logger)
-));
+import store from '../client/redux/store';
 
 export const withRedux = story => (
 	<StoreProvider store={store}>

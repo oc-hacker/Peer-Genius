@@ -7,11 +7,7 @@ import { FormControl, FormControlLabel } from 'material-ui/Form';
 
 import { connect } from 'react-redux';
 
-class CheckboxFieldComponent extends Component {
-	constructor(props) {
-		super(props);
-	}
-	
+export class CheckboxFieldComponent extends Component {
 	render() {
 		let {
 			input, meta: { touched, error, warning },

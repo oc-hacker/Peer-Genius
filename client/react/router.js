@@ -1,12 +1,16 @@
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-router';
+import { ConnectedRouter } from 'react-router-redux';
 
 import { connect } from 'react-redux';
 
 import { Route } from './components';
 import FrontPage from './frontPage';
+import CreateAccount from './createAccount';
 import { initialize } from '../redux/actions/creators/init';
+
+import { browserHistory } from '../redux/store';
 
 @connect(null, { initialize })
 export default class MasterRouter extends Component {
@@ -16,9 +20,12 @@ export default class MasterRouter extends Component {
 	
 	render() {
 		return (
-			<Switch>
-				<Route isPublic path="/" exact component={FrontPage} />
-			</Switch>
+			<ConnectedRouter history={browserHistory}>
+				<Switch>
+					<Route isPublic exact path="/" component={FrontPage} />
+					<Route isPublic path="/createAccount" component={CreateAccount} />
+				</Switch>
+			</ConnectedRouter>
 		);
 	}
 }
