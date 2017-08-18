@@ -4,57 +4,21 @@ import { Field } from 'redux-form';
 import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Input, { InputLabel } from 'material-ui/Input';
-import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog';
 
 import { connect } from 'react-redux';
 
-import DisabledInput from './DisabledInput';
+import ClickInput from './ClickInput';
+import DatePickerDialog from './DateFieldComponents/DatePickerDialog';
 
-const styles = theme => ({
-	dialogTitle: {
-		backgroundColor: theme.palette.primary[500]
-	}
-});
-
-class DatePickerDialog extends Component {
-	static propTypes = {
-		open: PropTypes.bool,
-		onRequestClose: PropTypes.func,
-		onSelect: PropTypes.func,
-		startDate: PropTypes.object,
-		classes: PropTypes.object
-	};
-	
-	constructor(props) {
-		super(props);
-		
-		this.state = {
-			year: null,
-			month: null,
-			date: null
-		};
-	}
-	
-	render() {
-		let { classes, open, onRequestClose, onSelect } = this.props;
-		
-		return (
-			<Dialog open={open} onRequestClose={onRequestClose}>
-				<DialogTitle className={classes.dialogTitle}>
-					Hello world!
-				</DialogTitle>
-			</Dialog>
-		);
-	}
-}
+const styles = {};
 
 @withStyles(styles)
 export class DateFieldComponent extends Component {
 	static propTypes = {
 		name: PropTypes.string,
-		label: PropTypes.string
+		label: PropTypes.string,
+		firstDayOfWeek: PropTypes.number,
+		defaultMode: PropTypes.oneOf('date', 'year')
 	};
 	
 	constructor(props) {
@@ -77,45 +41,38 @@ export class DateFieldComponent extends Component {
 		});
 	};
 	
+	_onConfirm = date => {
+		this._closePicker();
+		this.props.input.onBlur(date);
+	};
+	
 	render() {
 		let {
-			input: { value, onChange, onFocus, onBlur, ...input }, meta: { touched, error, warning },
-			label, type, classes, fullWidth, ...fieldProps
+			input, meta, label, classes,
+			firstDayOfWeek, defaultMode,
+			...inputProps
 		} = this.props;
 		let { open } = this.state;
 		
-		let warningClass = classNames({
-			[classes.warning]: touched && (warning && !error)
-		});
-		
 		return (
-			<FormControl
-				className={classes.fieldContainer}
-				fullWidth={fullWidth !== false}
-				error={touched && (error || warning)}
+			<ClickInput
+				input={{
+					...input,
+					value: input.value ? input.value.toDateString() : ''
+				}}
+				meta={meta}
+				label={label}
+				onClick={this._openPicker}
+				{...inputProps}
 			>
-				<InputLabel className={warningClass}>
-					{label}
-				</InputLabel>
-				<Input
-					{...input}
-					value={value.toDateString()}
-					component={DisabledInput}
-					onClick={this._openPicker}
-					classes={{
-						error: classNames({
-							[classes.warningInput]: touched && (warning && !error)
-						})
-					}}
-				/>
-				<FormHelperText classes={{ error: warningClass }}>
-					{touched && (error || warning)}
-				</FormHelperText>
 				<DatePickerDialog
 					classes={classes}
 					open={open} onRequestClose={this._closePicker}
+					title={label} value={input.value}
+					firstDayOfWeek={firstDayOfWeek} defaultMode={defaultMode}
+					onSelect={this._onConfirm}
 				/>
-			</FormControl>
+			</ClickInput>
 		);
 	}
 }
@@ -125,10 +82,17 @@ export default class DateField extends Component {
 		name: PropTypes.string,
 		label: PropTypes.string,
 		minDate: PropTypes.object,
-		maxDate: PropTypes.object
+		maxDate: PropTypes.object,
+		firstDayOfWeek: PropTypes.number,
+		defaultMode: PropTypes.oneOf('date', 'year')
 	};
 	
-	_format = value => new Date(value);
+	static defaultProps = {
+		firstDayOfWeek: 0,
+		defaultMode: 'date'
+	};
+	
+	_format = value => value && new Date(value);
 	
 	_parse = input => input.toISOString();
 	

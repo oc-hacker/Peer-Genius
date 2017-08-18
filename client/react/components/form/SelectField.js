@@ -13,7 +13,7 @@ import ArrowDropdown from 'material-ui-icons/ArrowDropDown';
 import { connect } from 'react-redux';
 
 import ClickInput from './ClickInput';
-import DisabledInput from './DisabledInput';
+// import DisabledInput from './DisabledInput';
 
 /**
  * Reverses the keys and values of an object.
@@ -73,18 +73,6 @@ export class SelectFieldComponent extends Component {
 		};
 	}
 	
-	_onInputFocus = event => {
-		const { input: { value, onFocus } } = this.props;
-		
-		onFocus(value);
-	};
-	
-	_onInputBlur = event => {
-		const { input: { value, onBlur } } = this.props;
-		
-		onBlur(value);
-	};
-	
 	_onInputClick = event => {
 		this.setState({
 			anchor: event.currentTarget,
@@ -93,10 +81,12 @@ export class SelectFieldComponent extends Component {
 	};
 	
 	_closeMenu = () => {
+		const { input: { value, onBlur } } = this.props;
+		
 		this.setState({
 			open: false
 		});
-		this._onInputBlur(); // Artificially blur the field to mark it as touched
+		onBlur(value);// Artificially blur the field to mark it as touched
 	};
 	
 	_makeSelectHandler = value => () => {
@@ -106,41 +96,19 @@ export class SelectFieldComponent extends Component {
 	
 	render() {
 		let {
-			input: { onChange, onFocus, onBlur, ...input }, meta: { touched, error, warning },
-			label, options, classes, fullWidth, ...fieldProps
+			input, meta, options, classes,
+			...inputProps
 		} = this.props;
 		let { anchor, open } = this.state;
 		
-		let warningClass = classNames({
-			[classes.warning]: touched && (warning && !error)
-		});
-		
 		return (
-			<FormControl
-				className={classes.fieldContainer}
-				fullWidth={fullWidth !== false}
-				error={touched && (error || warning)}
+			<ClickInput
+				input={input}
+				meta={meta}
+				onClick={this._onInputClick}
+				firstChildren={<ArrowDropdown className={classes.icon} />}
+				{...inputProps}
 			>
-				<ArrowDropdown className={classes.icon} />
-				<InputLabel className={warningClass} shrink={Boolean(input.value)}>
-					{label}
-				</InputLabel>
-				<Input
-					{...input}
-					component={DisabledInput}
-					onFocus={this._onInputFocus}
-					onBlur={this._onInputBlur}
-					onClick={this._onInputClick}
-					classes={{
-						input: classes.input,
-						error: classNames({
-							[classes.warningInput]: touched && (warning && !error)
-						})
-					}}
-				/>
-				<FormHelperText classes={{ error: warningClass }}>
-					{touched && (error || warning)}
-				</FormHelperText>
 				<Menu
 					anchorEl={anchor}
 					open={open} onRequestClose={this._closeMenu}
@@ -152,7 +120,7 @@ export class SelectFieldComponent extends Component {
 						</MenuItem>
 					))}
 				</Menu>
-			</FormControl>
+			</ClickInput>
 		);
 	}
 }

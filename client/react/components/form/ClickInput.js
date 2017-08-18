@@ -1,7 +1,9 @@
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
+import { orange } from 'material-ui/colors';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import Input, { InputLabel } from 'material-ui/Input';
 
@@ -37,14 +39,23 @@ class DisabledInput extends Component {
 @withStyles(styles)
 export default class ClickInput extends Component {
 	static propTypes = {
-		onClick: PropTypes.func.isRequired
+		input: PropTypes.object,
+		meta: PropTypes.object,
+		label: PropTypes.string,
+		fullWidth: PropTypes.bool,
+		firstChildren: PropTypes.oneOfType([
+			PropTypes.node,
+			PropTypes.arrayOf(PropTypes.node)
+		]),
+		onClick: PropTypes.func.isRequired,
+		inputProps:PropTypes.object
 	};
 	
 	render() {
 		let {
 			input, meta: { touched, error, warning },
-			label, classes, fullWidth, children,
-			...inputProps
+			label, classes, fullWidth, children, firstChildren,
+			onClick, inputProps
 		} = this.props;
 		
 		let warningClass = classNames({
@@ -55,14 +66,20 @@ export default class ClickInput extends Component {
 			<FormControl
 				className={classes.fieldContainer}
 				fullWidth={fullWidth !== false}
-				error={touched && (error || warning)}
+				error={Boolean(touched && (error || warning))}
 			>
-				<InputLabel className={warningClass}>
+				{firstChildren}
+				<InputLabel
+					className={warningClass}
+					shrink={Boolean(input.value)}
+				>
 					{label}
 				</InputLabel>
 				<Input
 					{...input}
 					{...inputProps}
+					component={DisabledInput}
+					onClick={onClick}
 					classes={{
 						input: classes.input,
 						error: classNames({
@@ -73,7 +90,7 @@ export default class ClickInput extends Component {
 				<FormHelperText classes={{ error: warningClass }}>
 					{touched && (error || warning)}
 				</FormHelperText>
-				{...children}
+				{children}
 			</FormControl>
 		);
 	}

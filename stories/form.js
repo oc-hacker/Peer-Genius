@@ -77,6 +77,7 @@ storiesOf('Form', module)
 			<DateField
 				name="date"
 				label="Date"
+				defaultMode="year"
 			/>
 			<Button
 				raised
