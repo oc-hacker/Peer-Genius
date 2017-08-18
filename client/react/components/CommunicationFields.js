@@ -31,6 +31,7 @@ export default class CommunicationFields extends Component {
 			<div>
 				{Object.keys(methods).map(methodName => (
 					<CheckTextField
+						key={methodName}
 						name={methodName}
 						checkLabel={methods[methodName]}
 						textLabel={methodName === 'imessage' ? 'Phone number' : 'Username'}

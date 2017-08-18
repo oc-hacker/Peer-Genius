@@ -100,7 +100,7 @@ class CheckTextFieldComponent extends Component {
 	render() {
 		let {
 			input: { name }, meta: { touched, error, warning },
-			checkLabel, textLabel, uncheckedValue, autoClear, classes,
+			fullWidth, checkLabel, textLabel, uncheckedValue, autoClear, classes,
 			checkboxProps, inputProps
 		} = this.props;
 		let { checked, value } = this.state;
@@ -118,7 +118,10 @@ class CheckTextFieldComponent extends Component {
 					control={<Checkbox />}
 					{...checkboxProps}
 				/>
-				<FormControl error={touched && (error || warning)}>
+				<FormControl
+					fullWidth={fullWidth !== false}
+					error={touched && (error || warning)}
+				>
 					<InputLabel className={warningClass}>
 						{textLabel}
 					</InputLabel>

@@ -58,15 +58,15 @@ export default class DatePickerDialog extends Component {
 		onSelect: PropTypes.func,
 		
 		title: PropTypes.string,
-		value: PropTypes.object,
-		startDate: PropTypes.object,
-		endDate: PropTypes.object,
+		value: PropTypes.instanceOf(Date),
+		minDate: PropTypes.instanceOf(Date),
+		maxDate: PropTypes.instanceOf(Date),
 		/** The date that picker will start on. Defaults to today. */
-		initialDate: PropTypes.object,
+		initialDate: PropTypes.instanceOf(Date),
 		
 		/** 0=Sun, 1=Mon, ...*/
 		firstDayOfWeek: PropTypes.number,
-		defaultMode: PropTypes.oneOf('date', 'year'),
+		defaultMode: PropTypes.oneOf(['date', 'year']),
 		
 		classes: PropTypes.object
 	};
@@ -104,8 +104,8 @@ export default class DatePickerDialog extends Component {
 	_setYear = year => {
 		this.setState({
 			year,
-			mode: ' date'
-		});
+			mode: 'date'
+		}, this._boundDate);
 	};
 	
 	_onRequestClose = () => {
@@ -121,6 +121,28 @@ export default class DatePickerDialog extends Component {
 	_onConfirmSelect = () => {
 		let { year, month, date } = this.state;
 		this.props.onSelect(new Date(year, month, date));
+	};
+	
+	_boundDate = () => {
+		let { minDate, maxDate } = this.props;
+		let { year, month, date } = this.state;
+		
+		// Check minimum date
+		if (new Date(year, month, date).getTime() < minDate.getTime()) {
+			this.setState({
+				year: minDate.getFullYear(),
+				month: minDate.getMonth(),
+				date: minDate.getDate()
+			});
+		}
+		// Check maximum date
+		else if (new Date(year, month, date).getTime() > maxDate.getTime()) {
+			this.setState({
+				year: maxDate.getFullYear(),
+				month: maxDate.getMonth(),
+				date: maxDate.getDate()
+			});
+		}
 	};
 	
 	_decrementMonth = () => {
@@ -139,7 +161,7 @@ export default class DatePickerDialog extends Component {
 					date: null
 				};
 			}
-		});
+		}, this._boundDate);
 	};
 	
 	_incrementMonth = () => {
@@ -158,7 +180,7 @@ export default class DatePickerDialog extends Component {
 					date: null
 				};
 			}
-		});
+		}, this._boundDate);
 	};
 	
 	/**
@@ -178,7 +200,7 @@ export default class DatePickerDialog extends Component {
 	render() {
 		let {
 			classes, title,
-			open, onSelect,
+			open, onSelect, minDate, maxDate,
 			firstDayOfWeek
 		} = this.props;
 		let { year, month, date, mode } = this.state;
@@ -197,7 +219,10 @@ export default class DatePickerDialog extends Component {
 						</Typography>
 					</DialogTitle>
 					<DialogContent>
-						<YearMenu year={year} setYear={this._setYear} />
+						<YearMenu
+							year={year} setYear={this._setYear}
+							minYear={minDate.getFullYear()} maxYear={maxDate.getFullYear()}
+						/>
 					</DialogContent>
 				</Dialog>
 			);
@@ -232,7 +257,7 @@ export default class DatePickerDialog extends Component {
 						</IconButton>
 					</div>
 					<DateTable
-						year={year} month={month} date={date}
+						year={year} month={month} date={date} minDate={minDate} maxDate={maxDate}
 						firstDayOfWeek={firstDayOfWeek} onSelect={date => this.setState({ date })}
 					/>
 				</DialogContent>

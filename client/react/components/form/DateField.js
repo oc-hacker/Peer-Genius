@@ -17,8 +17,10 @@ export class DateFieldComponent extends Component {
 	static propTypes = {
 		name: PropTypes.string,
 		label: PropTypes.string,
+		minDate: PropTypes.instanceOf(Date),
+		maxDate: PropTypes.instanceOf(Date),
 		firstDayOfWeek: PropTypes.number,
-		defaultMode: PropTypes.oneOf('date', 'year')
+		defaultMode: PropTypes.oneOf(['date', 'year'])
 	};
 	
 	constructor(props) {
@@ -49,7 +51,7 @@ export class DateFieldComponent extends Component {
 	render() {
 		let {
 			input, meta, label, classes,
-			firstDayOfWeek, defaultMode,
+			minDate, maxDate, firstDayOfWeek, defaultMode,
 			...inputProps
 		} = this.props;
 		let { open } = this.state;
@@ -69,6 +71,7 @@ export class DateFieldComponent extends Component {
 					classes={classes}
 					open={open} onRequestClose={this._closePicker}
 					title={label} value={input.value}
+					minDate={minDate} maxDate={maxDate}
 					firstDayOfWeek={firstDayOfWeek} defaultMode={defaultMode}
 					onSelect={this._onConfirm}
 				/>
@@ -81,15 +84,17 @@ export default class DateField extends Component {
 	static propTypes = {
 		name: PropTypes.string,
 		label: PropTypes.string,
-		minDate: PropTypes.object,
-		maxDate: PropTypes.object,
+		minDate: PropTypes.instanceOf(Date),
+		maxDate: PropTypes.instanceOf(Date),
 		firstDayOfWeek: PropTypes.number,
-		defaultMode: PropTypes.oneOf('date', 'year')
+		defaultMode: PropTypes.oneOf(['date', 'year'])
 	};
 	
 	static defaultProps = {
 		firstDayOfWeek: 0,
-		defaultMode: 'date'
+		defaultMode: 'date',
+		minDate: new Date(new Date().getFullYear() - 50, new Date().getMonth(), new Date().getDate()),
+		maxDate: new Date(new Date().getFullYear() + 50, new Date().getMonth(), new Date().getDate())
 	};
 	
 	_format = value => value && new Date(value);

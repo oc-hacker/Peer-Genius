@@ -30,6 +30,8 @@ export default class DateTable extends Component {
 		year: PropTypes.number.isRequired,
 		month: PropTypes.number.isRequired,
 		date: PropTypes.number,
+		minDate: PropTypes.instanceOf(Date),
+		maxDate: PropTypes.instanceOf(Date),
 		firstDayOfWeek: PropTypes.number.isRequired,
 		onSelect: PropTypes.func, // Called when a date button is selected
 		

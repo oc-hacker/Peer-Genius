@@ -35,12 +35,6 @@ export default class YearMenu extends Component {
 		setYear: PropTypes.func.isRequired // Called with year when user selects a year.
 	};
 	
-	static defaultProps = {
-		year: new Date().getFullYear(),
-		minYear: new Date().getFullYear() - 50,
-		maxYear: new Date().getFullYear() + 50,
-	};
-	
 	render() {
 		let { year: currentYear, minYear, maxYear, setYear, classes } = this.props;
 		let yearItems = [];
