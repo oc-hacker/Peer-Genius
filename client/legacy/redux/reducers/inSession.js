@@ -22,7 +22,7 @@ export default function inSession(state=-1, action) {
 					return state;
 			}
 		case types.LOGOUT: {
-			// Set inSession to 0 on logout
+			// Set inSession to 0 on log out
 			return 0;
 		}
 		default:

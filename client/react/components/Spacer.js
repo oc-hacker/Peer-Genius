@@ -1,5 +1,6 @@
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import stylesheet from 'react-jss';
 
 import { withStyles } from 'material-ui/styles';
 
@@ -13,11 +14,11 @@ const styles = {
 	}
 };
 
-@withStyles(styles)
+@stylesheet(styles)
 export default class Spacer extends PureComponent {
 	render() {
 		return (
-			<div className={this.classes.spacer} />
+			<div className={this.props.classes.spacer} />
 		);
 	}
 }

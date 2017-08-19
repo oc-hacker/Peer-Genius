@@ -12,6 +12,7 @@ import { AccountInstance } from '../../database/models/account';
 import { Handler, ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { Store, VerifiedRequest } from '../../types';
 import { CommunicationInstance, communicationMethods } from '../../database/models/communication';
+import config from '../../core/config';
 
 export const logger: Handler = (request, response, next) => {
 	console.log(`[${new Date().toUTCString()}]`, 'Request received at', request.originalUrl);
@@ -123,7 +124,10 @@ export const buildStore = async (id: string, loadedInstances: LoadedModels = {})
 	store.account = pick(account, ['email', 'verified']);
 	store.user = pick(user, userAttributes);
 	store.communication = pick(communication, communicationMethods);
-	store.sessionJWT = createSessionToken(id);
+	store.session = {
+		jwt: createSessionToken(id),
+		expire: config.sessionJWTExpire
+	};
 	
 	return <Store>store;
 };

@@ -68,7 +68,7 @@ export class TextFieldComponent extends Component {
 			<FormControl
 				className={classes.fieldContainer}
 				fullWidth={fullWidth !== false}
-				error={touched && (error || warning)}
+				error={Boolean(touched && (error || warning))}
 			>
 				<InputLabel className={warningClass}>
 					{label}

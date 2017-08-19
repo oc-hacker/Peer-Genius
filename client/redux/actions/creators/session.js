@@ -1,4 +1,4 @@
-// All session related stuff (handling login and logout) go here. Also some housekeeping stuff (initialize constants and things like that)
+// Actions here are concerned with things related to the session jwt.
 import cookies from 'js-cookie';
 import httpStatus from 'http-status-codes';
 import { push } from 'react-router-redux';
@@ -19,8 +19,8 @@ export const logIn = credentials => async dispatch => {
 		// Log in successful. Save store and redirect to user page.
 		let json = await response.json();
 		
-		let { sessionJWT, ...data } = json;
-		await cookies.set('sessionJWT', sessionJWT, { expires: sessionJWTExpire });
+		let { session: { jwt, expire }, ...data } = json;
+		await cookies.set('sessionJWT', jwt, { expires: expire });
 		dispatch({
 			type: types.INIT_USER,
 			payload: data
@@ -44,10 +44,42 @@ export const logIn = credentials => async dispatch => {
 /**
  * Thunk action creator that commands the deletion of stored user info to log out.
  */
-export const logout = () => async dispatch => {
+export const logOut = () => async dispatch => {
 	await cookies.remove('sessionJWT');
 	dispatch({
 		type: types.CLEAR_USER
 	});
 	dispatch(push('/'));
+};
+
+export const createAccount = values => async dispatch => {
+	let birthdate = new Date(values.birthdate);
+	
+	// Send a POST request to create the account.
+	const response = await post('/api/createAccount', {
+		...values,
+		birthday: {
+			year: birthdate.getFullYear(),
+			month: birthdate.getMonth(),
+			date: birthdate.getDate()
+		}
+	});
+	
+	if (response.ok) {
+		// Account creation successful, save store and redirect to user page
+		let json = await response.json();
+		let { session: { jwt, expire }, ...data } = json;
+		
+		await cookies.set('sessionJWT', jwt, { expires: expire });
+		dispatch({
+			type: types.INIT_USER,
+			payload: data
+		});
+		dispatch(push('/home'));
+	}
+	else if (response.status === httpStatus.CONFLICT) {
+		throw new SubmissionError({
+			email: 'This email has been taken.'
+		});
+	}
 };

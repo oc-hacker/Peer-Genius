@@ -2,6 +2,7 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from 'material-ui/styles';
+import Slide from 'material-ui/transitions/Slide';
 
 import throttle from 'lodash/throttle';
 import { connect } from 'react-redux';
@@ -14,6 +15,7 @@ import PageThree from './page3';
 import PageRadio from './pageRadio';
 import PageFour from './page4';
 import LoginDialog from './login';
+import CreateAccountDialog from './createAccount';
 
 const styles = {
 	frontPage: {
@@ -51,7 +53,8 @@ export default class FrontPage extends Component {
 		
 		this.state = {
 			page: 0,
-			logInOpen: false
+			logInOpen: false,
+			createAccountOpen: false
 		};
 	}
 	
@@ -67,8 +70,16 @@ export default class FrontPage extends Component {
 		});
 	};
 	
-	_createAccount = () => {
-		this.props.push('/createAccount');
+	_openCreateAccount = () => {
+		this.setState({
+			createAccountOpen: true
+		});
+	};
+	
+	_closeCreateAccount = () => {
+		this.setState({
+			createAccountOpen: false
+		});
 	};
 	
 	_nextPage = () => {
@@ -102,7 +113,7 @@ export default class FrontPage extends Component {
 	
 	render() {
 		let { classes } = this.props;
-		let { page: currentPage } = this.state;
+		let { page: currentPage, logInOpen, createAccountOpen } = this.state;
 		
 		return (
 			<div
@@ -111,7 +122,7 @@ export default class FrontPage extends Component {
 			>
 				<PageZero
 					currentPage={currentPage}
-					openLogIn={this._openLogIn} createAccount={this._createAccount}
+					openLogIn={this._openLogIn} createAccount={this._openCreateAccount}
 				/>
 				<PageOne
 					currentPage={currentPage}
@@ -121,13 +132,14 @@ export default class FrontPage extends Component {
 				<PageThree currentPage={currentPage} />
 				<PageFour
 					currentPage={currentPage}
-					createAccount={this._createAccount}
+					createAccount={this._openCreateAccount}
 				/>
 				<PageRadio
 					currentPage={currentPage}
 					setPage={this._setPage}
 				/>
-				<LoginDialog open={this.state.logInOpen} onRequestClose={this._closeLogIn} />
+				<LoginDialog open={logInOpen} onRequestClose={this._closeLogIn} />
+				<CreateAccountDialog open={createAccountOpen} onRequestClose={this._closeCreateAccount} />
 			</div>
 		);
 	}

@@ -20,7 +20,7 @@ export default class ReduxForm extends Component {
 	render() {
 		let {
 			handleSubmit, // Relevant props
-			anyTouched, asyncValidate, asyncValidating, blur, change, destroy, dirty, dispatch, error, initialize, initialized, initialValues, invalid, pristine, reset, submitting, submitFailed,
+			anyTouched, asyncBlurFields, asyncValidate, asyncValidating, blur, change, destroy, dirty, dispatch, error, initialize, initialized, initialValues, invalid, pristine, reset, submitting, submitFailed,
 			submitSucceeded, touch, untouch, valid, warning, pure, triggerSubmit, autofill, clearSubmit, clearSubmitErrors, clearAsyncError, submit, array,// Injected by redux-form
 			...formProps
 		} = this.props;

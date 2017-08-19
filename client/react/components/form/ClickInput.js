@@ -32,7 +32,13 @@ class DisabledInput extends Component {
 	}
 	
 	render() {
-		return (<input {...this.props} disabled />);
+		let { rowsMax, ...inputProps } = this.props;
+		if (rowsMax > 1) {
+			return (<textarea {...inputProps} disabled />);
+		}
+		else {
+			return (<input {...inputProps} disabled />);
+		}
 	}
 }
 
@@ -48,7 +54,7 @@ export default class ClickInput extends Component {
 			PropTypes.arrayOf(PropTypes.node)
 		]),
 		onClick: PropTypes.func.isRequired,
-		inputProps:PropTypes.object
+		inputProps: PropTypes.object
 	};
 	
 	render() {

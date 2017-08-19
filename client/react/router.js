@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import { Route } from './components';
 import FrontPage from './frontPage';
-import CreateAccount from './createAccount';
+import CreateAccount from './frontPage/createAccount';
 import { initialize } from '../redux/actions/creators/init';
 
 import { browserHistory } from '../redux/store';

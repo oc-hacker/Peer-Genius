@@ -18,8 +18,8 @@ const corsOptions = {
 			cb(null, true);
 		}
 		else if (config.devMode
-			&& (origin === `http://localhost${config.serverPort === 80 ? '' : `:${config.serverPort}`}`
-				|| origin === `http://localhost${config.devServerPort === 80 ? '' : `:${config.devServerPort}`}`)
+			// && (origin === `http://localhost${config.serverPort === 80 ? '' : `:${config.serverPort}`}`
+			// 	|| origin === `http://localhost${config.devServerPort === 80 ? '' : `:${config.devServerPort}`}`)
 		) {
 			cb(null, true);
 		}

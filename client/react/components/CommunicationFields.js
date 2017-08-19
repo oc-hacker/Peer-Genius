@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { CheckTextField } from './form';
 
 import { selectCommunicationMethods } from '../../redux/selectors/config';
+import validator from './form/validator';
 
 const styles = {
 	checkbox: {

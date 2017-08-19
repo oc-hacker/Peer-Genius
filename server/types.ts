@@ -24,5 +24,8 @@ export interface Store {
 	communication: {
 		[method: string]: string | null;
 	};
-	sessionJWT: string;
+	session: {
+		jwt: string,
+		expire: number
+	};
 }
