@@ -21,7 +21,7 @@ export default class Flex extends Component {
 	
 	render() {
 		// Destruct and take out extra props.
-		let { classes, column, direction, align, justify, ...divProps } = this.props;
+		let { classes, sheet, column, direction, align, justify, ...divProps } = this.props;
 		
 		return (
 			<div className={classes.flex} {...divProps} />

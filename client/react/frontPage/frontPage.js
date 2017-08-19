@@ -8,12 +8,12 @@ import throttle from 'lodash/throttle';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import PageZero from './page0';
-import PageOne from './page1';
-import PageTwo from './page2';
-import PageThree from './page3';
+import PageZero from './pages/page0';
+import PageOne from './pages/page1';
+import PageTwo from './pages/page2';
+import PageThree from './pages/page3';
 import PageRadio from './pageRadio';
-import PageFour from './page4';
+import PageFour from './pages/page4';
 import LoginDialog from './login';
 import CreateAccountDialog from './createAccount';
 

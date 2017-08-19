@@ -4,7 +4,7 @@ import { MuiThemeProvider } from 'material-ui';
 
 import { connect } from 'react-redux';
 
-import MasterRouter from './router';
+import MasterRouter from './masterRouter';
 import { muiTheme } from './theme';
 
 import store from '../redux/store';

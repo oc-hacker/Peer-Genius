@@ -9,6 +9,19 @@ import types from '../types';
 import { post, status } from '../request';
 
 /**
+ * Thunk action creator that takes the server's store data and saves it into local redux store.
+ * @param json
+ */
+const handleStore = json => async dispatch => {
+	let { session: { jwt, expire }, ...data } = json;
+	await cookies.set('sessionJWT', jwt, { expires: expire });
+	dispatch({
+		type: types.INIT_USER,
+		payload: data
+	});
+};
+
+/**
  * Thunk action creator that takes in credentials and tries to log in the user
  * @param {{email: string, password: string}} credentials
  */
@@ -19,12 +32,7 @@ export const logIn = credentials => async dispatch => {
 		// Log in successful. Save store and redirect to user page.
 		let json = await response.json();
 		
-		let { session: { jwt, expire }, ...data } = json;
-		await cookies.set('sessionJWT', jwt, { expires: expire });
-		dispatch({
-			type: types.INIT_USER,
-			payload: data
-		});
+		dispatch(handleStore(json));
 		dispatch(push('/home'));
 	}
 	else if (response.status === httpStatus.UNAUTHORIZED) {
@@ -68,18 +76,33 @@ export const createAccount = values => async dispatch => {
 	if (response.ok) {
 		// Account creation successful, save store and redirect to user page
 		let json = await response.json();
-		let { session: { jwt, expire }, ...data } = json;
 		
-		await cookies.set('sessionJWT', jwt, { expires: expire });
-		dispatch({
-			type: types.INIT_USER,
-			payload: data
-		});
+		dispatch(handleStore(json));
 		dispatch(push('/home'));
 	}
 	else if (response.status === httpStatus.CONFLICT) {
 		throw new SubmissionError({
 			email: 'This email has been taken.'
 		});
+	}
+};
+
+/**
+ * Thunk action creator that uses the current JWT to fetch a new, refreshed JWT from server every time the JWT is about to expire.
+ * @param expire The amount of time, in milliseconds, that the jwt will take to expire.
+ */
+export const refreshSession = expire => async dispatch => {
+	let response = await post('/api/account/refresh');
+	
+	if (response.ok) {
+		// JWT valid, save the new JWT.
+		let json = await response.json();
+		
+		dispatch(handleStore(json));
+		setTimeout(() => dispatch(refreshSession(expire)), expire * 0.9);
+	}
+	else {
+		// JWT invalid, log out and return to front page.
+		dispatch(logOut());
 	}
 };

@@ -7,6 +7,7 @@ import { buildStore } from '../misc/utils';
 
 import { Response } from 'express';
 import { VerifiedRequest } from '../../types';
+import config from '../../core/config';
 
 interface EditAccountRequest extends VerifiedRequest {
 	body: {
@@ -50,5 +51,10 @@ export const info = async (request: VerifiedRequest, response: Response) => {
 };
 
 export const refresh = async (request: VerifiedRequest, response: Response) => {
-	response.status(httpStatus.OK).json({ sessionJWT: createSessionToken(request.body.user.id) })
+	response.status(httpStatus.OK).json({
+		session: {
+			jwt: createSessionToken(request.body.user.id),
+			expire: config.sessionJWTExpire
+		}
+	})
 };
