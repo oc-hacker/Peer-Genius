@@ -20,7 +20,11 @@ export default (state = defaultState, action) => {
 		case types.CLEAR_USER: {
 			return defaultState;
 		}
+		case types.EDIT_COMMUNICATIONS: {
+			diff = payload;
+			break;
+		}
 	}
 	
-	return deepmerge(state, diff || {})
+	return deepmerge(state, diff || {});
 }

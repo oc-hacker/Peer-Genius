@@ -13,14 +13,33 @@ import AppBarMenu from './AppBarMenu';
 export default class GuruMenu extends Component {
 	constructor(props) {
 		super(props);
+		
+		this.state = {
+			open: false
+		};
 	}
 	
+	_openMenu = () => {
+		this.setState({
+			open: true
+		});
+	};
+	
+	_closeMenu = () => {
+		this.setState({
+			open: false
+		});
+	};
+	
 	render() {
+		let { open } = this.state;
+		
 		return (
 			<AppBarMenu
 				button={
 					'Gurus'
 				}
+				open={open} onClick={this._openMenu} onRequestClose={this._closeMenu}
 			>
 				<MenuItem>Become a Guru</MenuItem>
 			</AppBarMenu>

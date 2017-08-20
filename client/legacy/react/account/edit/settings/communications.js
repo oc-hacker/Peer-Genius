@@ -13,7 +13,7 @@ import { updateComms } from '../../../../redux/actions/communication';
 	defaultValues: state.comms
 }))
 @reduxForm({
-	form: 'editCommunications',
+	form: 'editCommunication',
 	onSubmit: (values, dispatch) => {
 		dispatch(updateComms(values));
 	}

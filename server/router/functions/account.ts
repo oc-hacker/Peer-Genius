@@ -15,25 +15,31 @@ interface EditAccountRequest extends VerifiedRequest {
 			id: string
 		},
 		password: string,
-		newEmail: string,
-		newPassword: string
+		newEmail?: string,
+		newPassword?: string
 	}
 }
 
 export const edit = async (request: EditAccountRequest, response: Response) => {
+	let { user, password, newEmail, newPassword } =  request.body;
+	
 	let account = await models.account.find({
 		where: {
-			user: request.body.user.id
+			user: user.id
 		}
 	});
 	
-	if (!account || !request.body.password) {
+	if (!account || !password) {
 		response.status(httpStatus.BAD_REQUEST).end();
 		return;
 	}
 	
-	if (await argon2.verify(account.password, request.body.password)) {
-		await account.update(request.body);
+	if (await argon2.verify(account.password, password)) {
+		// TODO if this breaks partial edits, need to change.
+		await account.update({
+			email: newEmail,
+			password: newPassword
+		});
 		await account.save({ fields: ['email', 'password', 'verified'] });
 		response.status(httpStatus.OK).end();
 	}

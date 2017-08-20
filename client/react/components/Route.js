@@ -13,28 +13,33 @@ import { push } from 'react-router-redux';
  */
 export default class CustomRoute extends Component {
 	static propTypes = {
-		isPublic: PropTypes.bool,
+		/** public - only when not logged in; private - only when logged in; all - does not matter */
+		access: PropTypes.oneOf(['public', 'private', 'all']),
 		path: PropTypes.string,
 		component: PropTypes.func,
 		render: PropTypes.func
 	};
 	
+	static defaultProps = {
+		access: 'all'
+	};
+	
 	componentWillMount() {
-		let { isPublic, push } = this.props;
+		let { access, push } = this.props;
 		let jwt = cookies.get('sessionJWT');
 		
 		// Check that the user is in a valid place.
-		if (isPublic && jwt) {
+		if (access === 'public' && jwt) {
 			push('/home');
 		}
-		else if (!isPublic && !jwt) {
+		else if (access === 'private' && !jwt) {
 			push('/');
 		}
 	}
 	
 	render() {
 		// Extract router props
-		let { isPublic, push, ...routeProps } = this.props;
+		let { access, push, ...routeProps } = this.props;
 		
 		return (<Route {...routeProps} />);
 	}

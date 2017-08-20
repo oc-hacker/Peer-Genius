@@ -10,6 +10,7 @@ import UserPage from './userPage';
 import { initialize } from '../redux/actions/creators/init';
 
 import { browserHistory } from '../redux/store';
+import { UnexpectedErrorDialog } from './components';
 
 @connect(null, { initialize })
 export default class MasterRouter extends Component {
@@ -18,12 +19,12 @@ export default class MasterRouter extends Component {
 	}
 	
 	render() {
-		// TODO make UserPage not public once testing is finished.
+		// TODO make UserPage private once testing is finished.
 		return (
 			<ConnectedRouter history={browserHistory}>
 				<Switch>
-					<Route isPublic exact path="/" component={FrontPage} />
-					<Route isPublic path="/" component={UserPage}/>
+					<Route access="public" exact path="/" component={FrontPage} />
+					<Route path="/" component={UserPage} />
 				</Switch>
 			</ConnectedRouter>
 		);

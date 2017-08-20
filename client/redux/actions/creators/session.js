@@ -13,11 +13,25 @@ import { post, status } from '../request';
  * @param json
  */
 const handleStore = json => async dispatch => {
-	let { session: { jwt, expire }, ...data } = json;
+	let { session: { jwt, expire }, user: { birthday, ...user }, ...otherData } = json;
 	await cookies.set('sessionJWT', jwt, { expires: expire });
+	
+	// Process user - set birthdate to { year, month, date }
+	birthday = new Date(birthday);
+	user = {
+		...user,
+		birthdate: {
+			year: birthday.getFullYear(),
+			month: birthday.getMonth(),
+			date: birthday.getDate()
+		}
+	};
+	
 	dispatch({
 		type: types.INIT_USER,
-		payload: data
+		payload: {
+			...otherData
+		}
 	});
 };
 
@@ -43,9 +57,7 @@ export const logIn = credentials => async dispatch => {
 	}
 	else {
 		// Unexpected error
-		throw new SubmissionError({
-			email: 'Unexpected error when contacting server. Please try again later.'
-		});
+		dispatch({ type: types.UNEXPECTED_ERROR });
 	}
 };
 
@@ -61,11 +73,12 @@ export const logOut = () => async dispatch => {
 };
 
 export const createAccount = values => async dispatch => {
-	let birthdate = new Date(values.birthdate);
+	let { birthdate, ...otherValues } = values;
+	birthdate = new Date(values.birthdate);
 	
 	// Send a POST request to create the account.
 	const response = await post('/api/createAccount', {
-		...values,
+		...otherValues,
 		birthday: {
 			year: birthdate.getFullYear(),
 			month: birthdate.getMonth(),

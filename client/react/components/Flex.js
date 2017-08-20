@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import stylesheet from 'react-jss';
 
 const styles = {
@@ -6,7 +7,9 @@ const styles = {
 		display: 'flex',
 		flexDirection: props => props.column ? 'column' : (props.direction || 'row'),
 		alignItems: props => props.align || 'stretch',
-		justifyContent: props => props.justify || 'flex-start'
+		justifyContent: props => props.justify || 'flex-start',
+		flexGrow: props => props.grow || 0,
+		flexShrink: props => props.shrink || 0
 	}
 };
 
@@ -21,10 +24,14 @@ export default class Flex extends Component {
 	
 	render() {
 		// Destruct and take out extra props.
-		let { classes, sheet, column, direction, align, justify, ...divProps } = this.props;
+		let {
+			className, classes, sheet,
+			column, direction, align, justify, grow, shrink,
+			...divProps
+		} = this.props;
 		
 		return (
-			<div className={classes.flex} {...divProps} />
+			<div className={classNames(classes.flex, className)} {...divProps} />
 		);
 	}
 }

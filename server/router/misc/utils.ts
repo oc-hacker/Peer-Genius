@@ -26,14 +26,15 @@ export const sendIndex: Handler = (request, response) => {
 export const checkReview = async (request: VerifiedRequest, response: Response, next: NextFunction) => {
 	let unfinishedReview = await models.lesson.find({
 		where: {
-			mentee: request.body.user.id
+			mentee: request.body.user.id,
+			rating: null
 		}
 	});
 	
 	if (unfinishedReview) {
 		response.status(httpStatus.FORBIDDEN).json({
 			reason: 'Review required.',
-			session: unfinishedReview.id
+			lesson: unfinishedReview.id
 		});
 		return;
 	}

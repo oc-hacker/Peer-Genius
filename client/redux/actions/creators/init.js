@@ -9,15 +9,18 @@ import { get } from '../request';
 export const initialize = () => async dispatch => {
 	let [
 		communicationMethodsResponse,
-		subjectsResponse
+		subjectsResponse,
+		configResponse
 	] = await Promise.all([
 		get('/loc/comms.json'),
-		get('/loc/subjects.json')
+		get('/loc/subjects.json'),
+		get('/api/config')
 	]);
 	
-	if (communicationMethodsResponse.ok && subjectsResponse.ok) {
+	if (communicationMethodsResponse.ok && subjectsResponse.ok && configResponse.ok) {
 		let communicationMethods = await communicationMethodsResponse.json();
 		let flatSubjects = await subjectsResponse.json();
+		let serverConfig = await configResponse.json();
 		
 		// Unflatten flatSubjects
 		let subjects = {};
@@ -39,7 +42,8 @@ export const initialize = () => async dispatch => {
 			type: types.INIT_CONFIG,
 			payload: {
 				communicationMethods,
-				subjects
+				subjects,
+				serverConfig
 			}
 		});
 	}

@@ -20,19 +20,47 @@ import { logOut } from '../../../redux/actions/creators/session';
 export default class AccountMenu extends Component {
 	constructor(props) {
 		super(props);
+		
+		this.state = {
+			open: false
+		};
 	}
 	
+	_openMenu = () => {
+		this.setState({
+			open: true
+		});
+	};
+	
+	_closeMenu = () => {
+		this.setState({
+			open: false
+		});
+	};
+	
+	_toAccountSettings = () => {
+		this.props.push('/accountSettings');
+		this._closeMenu();
+	};
+	
+	_toEditProfile = () => {
+		this.props.push('/editProfile');
+		this._closeMenu();
+	};
+	
 	render() {
-		let { push, logOut } = this.props;
+		let { logOut } = this.props;
+		let { open } = this.state;
 		
 		return (
 			<AppBarMenu
 				button={
 					<AccountIcon />
 				}
+				open={open} onClick={this._openMenu} onRequestClose={this._closeMenu}
 			>
-				<MenuItem onClick={() => push('/accountSettings')}>Account Settings</MenuItem>
-				<MenuItem onClick={() => push('/editProfile')}>Edit Profile</MenuItem>
+				<MenuItem onClick={this._toAccountSettings}>Account Settings</MenuItem>
+				<MenuItem onClick={this._toEditProfile}>Edit Profile</MenuItem>
 				<MenuItem onClick={logOut}>Log Out</MenuItem>
 			</AppBarMenu>
 		);

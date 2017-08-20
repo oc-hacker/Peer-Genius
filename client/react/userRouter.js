@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 
 import { Route } from './components';
 import Home from './home';
+import AccountSettings from './accountSettings';
+import EditProfile from './editProfile';
 
 export default class UserRouter extends Component {
 	constructor(props) {
@@ -17,7 +19,9 @@ export default class UserRouter extends Component {
 	render() {
 		return (
 			<Switch>
-				<Route isPublic path="/home" component={Home}/>
+				<Route path="/home" component={Home}/>
+				<Route path="/accountSettings" component={AccountSettings}/>
+				<Route path="/editProfile" component={EditProfile}/>
 			</Switch>
 		);
 	}

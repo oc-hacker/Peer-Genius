@@ -1,18 +1,14 @@
-import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import Flex from './Flex';
-import Spacer from './Spacer';
 import AccountMenu from './AppBarComponents/AccountMenu';
 import AboutUs from './AppBarComponents/AboutUs';
 import GuruMenu from './AppBarComponents/GuruMenu';
@@ -53,10 +49,10 @@ export default class CustomAppBar extends Component {
 	
 	
 	render() {
-		let { classes, push } = this.props;
+		let { className, classes, push } = this.props;
 		
 		return (
-			<AppBar className={classes.appBar}>
+			<AppBar position="static" className={classNames(classes.appBar, className)}>
 				<Flex align="center">
 					<img
 						src="/logo.svg"

@@ -31,8 +31,7 @@ const styles = theme => {
 		selectYearIcon: {
 			position: 'absolute',
 			right: unit,
-			top: unit,
-			color: getContrastText(primary[500])
+			top: unit
 		},
 		monthSelector: {
 			display: 'flex',
@@ -71,6 +70,10 @@ export default class DatePickerDialog extends Component {
 		classes: PropTypes.object
 	};
 	
+	static defaultProps = {
+		initialDate: new Date()
+	};
+	
 	constructor(props) {
 		super(props);
 		
@@ -83,10 +86,12 @@ export default class DatePickerDialog extends Component {
 	}
 	
 	componentWillMount() {
-		let { initialDate, defaultMode } = this.props;
-		if (!initialDate) {
-			initialDate = new Date();
-		}
+		let { value, initialDate, defaultMode } = this.props;
+		
+		// Initialize initialDate depending on the situation.
+		// value set - has original value
+		initialDate = value || initialDate;
+		
 		this.setState({
 			year: initialDate.getFullYear(),
 			month: initialDate.getMonth(),
@@ -240,6 +245,7 @@ export default class DatePickerDialog extends Component {
 						{months[month]} {date} {year}
 					</Typography>
 					<IconButton
+						color="contrast"
 						className={classes.selectYearIcon}
 						onClick={this._openYearSelection}
 					>

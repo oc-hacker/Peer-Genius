@@ -115,7 +115,11 @@ export class SelectFieldComponent extends Component {
 					style={{ width: anchor ? anchor.clientWidth : 0 }}
 				>
 					{Object.values(options).map(value => (
-						<MenuItem key={value} onClick={this._makeSelectHandler(value)}>
+						<MenuItem
+							key={value}
+							selected={input.value === value}
+							onClick={this._makeSelectHandler(value)}
+						>
 							{value}
 						</MenuItem>
 					))}

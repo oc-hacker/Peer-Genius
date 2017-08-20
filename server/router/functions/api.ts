@@ -14,6 +14,16 @@ import { slackConnection } from '../../database/reference';
 
 // Note: only use next() if you are not handling the request!
 
+/**
+ * Used for letting the client retrieve server configuration information.
+ */
+export const getConfig = async (request: Request, response: Response) => {
+	let { devMode } = config;
+	response.status(httpStatus.OK).json({
+		devMode
+	})
+};
+
 interface CreateAccountRequest extends Request {
 	body: {
 		email: string,

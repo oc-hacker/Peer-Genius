@@ -22,6 +22,8 @@ const styles = {
 @withStyles(styles)
 export default class AppBarMenu extends Component {
 	static propTypes = {
+		open: PropTypes.bool,
+		onRequestClose: PropTypes.func.isRequired,
 		button: PropTypes.node.isRequired,
 		onClick: PropTypes.func
 	};
@@ -32,40 +34,37 @@ export default class AppBarMenu extends Component {
 		this._root = null;
 		
 		this.state = {
-			open: false,
 			anchor: null,
 			rootWidth: 0,
 			rootHeight: 0
 		};
 	}
 	
-	_onClick = () => {
+	_onClick = event => {
+		this.props.onClick(event);
 		this.setState({
-			open: true,
 			anchor: this._root,
 			rootWidth: this._root.clientWidth,
 			rootHeight: this._root.clientHeight
 		});
 	};
 	
-	_closeMenu = () => {
-		this.setState({
-			open: false
-		});
-	};
-	
 	render() {
-		let { classes, button, onClick, children } = this.props;
-		let { open, anchor, rootWidth, rootHeight } = this.state;
+		let {
+			classes,
+			button, open, onRequestClose,
+			children
+		} = this.props;
+		let { anchor, rootWidth, rootHeight } = this.state;
 		
 		return (
 			<div ref={self => this._root = self} className={classes.root}>
-				<div className={classes.buttonWrapper} onClick={onClick || this._onClick}>
+				<div className={classes.buttonWrapper} onClick={this._onClick}>
 					{button}
 				</div>
 				<Menu
 					anchorEl={anchor} style={{ width: rootWidth, marginTop: rootHeight }}
-					open={open} onRequestClose={this._closeMenu}
+					open={open} onRequestClose={onRequestClose}
 				>
 					{children}
 				</Menu>

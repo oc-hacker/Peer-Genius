@@ -46,7 +46,6 @@ const styles = ({ palette: { primary, getContrastText }, spacing }) => ({
 		color: getContrastText(primary[500])
 	},
 	button: {
-		color: getContrastText(primary[500]),
 		width: spacing.unit * 4,
 		height: spacing.unit * 4
 	}
@@ -119,7 +118,10 @@ export default class CreateAccountDialog extends Component {
 					<Typography type="title" classes={{ title: classes.titleText }}>
 						Create Account
 					</Typography>
-					<IconButton className={classes.button} onClick={onRequestClose}>
+					<IconButton
+						color="contrast" className={classes.button}
+						onClick={onRequestClose}
+					>
 						<ClearIcon />
 					</IconButton>
 				</DialogTitle>

@@ -16,6 +16,7 @@ const router = Router();
 // For expected response, see docs for the buildStore method in misc/utils
 router.post('/createAccount', wrapTryCatch(functions.createAccount));
 router.post('/login', wrapTryCatch(functions.verifyLogin));
+router.get('/config', wrapTryCatch(functions.getConfig));
 router.post('/checkEmail', wrapTryCatch(functions.checkEmail));
 
 router.post('/db', urlencoded({ extended: true }), functions._db);

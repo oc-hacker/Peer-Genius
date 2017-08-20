@@ -2,7 +2,10 @@ import deepmerge from 'deepmerge';
 
 import types from '../actions/types';
 
-const defaultState = {};
+const defaultState = {
+	ignoreUnexpectedError: false,
+	unexpectedError: false
+};
 
 export default (state = defaultState, action) => {
 	let { type, payload, meta, error } = action;
@@ -13,18 +16,25 @@ export default (state = defaultState, action) => {
 		default: {
 			return state;
 		}
-		case types.INIT_USER: {
-			diff = payload.user;
+		case types.UNEXPECTED_ERROR: {
+			diff = {
+				unexpectedError: true
+			};
 			break;
 		}
-		case types.CLEAR_USER: {
-			return defaultState;
+		case types.CLOSE_UNEXPECTED_ERROR: {
+			diff = {
+				unexpectedError: false
+			};
+			break;
 		}
-		case types.EDIT_PROFILE: {
-			diff = payload;
+		case types.IGNORE_UNEXPECTED_ERROR: {
+			diff = {
+				ignoreUnexpectedError: true
+			};
 			break;
 		}
 	}
 	
-	return deepmerge(state, diff || {});
+	return deepmerge(state, diff);
 }

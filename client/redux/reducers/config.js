@@ -4,7 +4,10 @@ import types from '../actions/types';
 
 const defaultState = {
 	communicationMethods: {},
-	subjects: {}
+	subjects: {},
+	serverConfig: {
+		devMode: false
+	}
 };
 
 export default (state = defaultState, action) => {

@@ -9,7 +9,7 @@ const router = Router();
 
 router.use('/', verifySessionToken);
 router.use('/', wrapTryCatch(checkReview));
-router.post('/update', wrapTryCatch(functions.update));
+router.post('/edit', wrapTryCatch(functions.edit));
 
 export default router;
 

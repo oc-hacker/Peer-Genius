@@ -13,7 +13,7 @@ export const getMethods = async (request: Request, response: Response) => {
 	})
 };
 
-interface UpdateCommunicationRequest extends VerifiedRequest {
+interface EditCommunicationRequest extends VerifiedRequest {
 	body: {
 		user: {
 			id: string
@@ -30,29 +30,16 @@ interface UpdateCommunicationRequest extends VerifiedRequest {
 	}
 }
 
-export const update = async (request: UpdateCommunicationRequest, response: Response) => {
+export const edit = async (request: EditCommunicationRequest, response: Response) => {
+	let { user, ...communications } = request.body;
+	
 	let communication = await models.communication.find({
 		where: {
-			user: request.body.user.id
+			user: user.id
 		}
 	});
 	
-	let updated = Object.assign(
-		{
-			whatsapp: null,
-			hangouts: null,
-			messenger: null,
-			imessage: null,
-			skype: null,
-			viber: null,
-			tango: null,
-			aim: null,
-			oovoo: null
-		},
-		request.body
-	);
-	
-	await communication.update(omit(request.body, [ 'user' ]));
+	await communication.update(omit(request.body, ['user']));
 	await communication.save();
 	
 	response.status(httpStatus.OK).end();
