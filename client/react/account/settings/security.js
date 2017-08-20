@@ -7,11 +7,11 @@ import Button from 'material-ui/Button';
 
 import { connect } from 'react-redux';
 
-import { Flex, Paper } from '../components';
-import { ReduxForm, TextField } from '../components/form';
+import { Flex, Paper } from '../../components/index';
+import { ReduxForm, TextField } from '../../components/form/index';
 
-import { required, same } from '../components/form/validator';
-import { editPassword } from '../../redux/actions/creators/account';
+import { required, same } from '../../components/form/validator';
+import { editPassword } from '../../../redux/actions/creators/account';
 
 @connect(null, { editPassword })
 export default class EditSecurity extends Component {

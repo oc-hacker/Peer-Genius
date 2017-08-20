@@ -11,11 +11,11 @@ export const handleStore = json => async dispatch => {
 	let { session: { jwt, expire }, user: { birthday, ...user }, ...otherData } = json;
 	await cookies.set('sessionJWT', jwt, { expires: new Date(Date.now() + expire) });
 	
-	// Process user - set birthdate to { year, month, date }
+	// Process user - server stores birthday in UTC, without timezone conversion, so the UTC values are the actually correct values.
 	birthday = new Date(birthday);
 	user = {
 		...user,
-		birthdate: new Date(birthday)
+		birthdate: new Date(birthday.getUTCFullYear(), birthday.getUTCMonth(), birthday.getUTCDate())
 	};
 	
 	dispatch({

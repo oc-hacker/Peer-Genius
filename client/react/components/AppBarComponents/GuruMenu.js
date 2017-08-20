@@ -42,6 +42,7 @@ export default class GuruMenu extends Component {
 				open={open} onClick={this._openMenu} onRequestClose={this._closeMenu}
 			>
 				<MenuItem>Become a Guru</MenuItem>
+				<MenuItem>Guru Requests</MenuItem>
 			</AppBarMenu>
 		);
 	}

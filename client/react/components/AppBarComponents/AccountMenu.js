@@ -39,12 +39,12 @@ export default class AccountMenu extends Component {
 	};
 	
 	_toAccountSettings = () => {
-		this.props.push('/accountSettings');
+		this.props.push('/account/settings');
 		this._closeMenu();
 	};
 	
 	_toEditProfile = () => {
-		this.props.push('/editProfile');
+		this.props.push('/account/profile');
 		this._closeMenu();
 	};
 	
