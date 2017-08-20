@@ -4,36 +4,10 @@ import httpStatus from 'http-status-codes';
 import { push } from 'react-router-redux';
 import { SubmissionError } from 'redux-form';
 
-import { sessionJWTExpire } from '../../../config';
 import types from '../types';
-import { post, status } from '../request';
+import { post } from '../request';
+import { handleStore } from './utils';
 
-/**
- * Thunk action creator that takes the server's store data and saves it into local redux store.
- * @param json
- */
-const handleStore = json => async dispatch => {
-	let { session: { jwt, expire }, user: { birthday, ...user }, ...otherData } = json;
-	await cookies.set('sessionJWT', jwt, { expires: expire });
-	
-	// Process user - set birthdate to { year, month, date }
-	birthday = new Date(birthday);
-	user = {
-		...user,
-		birthdate: {
-			year: birthday.getFullYear(),
-			month: birthday.getMonth(),
-			date: birthday.getDate()
-		}
-	};
-	
-	dispatch({
-		type: types.INIT_USER,
-		payload: {
-			...otherData
-		}
-	});
-};
 
 /**
  * Thunk action creator that takes in credentials and tries to log in the user

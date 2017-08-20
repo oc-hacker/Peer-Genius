@@ -23,7 +23,7 @@ const styles = {
 export default class AppBarMenu extends Component {
 	static propTypes = {
 		open: PropTypes.bool,
-		onRequestClose: PropTypes.func.isRequired,
+		onRequestClose: PropTypes.func,
 		button: PropTypes.node.isRequired,
 		onClick: PropTypes.func
 	};

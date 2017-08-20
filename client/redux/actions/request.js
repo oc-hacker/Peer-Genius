@@ -3,8 +3,10 @@ import deepmerge from 'deepmerge';
 import { serverURL } from '../../config';
 
 export const status = {
-	START: 'START',
-	END: 'END'
+	INITIAL: 'INITIAL',
+	FETCHING: 'FETCHING',
+	COMPLETE: 'COMPLETE',
+	ERROR: 'ERROR'
 };
 
 /**

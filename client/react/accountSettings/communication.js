@@ -7,12 +7,13 @@ import Typography from 'material-ui/Typography';
 
 import { connect } from 'react-redux';
 
-import { Flex, Paper, CommunicationFields } from '../components';
+import { Flex, Paper, CommunicationFields, waitForInit } from '../components';
 import { ReduxForm } from '../components/form';
 
 import { selectCommunication } from '../../redux/selectors/communication';
 import { editCommunication } from '../../redux/actions/creators/communication';
 
+@waitForInit
 @connect(state => ({
 	communication: selectCommunication(state)
 }), {

@@ -5,3 +5,4 @@ export { default as Paper } from './Paper';
 export { default as Route } from './Route';
 export { default as Spacer } from './Spacer';
 export { default as UnexpectedErrorDialog } from './UnexpectedErrorDialog';
+export { default as waitForInit } from './waitForInit';

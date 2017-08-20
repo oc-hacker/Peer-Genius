@@ -7,12 +7,13 @@ import Button from 'material-ui/Button';
 
 import { connect } from 'react-redux';
 
-import { Flex, Paper } from '../components';
+import { Flex, Paper, waitForInit } from '../components';
 import { ReduxForm, TextField, DateField } from '../components/form';
 
 import { editProfile } from '../../redux/actions/creators/user';
 import { selectUser } from '../../redux/selectors/user';
 
+@waitForInit
 @connect(state => ({
 	user: selectUser(state)
 }), {

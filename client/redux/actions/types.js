@@ -1,4 +1,7 @@
 export default {
+	INIT_START: 'INIT_START',
+	INIT_END: 'INIT_END',
+	
 	INIT_CONFIG: 'INIT_CONFIG',
 	
 	INIT_USER: 'INIT_USER',

@@ -1,12 +1,18 @@
 // Mostly housekeeping actions that should be called upon initialization or login.
+import cookies from 'js-cookie';
+
 import types from '../types';
-import { get } from '../request';
+import { get, post } from '../request';
+import { handleStore } from './utils';
 
 /**
  * Thunk action creator called upon page load.
  * Fetches communication methods and available subjects.
  */
 export const initialize = () => async dispatch => {
+	dispatch({ type: types.INIT_START });
+	
+	// Retrieve basic server information
 	let [
 		communicationMethodsResponse,
 		subjectsResponse,
@@ -38,7 +44,7 @@ export const initialize = () => async dispatch => {
 			}
 		}
 		
-		dispatch({
+		await dispatch({
 			type: types.INIT_CONFIG,
 			payload: {
 				communicationMethods,
@@ -47,4 +53,16 @@ export const initialize = () => async dispatch => {
 			}
 		});
 	}
+	
+	// If logged in, retrieve user information
+	if (cookies.get('sessionJWT')) {
+		let response = await post('/api/account/info');
+		
+		if (response.ok) {
+			let json = await response.json();
+			await dispatch(handleStore(json));
+		}
+	}
+	
+	dispatch({ type: types.INIT_END });
 };
