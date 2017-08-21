@@ -11,14 +11,22 @@ import { ReduxForm, TextField } from '../components/form';
 
 import { logIn } from '../../redux/actions/creators/session';
 
-const styles = {
+const styles = ({ palette: { error, getContrastText } }) => ({
 	buttons: {
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'flex-start',
 		justifyContent: 'space-between'
+	},
+	cancel: {
+		backgroundColor: error[500],
+		color: getContrastText(error[500]),
+		'&:hover': {
+			backgroundColor: error[700],
+			color: getContrastText(error[700])
+		}
 	}
-};
+});
 
 @connect(null, { logIn })
 @withStyles(styles)
@@ -44,7 +52,7 @@ export default class LoginDialog extends Component {
 						/>
 						<div className={classes.buttons}>
 							<Button
-								raised color="accent"
+								raised className={classes.cancel}
 								onClick={onRequestClose}
 							>
 								Cancel

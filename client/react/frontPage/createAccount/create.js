@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormSection, SubmissionError, submit, touch, isValid } from 'redux-form';
 
 import { withStyles } from 'material-ui/styles';
+import { fade } from 'material-ui/styles/colorManipulator';
 import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
@@ -34,7 +35,7 @@ const asyncValidate = async values => {
 	}
 };
 
-const styles = ({ palette: { primary, getContrastText }, spacing }) => ({
+const styles = ({ palette: { primary, error, getContrastText }, spacing }) => ({
 	title: {
 		backgroundColor: primary[500],
 		display: 'flex',
@@ -48,6 +49,12 @@ const styles = ({ palette: { primary, getContrastText }, spacing }) => ({
 	button: {
 		width: spacing.unit * 4,
 		height: spacing.unit * 4
+	},
+	cancel: {
+		color: error[500],
+		'&:hover': {
+			backgroundColor: fade(error['A200'], 0.12),
+		}
 	}
 });
 
@@ -140,7 +147,7 @@ export default class CreateAccountDialog extends Component {
 				</DialogContent>
 				<DialogActions>
 					<Button
-						color="accent"
+						className={classes.cancel}
 						onClick={onRequestClose}
 					>
 						Cancel

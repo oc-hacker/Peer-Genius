@@ -18,7 +18,9 @@ export default RawComponent => {
 	}))
 	class InitializedComponent extends Component {
 		render() {
-			if (this.props.initStatus !== status.COMPLETE) {
+			let { initStatus, ...others } = this.props;
+			
+			if (initStatus !== status.COMPLETE) {
 				return (
 					<Flex align="center" justify="center">
 						<CircularProgress />
@@ -27,7 +29,7 @@ export default RawComponent => {
 			}
 			else {
 				return (
-					<RawComponent />
+					<RawComponent {...others} />
 				);
 			}
 		}
