@@ -7,7 +7,11 @@ import Typography from 'material-ui/Typography';
 import { connect } from 'react-redux';
 
 import { Flex } from '../components';
-import TabTitles from './tabTitles';
+import { Tabs } from '../components/tabs';
+import Control from './TabComponents/control';
+import SubjectTab from './TabComponents/subject';
+import TimeTab from './TabComponents/time';
+import SearchTab from './TabComponents/search';
 
 const styles = ({ typography: { title }, palette: { primary, accent, getContrastText }, spacing }) => ({
 	root: {
@@ -45,7 +49,12 @@ export default class Home extends Component {
 				className={classes.root}
 			>
 				<Typography type="title" classes={{ title: classes.motto }}>ELIMINATE the<br />GRIND</Typography>
-				<TabTitles tabIndex={tabIndex} setTab={this._setTab} />
+				<Tabs>
+					<Control />
+					<SubjectTab />
+					<TimeTab />
+					<SearchTab />
+				</Tabs>
 			</Flex>
 		);
 	}

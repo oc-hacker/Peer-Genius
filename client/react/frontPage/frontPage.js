@@ -15,7 +15,7 @@ import PageThree from './PageComponents/page3';
 import PageRadio from './pageRadio';
 import PageFour from './PageComponents/page4';
 import LoginDialog from './login';
-import CreateAccountDialog from './createAccount';
+import CreateAccountDialog from './CreateAccountComponents';
 
 const styles = {
 	frontPage: {
