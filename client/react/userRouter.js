@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { Route } from './components';
 import Home from './home';
 import Account from './account';
+import Guru from './guru';
 
 export default class UserRouter extends Component {
 	constructor(props) {
@@ -18,8 +19,9 @@ export default class UserRouter extends Component {
 	render() {
 		return (
 			<Switch>
-				<Route path="/home" component={Home}/>
-				<Route path="/account" component={Account}/>
+				<Route path="/home" component={Home} />
+				<Route path="/account" component={Account} />
+				<Route path="/guru" component={Guru}  />
 			</Switch>
 		);
 	}

@@ -31,7 +31,7 @@ export const handleStore = json => async dispatch => {
 	});
 	
 	// Connect sockets
-	dispatch(socketConnect(user.id))
+	dispatch(socketConnect(jwt))
 };
 
 /**

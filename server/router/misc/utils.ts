@@ -47,21 +47,25 @@ const errorLogPath = path.resolve(__dirname, '../../errors.log');
 // Clear up error log on start
 fs.writeFileSync(errorLogPath, '');
 
-export const errorHandler: ErrorRequestHandler = (error: Error | string, request, response, next) => {
+export const logError = (message: string): Promise<any> => {
+	return new Promise(resolve => {
+		fs.appendFile(errorLogPath, [message, ''].join('\n'), resolve);
+	});
+};
+
+export const errorHandler: ErrorRequestHandler = async (error: Error | string, request, response, next) => {
 	if (error instanceof ProhibitedEditError) {
 		console.warn([
 			`[${new Date().toUTCString()}]`,
 			`Request at ${request.originalUrl} attempted make a forbidden edit. The request processing has been aborted.`,
 			'Details available in error log.'
 		].join('\n'));
-		fs.appendFile(errorLogPath, [
+		await logError([
 			`[${new Date().toUTCString()}] Blocked edit request:`,
 			`Error message: ${error.message}`,
-			JSON.stringify(request.body, null, '\t'),
-			''
-		].join('\n'), () => {
-			response.status(httpStatus.FORBIDDEN).end();
-		});
+			JSON.stringify(request.body, null, '\t')
+		].join('\n'));
+		response.status(httpStatus.FORBIDDEN).end();
 		
 	}
 	else if (error === 'Request blocked by CORS.') {
@@ -71,17 +75,14 @@ export const errorHandler: ErrorRequestHandler = (error: Error | string, request
 	else {
 		const timeStamp: string = new Date().toUTCString();
 		console.error(`[${timeStamp}] Unexpected error when handling request at ${request.originalUrl}\nDetails will be logged to error log.`);
-		fs.appendFile(errorLogPath, [
+		await logError([
 			`[${timeStamp}] Server handling error!`,
 			`Error message:`,
 			`${error}`,
 			`Request details:`,
-			JSON.stringify(request.body, null, '\t'),
-			''
-		].join('\n'), () => {
-			response.status(httpStatus.INTERNAL_SERVER_ERROR).end();
-		});
-		
+			JSON.stringify(request.body, null, '\t')
+		].join('\n'));
+		response.status(httpStatus.INTERNAL_SERVER_ERROR).end();
 	}
 };
 
@@ -123,7 +124,7 @@ export const buildStore = async (id: string, loadedInstances: LoadedModels = {})
 	let store: any = {};
 	
 	store.account = pick(account, ['email', 'verified']);
-	store.user = pick(user, [...userAttributes, 'id']);
+	store.user = pick(user, userAttributes);
 	store.communication = pick(communication, communicationMethods);
 	store.session = {
 		jwt: createSessionToken(id),

@@ -13,7 +13,7 @@ export default (state = defaultState, action) => {
 			return state;
 		}
 		case types.SOCKET_CONNECT: {
-			return payload.socket;
+			return payload;
 		}
 	}
 }

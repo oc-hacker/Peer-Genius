@@ -65,6 +65,7 @@ export default class Control extends Component {
 			<Flex justify="center" {...others}>
 				{tabTitles.map((title, index) => (
 					<div
+						key={title}
 						className={classNames(
 							classes.title,
 							{

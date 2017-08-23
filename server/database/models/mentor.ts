@@ -1,6 +1,7 @@
 import * as Sequelize from 'sequelize';
-import { ProhibitedEditError } from '../errors';
+import { without } from 'lodash';
 
+import { ProhibitedEditError } from '../errors';
 import config from '../../core/config';
 import { sequelizeAdmin as admin } from '../reference';
 import user from './user';
@@ -330,14 +331,16 @@ const attributes = {
 	'socialStudies:apWorldHistory': Sequelize.BOOLEAN
 };
 
+export const subjects = without(Object.keys(attributes), 'user');
+
 const blockUserEdit = (instance: MentorInstance) => {
 	if (instance.changed('user')) {
-		throw new ProhibitedEditError('Editing the user FK of mentors table is prohibited.')
+		throw new ProhibitedEditError('Editing the user FK of mentors table is prohibited.');
 	}
 };
 
-const model = admin.define('mentors', attributes);
+const model: Sequelize.Model<MentorInstance, MentorAttributes> = admin.define('mentors', attributes);
 model.beforeUpdate(blockUserEdit);
 model.sync({ alter: config.devMode }); // Alter when in development mode
 
-export default model
+export default model;

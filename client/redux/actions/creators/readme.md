@@ -1,10 +1,10 @@
 Quick start/reminders:
 
-Redux actions in `Peer Genius` use flux standard actions and `redux-thunk`.
+Redux actions in `Peer Genius` are either flux standard actions or `thunk`s.
 
 Flux standard actions are actions that follow the structure of
-```flow js
-type Action = {
+```typescript
+interface Action {
 	type: string,
 	payload: any,
 	meta: any,
@@ -12,6 +12,6 @@ type Action = {
 }
 ```
 
-In the case of `Peer Genius`, the structure is slightly loosened in that `error` can be anything.
+In the case of `Peer Genius`, the restriction on structure is slightly loosened in that `error` can be anything.
 
 `thunk`s are functions used as redux actions. Their signature is `async (dispatch, getState) => any`.
