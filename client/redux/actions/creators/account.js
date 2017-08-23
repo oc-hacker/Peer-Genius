@@ -4,6 +4,7 @@ import { SubmissionError } from 'redux-form';
 
 import types from '../types';
 import { post } from '../request';
+import { handleError } from './utils';
 
 export const editEmail = values => async dispatch => {
 	let { email, password } = values;
@@ -34,8 +35,7 @@ export const editPassword = values => async dispatch => {
 			});
 		}
 		else {
-			// Unexpected error
-			dispatch({ type: types.UNEXPECTED_ERROR });
+			dispatch(handleError(response));
 		}
 	}
 };

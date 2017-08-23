@@ -1,10 +1,14 @@
 // Utility action creators that are used in multiple places in the app.
 import cookies from 'js-cookie';
+import httpStatus from 'http-status-codes';
+import { push } from 'react-router-redux';
 
 import types from '../types';
+import { socketConnect } from './socket';
 
 /**
- * Thunk action creator that takes the server's store data and saves it into local redux store.
+ * Thunk action creator.
+ * Takes the server's store data and saves it into local redux store.
  * @param json
  */
 export const handleStore = json => async dispatch => {
@@ -25,4 +29,29 @@ export const handleStore = json => async dispatch => {
 			...otherData
 		}
 	});
+	
+	// Connect sockets
+	dispatch(socketConnect(user.id))
+};
+
+/**
+ * Thunk action creator.
+ * Checks the response against some preconfigured error responses.
+ * @param response
+ */
+export const handleError = response => async dispatch => {
+	if (response.status === httpStatus.UNAUTHORIZED) {
+		let json = await response.json();
+		if (json.reason === 'Invalid session') {
+			// JWT is invalid. Delete it and redirect to front page.
+			cookies.remove('sessionJWT');
+			dispatch(push('/'));
+		}
+		else {
+			dispatch({ type: types.UNEXPECTED_ERROR });
+		}
+	}
+	else {
+		dispatch({ type: types.UNEXPECTED_ERROR });
+	}
 };

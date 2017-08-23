@@ -2,6 +2,7 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from 'material-ui/styles';
+import { fade } from 'material-ui/styles/colorManipulator';
 import { red } from 'material-ui/colors';
 import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
@@ -11,14 +12,21 @@ import { selectDevMode } from '../../redux/selectors/config';
 import { selectShowUnexpectedErrorDialog } from '../../redux/selectors/dialog';
 import { closeUnexpectedError, ignoreUnexpectedError } from '../../redux/actions/creators/dialog';
 
-const styles = {
+const styles = ({ palette: { error, getContrastText }, spacing }) => ({
 	error: {
-		backgroundColor: red[500]
+		backgroundColor: error[500],
+		color: getContrastText(error[500])
 	},
 	danger: {
-		backgroundColor: red[500]
+		color: error[500],
+		'&:hover': {
+			backgroundColor: fade(error['A200'], 0.12),
+		}
+	},
+	content: {
+		padding: spacing.unit * 3
 	}
-};
+});
 
 @connect(state => ({
 	show: selectShowUnexpectedErrorDialog(state),
@@ -42,7 +50,7 @@ export default class UnexpectedErrorDialog extends Component {
 				<DialogTitle className={classes.error}>
 					Oops!
 				</DialogTitle>
-				<DialogContent>
+				<DialogContent className={classes.content}>
 					We have encountered an unexpected error when contacting the server.
 					<br />
 					Please try refreshing the page, or access Peer Genius at a later time.

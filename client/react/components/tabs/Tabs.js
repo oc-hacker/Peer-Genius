@@ -64,6 +64,10 @@ export default class Tabs extends Component {
 		}));
 	};
 	
+	_onWheel = event => {
+		console.log(event.deltaX);
+	};
+	
 	_unregisterTab = tabIndex => {
 		this.setState(state => ({
 			tabTitles: state.tabTitles.filter((_, index) => index !== tabIndex)
@@ -101,7 +105,10 @@ export default class Tabs extends Component {
 						throw new Error('Only components decorated with @tab or @tabControl should be placed inside Tabs!');
 					}
 				})}
-				<div className={classes.container}>
+				<div
+					className={classes.container}
+					onWheel={this._onWheel}
+				>
 					{Children.map(children, child => {
 						if (child.type.isTab) {
 							child = React.cloneElement(child, {

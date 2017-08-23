@@ -60,13 +60,13 @@ export const errorHandler: ErrorRequestHandler = (error: Error | string, request
 			JSON.stringify(request.body, null, '\t'),
 			''
 		].join('\n'), () => {
-			response.status(httpStatus.FORBIDDEN).end()
+			response.status(httpStatus.FORBIDDEN).end();
 		});
 		
 	}
 	else if (error === 'Request blocked by CORS.') {
 		console.warn(`Request at ${request.originalUrl} blocked by CORS.`);
-		response.status(httpStatus.BAD_REQUEST).end()
+		response.status(httpStatus.BAD_REQUEST).end();
 	}
 	else {
 		const timeStamp: string = new Date().toUTCString();
@@ -123,7 +123,7 @@ export const buildStore = async (id: string, loadedInstances: LoadedModels = {})
 	let store: any = {};
 	
 	store.account = pick(account, ['email', 'verified']);
-	store.user = pick(user, userAttributes);
+	store.user = pick(user, [...userAttributes, 'id']);
 	store.communication = pick(communication, communicationMethods);
 	store.session = {
 		jwt: createSessionToken(id),
@@ -138,10 +138,10 @@ export const buildStore = async (id: string, loadedInstances: LoadedModels = {})
  */
 export const wrapTryCatch = (handler: (Request, Response, NextFunction) => Promise<any>): Handler => async (request: Request, response: Response, next: NextFunction) => {
 	try {
-		await handler(request, response, next)
+		await handler(request, response, next);
 	}
 	catch (error) {
-		next(error)
+		next(error);
 	}
 };
 

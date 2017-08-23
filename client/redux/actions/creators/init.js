@@ -1,13 +1,14 @@
 // Mostly housekeeping actions that should be called upon initialization or login.
 import cookies from 'js-cookie';
+import { push } from 'react-router-redux';
 
 import types from '../types';
 import { get, post } from '../request';
-import { handleStore } from './utils';
+import { handleError, handleStore } from './utils';
 
 /**
- * Thunk action creator called upon page load.
- * Fetches communication methods and available subjects.
+ * Thunk action creator.
+ * Called upon page load. Fetches communication methods, available subjects, and server configuration.
  */
 export const initialize = () => async dispatch => {
 	dispatch({ type: types.INIT_START });
@@ -59,8 +60,12 @@ export const initialize = () => async dispatch => {
 		let response = await post('/api/account/info');
 		
 		if (response.ok) {
+			// JWT still valid
 			let json = await response.json();
 			await dispatch(handleStore(json));
+		}
+		else {
+			await dispatch(handleError(response));
 		}
 	}
 	

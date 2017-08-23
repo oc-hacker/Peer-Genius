@@ -55,7 +55,7 @@ export const newConnection: ConnectionFactory = async (logSQL?: boolean) => {
 			if (values) {
 				connection.query(query, values, (err, results, fields) => {
 					if (err) {
-						reject(Error(['Unexpected error: ' + err.message, 'Query:', query].join('\n')));
+						reject(err);
 					}
 					else {
 						resolve(results);
@@ -116,7 +116,7 @@ export const sequelizeAdmin: Sequelize.Sequelize = new Sequelize(
 	config.mysqlAdmin.user,
 	config.mysqlAdmin.password,
 	{
-		host: 'localhost',
+		host: '127.0.0.1',
 		dialect: 'mysql',
 		logging: false,
 		timezone: '+00:00'

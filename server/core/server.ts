@@ -65,6 +65,6 @@ app.use(endResponse);
 // Errors
 app.use(errorHandler);
 
-app.listen(config.serverPort, () => {
+export default app.listen(config.serverPort, () => {
 	console.log('Listening on port ' + config.serverPort + '!');
 });
