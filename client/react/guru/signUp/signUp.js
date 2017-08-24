@@ -6,6 +6,7 @@ import { withStyles } from 'material-ui/styles';
 import { connect } from 'react-redux';
 
 import { SubjectFields } from '../../components';
+import { ReduxForm } from '../../components/form';
 
 export default class SignUp extends Component {
 	constructor(props) {
@@ -14,7 +15,9 @@ export default class SignUp extends Component {
 	
 	render() {
 		return (
-			<SubjectFields />
+			<ReduxForm form="f" onSubmit={console.log}>
+				<SubjectFields />
+			</ReduxForm>
 		);
 	}
 }

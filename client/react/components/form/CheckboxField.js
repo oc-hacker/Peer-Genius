@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 export class CheckboxFieldComponent extends Component {
 	render() {
 		let {
-			input, meta: { touched, error, warning },
+			input: { value, ...input }, meta: { touched, error, warning },
 			label, classes, ...fieldProps
 		} = this.props;
 		
@@ -19,6 +19,8 @@ export class CheckboxFieldComponent extends Component {
 				<FormControlLabel
 					label={label}
 					{...input}
+					checked={Boolean(value)}
+					{...fieldProps}
 					control={<Checkbox />}
 				/>
 			</FormControl>

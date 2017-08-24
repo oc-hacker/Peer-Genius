@@ -8,10 +8,10 @@ import Typography from 'material-ui/Typography';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import Flex from './Flex';
-import AccountMenu from './AppBarComponents/AccountMenu';
-import AboutUs from './AppBarComponents/AboutUs';
-import GuruMenu from './AppBarComponents/GuruMenu';
+import Flex from '../Flex';
+import AccountMenu from './AccountMenu';
+import AboutUs from './AboutUs';
+import GuruMenu from './GuruMenu';
 
 const styles = ({ palette: { primary, getContrastText }, spacing }) => ({
 	appBar: {
