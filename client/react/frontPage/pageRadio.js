@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
-import Radio, { RadioGroup } from 'material-ui/Radio';
 
 import { connect } from 'react-redux';
+
+import {Radio} from './PageRadioComponents';
 
 const styles = {
 	group: {
 		position: 'absolute',
 		left: 0,
 		top: 0,
-		height: '100%',
+		bottom: 0,
+		padding: '0 32px',
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
@@ -42,28 +44,42 @@ export default class PageRadio extends Component {
 		setPage: PropTypes.func.isRequired
 	};
 	
-	_setPage = (event, value) => {
-		this.props.setPage(parseInt(value));
-	};
-	
 	render() {
-		let { classes, currentPage } = this.props;
+		let { classes, currentPage, setPage } = this.props;
 		
 		return (
-			<RadioGroup
+			<div
 				className={classNames({
 					[classes.group]: true,
 					[classes.hidden]: currentPage === 0
 				})}
-				selectedValue={currentPage.toString()}
-				onChange={this._setPage}
 			>
-				<Radio value="0" className={classes.radio} />
-				<Radio value="1" className={classes.radio} />
-				<Radio value="2" className={classes.radio} />
-				<Radio value="3" className={classes.radio} />
-				<Radio value="4" className={classes.radio} />
-			</RadioGroup>
+				<Radio
+					selected={currentPage === 0}
+					firstPage={currentPage === 0}
+					onClick={() => setPage(0)}
+				/>
+				<Radio
+					selected={currentPage === 1}
+					firstPage={currentPage === 0}
+					onClick={() => setPage(1)}
+				/>
+				<Radio
+					selected={currentPage === 2}
+					firstPage={currentPage === 0}
+					onClick={() => setPage(2)}
+				/>
+				<Radio
+					selected={currentPage === 3}
+					firstPage={currentPage === 0}
+					onClick={() => setPage(3)}
+				/>
+				<Radio
+					selected={currentPage === 4}
+					firstPage={currentPage === 0}
+					onClick={() => setPage(4)}
+				/>
+			</div>
 		);
 	}
 }
