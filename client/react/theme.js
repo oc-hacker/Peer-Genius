@@ -1,5 +1,5 @@
 import { createMuiTheme, createPalette, createTypography } from 'material-ui';
-import { lightBlue, blue } from 'material-ui/colors';
+import { orange } from 'material-ui/colors';
 
 const baseTheme = createMuiTheme({});
 
@@ -13,13 +13,13 @@ const palette = createPalette({
 		100: '#aeebf2',
 		200: '#9fdce3',
 		300: '#93d3d9',
-		400: '#87c1c7',
+		400: '#81b6c4',
 		500: '#7fb8bf',
 		600: '#57a3ad',
-		700: '#27909c',
+		700: '#3792a4',
 		800: '#0c6d78',
 		900: '#00545c',
-		'A100': '#bffcff',
+		'A100': '#a6fcff',
 		'A200': '#8cf5ff',
 		'A400': '#66f5ff',
 		'A700': '#33eeff',

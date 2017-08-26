@@ -9,7 +9,8 @@ const styles = {
 		alignItems: props => props.align || 'stretch',
 		justifyContent: props => props.justify || 'flex-start',
 		flexGrow: props => props.grow || 0,
-		flexShrink: props => props.shrink || 0
+		flexShrink: props => props.shrink || 0,
+		flexBasis: props => props.basis || 'auto'
 	}
 };
 
@@ -27,11 +28,12 @@ export default class Flex extends Component {
 		let {
 			className, classes, sheet,
 			column, direction, align, justify, grow, shrink,
+			rootRef,
 			...divProps
 		} = this.props;
 		
 		return (
-			<div className={classNames(classes.flex, className)} {...divProps} />
+			<div ref={rootRef} className={classNames(classes.flex, className)} {...divProps} />
 		);
 	}
 }

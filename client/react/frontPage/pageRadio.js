@@ -14,7 +14,7 @@ const styles = {
 		left: 0,
 		top: 0,
 		bottom: 0,
-		padding: '0 32px',
+		padding: '0 16px',
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
