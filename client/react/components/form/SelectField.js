@@ -1,71 +1,72 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
 import { orange } from 'material-ui/colors';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Input, { InputLabel } from 'material-ui/Input';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import ArrowDropdown from 'material-ui-icons/ArrowDropDown';
 
-import { connect } from 'react-redux';
+import Flex from '../Flex';
 
-import ClickInput from './ClickInput';
-// import DisabledInput from './DisabledInput';
-
-/**
- * Reverses the keys and values of an object.
- * Warning: having duplicate keys will have unexpected behaviour.
- */
-const reverse = map => {
-	let reverseMap = {};
-	
-	for (let prop in map) {
-		if (map.hasOwnProperty(prop)) {
-			if (map[prop] in reverseMap) {
-				console.warn('Reverse mapping an object with duplicate values will have unexpected behaviour.');
-			}
-			reverseMap[map[prop]] = prop;
-		}
-	}
-	
-	return reverseMap;
-};
-
-const styles = {
-	fieldContainer: {
+const styles = ({ palette: { primary, grey, error, warning }, transitions, spacing }) => ({
+	root: {
 		position: 'relative'
 	},
-	icon: {
-		position: 'absolute',
-		right: 0,
-		top: '1.4em'
+	sizing: {
+		width: '100%',
+		padding: spacing.unit,
+		boxSizing: 'border-box',
 	},
 	input: {
-		cursor: 'pointer'
+		borderWidth: 1,
+		borderRadius: spacing.unit / 2,
+		borderStyle: 'solid',
+		borderColor: grey[300],
+		
+		fontSize: 'inherit',
+		cursor: 'pointer',
+		
+		'&:focus': {
+			outline: 'none'
+		}
+	},
+	error: {
+		borderColor: error[500],
+		boxShadow: `0 0 4px ${error[500]}`
 	},
 	warning: {
-		color: orange[500]
+		borderColor: orange[500],
+		boxShadow: `0 0 4px ${orange[500]}`
 	},
-	warningInput: {
-		'&:after': {
-			backgroundColor: orange[500]
-		}
+	dropdownIconWrapper: {
+		position: 'absolute',
+		right: 0,
+		top: 0,
+		bottom: 0,
+		pointerEvents: 'none'
+	},
+	dropdownIcon: {
+		color: primary[700]
 	}
-};
+});
 
 @withStyles(styles)
 export class SelectFieldComponent extends Component {
 	static propTypes = {
 		name: PropTypes.string,
 		label: PropTypes.string,
-		options: PropTypes.object
+		options: PropTypes.arrayOf(PropTypes.shape({
+			value: PropTypes.any,
+			label: PropTypes.string
+		}))
 	};
 	
 	constructor(props) {
 		super(props);
+		
+		this._input = null;
 		
 		this.state = {
 			anchor: null,
@@ -73,58 +74,70 @@ export class SelectFieldComponent extends Component {
 		};
 	}
 	
-	_onInputClick = event => {
+	_openMenu = () => {
 		this.setState({
-			anchor: event.currentTarget,
+			anchor: this._input,
 			open: true
 		});
 	};
 	
 	_closeMenu = () => {
-		const { input: { value, onBlur } } = this.props;
-		
 		this.setState({
 			open: false
 		});
-		onBlur(value);// Artificially blur the field to mark it as touched
 	};
 	
-	_makeSelectHandler = value => () => {
+	_makeClickHandler = value => () => {
 		this._closeMenu();
-		this.props.input.onChange(value);
+		this.props.input.onBlur(value);
 	};
 	
 	render() {
 		let {
-			input, meta, options, classes,
+			input, meta, options, classes, className,
 			...inputProps
 		} = this.props;
-		let { anchor, open } = this.state;
+		let { open, anchor } = this.state;
+		
+		let label = '';
+		for (let option of options) {
+			if (option.value === input.value) {
+				label = option.label;
+			}
+		}
 		
 		return (
-			<ClickInput
-				input={input}
-				meta={meta}
-				onClick={this._onInputClick}
-				firstChildren={<ArrowDropdown className={classes.icon} />}
-				{...inputProps}
-			>
+			<div className={classes.root}>
+				<input
+					ref={self => this._input = self}
+					className={classNames(
+						classes.sizing, classes.input,
+						{
+							[classes.warning]: meta.touched && meta.warning,
+							[classes.error]: meta.touched && meta.error
+						},
+						className
+					)}
+					value={label} readOnly
+					onClick={this._openMenu}
+				/>
 				<Menu
-					anchorEl={anchor}
+					anchorEl={anchor} style={{ width: this._input ? this._input.clientWidth : 0 }}
 					open={open} onRequestClose={this._closeMenu}
-					style={{ width: anchor ? anchor.clientWidth : 0 }}
 				>
-					{Object.values(options).map(value => (
+					{options.map(option => (
 						<MenuItem
-							key={value}
-							selected={input.value === value}
-							onClick={this._makeSelectHandler(value)}
+							selected={option.value === input.value}
+							onClick={this._makeClickHandler(option.value)}
 						>
-							{value}
+							{option.label}
 						</MenuItem>
 					))}
 				</Menu>
-			</ClickInput>
+				<Flex align="center" justify="center" className={classes.dropdownIconWrapper}>
+					<ArrowDropdown className={classes.dropdownIcon} />
+				</Flex>
+			</div>
 		);
 	}
 }
@@ -133,20 +146,14 @@ export default class SelectField extends Component {
 	static propTypes = {
 		name: PropTypes.string,
 		label: PropTypes.string,
-		options: PropTypes.object
+		options: PropTypes.arrayOf(PropTypes.shape({
+			value: PropTypes.any,
+			label: PropTypes.string
+		}))
 	};
 	
 	constructor(props) {
 		super(props);
-		this._reverseMap = null;
-	}
-	
-	_format = value => this.props.options[value];
-	
-	_parse = input => this._reverseMap[input];
-	
-	componentWillMount() {
-		this._reverseMap = reverse(this.props.options);
 	}
 	
 	render() {
