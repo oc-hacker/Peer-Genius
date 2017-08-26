@@ -48,7 +48,7 @@ const attach = async (socket: SocketIO.Socket, user: string) => {
 		
 		let endTime = Date.now();
 		
-		// TODO is this the best way to find all online users
+		// TODO is this the best way to find all online users?
 		console.log(`[Performance Monitor] Online users list compiled in ${endTime - startTime}ms`);
 		return {
 			onlineMentors

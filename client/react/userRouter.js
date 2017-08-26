@@ -6,10 +6,11 @@ import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
 
-import { Route } from './components';
+import { Route, NotFound } from './components';
 import Home from './home';
-import Account from './account';
-import Guru from './guru';
+import AccountRouter from './account';
+import GuruRouter from './guru';
+import NewbieRouter from './newbie';
 
 export default class UserRouter extends Component {
 	constructor(props) {
@@ -19,9 +20,11 @@ export default class UserRouter extends Component {
 	render() {
 		return (
 			<Switch>
-				<Route path="/home" component={Home} />
-				<Route path="/account" component={Account} />
-				<Route path="/guru" component={Guru}  />
+				<Route access="private" path="/home" component={Home} />
+				<Route access="private" path="/account" component={AccountRouter} />
+				<Route access="private" path="/guru" component={GuruRouter} />
+				<Route access="private" path="/newbie" component={NewbieRouter} />
+				{/*<Route access="all" path="/" component={NotFound} />*/}
 			</Switch>
 		);
 	}

@@ -24,7 +24,7 @@ export default class MasterRouter extends Component {
 			<ConnectedRouter history={browserHistory}>
 				<Switch>
 					<Route access="public" exact path="/" component={FrontPage} />
-					<Route access="private" path="/" component={UserPage} />
+					<Route path="/" component={UserPage} />
 				</Switch>
 			</ConnectedRouter>
 		);

@@ -21,7 +21,8 @@ export default class CustomRoute extends Component {
 	};
 	
 	static defaultProps = {
-		access: 'all'
+		access: 'all',
+		path: '/'
 	};
 	
 	componentWillMount() {

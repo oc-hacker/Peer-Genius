@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { Switch } from 'react-router';
 
+import { withStyles } from 'material-ui/styles';
+
+import { connect } from 'react-redux';
+
 import { Route } from '../components';
-import SignUp from './signUp';
 import SessionsRouter from './sessions';
 
-export default class GuruRouter extends Component {
+export default class NewbieRouter extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -15,7 +19,6 @@ export default class GuruRouter extends Component {
 		
 		return (
 			<Switch>
-				<Route path={`${url}/signUp`} component={SignUp} />
 				<Route path={`${url}/sessions`} component={SessionsRouter} />
 			</Switch>
 		);
