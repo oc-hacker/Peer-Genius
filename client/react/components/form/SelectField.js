@@ -6,13 +6,15 @@ import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import { orange } from 'material-ui/colors';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import { FormHelperText } from 'material-ui/Form';
 import ArrowDropdown from 'material-ui-icons/ArrowDropDown';
 
 import Flex from '../Flex';
+import HelperText from './HelperText';
 
 const styles = ({ palette: { primary, grey, error, warning }, transitions, spacing }) => ({
 	root: {
-		position: 'relative'
+		position: 'relative',
 	},
 	sizing: {
 		width: '100%',
@@ -32,11 +34,11 @@ const styles = ({ palette: { primary, grey, error, warning }, transitions, spaci
 			outline: 'none'
 		}
 	},
-	error: {
+	errorInput: {
 		borderColor: error[500],
 		boxShadow: `0 0 4px ${error[500]}`
 	},
-	warning: {
+	warningInput: {
 		borderColor: orange[500],
 		boxShadow: `0 0 4px ${orange[500]}`
 	},
@@ -107,37 +109,40 @@ export class SelectFieldComponent extends Component {
 		}
 		
 		return (
-			<div className={classes.root}>
-				<input
-					ref={self => this._input = self}
-					className={classNames(
-						classes.sizing, classes.input,
-						{
-							[classes.warning]: meta.touched && meta.warning,
-							[classes.error]: meta.touched && meta.error
-						},
-						className
-					)}
-					value={label} readOnly
-					onClick={this._openMenu}
-				/>
-				<Menu
-					anchorEl={anchor} style={{ width: this._input ? this._input.clientWidth : 0 }}
-					open={open} onRequestClose={this._closeMenu}
-				>
-					{options.map(option => (
-						<MenuItem
-							selected={option.value === input.value}
-							onClick={this._makeClickHandler(option.value)}
-						>
-							{option.label}
-						</MenuItem>
-					))}
-				</Menu>
-				<Flex align="center" justify="center" className={classes.dropdownIconWrapper}>
-					<ArrowDropdown className={classes.dropdownIcon} />
-				</Flex>
-			</div>
+			<Flex column>
+				<div className={classes.root}>
+					<input
+						ref={self => this._input = self}
+						className={classNames(
+							classes.sizing, classes.input,
+							{
+								[classes.warningInput]: meta.touched && meta.warning,
+								[classes.errorInput]: meta.touched && meta.error
+							},
+							className
+						)}
+						value={label} readOnly
+						onClick={this._openMenu}
+					/>
+					<Menu
+						anchorEl={anchor} style={{ width: this._input ? this._input.clientWidth : 0 }}
+						open={open} onRequestClose={this._closeMenu}
+					>
+						{options.map(option => (
+							<MenuItem
+								selected={option.value === input.value}
+								onClick={this._makeClickHandler(option.value)}
+							>
+								{option.label}
+							</MenuItem>
+						))}
+					</Menu>
+					<Flex align="center" justify="center" className={classes.dropdownIconWrapper}>
+						<ArrowDropdown className={classes.dropdownIcon} />
+					</Flex>
+				</div>
+				<HelperText error={meta.touched && meta.error} warning={meta.touched && meta.warning} />
+			</Flex>
 		);
 	}
 }

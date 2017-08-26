@@ -16,39 +16,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withRedux, withTheme } from './decorators';
 
-const SimpleForm = reduxForm({
-	form: 'story',
-	// onSubmit: () => new Promise((resolve, reject) => {
-	// 	reject(new SubmissionError({ text: 'Error!' }));
-	// })
-	onSubmit: action('submit')
-})(props => (
-	<Form onSubmit={props.handleSubmit}>
-		<TextField
-			name="test"
-			label="Test"
-			validate={[validator(value => value !== 'error')`Test error`]}
-			warn={[validator(value => value !== 'warn')`Test warning`]}
-		/>
-		<TextField
-			name="pw"
-			type="password"
-			label="Pass"
-			validate={[required`Need password.`]}
-		/>
-		<Button
-			raised
-			type="submit"
-		>
-			Submit
-		</Button>
-	</Form>
-));
-
 storiesOf('Form', module)
 	.addDecorator(withRedux)
 	.addDecorator(withTheme)
-	.add('with fields', () => <SimpleForm />)
 	.add('redux form', () => (
 		<ReduxForm form="testForm" onSubmit={action('submit')}>
 			<TextField
@@ -68,10 +38,10 @@ storiesOf('Form', module)
 			<SelectField
 				name="select"
 				label="Select"
-				options={{
-					o1: 'Option 1',
-					o2: 'Option 2'
-				}}
+				options={[
+					{ value: 'o1', label: 'Option 1' },
+					{ value: 'o2', label: 'Option 2' }
+				]}
 				validate={validator(value => value !== 'o2')`Test error`}
 			/>
 			<DateField

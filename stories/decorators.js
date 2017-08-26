@@ -1,9 +1,8 @@
 import React from 'react';
-import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { Provider as StoreProvider } from 'react-redux';
-import { reducer as formReducer } from 'redux-form';
-import logger from 'redux-logger';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { MuiThemeProvider } from 'material-ui/styles';
+
+import theme from '../client/react/theme';
 
 import store from '../client/redux/store';
 
@@ -14,7 +13,7 @@ export const withRedux = story => (
 );
 
 export const withTheme = story => (
-	<MuiThemeProvider theme={createMuiTheme()}>
+	<MuiThemeProvider theme={theme}>
 		{story()}
 	</MuiThemeProvider>
 );
