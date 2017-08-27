@@ -102,6 +102,6 @@ const blockUserEdit = (instance: LessonInstance) => {
 
 const model: Sequelize.Model<LessonInstance, LessonAttributes> = admin.define<LessonInstance, LessonAttributes>('lessons', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync({ alter: config.devMode }); // Alter when in development mode
+model.sync(); // Alter when in development mode
 
 export default model;

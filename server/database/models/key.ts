@@ -51,7 +51,7 @@ const blockUserEdit = (instance: KeyInstance) => {
 
 const model: Sequelize.Model<KeyInstance, KeyAttributes> = admin.define<KeyInstance, KeyAttributes>('keys', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync({ alter: config.devMode }); // Alter when in development mode
+model.sync(); // Alter when in development mode
 
 // Extra utility methods
 /**

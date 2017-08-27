@@ -105,6 +105,6 @@ const blockUserEdit = (instance: CommunicationInstance) => {
 /** @typedef {Model} */
 const model: Sequelize.Model<CommunicationInstance, CommunicationAttributes> = admin.define<CommunicationInstance, CommunicationAttributes>('communications', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync({ alter: config.devMode }); // Alter when in development mode
+model.sync(); // Alter when in development mode
 
 export default model
