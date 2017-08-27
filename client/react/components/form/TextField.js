@@ -33,22 +33,24 @@ export default class TextField extends React.Component {
 		placeholder: propTypes.string,
 		onChange: propTypes.func.isRequired
 	};
-	
+
 	constructor(props) {
 		super(props);
 		this.state = {
 			value: ''
 		};
 	}
-	
+
 	render = () => {
+		let { type, value, placeholder, onChange, ...fieldProps } = this.props;
 		return (
 			<div style={borderStyle}>
-				<input type="text"
-				       value={this.props.value}
-				       placeholder={this.props.placeholder}
-				       onChange={this.props.onChange}
+				<input type={type}
+				       value={value}
+				       placeholder={placeholder}
+				       onChange={onChange}
 				       style={textAreaStyle}
+					   {...fieldProps}
 				/>
 			</div>
 		);
