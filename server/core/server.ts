@@ -5,10 +5,11 @@ import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 import * as serveStatic from 'serve-static';
 
-import config from './config';
 import { initMailer } from '../email/mailer';
 import { logger, sendIndex, endResponse, errorHandler } from '../router/misc/utils';
 import apiRouter from '../router/api';
+
+const { NODE_ENV, SERVER_PORT } = process.env;
 
 const corsOptions = {
 	origin: (origin: string, cb: (any, boolean?) => any) => {
@@ -17,10 +18,7 @@ const corsOptions = {
 		if (!origin || origin === 'https://peergenius.io') {
 			cb(null, true);
 		}
-		else if (config.devMode
-			// && (origin === `http://localhost${config.serverPort === 80 ? '' : `:${config.serverPort}`}`
-			// 	|| origin === `http://localhost${config.devServerPort === 80 ? '' : `:${config.devServerPort}`}`)
-		) {
+		else if (NODE_ENV === 'dev') {
 			cb(null, true);
 		}
 		else {
@@ -65,6 +63,6 @@ app.use(endResponse);
 // Errors
 app.use(errorHandler);
 
-export default app.listen(config.serverPort, () => {
-	console.log('Listening on port ' + config.serverPort + '!');
+export default app.listen(SERVER_PORT, () => {
+	console.log('Listening on port ' + SERVER_PORT + '!');
 });

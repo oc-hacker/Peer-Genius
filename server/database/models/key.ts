@@ -1,7 +1,6 @@
 import * as Sequelize from 'sequelize';
 import * as randomstring from 'randomstring';
 
-import config from '../../core/config';
 import { sequelizeAdmin as admin } from '../reference';
 import user from './user';
 import { ProhibitedEditError } from '../errors';
