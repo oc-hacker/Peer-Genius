@@ -4,24 +4,22 @@ import * as argon2 from 'argon2';
 import * as models from '../../database/models/index';
 import { createSessionToken } from '../misc/auth';
 import { buildStore } from '../misc/utils';
-
-import { Response } from 'express';
-import { VerifiedRequest } from '../../types';
+import { AsyncHandler, VerifiedRequest } from '../../types';
 import config from '../../core/config';
 
 interface EditAccountRequest extends VerifiedRequest {
 	body: {
 		user: {
-			id: string
+			id: string;
 		},
-		password: string,
-		newEmail?: string,
-		newPassword?: string
+		password: string;
+		newEmail?: string;
+		newPassword?: string;
 	}
 }
 
-export const edit = async (request: EditAccountRequest, response: Response) => {
-	let { user, password, newEmail, newPassword } =  request.body;
+export const edit: AsyncHandler<EditAccountRequest> = async (request, response) => {
+	let { user, password, newEmail, newPassword } = request.body;
 	
 	let account = await models.account.find({
 		where: {
@@ -44,23 +42,23 @@ export const edit = async (request: EditAccountRequest, response: Response) => {
 		response.status(httpStatus.OK).end();
 	}
 	else {
-		response.status(httpStatus.UNAUTHORIZED).end()
+		response.status(httpStatus.UNAUTHORIZED).end();
 	}
 };
 
-export const verify = async (request: VerifiedRequest, response: Response) => {
+export const verify: AsyncHandler<VerifiedRequest> = async (request, response) => {
 	response.status(httpStatus.OK).end();
 };
 
-export const info = async (request: VerifiedRequest, response: Response) => {
-	response.status(httpStatus.OK).json(await buildStore(request.body.user.id))
+export const info: AsyncHandler<VerifiedRequest> = async (request, response) => {
+	response.status(httpStatus.OK).json(await buildStore(request.body.user.id));
 };
 
-export const refresh = async (request: VerifiedRequest, response: Response) => {
+export const refresh: AsyncHandler<VerifiedRequest> = async (request, response) => {
 	response.status(httpStatus.OK).json({
 		session: {
 			jwt: createSessionToken(request.body.user.id),
 			expire: config.sessionJWTExpire
 		}
-	})
+	});
 };

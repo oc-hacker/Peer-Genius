@@ -1,6 +1,6 @@
 import types from '../types';
 import { post } from '../request';
-import { handleStore } from './utils';
+import { handleError, handleStore } from './utils';
 
 import httpStatus from 'http-status-codes';
 
@@ -9,16 +9,16 @@ import httpStatus from 'http-status-codes';
 
 
 export const getPastSessions = () => async dispatch => {
-    let response = await post('/api/schedule/getPastSessions');
-
-    if(response.ok){
-        let pastSessions = await response.json();
-
-        dispatch({
-            type: types.INIT_PAST_SESSIONS,
-            payload: { pastSessions }
-        });
-    } else {
-        dispatch({ type: types.UNEXPECTED_ERROR });
-    }
-}
+	let response = await post('/api/schedule/getPastSessions');
+	
+	if (response.ok) {
+		let pastSessions = await response.json();
+		
+		dispatch({
+			type: types.INIT_PAST_SESSIONS,
+			payload: { pastSessions }
+		});
+	} else {
+		dispatch(handleError(response));
+	}
+};

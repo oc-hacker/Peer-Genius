@@ -7,8 +7,8 @@ import * as models from '../../database/models';
 import { uniqueRandom as uniqueRandomKey } from '../../database/models/key';
 import { exposedAttributes as userAttributes } from '../../database/models/user';
 
-import { Request, Response } from 'express';
-import { Store } from '../../types';
+import { Request } from 'express';
+import { AsyncHandler, Store } from '../../types';
 import config from '../../core/config';
 import { slackConnection } from '../../database/reference';
 
@@ -17,7 +17,7 @@ import { slackConnection } from '../../database/reference';
 /**
  * Used for letting the client retrieve server configuration information.
  */
-export const getConfig = async (request: Request, response: Response) => {
+export const getConfig: AsyncHandler<Request> = async (request, response) => {
 	let { devMode } = config;
 	response.status(httpStatus.OK).json({
 		devMode
@@ -26,25 +26,25 @@ export const getConfig = async (request: Request, response: Response) => {
 
 interface CreateAccountRequest extends Request {
 	body: {
-		email: string,
-		password: string,
-		firstName: string,
-		lastName: string,
+		email: string;
+		password: string;
+		firstName: string;
+		lastName: string;
 		birthday: {
-			year: number,
-			month: number,
-			day: number
-		},
+			year: number;
+			month: number;
+			day: number;
+		}
 		communication: {
-			skype?: string,
-			hangouts?: string,
-			messenger?: string,
-			imessage?: string,
-			whatsapp?: string,
-			viber?: string,
-			tango?: string,
-			aim?: string,
-			oovoo?: string
+			skype?: string;
+			hangouts?: string;
+			messenger?: string;
+			imessage?: string;
+			whatsapp?: string;
+			viber?: string;
+			tango?: string;
+			aim?: string;
+			oovoo?: string;
 		}
 	}
 }
@@ -54,7 +54,7 @@ interface CreateAccountRequest extends Request {
  * OK - account creation successful. An initial store will be sent. See <code>Store</code> interface defined in <code>server/types.ts</code> for details.
  * CONFLICT - email already used
  */
-export const createAccount = async (request: CreateAccountRequest, response: Response) => {
+export const createAccount: AsyncHandler<CreateAccountRequest> = async (request, response) => {
 	let account = await models.account.find({
 		where: {
 			email: request.body.email
@@ -87,8 +87,8 @@ export const createAccount = async (request: CreateAccountRequest, response: Res
 
 interface LoginRequest extends Request {
 	body: {
-		email: string,
-		password: string
+		email: string;
+		password: string;
 	}
 }
 
@@ -97,7 +97,7 @@ interface LoginRequest extends Request {
  * OK - login successful. An initial store will be sent. See <code>Store</code> interface defined in <code>server/types.ts</code> for details.
  * UNAUTHORIZED - bad email or password
  */
-export const verifyLogin = async (request: LoginRequest, response: Response) => {
+export const verifyLogin: AsyncHandler<LoginRequest> = async (request, response) => {
 	let account = await models.account.find({
 		where: {
 			email: request.body.email
@@ -114,7 +114,7 @@ export const verifyLogin = async (request: LoginRequest, response: Response) => 
 
 interface CheckEmailRequest extends Request {
 	body: {
-		email: string
+		email: string;
 	}
 }
 
@@ -123,7 +123,7 @@ interface CheckEmailRequest extends Request {
  * Response:
  * OK - the request will always be OK. Field <code>taken</code> in response body will indicate whether the email has been taken.
  */
-export const checkEmail = async (request: CheckEmailRequest, response: Response) => {
+export const checkEmail: AsyncHandler<CheckEmailRequest> = async (request, response) => {
 	let account = await models.account.find({
 		where: {
 			email: request.body.email
@@ -142,7 +142,7 @@ interface SlackRequest extends Request {
 	}
 }
 
-export const _db = async (request: Request, response: Response) => {
+export const _db: AsyncHandler<Request> = async (request, response) => {
 	let { token, command, text } = request.body;
 	
 	if (token && token === config.slackToken) {
@@ -168,7 +168,7 @@ export const _db = async (request: Request, response: Response) => {
 					let mentorCount = results[0].mentorCount;
 					
 					response.status(httpStatus.OK).json({
-						text: `There are ${totalCount} registered users at Peer Genius, of which `
+						text: `There are ${totalCount} registered users at Peer Genius, of which ${mentorCount} can be mentors.`
 					})
 				}
 			}

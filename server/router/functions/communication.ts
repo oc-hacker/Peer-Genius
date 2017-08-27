@@ -1,37 +1,36 @@
-import { omit } from 'lodash';
 import * as httpStatus from 'http-status-codes';
 
 import * as models from '../../database/models';
 import { communicationMethods } from '../../database/models/communication';
 
-import { Request, Response } from 'express';
-import { VerifiedRequest } from '../../types';
+import { Request } from 'express';
+import { AsyncHandler, VerifiedRequest } from '../../types';
 
-export const getMethods = async (request: Request, response: Response) => {
+export const getMethods: AsyncHandler<Request> = async (request, response) => {
 	response.status(httpStatus.OK).json({
 		methods: communicationMethods
-	})
+	});
 };
 
 interface EditCommunicationRequest extends VerifiedRequest {
 	body: {
 		user: {
-			id: string
-		},
-		whatsapp: string | null,
-		hangouts: string | null,
-		messenger: string | null,
-		imessage: string | null,
-		skype: string | null,
-		viber: string | null,
-		tango: string | null,
-		aim: string | null,
-		oovoo: string | null
+			id: string;
+		}
+		whatsapp: string | null;
+		hangouts: string | null;
+		messenger: string | null;
+		imessage: string | null;
+		skype: string | null;
+		viber: string | null;
+		tango: string | null;
+		aim: string | null;
+		oovoo: string | null;
 	}
 }
 
-export const edit = async (request: EditCommunicationRequest, response: Response) => {
-	let { user, ...communications } = request.body;
+export const edit: AsyncHandler<EditCommunicationRequest> = async (request, response) => {
+	let { user, ...newCommunications } = request.body;
 	
 	let communication = await models.communication.find({
 		where: {
@@ -39,7 +38,7 @@ export const edit = async (request: EditCommunicationRequest, response: Response
 		}
 	});
 	
-	await communication.update(omit(request.body, ['user']));
+	await communication.update(newCommunications);
 	await communication.save();
 	
 	response.status(httpStatus.OK).end();

@@ -10,7 +10,7 @@ import { createSessionToken } from './auth';
 import { AccountInstance } from '../../database/models/account';
 
 import { Handler, ErrorRequestHandler, NextFunction, Request, Response } from 'express';
-import { Store, VerifiedRequest } from '../../types';
+import { AsyncHandler, Store, VerifiedRequest } from '../../types';
 import { CommunicationInstance, communicationMethods } from '../../database/models/communication';
 import config from '../../core/config';
 
@@ -24,7 +24,7 @@ export const sendIndex: Handler = (request, response) => {
 };
 
 export const checkReview = async (request: VerifiedRequest, response: Response, next: NextFunction) => {
-	let unfinishedReview = await models.lesson.find({
+	let unfinishedReview = await models.session.find({
 		where: {
 			mentee: request.body.user.id,
 			rating: null
@@ -137,7 +137,7 @@ export const buildStore = async (id: string, loadedInstances: LoadedModels = {})
 /**
  * Wraps the handler in a higher order function to catch any error that the handler throws and pass it to express's error handler.
  */
-export const wrapTryCatch = (handler: (Request, Response, NextFunction) => Promise<any>): Handler => async (request: Request, response: Response, next: NextFunction) => {
+export const wrapTryCatch = (handler: AsyncHandler<Request>): AsyncHandler<Request> => async (request, response, next) => {
 	try {
 		await handler(request, response, next);
 	}

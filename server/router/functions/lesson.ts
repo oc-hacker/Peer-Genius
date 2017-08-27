@@ -1,5 +1,6 @@
+// @deprecated
 import * as httpStatus from 'http-status-codes';
-import { pick, omit } from 'lodash';
+import { omit, pick } from 'lodash';
 
 import * as models from '../../database/models';
 
@@ -11,10 +12,10 @@ import { newConnection } from '../../database/reference';
 Workflow:
 request - Mentees post here to send requests to mentors
 check - Mentors post here to check if there are lessons needing a mentor
-accept - Mentors post here to accept a lesson
-start - Mentors post here to start a lesson
-end - Mentors post here to stop a lesson
-review - Mentees post here to review a lesson
+accept - Mentors post here to accept a session
+start - Mentors post here to start a session
+end - Mentors post here to stop a session
+review - Mentees post here to review a session
  */
 
 interface RequestLessonRequest extends VerifiedRequest {
@@ -28,10 +29,13 @@ interface RequestLessonRequest extends VerifiedRequest {
 	}
 }
 
+/**
+ * @deprecated Moving to socket.io handling
+ */
 export const request = async (request: RequestLessonRequest, response: Response) => {
 	let { user: { id }, scheduledStart, scheduledEnd } = request.body;
 	
-	await models.lesson.create({
+	await models.session.create({
 		mentee: id,
 		scheduledStart,
 		scheduledEnd
@@ -40,6 +44,9 @@ export const request = async (request: RequestLessonRequest, response: Response)
 	response.status(200).end();
 };
 
+/**
+ * @deprecated Moving to socket.io handling
+ */
 export const check = async (request: VerifiedRequest, response: Response) => {
 	let { user: { id } } = request.body;
 	
@@ -48,7 +55,7 @@ export const check = async (request: VerifiedRequest, response: Response) => {
 			user: id
 		}
 	});
-	let subjects = Object.keys(omit(mentor, 'user')).filter(subject => mentor[ subject ]);
+	let subjects = Object.keys(omit(mentor, 'user')).filter(subject => mentor[subject]);
 	
 	const connection = await newConnection();
 	// language=MYSQL-SQL
@@ -62,7 +69,7 @@ ORDER BY startTime ASC`
 	
 	response.status(httpStatus.OK).json({
 		requests: results
-	})
+	});
 };
 
 interface LessonInfoRequest extends VerifiedRequest {
@@ -74,8 +81,11 @@ interface LessonInfoRequest extends VerifiedRequest {
 	}
 }
 
+/**
+ * @deprecated Moving to socket.io handling
+ */
 export const info = async (request: LessonInfoRequest, response: Response) => {
-	let result = await models.lesson.find({
+	let result = await models.session.find({
 		where: {
 			id: request.body.lesson
 		}
@@ -91,13 +101,16 @@ interface AcceptLessonRequest extends VerifiedRequest {
 		user: {
 			id: string
 		},
-		/** ID of lesson */
+		/** ID of session */
 		lesson: string
 	}
 }
 
-export const accept = async (request: AcceptLessonRequest, response: Response) => {
-	let [ affectedRowCount ] = await models.lesson.update({
+/**
+ * @deprecated Moving to socket.io handling
+ */
+const accept = async (request: AcceptLessonRequest, response: Response) => {
+	let [affectedRowCount] = await models.session.update({
 		mentor: request.body.user.id
 	}, {
 		where: {
@@ -109,7 +122,7 @@ export const accept = async (request: AcceptLessonRequest, response: Response) =
 	
 	if (affectedRowCount > 0) {
 		// Changed a row, successful
-		let lesson = await models.lesson.find({
+		let lesson = await models.session.find({
 			where: {
 				id: request.body.lesson
 			}
@@ -138,15 +151,13 @@ export const accept = async (request: AcceptLessonRequest, response: Response) =
 	}
 };
 
-// TODO start, end
-// TODO missing review blocks future requests.
 
 interface ReviewLessonRequest extends VerifiedRequest {
 	body: {
 		user: {
 			id: string
 		},
-		/** ID of lesson */
+		/** ID of session */
 		lesson: string,
 		/** Number between 1 and 5 (inclusive) */
 		rating: number,
@@ -155,10 +166,13 @@ interface ReviewLessonRequest extends VerifiedRequest {
 }
 
 // Used for both initial reviews and editing reviews.
+/**
+ * @deprecated Moving to socket.io handling
+ */
 export const review = async (request: ReviewLessonRequest, response: Response) => {
 	let { user, lesson: lessonId, rating, comment } = request.body;
 	
-	let lesson = await models.lesson.find({
+	let lesson = await models.session.find({
 		where: {
 			id: lessonId,
 			mentee: user.id

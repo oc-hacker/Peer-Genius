@@ -1,38 +1,42 @@
 import types from '../types';
 import { post } from '../request';
-import { handleStore } from './utils';
+import { handleError, handleStore } from './utils';
 
 import httpStatus from 'http-status-codes';
 
 /* Holds action creators for functions related to handling of PeerGenius reviews. */
 
 export const getReviews = () => async dispatch => {
-    let response = await post('/api/guru/reviews');
+	let response = await post('/api/guru/reviews');
+	
+	if (response.ok) {
+		let reviews = await response.json();
+		
+		dispatch({
+			type: types.GET_SESSION_REVIEWS,
+			payload: { reviews }
+		});
+	} else {
+		dispatch(handleError(response));
+	}
+};
 
-    if(response.ok){
-        let reviews = await response.json();
-
-        dispatch({
-            type: types.GET_SESSION_REVIEWS,
-            payload: { reviews }
-        });
-    } else {
-        dispatch({ type: types.UNEXPECTED_ERROR });
-    }
-}
-
-export const giveReview = () => async dispatch => {
-    //TODO: finish and implement other stuff
-    let response = await post('/api/newbie/:sessionUUID/review');
-
-    if(response.ok){
-        let review = await response.json();
-
-        dispatch({
-            type: types.GIVE_SESSION_REVIEW,
-            payload: { review }
-        });
-    } else {
-        dispatch({ type: types.UNEXPECTED_ERROR });
-    }
-}
+/**
+ * Thunk action creator.
+ * Sends review session POST request to the server.
+ */
+export const giveReview = (sessionUUID, rating, comment) => async dispatch => {
+	let response = await post(`/api/newbie/review`, {
+		session: sessionUUID,
+		rating,
+		comment
+	});
+	
+	if (response.ok) {
+		dispatch({
+			type: types.GIVE_SESSION_REVIEW,
+		});
+	} else {
+		dispatch(handleError(response));
+	}
+};
