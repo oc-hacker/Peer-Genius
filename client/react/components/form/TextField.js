@@ -15,7 +15,7 @@ const textAreaStyle = {
     overflow: "auto",
     borderColor: "transparent",
     resize: "none",
-    padding: "4px",
+    padding: 0,
     marginLeft: "10px",
     outline: "none"
 }
