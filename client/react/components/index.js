@@ -8,3 +8,4 @@ export { default as Spacer } from './Spacer';
 export { default as SubjectFields } from './SubjectFields';
 export { default as UnexpectedErrorDialog } from './UnexpectedErrorDialog';
 export { default as waitForInit } from './waitForInit';
+export { default as withProps } from './withProps';

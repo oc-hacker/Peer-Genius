@@ -26,7 +26,7 @@ export const getReviews = () => async dispatch => {
  * Sends review session POST request to the server.
  */
 export const giveReview = (sessionUUID, rating, comment) => async dispatch => {
-	let response = await post('/api/session/' + sessionUUID + "/review", {
+	let response = await post(`/api/session/${sessionUUID}/review`, {
 		session: sessionUUID,
 		rating,
 		comment

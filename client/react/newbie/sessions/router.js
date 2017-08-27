@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 import { Route } from '../../components';
 import SessionsList from './list';
-import SessionDetails from './details';
+import SessionDetailsRouter from './details';
 
 export default class SessionsRouter extends Component {
 	constructor(props) {
@@ -21,7 +21,7 @@ export default class SessionsRouter extends Component {
 		return (
 			<Switch>
 				<Route exact path={`${url}`} component={SessionsList}/>
-				<Route path={`${url}/:sessionID`} component={SessionDetails} />
+				<Route path={`${url}/:sessionID`} component={SessionDetailsRouter} />
 			</Switch>
 		);
 	}
