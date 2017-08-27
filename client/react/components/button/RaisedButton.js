@@ -28,6 +28,7 @@ export default class RaisedButton extends React.Component {
                     label={label}
                     buttonStyle={{ borderRadius: 5 }}
                     style={{ borderRadius: 5 }}
+                    {...ButtonProps}
                 />
             );
         } else if (secondary) {
@@ -37,6 +38,7 @@ export default class RaisedButton extends React.Component {
                     label={label}
                     buttonStyle={{ borderRadius: 5 }}
                     style={{ borderRadius: 5 }}
+                    {...buttonProps}
                 />
             );
         } else if (transparent) {
@@ -47,6 +49,7 @@ export default class RaisedButton extends React.Component {
                     style={{ borderRadius: 5, borderColor: 'black' }}
                     labelColor={'transparent'}
                     backgroundColor={'transparent'}
+                    {...buttonProps}
                 />
             );
         }
