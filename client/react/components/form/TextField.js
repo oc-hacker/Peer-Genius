@@ -53,12 +53,21 @@ class TextFieldClass extends React.Component {
 
         return (
             <div style={borderStyle}>
+<<<<<<< HEAD
                 <input type="text" 
                 value={input.value}
                 placeholder={placeholder}
                 onChange={input.onChange}
                 style={textAreaStyle}
                 {...fieldProps}
+=======
+                <input type={type}
+	                value={value}
+	                placeholder={placeholder}
+	                onChange={onChange}
+	                style={textAreaStyle}
+	                {...fieldProps}
+>>>>>>> 3889e03bf048a0b710d3a815f869c412af1c5958
                 />
             </div>
         );
