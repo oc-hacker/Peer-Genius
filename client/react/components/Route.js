@@ -26,7 +26,7 @@ export default class CustomRoute extends Component {
 	};
 	
 	componentWillMount() {
-		let { access, push } = this.props;
+		let { access, push, component } = this.props;
 		let jwt = cookies.get('sessionJWT');
 		
 		// Check that the user is in a valid place.

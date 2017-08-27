@@ -3,12 +3,12 @@ import * as mysql from 'mysql';
 import RowData from 'mysql/lib/protocol/packets/RowDataPacket';
 import * as Sequelize from 'sequelize';
 
-import config from '../core/config';
+const { DB_NAME, DB_ADMIN_USER, DB_ADMIN_PASS, DB_SLACK_USER, DB_SLACK_PASS } = process.env;
 
 interface QueryResults extends Array<RowData> {
-	affectedRows: number,
-	changedRows: number,
-	threadId: number
+	affectedRows: number;
+	changedRows: number;
+	threadId: number;
 }
 
 export interface AsyncConnection extends mysql.IConnection {
@@ -33,9 +33,9 @@ const getConnection = (pool: mysql.IPool): Promise<mysql.IConnection> => {
 
 const adminPool = mysql.createPool({
 	host: 'localhost',
-	database: config.mysqlDatabase,
-	user: config.mysqlAdmin.user,
-	password: config.mysqlAdmin.password,
+	database: DB_NAME,
+	user: DB_ADMIN_USER,
+	password: DB_ADMIN_PASS,
 	timezone: '+00'
 });
 
@@ -53,12 +53,12 @@ export const newConnection: ConnectionFactory = async (logSQL?: boolean) => {
 		}
 		return new Promise((resolve, reject) => {
 			if (values) {
-				connection.query(query, values, (err, results, fields) => {
+				connection.query(query, values, (err, result, fields) => {
 					if (err) {
 						reject(err);
 					}
 					else {
-						resolve(results);
+						resolve(result);
 					}
 				});
 			}
@@ -83,9 +83,9 @@ export const newConnection: ConnectionFactory = async (logSQL?: boolean) => {
 
 const slackPool = mysql.createPool({
 	host: 'localhost',
-	database: config.mysqlDatabase,
-	user: config.mysqlSlack.user,
-	password: config.mysqlSlack.password,
+	database: DB_NAME,
+	user: DB_SLACK_USER,
+	password: DB_SLACK_PASS,
 	timezone: '+00'
 });
 
@@ -112,9 +112,9 @@ export const slackConnection: ConnectionFactory = async () => {
 };
 
 export const sequelizeAdmin: Sequelize.Sequelize = new Sequelize(
-	config.mysqlDatabase,
-	config.mysqlAdmin.user,
-	config.mysqlAdmin.password,
+	DB_NAME,
+	DB_ADMIN_USER,
+	DB_ADMIN_PASS,
 	{
 		host: '127.0.0.1',
 		dialect: 'mysql',

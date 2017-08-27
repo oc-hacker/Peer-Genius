@@ -1,7 +1,6 @@
 import { without } from 'lodash';
 import * as Sequelize from 'sequelize';
 
-import config from '../../core/config';
 import { sequelizeAdmin as admin } from '../reference';
 import { ProhibitedEditError } from '../errors';
 

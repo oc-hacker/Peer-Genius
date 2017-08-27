@@ -2,13 +2,14 @@ import * as sio from 'socket.io';
 import Socket = SocketIO.Socket;
 import * as jwt from 'jsonwebtoken';
 
-import config from './config';
 import server from './server';
 import { logError } from '../router/misc/utils';
 import { connection } from '../socket';
 
+const { JWT_SECRET } = process.env;
+
 export const io = sio(server);
-const secret = new Buffer(config.sessionJWTKey, 'base64');
+const secret = new Buffer(JWT_SECRET, 'base64');
 
 io.on('connection', async (socket: SocketIO.Socket) => {
 	// Verify valid JWT

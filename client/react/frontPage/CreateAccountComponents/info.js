@@ -17,20 +17,23 @@ export default class InfoFields extends Component {
 	static propTypes = {
 		className: PropTypes.string
 	};
-	
+
 	render() {
 		let minDate = new Date(), maxDate = new Date();
 		minDate.setFullYear(minDate.getFullYear() - 19);
 		maxDate.setFullYear(maxDate.getFullYear() - 13);
-		
+
 		return (
 			<div {...this.props}>
+				<br />
 				<TextField
+					type="text"
 					name="firstName"
 					label="First Name"
 					validate={[required`You have a name, right?`]}
 				/>
 				<TextField
+					type="text"
 					name="lastName"
 					label="Last Name"
 					validate={[required`You have a name, right?`]}
@@ -42,6 +45,7 @@ export default class InfoFields extends Component {
 					warn={[email`'${value => value}' does not look like an email address.`]}
 				/>
 				<TextField
+					type="email"
 					name="confirmEmail"
 					label="Confirm Email"
 					validate={[same('email')`'${value => value}' does not match '${(value, all) => all.email}'.`]}

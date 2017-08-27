@@ -2,7 +2,6 @@ import * as Sequelize from 'sequelize';
 import { without } from 'lodash';
 
 import { ProhibitedEditError } from '../errors';
-import config from '../../core/config';
 import { sequelizeAdmin as admin } from '../reference';
 import user from './user';
 

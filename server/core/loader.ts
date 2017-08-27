@@ -1,6 +1,6 @@
-let run = async () => {
-	require('./server');
-	require('./socket');
-};
+import * as dotenv from 'dotenv';
 
-run();
+dotenv.config();
+
+require('./server');
+require('./socket');
