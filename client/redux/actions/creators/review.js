@@ -8,10 +8,10 @@ import httpStatus from 'http-status-codes';
 
 export const getReviews = () => async dispatch => {
 	let response = await post('/api/guru/reviews');
-	
+
 	if (response.ok) {
 		let reviews = await response.json();
-		
+
 		dispatch({
 			type: types.GET_SESSION_REVIEWS,
 			payload: { reviews }
@@ -26,12 +26,12 @@ export const getReviews = () => async dispatch => {
  * Sends review session POST request to the server.
  */
 export const giveReview = (sessionUUID, rating, comment) => async dispatch => {
-	let response = await post(`/api/newbie/review`, {
+	let response = await post('/api/' + sessionUUID + "/review", {
 		session: sessionUUID,
 		rating,
 		comment
 	});
-	
+
 	if (response.ok) {
 		dispatch({
 			type: types.GIVE_SESSION_REVIEW,
