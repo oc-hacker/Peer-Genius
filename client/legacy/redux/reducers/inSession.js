@@ -11,11 +11,11 @@ export default function inSession(state=-1, action) {
 		case types.REFRESH_SESSION:
 			switch (action.status) {
 				case status.SUCCESS: {
-					// On successful login/lesson refresh, set inSession to 1
+					// On successful login/session refresh, set inSession to 1
 					return 1;
 				}
 				case status.FAILURE: {
-					// On failed login/lesson refresh, set inSession to 0
+					// On failed login/session refresh, set inSession to 0
 					return 0;
 				}
 				default: 

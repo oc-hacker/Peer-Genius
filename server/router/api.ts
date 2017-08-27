@@ -5,8 +5,8 @@ import { verifySessionToken } from './misc/auth';
 import { wrapTryCatch } from './misc/utils';
 import accountRouter from './account';
 import communicationRouter from './communication';
-import mentorRouter from './mentor';
-import lessonRouter from './lesson';
+import guruRouter from './guru';
+import newbieRouter from './newbie';
 import userRouter from './user';
 import { urlencoded } from 'body-parser';
 
@@ -24,8 +24,8 @@ router.post('/db', urlencoded({ extended: true }), functions._db);
 // If JWT token is  verifying session token will give UNAUTHORIZED and return {reason: 'Invalid session'}
 router.use('/account', accountRouter);
 router.use('/communication', communicationRouter);
-router.use('/mentor', mentorRouter);
-router.use('/lesson', lessonRouter);
+router.use('/guru', guruRouter);
+router.use('/newbie', newbieRouter);
 router.use('/user', userRouter);
 
 export default router;

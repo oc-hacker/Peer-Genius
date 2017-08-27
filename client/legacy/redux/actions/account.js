@@ -50,10 +50,10 @@ export const createAccount = (values) => async dispatch => {
 		dispatch(initComms(json.communication));
 		dispatch(initCommMethods());
 		
-		// Store the lesson JWT as a cookie.
+		// Store the session JWT as a cookie.
 		await cookie.set('sessionJWT', json.sessionJWT);
 		
-		// Refresh the lesson and push to the account page.
+		// Refresh the session and push to the account page.
 		await dispatch(verifySession());
 		dispatch(push('/home'));
 		
