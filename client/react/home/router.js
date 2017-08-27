@@ -12,7 +12,7 @@ export default class HomeRouter extends Component {
 		return (
 			<Switch>
 				<Route exact path={`${url}`} component={Home} />
-				<Route path={`${url}/gurusearch`} component={GuruSearch} />
+				<Route path={`${url}/schedule`} component={GuruSearch} />
 			</Switch>
 		);
 	}
