@@ -1,5 +1,8 @@
 import React from 'react';
 import propTypes from 'prop-types';
+
+import { Field } from 'redux-form';
+
 const borderStyle = {
     borderStyle: "solid",
     borderWidth: "1px",
@@ -23,7 +26,7 @@ const textAreaStyle = {
 /**
  * Text field class. Allows for entry of text into something.
  */
-export default class TextField extends React.Component {
+class TextFieldClass extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -47,6 +50,17 @@ export default class TextField extends React.Component {
                 style={textAreaStyle}
                 />
             </div>
+        );
+    }
+}
+
+export default class TextField extends React.Component {
+    render = () => {
+        return (
+            <Field
+                component={TextFieldClass}
+                {...this.props}
+            />
         );
     }
 }
