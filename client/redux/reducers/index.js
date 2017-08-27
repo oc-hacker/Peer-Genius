@@ -5,4 +5,5 @@ export { default as dialog } from './dialog';
 export { default as socket } from './socket';
 export { default as status } from './status';
 export { default as user } from './user';
-export { default as PGsession } from "./PGsession";
+export { default as PGsession } from './PGsession';
+export { default as review } from './review';
