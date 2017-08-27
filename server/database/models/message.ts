@@ -60,6 +60,6 @@ const blockUserEdit = (instance: MessageInstance) => {
 
 const model: Sequelize.Model<MessageInstance, MessageAttributes> = admin.define<MessageInstance, MessageAttributes>('messages', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync({ alter: config.devMode }); // Alter when in development mode
+model.sync(); // Alter when in development mode
 
 export default model

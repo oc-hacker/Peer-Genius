@@ -2,9 +2,7 @@ import * as httpStatus from 'http-status-codes';
 
 import * as models from '../../database/models/index';
 import { exposedAttributes as userAttributes } from '../../database/models/user';
-
-import { Response } from 'express';
-import { VerifiedRequest } from '../../types';
+import { AsyncHandler, VerifiedRequest } from '../../types';
 
 interface EditUserRequest extends VerifiedRequest {
 	body: {
@@ -27,7 +25,7 @@ interface EditUserRequest extends VerifiedRequest {
  * OK - edit successful
  * BAD_REQUEST - user not found (should not happen)
  */
-export const edit = async (request: EditUserRequest, response: Response) => {
+export const edit: AsyncHandler<EditUserRequest> = async (request, response) => {
 	let user = await models.user.find({
 		where: {
 			id: request.body.user.id

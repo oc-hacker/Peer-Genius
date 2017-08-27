@@ -69,6 +69,6 @@ const model: Sequelize.Model<AccountInstance, AccountAttributes> = admin.define<
 model.beforeCreate(hashPassword);
 model.beforeUpdate('blockUserEdit', blockUserEdit);
 model.beforeUpdate('hashPassword', hashPassword);
-model.sync({ alter: config.devMode }); // Alter when in development mode
+model.sync();
 
 export default model
