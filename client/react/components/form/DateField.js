@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 
 import Flex from '../Flex';
 import HelperText from './HelperText';
+import FieldBorder from './FieldBorder';
 
 // Maximum date counts
 const dateCounts = [
@@ -19,21 +20,8 @@ const dateCounts = [
 
 const styles = ({ palette: { grey, error }, spacing }) => ({
 	root: {
-		borderWidth: 1,
-		borderRadius: spacing.unit / 2,
-		borderStyle: 'solid',
-		borderColor: grey[300],
-		boxSizing: 'border-box',
-		
-		fontSize: 'inherit',
-	},
-	errorRoot: {
-		borderColor: error[500],
-		boxShadow: `0 0 4px ${error[500]}`
-	},
-	warningRoot: {
-		borderColor: orange[500],
-		boxShadow: `0 0 4px ${orange[500]}`
+		display: 'flex',
+		flexDirection: 'row'
 	},
 	segment: {
 		cursor: 'pointer',
@@ -173,16 +161,8 @@ class DateFieldComponent extends Component {
 		} = this.state;
 		
 		return (
-			<Flex column>
-				<Flex
-					className={classNames(
-						classes.root,
-						{
-							[classes.warningRoot]: meta.touched && meta.warning,
-							[classes.errorRoot]: meta.touched && meta.error
-						}
-					)}
-				>
+			<Flex column className={className}>
+				<FieldBorder className={classes.root}>
 					<Flex
 						rootRef={self => this._monthInput = self}
 						grow={1} justify="center" basis={0} className={classes.segment}
@@ -251,8 +231,8 @@ class DateFieldComponent extends Component {
 							))}
 						</Menu>
 					</Flex>
-				</Flex>
-				<HelperText error={meta.touched && meta.error} warning={meta.touched && meta.warning}/>
+				</FieldBorder>
+				<HelperText error={meta.touched && meta.error} warning={meta.touched && meta.warning} />
 			</Flex>
 		);
 	}

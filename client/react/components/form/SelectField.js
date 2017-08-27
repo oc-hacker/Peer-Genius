@@ -11,6 +11,7 @@ import ArrowDropdown from 'material-ui-icons/ArrowDropDown';
 
 import Flex from '../Flex';
 import HelperText from './HelperText';
+import FieldBorder from './FieldBorder';
 
 const styles = ({ palette: { primary, grey, error, warning }, transitions, spacing }) => ({
 	root: {
@@ -22,25 +23,14 @@ const styles = ({ palette: { primary, grey, error, warning }, transitions, spaci
 		boxSizing: 'border-box',
 	},
 	input: {
-		borderWidth: 1,
-		borderRadius: spacing.unit / 2,
-		borderStyle: 'solid',
-		borderColor: grey[300],
-		
+		border: 'none',
+		backgroundColor: 'transparent',
 		fontSize: 'inherit',
 		cursor: 'pointer',
 		
 		'&:focus': {
 			outline: 'none'
 		}
-	},
-	errorInput: {
-		borderColor: error[500],
-		boxShadow: `0 0 4px ${error[500]}`
-	},
-	warningInput: {
-		borderColor: orange[500],
-		boxShadow: `0 0 4px ${orange[500]}`
 	},
 	dropdownIconWrapper: {
 		position: 'absolute',
@@ -110,7 +100,7 @@ export class SelectFieldComponent extends Component {
 		
 		return (
 			<Flex column>
-				<div className={classes.root}>
+				<FieldBorder className={classes.root}>
 					<input
 						ref={self => this._input = self}
 						className={classNames(
@@ -140,7 +130,7 @@ export class SelectFieldComponent extends Component {
 					<Flex align="center" justify="center" className={classes.dropdownIconWrapper}>
 						<ArrowDropdown className={classes.dropdownIcon} />
 					</Flex>
-				</div>
+				</FieldBorder>
 				<HelperText error={meta.touched && meta.error} warning={meta.touched && meta.warning} />
 			</Flex>
 		);
