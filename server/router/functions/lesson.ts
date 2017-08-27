@@ -1,4 +1,4 @@
-// @deprecated
+// @deprecated switching to socket.io for session stuff
 import * as httpStatus from 'http-status-codes';
 import { omit, pick } from 'lodash';
 

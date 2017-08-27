@@ -9,8 +9,9 @@ import { exposedAttributes as userAttributes } from '../../database/models/user'
 
 import { Request } from 'express';
 import { AsyncHandler, Store } from '../../types';
-import config from '../../core/config';
 import { slackConnection } from '../../database/reference';
+
+const { SLACK_TOKEN, NODE_ENV } = process.env;
 
 // Note: only use next() if you are not handling the request!
 
@@ -18,10 +19,9 @@ import { slackConnection } from '../../database/reference';
  * Used for letting the client retrieve server configuration information.
  */
 export const getConfig: AsyncHandler<Request> = async (request, response) => {
-	let { devMode } = config;
 	response.status(httpStatus.OK).json({
-		devMode
-	})
+		devMode: NODE_ENV === 'dev'
+	});
 };
 
 interface CreateAccountRequest extends Request {
@@ -80,7 +80,7 @@ export const createAccount: AsyncHandler<CreateAccountRequest> = async (request,
 		let store: Store = await buildStore(user.id, { user, account, communication });
 		
 		response.status(httpStatus.OK).json(store);
-		let key = await uniqueRandomKey('verifyEmailKey')
+		let key = await uniqueRandomKey('verifyEmailKey');
 		// TODO send email
 	}
 };
@@ -130,7 +130,7 @@ export const checkEmail: AsyncHandler<CheckEmailRequest> = async (request, respo
 		}
 	});
 	
-	response.status(httpStatus.OK).json({ taken: !!account })
+	response.status(httpStatus.OK).json({ taken: !!account });
 };
 
 interface SlackRequest extends Request {
@@ -145,7 +145,7 @@ interface SlackRequest extends Request {
 export const _db: AsyncHandler<Request> = async (request, response) => {
 	let { token, command, text } = request.body;
 	
-	if (token && token === config.slackToken) {
+	if (token === SLACK_TOKEN) {
 		try {
 			// Parse command
 			let flags: string[] = text.match(/--\S+/g).map(flag => flag.substring(2));
@@ -169,14 +169,14 @@ export const _db: AsyncHandler<Request> = async (request, response) => {
 					
 					response.status(httpStatus.OK).json({
 						text: `There are ${totalCount} registered users at Peer Genius, of which ${mentorCount} can be mentors.`
-					})
+					});
 				}
 			}
 			
 			connection.release();
 		}
 		catch (error) {
-			response.status(httpStatus.INTERNAL_SERVER_ERROR).json({ error })
+			response.status(httpStatus.INTERNAL_SERVER_ERROR).json({ error });
 		}
 	}
 	else {

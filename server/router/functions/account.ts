@@ -5,7 +5,8 @@ import * as models from '../../database/models/index';
 import { createSessionToken } from '../misc/auth';
 import { buildStore } from '../misc/utils';
 import { AsyncHandler, VerifiedRequest } from '../../types';
-import config from '../../core/config';
+
+const { JWT_EXPIRE } = process.env;
 
 interface EditAccountRequest extends VerifiedRequest {
 	body: {
@@ -58,7 +59,7 @@ export const refresh: AsyncHandler<VerifiedRequest> = async (request, response) 
 	response.status(httpStatus.OK).json({
 		session: {
 			jwt: createSessionToken(request.body.user.id),
-			expire: config.sessionJWTExpire
+			expire: parseInt(JWT_EXPIRE) * 1000
 		}
 	});
 };
