@@ -45,9 +45,7 @@ export const check = async (request: VerifiedRequest, response: Response) => {
 	
 	let mentor = await models.mentor.find({
 		where: {
-			user: {
-				id
-			}
+			user: id
 		}
 	});
 	let subjects = Object.keys(omit(mentor, 'user')).filter(subject => mentor[ subject ]);
