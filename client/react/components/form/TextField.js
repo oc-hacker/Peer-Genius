@@ -1,115 +1,52 @@
-import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
-import classNames from 'classnames';
-
-import { withStyles } from 'material-ui/styles';
-import { orange } from 'material-ui/colors';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Input, { InputLabel } from 'material-ui/Input';
-import IconButton from 'material-ui/IconButton';
-import Hide from 'material-ui-icons/VisibilityOff';
-import Unhide from 'material-ui-icons/Visibility';
-
-import { connect } from 'react-redux';
-
-const styles = {
-	fieldContainer: {
-		position: 'relative'
-	},
-	icon: {
-		position: 'absolute',
-		right: 0,
-		top: 8
-	},
-	warning: {
-		color: orange[500]
-	},
-	warningInput: {
-		'&:after': {
-			backgroundColor: orange[500]
-		}
-	}
-};
-
-@withStyles(styles)
-export class TextFieldComponent extends Component {
-	constructor(props) {
-		super(props);
-		
-		this.state = {
-			hidden: true
-		};
-	}
-	
-	_toggleHide = () => {
-		this.setState(state => ({
-			hidden: !state.hidden
-		}));
-	};
-	
-	render() {
-		let {
-			input, meta: { touched, error, warning },
-			label, type, classes, fullWidth, ...fieldProps
-		} = this.props;
-		let { hidden } = this.state;
-		
-		let warningClass = classNames({
-			[classes.warning]: touched && (warning && !error)
-		});
-		
-		let inputType = type;
-		if (type === 'password' && !hidden) {
-			inputType = 'text';
-		}
-		
-		return (
-			<FormControl
-				className={classes.fieldContainer}
-				fullWidth={fullWidth !== false}
-				error={Boolean(touched && (error || warning))}
-			>
-				<InputLabel className={warningClass}>
-					{label}
-				</InputLabel>
-				<Input
-					{...input}
-					type={inputType}
-					classes={{
-						error: classNames({
-							[classes.warningInput]: touched && (warning && !error)
-						})
-					}}
-				/>
-				<FormHelperText classes={{ error: warningClass }}>
-					{touched && (error || warning)}
-				</FormHelperText>
-				{type === 'password' && (
-					<IconButton
-						className={classes.icon} tabIndex="-1"
-						onClick={this._toggleHide}
-					>
-						{hidden ? <Unhide /> : <Hide />}
-					</IconButton>
-				)}
-			</FormControl>
-		);
-	}
+import React from 'react';
+import propTypes from 'prop-types';
+const borderStyle = {
+    borderStyle: "solid",
+    borderWidth: "1px",
+    borderColor: "#D3D3D3",
+    borderRadius: "9px"
 }
 
-export default class TextField extends Component {
-	static propTypes = {
-		name: PropTypes.string,
-		label: PropTypes.string
-	};
-	
-	render() {
-		return (
-			<Field
-				component={TextFieldComponent}
-				{...this.props}
-			/>
-		);
-	}
+const textAreaStyle = {
+    width: "85%",
+    wrap: "soft",
+    border: "none",
+    margin: 0,
+    overflow: "auto",
+    borderColor: "transparent",
+    resize: "none",
+    padding: "4px",
+    marginLeft: "10px",
+    outline: "none"
+}
+
+/**
+ * Text field class. Allows for entry of text into something.
+ */
+export default class TextField extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            value: ""
+        }
+    }
+
+    static propTypes = {
+        value: propTypes.string.isRequired,
+        placeholder: propTypes.string,
+        onChange: propTypes.func.isRequired
+    }
+
+    render = () => {
+        return (
+            <div style={borderStyle}>
+                <input type="text" 
+                value={this.props.value}
+                placeholder={this.props.placeholder}
+                onChange={this.props.onChange}
+                style={textAreaStyle}
+                />
+            </div>
+        );
+    }
 }
