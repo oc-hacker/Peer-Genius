@@ -9,10 +9,10 @@ const typography = createTypography(baseTheme.palette, {
 
 const palette = createPalette({
 	primary: {
-		50: '#bbf4fa',
-		100: '#aeebf2',
-		200: '#9fdce3',
-		300: '#93d3d9',
+		50: '#c5faed',
+		100: '#a2f2e6',
+		200: '#8fe8ea',
+		300: '#9bd0d5',
 		400: '#81b6c4',
 		500: '#7fb8bf',
 		600: '#57a3ad',

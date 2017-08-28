@@ -59,12 +59,12 @@ class TextFieldClass extends React.Component {
 }
 
 export default class TextField extends React.Component {
-    render = () => {
-        return (
-            <Field
-                component={TextFieldClass}
-                {...this.props}
-            />
-        );
-    }
+	render = () => {
+		return (
+			<Field
+				component={TextFieldClass}
+				{...this.props}
+			/>
+		);
+	};
 }

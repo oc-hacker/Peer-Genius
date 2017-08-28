@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import stylesheet from 'react-jss';
 
@@ -19,21 +20,29 @@ const styles = {
  * A component for flexbox purposes.
  */
 export default class Flex extends Component {
-	constructor(props) {
-		super(props);
-	}
+	static propTypes = {
+		component: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
+	};
+	
+	static defaultProps = {
+		component: 'div'
+	};
 	
 	render() {
 		// Destruct and take out extra props.
 		let {
 			className, classes, sheet,
-			column, direction, align, justify, grow, shrink,
-			rootRef,
-			...divProps
+			column, direction, align, justify, grow, shrink, basis,
+			component: Component, rootRef,
+			...componentProps
 		} = this.props;
 		
 		return (
-			<div ref={rootRef} className={classNames(classes.flex, className)} {...divProps} />
+			<Component
+				ref={rootRef}
+				className={classNames(classes.flex, className)}
+				{...componentProps}
+			/>
 		);
 	}
 }
