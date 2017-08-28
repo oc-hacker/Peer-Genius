@@ -4,9 +4,31 @@ import PropTypes from 'prop-types';
 
 import { RaisedButton } from 'material-ui/RaisedButton';
 
+import { withStyles } from 'material-ui/styles';
+import { orange } from 'material-ui/colors';
+import Menu, { MenuItem } from 'material-ui/Menu';
+
+const styles = ({ palette: { grey, error }, spacing }) => ({
+	root: {
+		display: 'flex'
+	},
+	divider: {
+		width: 1,
+		margin: `${spacing.unit / 2}px 0`,
+		backgroundColor: grey[300]
+	},
+    buttons: {
+        borderRadius: 10,
+        style: {
+            borderRadius: 10
+        }
+    }
+});
+
 /**
- * Flat buttons (see guru_page.jpg of design)
+ * Raised buttons
  */
+@withStyles(styles)
 export default class RaisedButton extends React.Component {
     static propTypes = {
         label: PropTypes.string.isRequired,

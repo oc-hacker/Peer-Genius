@@ -27,19 +27,19 @@ export default class AppBarMenu extends Component {
 		button: PropTypes.node.isRequired,
 		onClick: PropTypes.func
 	};
-	
+
 	constructor(props) {
 		super(props);
-		
+
 		this._root = null;
-		
+
 		this.state = {
 			anchor: null,
 			rootWidth: 0,
 			rootHeight: 0
 		};
 	}
-	
+
 	_onClick = event => {
 		this.props.onClick(event);
 		this.setState({
@@ -48,19 +48,19 @@ export default class AppBarMenu extends Component {
 			rootHeight: this._root.clientHeight
 		});
 	};
-	
+
 	render() {
 		let {
 			classes,
-			button, open, onRequestClose,
+			icon, button, open, onRequestClose,
 			children
 		} = this.props;
 		let { anchor, rootWidth, rootHeight } = this.state;
-		
+
 		return (
 			<div ref={self => this._root = self} className={classes.root}>
 				<div className={classes.buttonWrapper} onClick={this._onClick}>
-					{button}
+					{icon}{button}
 				</div>
 				<Menu
 					anchorEl={anchor} style={{ width: rootWidth, marginTop: rootHeight }}

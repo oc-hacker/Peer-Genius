@@ -12,6 +12,8 @@ import Flex from '../Flex';
 import AccountMenu from './AccountMenu';
 import AboutUs from './AboutUs';
 import GuruMenu from './GuruMenu';
+import NotificationsMenu from './NotificationsMenu';
+import SessionsMenu from './SessionsMenu';
 
 const styles = ({ palette: { primary, getContrastText }, spacing }) => ({
 	appBar: {
@@ -41,16 +43,16 @@ const styles = ({ palette: { primary, getContrastText }, spacing }) => ({
 export default class CustomAppBar extends Component {
 	constructor(props) {
 		super(props);
-		
+
 		this.state = {
 			currentMenu: null
 		};
 	}
-	
-	
+
+
 	render() {
 		let { className, classes, push } = this.props;
-		
+
 		return (
 			<AppBar position="static" className={classNames(classes.appBar, className)}>
 				<Flex align="center">
@@ -64,6 +66,8 @@ export default class CustomAppBar extends Component {
 				<Flex align="center">
 					<GuruMenu />
 					<AboutUs />
+					<SessionsMenu />
+					<NotificationsMenu />
 					<AccountMenu />
 				</Flex>
 			</AppBar>
