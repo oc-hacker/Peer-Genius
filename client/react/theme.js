@@ -4,7 +4,7 @@ import { orange } from 'material-ui/colors';
 const baseTheme = createMuiTheme({});
 
 const typography = createTypography(baseTheme.palette, {
-	fontFamily: '"Times New Roman", serif'
+	fontFamily: '"Open Sans", sans-serif',
 });
 
 const palette = createPalette({

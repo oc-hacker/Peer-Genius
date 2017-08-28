@@ -2,7 +2,6 @@ import React from 'react';
 import propTypes from 'prop-types';
 
 import { Field } from 'redux-form';
-import { withStyles } from 'material-ui/styles';
 
 const borderStyle = {
 	borderStyle: 'solid',
@@ -24,45 +23,39 @@ const textAreaStyle = {
 	outline: 'none'
 };
 
-const styles = {};
-
 /**
  * Text field class. Allows for entry of text into something.
  */
 class TextFieldClass extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			value: ''
-		};
-	}
-	
-	static propTypes = {
-		value: propTypes.string.isRequired,
-		placeholder: propTypes.string,
-		onChange: propTypes.func.isRequired,
-		type: propTypes.string.isRequired
-	};
-	
-	render = () => {
-		let {
-			input, meta: { touched, error, warning },
-			label, type, classes, fullWidth, placeholder, ...fieldProps
-		} = this.props;
-		placeholder = placeholder ? placeholder : ' ';
-		return (
-			<div style={borderStyle}>
-				<input
-					type={type}
-					value={input.value}
-					placeholder={placeholder}
-					onChange={input.onChange}
-					style={textAreaStyle}
-					{...fieldProps}
-				/>
-			</div>
-		);
-	};
+    constructor(props){
+        super(props);
+    }
+
+    static propTypes = {
+        value: propTypes.string.isRequired,
+        placeholder: propTypes.string,
+        onChange: propTypes.func.isRequired,
+        type: propTypes.func.isRequired
+    }
+
+    render = () => {
+        let {
+        input, meta: { touched, error, warning },
+            label, type, classes, fullWidth, placeholder, ...fieldProps
+        } = this.props;
+        placeholder = placeholder ? placeholder : " ";
+        return (
+            <div style={borderStyle}>
+                <input type={type}
+                value={input.value}
+                placeholder={placeholder}
+                onChange={input.onChange}
+                style={textAreaStyle}
+                {...fieldProps}
+                />
+            </div>
+        );
+    }
 }
 
 export default class TextField extends React.Component {
