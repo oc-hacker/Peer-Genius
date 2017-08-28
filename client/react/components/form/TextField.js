@@ -2,7 +2,6 @@ import React from 'react';
 import propTypes from 'prop-types';
 
 import { Field } from 'redux-form';
-import { withStyles } from 'material-ui/styles';
 
 const borderStyle = {
 	borderStyle: 'solid',
@@ -24,19 +23,12 @@ const textAreaStyle = {
 	outline: 'none'
 };
 
-const styles = {
-
-}
-
 /**
  * Text field class. Allows for entry of text into something.
  */
 class TextFieldClass extends React.Component {
     constructor(props){
         super(props);
-        this.state = {
-            value: ""
-        }
     }
 
     static propTypes = {
@@ -54,7 +46,7 @@ class TextFieldClass extends React.Component {
         placeholder = placeholder ? placeholder : " ";
         return (
             <div style={borderStyle}>
-                <input type={type} 
+                <input type={type}
                 value={input.value}
                 placeholder={placeholder}
                 onChange={input.onChange}
