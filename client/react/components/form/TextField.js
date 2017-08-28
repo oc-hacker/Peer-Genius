@@ -42,7 +42,8 @@ class TextFieldClass extends React.Component {
     static propTypes = {
         value: propTypes.string.isRequired,
         placeholder: propTypes.string,
-        onChange: propTypes.func.isRequired
+        onChange: propTypes.func.isRequired,
+        type: propTypes.func.isRequired
     }
 
     render = () => {
@@ -53,7 +54,7 @@ class TextFieldClass extends React.Component {
         placeholder = placeholder ? placeholder : " ";
         return (
             <div style={borderStyle}>
-                <input type="text" 
+                <input type={type} 
                 value={input.value}
                 placeholder={placeholder}
                 onChange={input.onChange}
