@@ -3,7 +3,7 @@ import { Switch } from 'react-router';
 
 import { Route } from '../components';
 import AccountSettings from './settings';
-import EditProfile from './profile';
+import ProfileRouter from './profile';
 
 export default class AccountRouter extends Component {
 	render() {
@@ -12,7 +12,7 @@ export default class AccountRouter extends Component {
 		return (
 			<Switch>
 				<Route path={`${url}/settings`} component={AccountSettings} />
-				<Route path={`${url}/profile`} component={EditProfile} />
+				<Route path={`${url}/profile`} component={ProfileRouter} />
 			</Switch>
 		);
 	}
