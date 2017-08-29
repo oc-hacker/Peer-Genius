@@ -1,11 +1,9 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
 
-import { connect } from 'react-redux';
-
+import { Text } from '../../components';
 import Page from './Page';
 
 const styles = {
@@ -32,30 +30,30 @@ export default class PageTwo extends Component {
 				page={2} currentPage={currentPage}
 				className={classes.withColor}
 			>
-				<Typography type="title">GURU BENEFITS</Typography>
+				<Text type="title">GURU BENEFITS</Text>
 				<div className={classes.row}>
 					<p>[Icon]</p>
-					<Typography>
+					<Text>
 						- Gain volunteer service hours and have the chance to win the Presidential Volunteer Service Award (PVSA).
-					</Typography>
+					</Text>
 				</div>
 				<div className={classes.row}>
 					<p>[Icon]</p>
-					<Typography>
+					<Text>
 						- What is PVSA? Click <a href="https://www.presidentialserviceawards.gov/">here</a> to find out more.
-					</Typography>
+					</Text>
 				</div>
 				<div className={classes.row}>
 					<p>[Icon]</p>
-					<Typography>
+					<Text>
 						- Use <a href="https://voluntu.io">voluntu.io</a> to log all of your hours.
-					</Typography>
+					</Text>
 				</div>
 				<div className={classes.row}>
 					<p>[Icon]</p>
-					<Typography>
+					<Text>
 						- Customize your profile with flexible times you are available to tutor.
-					</Typography>
+					</Text>
 				</div>
 			</Page>
 		);

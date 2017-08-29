@@ -1,13 +1,9 @@
-import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
-
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
+import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 
 import { connect } from 'react-redux';
 
-import { Flex } from '../../components';
+import { Flex, Text } from '../../components';
 import { selectUser } from '../../../redux/selectors/user';
 
 @connect(state => ({
@@ -23,9 +19,9 @@ export default class ViewProfile extends Component {
 		
 		return (
 			<Flex component={Paper} column grow={1} align="center">
-				<Typography type="title">
+				<Text type="title">
 					Your Profile
-				</Typography>
+				</Text>
 			</Flex>
 		);
 	}

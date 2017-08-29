@@ -3,12 +3,12 @@ import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
-import Typography from 'material-ui/Typography';
 
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import Flex from '../Flex';
+import Text from '../Text';
 import AccountMenu from './AccountMenu';
 import AboutUs from './AboutUs';
 import GuruMenu from './GuruMenu';
@@ -30,8 +30,7 @@ const styles = ({ palette: { primary, getContrastText }, spacing }) => ({
 	},
 	appBarText: {
 		color: getContrastText(primary[500]),
-		padding: spacing.unit,
-		cursor: 'default'
+		padding: spacing.unit
 	},
 	appBarButton: {
 		width: '5em'
@@ -61,7 +60,7 @@ export default class CustomAppBar extends Component {
 						className={classes.logo}
 						onClick={() => push('/home')}
 					/>
-					<Typography type="title" className={classes.appBarText}>Peer Genius</Typography>
+					<Text type="title" noSelect className={classes.appBarText}>Peer Genius</Text>
 				</Flex>
 				<Flex align="center">
 					<GuruMenu />

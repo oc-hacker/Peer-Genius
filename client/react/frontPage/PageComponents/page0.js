@@ -1,12 +1,10 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
 
-import { connect } from 'react-redux';
-
+import { Text } from '../../components';
 import Page from './Page';
 
 const styles = {
@@ -32,8 +30,8 @@ export default class PageZero extends Component {
 				page={0} currentPage={currentPage}
 				bg="white"
 			>
-				<Typography type="title">Peer Genius</Typography>
-				<Typography type="subheading">Eliminate the Grind</Typography>
+				<Text type="title">Peer Genius</Text>
+				<Text type="subheading">Eliminate the Grind</Text>
 				<div className={classes.buttons}>
 					<Button
 						raised color="primary"

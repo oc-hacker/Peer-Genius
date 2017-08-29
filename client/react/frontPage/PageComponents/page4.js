@@ -1,12 +1,10 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 
-import { connect } from 'react-redux';
-
+import { Text } from '../../components';
 import Page from './Page';
 
 const styles = {
@@ -30,7 +28,7 @@ export default class PageFour extends Component {
 				page={4} currentPage={currentPage}
 				className={classes.withColor}
 			>
-				<Typography type="subheading">Okay, Now that you get the idea behind PEER GENIUS...</Typography>
+				<Text type="subheading">Okay, Now that you get the idea behind PEER GENIUS...</Text>
 				<Button
 					raised
 					color="primary"

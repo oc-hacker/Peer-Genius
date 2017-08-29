@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography';
 
 import { connect } from 'react-redux';
 
-import { Flex } from '../components';
+import { Flex, Text } from '../components';
 import { Tabs } from '../components/tabs';
 import Control from './TabComponents/control';
 import SubjectTab from './TabComponents/subject';
@@ -18,8 +18,7 @@ const styles = ({ typography: { title }, palette: { primary, accent, getContrast
 		width: '100%'
 	},
 	motto: {
-		fontSize: title.fontSize * 1.5,
-		textAlign: 'center'
+		fontSize: title.fontSize * 1.5
 	},
 });
 
@@ -48,7 +47,8 @@ export default class Home extends Component {
 				column align="center" justify="center" grow={1}
 				className={classes.root}
 			>
-				<Typography type="title" classes={{ title: classes.motto }}>ELIMINATE the<br />GRIND</Typography>
+				<Text type="title" align="center" className={classes.motto}>ELIMINATE the<br />GRIND</Text>
+				{/* TODO: MUI already has an implementation of tabs. Use that instead of what Jack threw together. */}
 				<Tabs>
 					<Control />
 					<SubjectTab />

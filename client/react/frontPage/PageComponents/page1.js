@@ -1,12 +1,10 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
 
-import { connect } from 'react-redux';
-
+import { Text } from '../../components';
 import Page from './Page';
 
 const styles = {
@@ -21,9 +19,7 @@ const styles = {
 		cursor: 'pointer',
 	},
 	title: {
-		textAlign: 'center',
 		textTransform: 'uppercase',
-		color: 'white'
 	},
 	body: {
 		display: 'flex',
@@ -56,26 +52,26 @@ export default class PageOne extends Component {
 					className={classNames(classes.button, classes.withColor)}
 					onClick={next}
 				>
-					<Typography
-						type="subheading"
-						classes={{ subheading: classes.title }}
+					<Text
+						type="subheading" align="center" color="white"
+						className={classes.title}
 					>
 						What is peer genius?
-					</Typography>
+					</Text>
 				</div>
-				<Typography type="subheading">A web platform where students teach other students to:</Typography>
+				<Text type="subheading">A web platform where students teach other students to:</Text>
 				<div className={classes.body}>
 					<div className={classes.column}>
 						<p>[Insert Picture Here]</p>
-						<Typography type="body1">Save money while learning</Typography>
+						<Text type="body1">Save money while learning</Text>
 					</div>
 					<div className={classes.column}>
 						<p>[Insert Picture Here]</p>
-						<Typography type="body1">Gain community service hours while learning</Typography>
+						<Text type="body1">Gain community service hours while learning</Text>
 					</div>
 					<div className={classes.column}>
 						<p>[Insert Picture Here]</p>
-						<Typography type="body1">Network with actual people</Typography>
+						<Text type="body1">Network with actual people</Text>
 					</div>
 				</div>
 			</Page>

@@ -1,16 +1,10 @@
-import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 
-import { withStyles, withTheme } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
+import { withStyles } from 'material-ui/styles';
 
-import { connect } from 'react-redux';
-
-import { Flex, Spacer } from '../../components/index';
+import { Flex, Text } from '../../components';
 import SettingsItem from './SettingsComponents/SettingsItem';
-import EditSecurity from './security';
-import EditCommunication from './communication';
 import EditPassword from './SettingsComponents/password';
 
 const styles = ({ palette: { primary, grey }, spacing }) => ({
@@ -18,12 +12,10 @@ const styles = ({ palette: { primary, grey }, spacing }) => ({
 		boxSizing: 'border-box',
 		padding: spacing.unit * 2
 	},
-	title: {
-		color: primary[500]
-	},
 	heading: {
 		textTransform: 'uppercase',
-		margin: `${spacing.unit * 2}px 0`
+		margin: `${spacing.unit * 2}px 0`,
+		letterSpacing: spacing.unit * 0.3
 	},
 	headerUnderline: {
 		width: '40%',
@@ -52,10 +44,15 @@ export default class Settings extends Component {
 				justify="center" grow={1}
 			>
 				<Flex column basis="60%">
-					<Typography type="title" className={classNames(classes.heading, classes.title)}>Setting</Typography>
+					<Text
+						type="title" className={classes.heading}
+						color="primary" size="2em" weight={600}
+					>
+						Setting
+					</Text>
 					<div className={classNames(classes.divider, classes.headerUnderline)} />
 					<Flex column>
-						<Typography type="subheading" className={classes.heading}>Notifications</Typography>
+						<Text type="subheading" className={classes.heading}>Notifications</Text>
 						<Flex>
 							<Flex column grow={1} basis={0}>
 								<SettingsItem
@@ -77,7 +74,7 @@ export default class Settings extends Component {
 					</Flex>
 					<div className={classes.divider} />
 					<Flex column>
-						<Typography type="subheading" className={classes.heading}>Privacy</Typography>
+						<Text type="subheading" className={classes.heading}>Privacy</Text>
 						<Flex>
 							<SettingsItem
 								text="Social"
@@ -86,7 +83,7 @@ export default class Settings extends Component {
 					</Flex>
 					<div className={classes.divider} />
 					<Flex column>
-						<Typography type="subheading" className={classes.heading}>Security</Typography>
+						<Text type="subheading" className={classes.heading}>Security</Text>
 						<EditPassword />
 					</Flex>
 				</Flex>

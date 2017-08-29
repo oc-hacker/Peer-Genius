@@ -7,8 +7,8 @@ import Button from 'material-ui/Button';
 
 import { connect } from 'react-redux';
 
-import { Flex, Paper, waitForInit } from '../../../components/index';
-import { ReduxForm, TextField, DateField } from '../../../components/form/index';
+import { Flex, Paper, waitForInit } from '../../../components';
+import { ReduxForm, TextField, DateField } from '../../../components/form';
 
 import { editProfile } from '../../../../redux/actions/creators/user';
 import { selectUser } from '../../../../redux/selectors/user';
@@ -25,7 +25,7 @@ export default class EditProfile extends Component {
 		
 		return (
 			<Paper>
-				<Typography type="title">Edit Profile</Typography>
+				<Text type="title">Edit Profile</Text>
 				<ReduxForm
 					form="editProfile" onSubmit={editProfile}
 					initialValues={user}

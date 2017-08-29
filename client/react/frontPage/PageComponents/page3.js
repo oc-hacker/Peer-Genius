@@ -6,6 +6,7 @@ import Typography from 'material-ui/Typography';
 
 import { connect } from 'react-redux';
 
+import {Text} from '../../components';
 import Page from './Page';
 
 const styles = {
@@ -32,30 +33,30 @@ export default class PageThree extends Component {
 				page={3} currentPage={currentPage}
 				className={classes.withColor}
 			>
-				<Typography type="title">NEWBEE BENEFITS</Typography>
+				<Text type="title">NEWBEE BENEFITS</Text>
 				<div className={classes.row}>
 					<p>[Icon]</p>
-					<Typography>
+					<Text>
 						- Gain quality help for free.
-					</Typography>
+					</Text>
 				</div>
 				<div className={classes.row}>
 					<p>[Icon]</p>
-					<Typography>
+					<Text>
 						- Find your perfect guru by browsing guru profiles.
-					</Typography>
+					</Text>
 				</div>
 				<div className={classes.row}>
 					<p>[Icon]</p>
-					<Typography>
+					<Text>
 						- Book a tutoring session in 3 clicks.
-					</Typography>
+					</Text>
 				</div>
 				<div className={classes.row}>
 					<p>[Icon]</p>
-					<Typography>
+					<Text>
 						- After each session, rate your guru & write a review!
-					</Typography>
+					</Text>
 				</div>
 			</Page>
 		);

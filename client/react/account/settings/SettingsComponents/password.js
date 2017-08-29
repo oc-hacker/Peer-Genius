@@ -8,21 +8,26 @@ import SettingsIcon from 'material-ui-icons/Settings';
 
 import { connect } from 'react-redux';
 
-import { Flex } from '../../../components';
+import { Flex, Spacer, Text } from '../../../components';
 import { ReduxForm, TextField } from '../../../components/form';
 
 import { editPassword } from '../../../../redux/actions/creators/account';
 import { required, same } from '../../../components/form/validator';
 
-const styles = ({ palette: { text } }) => ({
+const styles = ({ palette: { text }, spacing }) => ({
 	root: {
 		display: 'flex',
-		flexDirection: 'column'
+		flexDirection: 'column',
+	},
+	row: {
+		margin: spacing.unit,
+		alignItems: 'center'
 	},
 	icon: {
 		flexBasis: 24
 	},
 	label: {
+		color: text.secondary,
 		flexBasis: '5em',
 		flexGrow: 1
 	},
@@ -50,9 +55,10 @@ export default class EditPassword extends Component {
 				className={classes.root}
 				form="editPassword" onSubmit={this.props.editPassword}
 			>
-				<Flex>
+				<Flex className={classes.row}>
 					<SettingsIcon className={classes.icon} />
-					<Typography className={classes.label}>Old Password</Typography>
+					<Spacer width="2em" />
+					<Text className={classes.label}>Old Password</Text>
 					<TextField
 						className={classes.field}
 						name="oldPassword"
@@ -61,19 +67,22 @@ export default class EditPassword extends Component {
 						validate={[required`Please enter your old password.`]}
 					/>
 				</Flex>
-				<Flex>
+				<Flex className={classes.row}>
 					<SettingsIcon className={classes.icon} />
-					<Typography className={classes.label}>New Password</Typography>
+					<Spacer width="2em" />
+					<Text className={classes.label}>New Password</Text>
 					<TextField
 						className={classes.field}
 						name="newPassword"
 						type="password"
 						label="New Password"
+						validate={[required`Please enter your new password.`]}
 					/>
 				</Flex>
-				<Flex>
+				<Flex className={classes.row}>
 					<SettingsIcon className={classes.icon} />
-					<Typography className={classes.label}>Confirm Password</Typography>
+					<Spacer width="2em" />
+					<Text className={classes.label}>Confirm Password</Text>
 					<TextField
 						className={classes.field}
 						name="confirmPassword"

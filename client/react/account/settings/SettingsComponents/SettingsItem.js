@@ -1,21 +1,18 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
 import SettingsIcon from 'material-ui-icons/Settings';
 
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { Flex } from '../../../components';
+import { Flex, Spacer, Text } from '../../../components';
 
-const styles = ({ palette: { primary } }) => ({
+const styles = ({ palette: { primary }, spacing }) => ({
 	root: {
-		cursor: 'pointer'
-	},
-	text: {
-		color: primary[500]
+		cursor: 'pointer',
+		margin: spacing.unit
 	}
 });
 
@@ -36,7 +33,8 @@ export default class SettingsItem extends Component {
 				onClick={() => link && push(link)}
 			>
 				<SettingsIcon />
-				<Typography className={classes.text}>{text}</Typography>
+				<Spacer width="1em" />
+				<Text color="primary">{text}</Text>
 			</Flex>
 		);
 	}

@@ -1,20 +1,19 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormSection, SubmissionError, submit, touch, isValid } from 'redux-form';
+import { FormSection, isValid, SubmissionError, submit, touch } from 'redux-form';
 
 import { withStyles } from 'material-ui/styles';
 import { fade } from 'material-ui/styles/colorManipulator';
-import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog';
+import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
-import Typography from 'material-ui/Typography';
 import Slide from 'material-ui/transitions/Slide';
 import ClearIcon from 'material-ui-icons/Clear';
 
 import { connect } from 'react-redux';
 
-import { CommunicationFields, Spacer } from '../../components';
-import { ReduxForm } from '../../components/form/index';
+import { CommunicationFields, Spacer, Text } from '../../components';
+import { ReduxForm } from '../../components/form';
 import InfoFields, { infoFieldNames } from './info';
 
 import { post } from '../../../redux/actions/request';
@@ -122,9 +121,9 @@ export default class CreateAccountDialog extends Component {
 				open={open} onRequestClose={onRequestClose}
 			>
 				<DialogTitle disableTypography className={classes.title}>
-					<Typography type="title" classes={{ title: classes.titleText }}>
+					<Text type="title" className={classes.titleText}>
 						Create Account
-					</Typography>
+					</Text>
 					<IconButton
 						color="contrast" className={classes.button}
 						onClick={onRequestClose}
@@ -139,7 +138,7 @@ export default class CreateAccountDialog extends Component {
 					>
 						<InfoFields />
 						<Spacer height="2em" />
-						<Typography type="title">Communication methods</Typography>
+						<Text type="title">Communication methods</Text>
 						<FormSection name="communication">
 							<CommunicationFields />
 						</FormSection>
