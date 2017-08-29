@@ -1,6 +1,6 @@
 // All actions related to handing connection and online status.
 import * as models from '../database/models';
-import { subjects } from '../database/models/mentor';
+import { subjects } from '../database/models/guru';
 import { UserInstance } from '../database/models/user';
 
 /**
@@ -19,15 +19,15 @@ const attach = async (socket: SocketIO.Socket, user: string) => {
 	// Save the socket id to registry
 	registry[socket.id] = user;
 	console.log('User', user, 'connected.');
-	
+
 	socket.on('disconnect', () => {
 		delete registry[socket.id];
 		console.log('User', user, 'disconnected.');
 	});
-	
+
 	const getOnlineUsers = async () => {
 		let startTime = Date.now();
-		let onlineMentors = await models.mentor.all({
+		let onlineGurus = await models.guru.all({
 			where: {
 				user: {
 					$in: Object.values(socket.nsp.sockets) // Get all sockets
@@ -36,27 +36,27 @@ const attach = async (socket: SocketIO.Socket, user: string) => {
 				},
 				$or: subjectOrCondition
 			} as any // TODO Sequelize TypeScript does not allow nested where attributes?
-		}).then(mentors =>
+		}).then(gurus =>
 			Promise.all(
-				mentors.map(mentor => models.user.find({
-					where: { id: mentor.user }
+				gurus.map(guru => models.user.find({
+					where: { id: guru.user }
 				}))
 			)
 		).then(users => users.map((user: UserInstance) => ({
 			name: `${user.firstName} ${user.lastName}`
 		})));
-		
+
 		let endTime = Date.now();
-		
+
 		// TODO is this the best way to find all online users?
 		console.log(`[Performance Monitor] Online users list compiled in ${endTime - startTime}ms`);
 		return {
-			onlineMentors
+			onlineGurus
 		};
 	};
-	
+
 	socket.broadcast.emit('update_online_users', await getOnlineUsers());
-	
+
 	socket.on('disconnect', async () => {
 		socket.broadcast.emit('update_online_users', await getOnlineUsers());
 	});

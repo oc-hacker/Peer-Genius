@@ -1,4 +1,6 @@
-import * as  models from '../../database/models';
+import * as httpStatus from 'http-status-codes';
+
+import * as models from '../../database/models';
 
 import { AsyncHandler, VerifiedRequest } from '../../types';
 
@@ -14,6 +16,6 @@ interface GetReviewsRequest extends VerifiedRequest {
 
 export const getReviews: AsyncHandler<GetReviewsRequest> = async (request, response) => {
 	let { guru } = request.body;
-	
+
 	// TODO
 };

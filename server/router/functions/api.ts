@@ -164,11 +164,11 @@ export const _db: AsyncHandler<Request> = async (request, response) => {
 					results = await connection.asyncQuery(`SELECT COUNT(*) AS totalCount FROM users`);
 					let totalCount = results[0].totalCount;
 					// language=MYSQL-SQL
-					results = await connection.asyncQuery(`SELECT COUNT(*) AS mentorCount FROM users INNER JOIN mentors ON mentors.user = users.id`);
-					let mentorCount = results[0].mentorCount;
+					results = await connection.asyncQuery(`SELECT COUNT(*) AS guruCount FROM users INNER JOIN gurus ON gurus.user = users.id`);
+					let guruCount = results[0].guruCount;
 					
 					response.status(httpStatus.OK).json({
-						text: `There are ${totalCount} registered users at Peer Genius, of which ${mentorCount} can be mentors.`
+						text: `There are ${totalCount} registered users at Peer Genius, of which ${guruCount} can be gurus.`
 					});
 				}
 			}
