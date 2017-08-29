@@ -1,6 +1,6 @@
 import types from '../types';
 import { post } from '../request';
-import { handleError, handleStore } from '.utils';
+import { handleError, handleStore } from './utils';
 
 import htttpStatus from 'http-status-codes';
 

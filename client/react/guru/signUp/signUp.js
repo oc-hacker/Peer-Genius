@@ -2,26 +2,39 @@ import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from 'material-ui/styles';
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 
 import { connect } from 'react-redux';
 
 import { SubjectFields } from '../../components';
-import { ReduxForm } from '../../components/form';
 
+import { Flex, Paper } from '../../components/form';
+
+import { ReduxForm } from '../../components/form';
 import DateField from '../../components/form';
 import SelectField from '../../components/form';
 
-export default class SignUp extends Component {
-	constructor(props) {
-		super(props);
-	}
+import { getGuruProfile } from '../../../redux/actions/creators/guru';
+import { selectUser } from '../../../redux/selectors/user';
 
+@waitForInit
+@connect(state => ({
+	user: selectUser(state)
+}), {
+	getGuruProfile
+})
+export default class SignUp extends Component {
 	render() {
+
+		let { user } = this.props;
+
 		let minDate = new Date(), maxDate = new Date();
 		minDate.setFullYear(minDate.getFullYear() - 19);
 		maxDate.setFullYear(maxDate.getFullYear() - 13);
 		return (
-			<div>
+			<Paper>
+				<Typography type="title">Fill out the Form</Typography>
 				<ReduxForm form="becomeAGuru" onSubmit={console.log}>
 					<DateField
 						name="birthdate"
@@ -39,11 +52,14 @@ export default class SignUp extends Component {
 							}
 						})`You must be between 13 years and 18 years of age to participate at Peer Genius.`]}
 					/>
+					<SubjectFields />
 					<SelectField />
 					<SelectField />
-					<SelectField />
+					<Flex direction="row-reverse">
+						<Button primary type="submit">Done</Button>
+					</Flex>
 				</ReduxForm>
-			</div>
+			</Paper>
 		);
 	}
 }

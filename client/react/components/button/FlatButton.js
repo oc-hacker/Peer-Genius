@@ -15,7 +15,7 @@ export default class FlatButton extends React.Component {
 
     render() {
         return (
-
+            <div>Under construction</div>
         );
     }
 }

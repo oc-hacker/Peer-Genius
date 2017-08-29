@@ -29,7 +29,7 @@ const styles = ({ palette: { grey, error }, spacing }) => ({
  * Raised buttons
  */
 @withStyles(styles)
-export default class RaisedButton extends React.Component {
+export default class Raised extends React.Component {
     static propTypes = {
         label: PropTypes.string.isRequired,
         primary: PropTypes.boolean,
@@ -50,7 +50,7 @@ export default class RaisedButton extends React.Component {
                     label={label}
                     buttonStyle={{ borderRadius: 5 }}
                     style={{ borderRadius: 5 }}
-                    {...ButtonProps}
+                    {...buttonProps}
                 />
             );
         } else if (secondary) {
