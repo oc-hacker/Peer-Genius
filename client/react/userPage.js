@@ -5,7 +5,7 @@ import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
 
-import { AppBar, Flex } from './components';
+import { AppBar, AppFooter, Flex } from './components';
 import UserRouter from './userRouter';
 
 const styles = {
@@ -15,7 +15,7 @@ const styles = {
 		overflow: 'hidden'
 	},
 	body: {
-		maxHeight: 'calc(100vh - 53px)', // TODO is there a better way, without hard-coding the header height?
+		// maxHeight: 'calc(100vh - 53px)', // TODO is there a better way, without hard-coding the header height?
 		overflowY: 'auto'// Allow scroll when needed
 	}
 };
@@ -38,6 +38,7 @@ export default class UserPage extends Component {
 				<Flex grow={1} className={classes.body}>
 					<UserRouter />
 				</Flex>
+				<AppFooter />
 			</Flex>
 		);
 	}

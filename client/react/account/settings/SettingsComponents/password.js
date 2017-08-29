@@ -91,6 +91,7 @@ export default class EditPassword extends Component {
 						validate={[same('newPassword')`Passwords do not match.`]}
 					/>
 				</Flex>
+				<Spacer height="3em" />
 				<div>
 					<Button
 						className={classes.button}
