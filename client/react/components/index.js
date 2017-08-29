@@ -1,4 +1,5 @@
 export { default as AppBar } from './AppBar';
+export { default as AppFooter} from './AppFooter';
 export { default as CommunicationFields } from './CommunicationFields';
 export { default as Flex } from './Flex';
 // export { default as NotFound } from './NotFound'

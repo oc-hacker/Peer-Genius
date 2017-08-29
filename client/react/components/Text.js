@@ -31,13 +31,14 @@ const Text =
 			props => {
 				// Take out extra props using destructure
 				let {
-					className, color, tone, size, weight, noSelect,
+					classes: { text, ...classes }, className, color, tone, size, weight, noSelect,
 					...others
 				} = props;
 				
 				return (
 					<Typography
-						className={classNames(props.classes.text, className)}
+						className={classNames(text, className)}
+						classes={classes}
 						{...others}
 					/>
 				);
@@ -47,7 +48,7 @@ const Text =
 
 // Prop types copied from MUI Typography prop types
 Text.propTypes = {
-	align: PropTypes.oneOf(['inherit', 'left', 'center', 'right', 'justify']),
+	align: PropTypes.string,
 	className: PropTypes.string,
 	component: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 	color: PropTypes.string,
