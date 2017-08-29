@@ -5,7 +5,7 @@ import { ProhibitedEditError } from '../errors';
 import { sequelizeAdmin as admin } from '../reference';
 import user from './user';
 
-export interface MentorAttributes {
+export interface GuruAttributes {
 	user?: string,
 	'english:americanLiterature'?: boolean,
 	'english:britishLiterature'?: boolean,
@@ -109,10 +109,10 @@ export interface MentorAttributes {
 	'socialStudies:apWorldHistory'?: boolean
 }
 
-export interface MentorInstance extends Sequelize.Instance<MentorAttributes> {
+export interface GuruInstance extends Sequelize.Instance<GuruAttributes> {
 	createdAt: Date,
 	updatedAt: Date,
-	
+
 	user: string,
 	'english:americanLiterature': boolean,
 	'english:britishLiterature': boolean,
@@ -332,13 +332,13 @@ const attributes = {
 
 export const subjects = without(Object.keys(attributes), 'user');
 
-const blockUserEdit = (instance: MentorInstance) => {
+const blockUserEdit = (instance: GuruInstance) => {
 	if (instance.changed('user')) {
-		throw new ProhibitedEditError('Editing the user FK of mentors table is prohibited.');
+		throw new ProhibitedEditError('Editing the user FK of gurus table is prohibited.');
 	}
 };
 
-const model: Sequelize.Model<MentorInstance, MentorAttributes> = admin.define('mentors', attributes);
+const model: Sequelize.Model<GuruInstance, GuruAttributes> = admin.define('gurus', attributes);
 model.beforeUpdate(blockUserEdit);
 model.sync(); // Alter when in development mode
 

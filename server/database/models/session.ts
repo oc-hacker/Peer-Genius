@@ -6,8 +6,8 @@ import { ProhibitedEditError } from '../errors';
 
 export interface SessionAttributes {
 	id?: string;
-	mentee?: string;
-	mentor?: string;
+	newbie?: string;
+	guru?: string;
 	subject?: string;
 	scheduledStart?: Date;
 	scheduledEnd?: Date;
@@ -22,8 +22,8 @@ export interface SessionInstance extends Sequelize.Instance<SessionAttributes> {
 	updatedAt: Date;
 	
 	id: string;
-	mentee: string;
-	mentor?: string;
+	newbie: string;
+	guru?: string;
 	subject: string;
 	scheduledStart: Date;
 	scheduledEnd: Date;
@@ -39,7 +39,7 @@ const attributes = {
 		defaultValue: Sequelize.UUIDV4,
 		primaryKey: true
 	},
-	mentee: {
+	newbie: {
 		type: Sequelize.UUID,
 		allowNull: false,
 		references: {
@@ -49,7 +49,7 @@ const attributes = {
 			onDelete: 'cascade'
 		}
 	},
-	mentor: {
+	guru: {
 		type: Sequelize.UUID,
 		allowNull: true,
 		defaultValue: null,
@@ -91,11 +91,11 @@ const attributes = {
 };
 
 const blockUserEdit = (instance: SessionInstance) => {
-	if (instance.changed('mentor')) {
-		throw new ProhibitedEditError('Editing the mentor FK of lessons table is prohibited.')
+	if (instance.changed('guru')) {
+		throw new ProhibitedEditError('Editing the guru FK of sessions table is prohibited.')
 	}
-	if (instance.changed('mentee')) {
-		throw new ProhibitedEditError('Editing the mentee FK of lessons table is prohibited.')
+	if (instance.changed('newbie')) {
+		throw new ProhibitedEditError('Editing the newbie FK of sessions table is prohibited.')
 	}
 };
 

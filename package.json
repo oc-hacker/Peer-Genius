@@ -1,7 +1,7 @@
 {
   "name": "peer-genius",
   "version": "1.0.0",
-  "description": "A web application that connects mentors with mentees for peer tutoring.",
+  "description": "A web application that connects gurus with newbies for peer tutoring.",
   "main": "server/entry.js",
   "scripts": {
     "test": "jest",

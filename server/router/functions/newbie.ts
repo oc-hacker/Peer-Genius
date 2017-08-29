@@ -22,7 +22,7 @@ export const review: AsyncHandler<ReviewSessionRequest> = async (request, respon
 	let session = await models.session.find({
 		where: {
 			id: sessionId,
-			mentee: user.id
+			newbie: user.id
 		}
 	});
 	

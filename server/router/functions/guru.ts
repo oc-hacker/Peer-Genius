@@ -1,7 +1,7 @@
 import { pick } from 'lodash';
 import * as httpStatus from 'http-status-codes';
 
-import * as  models from '../../database/models';
+import * as models from '../../database/models';
 
 import { AsyncHandler, VerifiedRequest } from '../../types';
 
@@ -19,9 +19,9 @@ interface GetReviewsRequest extends VerifiedRequest {
 export const getReviews: AsyncHandler<GetReviewsRequest> = async (request, response) => {
 	let sessions = await models.session.all({
 		where: {
-			mentor: request.body.guru,
-			rating: {
-				$not: null
+			guru: request.body.guru,
+	rating: {
+	$not: null
 			}
 		}
 	});

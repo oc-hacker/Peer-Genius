@@ -2,7 +2,7 @@
 export { default as account } from './account';
 export { default as communication } from './communication';
 export { default as key } from './key';
-export { default as mentor } from './mentor';
+export { default as guru } from './guru';
 export { default as session } from './session';
 export { default as user } from './user';
 
@@ -11,8 +11,8 @@ export { default as user } from './user';
  accounts - user login information
  users - user's personal info
  communications - user's communication method preferences
- mentors - the subjects that user can be a mentor in
- sessions - represents a session of tutoring between mentor and mentee
+ gurus - the subjects that user can be a guru in
+ sessions - represents a session of tutoring between guru and newbie
  keys - stores generated keys and other temporary data for user
  */
 
