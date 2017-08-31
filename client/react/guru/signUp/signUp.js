@@ -18,7 +18,6 @@ import SelectField from '../../components/form';
 import { getGuruProfile } from '../../../redux/actions/creators/guru';
 import { selectUser } from '../../../redux/selectors/user';
 
-@waitForInit
 @connect(state => ({
 	user: selectUser(state)
 }), {
