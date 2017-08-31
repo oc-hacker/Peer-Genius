@@ -9,11 +9,15 @@ import { connect } from 'react-redux';
 
 const styles = ({ palette: { grey, error }, spacing }) => ({
 	root: {
+		position: 'relative',
+		
 		borderWidth: 1,
 		borderRadius: spacing.unit / 2,
 		borderStyle: 'solid',
 		borderColor: grey[300],
 		boxSizing: 'border-box',
+		
+		marginBottom: spacing.unit * 4,
 		
 		fontSize: 'inherit',
 	},
@@ -43,16 +47,11 @@ export default class FieldBorder extends Component {
 		
 		return (
 			<div
-				className={classNames(
-					classes.root,
-					{
-						[classes.warning]: warning
-					},
-					{
-						[classes.error]: error
-					},
-					className
-				)}
+				className={classNames({
+					[classes.root]: true,
+					[classes.warning]: warning,
+					[classes.error]: error
+				}, className)}
 				{...others}
 			/>
 		);

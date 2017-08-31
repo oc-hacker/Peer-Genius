@@ -9,6 +9,10 @@ import { FormHelperText } from 'material-ui/Form';
 import { connect } from 'react-redux';
 
 const styles = ({ palette: { error } }) => ({
+	root: {
+		position: 'absolute',
+		top: '100%'
+	},
 	error: {
 		color: error[500]
 	},
@@ -30,6 +34,7 @@ export default class HelperText extends Component {
 		return (
 			<FormHelperText
 				className={classNames({
+					[classes.root]: true,
 					[classes.warning]: warning,
 					[classes.error]: error,
 				})}

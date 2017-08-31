@@ -14,9 +14,6 @@ import HelperText from './HelperText';
 import FieldBorder from './FieldBorder';
 
 const styles = ({ palette: { primary, grey, error, warning }, transitions, spacing }) => ({
-	root: {
-		position: 'relative',
-	},
 	sizing: {
 		width: '100%',
 		padding: spacing.unit,
@@ -99,40 +96,38 @@ export class SelectFieldComponent extends Component {
 		}
 		
 		return (
-			<Flex column>
-				<FieldBorder className={classes.root}>
-					<input
-						ref={self => this._input = self}
-						className={classNames(
-							classes.sizing, classes.input,
-							{
-								[classes.warningInput]: meta.touched && meta.warning,
-								[classes.errorInput]: meta.touched && meta.error
-							},
-							className
-						)}
-						value={label} readOnly
-						onClick={this._openMenu}
-					/>
-					<Menu
-						anchorEl={anchor} style={{ width: this._input ? this._input.clientWidth : 0 }}
-						open={open} onRequestClose={this._closeMenu}
-					>
-						{options.map(option => (
-							<MenuItem
-								selected={option.value === input.value}
-								onClick={this._makeClickHandler(option.value)}
-							>
-								{option.label}
-							</MenuItem>
-						))}
-					</Menu>
-					<Flex align="center" justify="center" className={classes.dropdownIconWrapper}>
-						<ArrowDropdown className={classes.dropdownIcon} />
-					</Flex>
-				</FieldBorder>
-				<HelperText error={meta.touched && meta.error} warning={meta.touched && meta.warning} />
-			</Flex>
+			<FieldBorder
+				className={className}
+				warning={meta.touched && meta.warning}
+				error={meta.touched && meta.error}
+			>
+				<input
+					ref={self => this._input = self}
+					className={classNames(classes.input, classes.sizing)}
+					value={label} readOnly
+					onClick={this._openMenu}
+				/>
+				<Menu
+					anchorEl={anchor} style={{ width: this._input ? this._input.clientWidth : 0 }}
+					open={open} onRequestClose={this._closeMenu}
+				>
+					{options.map(option => (
+						<MenuItem
+							selected={option.value === input.value}
+							onClick={this._makeClickHandler(option.value)}
+						>
+							{option.label}
+						</MenuItem>
+					))}
+				</Menu>
+				<Flex align="center" justify="center" className={classes.dropdownIconWrapper}>
+					<ArrowDropdown className={classes.dropdownIcon} />
+				</Flex>
+				<HelperText
+					error={meta.touched && meta.error}
+					warning={meta.touched && meta.warning}
+				/>
+			</FieldBorder>
 		);
 	}
 }
