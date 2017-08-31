@@ -52,8 +52,8 @@ export default class SignUp extends Component {
 							}
 						})`You must be between 13 years and 18 years of age to participate at Peer Genius.`]}
 					/>
-					<SubjectFields />
-					<SelectField />
+					{/*<SubjectFields />*/}
+					<SelectField name="todo" />
 					<SelectField />
 					<Flex direction="row-reverse">
 						<Button primary type="submit">Done</Button>
