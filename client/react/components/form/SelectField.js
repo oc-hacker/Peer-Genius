@@ -11,7 +11,7 @@ import ArrowDropdown from 'material-ui-icons/ArrowDropDown';
 
 import Flex from '../Flex';
 import HelperText from './HelperText';
-import FieldBorder from './FieldBorder';
+import FieldControl from './FieldControl';
 
 const styles = ({ palette: { primary, grey, error, warning }, transitions, spacing }) => ({
 	sizing: {
@@ -96,7 +96,7 @@ export class SelectFieldComponent extends Component {
 		}
 		
 		return (
-			<FieldBorder
+			<FieldControl
 				className={className}
 				warning={meta.touched && meta.warning}
 				error={meta.touched && meta.error}
@@ -123,11 +123,8 @@ export class SelectFieldComponent extends Component {
 				<Flex align="center" justify="center" className={classes.dropdownIconWrapper}>
 					<ArrowDropdown className={classes.dropdownIcon} />
 				</Flex>
-				<HelperText
-					error={meta.touched && meta.error}
-					warning={meta.touched && meta.warning}
-				/>
-			</FieldBorder>
+				<HelperText />
+			</FieldControl>
 		);
 	}
 }

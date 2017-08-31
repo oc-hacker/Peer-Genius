@@ -39,7 +39,7 @@ const Flex =
 Flex.propTypes = {
 	component: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 	column: PropTypes.bool,
-	direction: PropTypes.bool,
+	direction: PropTypes.string,
 	align: PropTypes.string,
 	justify: PropTypes.string,
 	grow: PropTypes.number,

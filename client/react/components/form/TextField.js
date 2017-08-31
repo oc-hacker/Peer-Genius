@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 
 import { withStyles } from 'material-ui/styles';
 
-import FieldBorder from './FieldBorder';
+import FieldControl from './FieldControl';
 import HelperText from './HelperText';
 
 const styles = ({ palette: {}, spacing }) => ({
@@ -46,7 +46,7 @@ class TextFieldClass extends React.Component {
 		} = this.props;
 		
 		return (
-			<FieldBorder
+			<FieldControl
 				className={className}
 				error={meta.touched && meta.error}
 				warning={meta.touched && meta.warning}
@@ -56,11 +56,8 @@ class TextFieldClass extends React.Component {
 					type={type}
 					{...fieldProps}
 				/>
-				<HelperText
-					error={meta.touched && meta.error}
-					warning={meta.touched && meta.warning}
-				/>
-			</FieldBorder>
+				<HelperText />
+			</FieldControl>
 		);
 	};
 }

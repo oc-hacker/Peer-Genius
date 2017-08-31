@@ -32,7 +32,7 @@ const styles = ({ palette: { grey, error }, spacing }) => ({
 });
 
 @withStyles(styles)
-export default class FieldBorder extends Component {
+export default class FieldControl extends Component {
 	static propTypes = {
 		error: PropTypes.any,
 		warning: PropTypes.any
@@ -43,7 +43,12 @@ export default class FieldBorder extends Component {
 	}
 	
 	render() {
-		let { classes, className, error, warning, ...others } = this.props;
+		let {
+			classes, className,
+			error, warning,
+			children,
+			...others
+		} = this.props;
 		
 		return (
 			<div
@@ -53,7 +58,14 @@ export default class FieldBorder extends Component {
 					[classes.error]: error
 				}, className)}
 				{...others}
-			/>
+			>
+				{React.Children.map(children, child => {
+					return React.cloneElement(child, {
+						error,
+						warning
+					});
+				})}
+			</div>
 		);
 	}
 }
