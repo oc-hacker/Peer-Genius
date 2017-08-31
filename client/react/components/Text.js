@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 const styles = {
 	text: {
 		color: props => {
-			let { color, shade, palette } = props.theme;
+			let { color, shade, theme: { palette } } = props;
 			
 			if (color in palette) {
 				return palette[color][shade];

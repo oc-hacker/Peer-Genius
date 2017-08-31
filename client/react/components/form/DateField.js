@@ -33,14 +33,6 @@ const styles = ({ palette: { grey, error }, spacing }) => ({
 
 @withStyles(styles)
 class DateFieldComponent extends Component {
-	static propTypes = {
-		name: PropTypes.string,
-		label: PropTypes.string,
-		labelWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-		minDate: PropTypes.instanceOf(Date),
-		maxDate: PropTypes.instanceOf(Date),
-	};
-	
 	constructor(props) {
 		super(props);
 		
@@ -151,7 +143,8 @@ class DateFieldComponent extends Component {
 		let {
 			input: { value: { month, date, year }, ...input }, meta,
 			label, placeholder,
-			classes, className, labelWidth,
+			classes, className,
+			inputClass, labelClass, labelWidth,
 			minDate, maxDate,
 			...others
 		} = this.props;
@@ -169,12 +162,13 @@ class DateFieldComponent extends Component {
 				<StyledLabel
 					htmlFor={input.name}
 					width={labelWidth}
+					className={labelClass}
 				>
 					{label}
 				</StyledLabel>
 				<StyledInput
 					component={Flex}
-					className={classes.input}
+					className={classNames(classes.input, inputClass)}
 					placeholder={placeholder || 'Select one...'}
 				>
 					<Flex
@@ -256,6 +250,8 @@ export default class DateField extends Component {
 	static propTypes = {
 		name: PropTypes.string,
 		label: PropTypes.string,
+		inputClass: PropTypes.string,
+		labelClass: PropTypes.string,
 		labelWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		minDate: PropTypes.instanceOf(Date),
 		maxDate: PropTypes.instanceOf(Date),

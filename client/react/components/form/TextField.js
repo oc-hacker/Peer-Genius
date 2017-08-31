@@ -12,26 +12,13 @@ import HelperText from './HelperText';
 const styles = ({ palette: {}, spacing }) => ({});
 
 @withStyles(styles)
-	/**
-	 * Text field class. Allows for entry of text into something.
-	 */
 class TextFieldClass extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-	
-	static propTypes = {
-		name: PropTypes.string,
-		label: PropTypes.string,
-		placeholder: PropTypes.string,
-		labelWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	};
-	
 	render = () => {
 		let {
 			input, meta,
 			label, type,
-			classes, className, labelWidth,
+			classes, className,
+			inputClass, labelClass, labelWidth,
 			...fieldProps
 		} = this.props;
 		
@@ -44,11 +31,13 @@ class TextFieldClass extends React.Component {
 				<StyledLabel
 					htmlFor={input.name}
 					width={labelWidth}
+					className={labelClass}
 				>
 					{label}
 				</StyledLabel>
 				<StyledInput
 					type={type}
+					className={inputClass}
 					{...fieldProps}
 				/>
 				<HelperText />
@@ -69,6 +58,8 @@ TextField.displayName = 'TextField';
 TextField.propTypes = {
 	name: PropTypes.string,
 	label: PropTypes.string,
+	inputClass: PropTypes.string,
+	labelClass: PropTypes.string,
 	labelWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 

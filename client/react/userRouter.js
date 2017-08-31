@@ -20,10 +20,10 @@ export default class UserRouter extends Component {
 	render() {
 		return (
 			<Switch>
-				<Route access="private" path="/home" component={HomeRouter} />
-				<Route access="private" path="/account" component={AccountRouter} />
-				<Route access="private" path="/guru" component={GuruRouter} />
-				<Route access="private" path="/newbie" component={NewbieRouter} />
+				<Route path="/home" component={HomeRouter} />
+				<Route path="/account" component={AccountRouter} />
+				<Route path="/guru" component={GuruRouter} />
+				<Route path="/newbie" component={NewbieRouter} />
 				{/*<Route access="all" path="/" component={NotFound} />*/}
 			</Switch>
 		);

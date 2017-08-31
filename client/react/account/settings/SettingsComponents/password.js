@@ -21,18 +21,22 @@ const styles = ({ palette: { text }, spacing }) => ({
 	},
 	row: {
 		margin: spacing.unit,
+		marginBottom: spacing.unit * 2,
 		alignItems: 'center'
+	},
+	field: {
+		marginBottom: 0
 	},
 	icon: {
 		flexBasis: 24
 	},
+	input: {
+		flexBasis: '3em',
+		flexGrow: 2
+	},
 	label: {
 		color: text.secondary,
 		flexBasis: '5em',
-		flexGrow: 1
-	},
-	field: {
-		flexBasis: '3em',
 		flexGrow: 1
 	},
 	button: {
@@ -58,9 +62,10 @@ export default class EditPassword extends Component {
 				<Flex className={classes.row}>
 					<SettingsIcon className={classes.icon} />
 					<Spacer width="2em" />
-					<Text className={classes.label}>Old Password</Text>
 					<TextField
 						className={classes.field}
+						labelClass={classes.label}
+						inputClass={classes.input}
 						name="oldPassword"
 						type="password"
 						label="Old Password"
@@ -70,9 +75,10 @@ export default class EditPassword extends Component {
 				<Flex className={classes.row}>
 					<SettingsIcon className={classes.icon} />
 					<Spacer width="2em" />
-					<Text className={classes.label}>New Password</Text>
 					<TextField
 						className={classes.field}
+						labelClass={classes.label}
+						inputClass={classes.input}
 						name="newPassword"
 						type="password"
 						label="New Password"
@@ -82,9 +88,10 @@ export default class EditPassword extends Component {
 				<Flex className={classes.row}>
 					<SettingsIcon className={classes.icon} />
 					<Spacer width="2em" />
-					<Text className={classes.label}>Confirm Password</Text>
 					<TextField
 						className={classes.field}
+						labelClass={classes.label}
+						inputClass={classes.input}
 						name="confirmPassword"
 						type="password"
 						label="Confirm New Password"

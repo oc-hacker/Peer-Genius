@@ -77,7 +77,8 @@ export class SelectFieldComponent extends Component {
 	render() {
 		let {
 			input, meta, label, options,
-			classes, className, labelWidth,
+			classes, className,
+			inputClass, labelClass, labelWidth,
 			...inputProps
 		} = this.props;
 		let { open, anchor } = this.state;
@@ -98,12 +99,13 @@ export class SelectFieldComponent extends Component {
 				<StyledLabel
 					htmlFor={input.name}
 					width={labelWidth}
+					className={labelClass}
 				>
 					{label}
 				</StyledLabel>
 				<StyledInput
 					compRef={self => this._input = self}
-					className={classes.input}
+					className={classNames(classes.input, inputClass)}
 					value={selected} readOnly
 					onClick={this._openMenu}
 				/>
@@ -141,6 +143,8 @@ SelectField.displayName = 'SelectField';
 SelectField.propTypes = {
 	name: PropTypes.string,
 	label: PropTypes.string,
+	inputClass: PropTypes.string,
+	labelClass: PropTypes.string,
 	options: PropTypes.arrayOf(PropTypes.shape({
 		value: PropTypes.any,
 		label: PropTypes.string

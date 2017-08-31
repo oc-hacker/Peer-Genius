@@ -17,6 +17,7 @@ const StyledLabel =
 			let {
 				classes, className,
 				style, width,
+				error, warning,
 				...others
 			} = props;
 			
