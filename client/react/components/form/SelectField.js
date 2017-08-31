@@ -129,28 +129,22 @@ export class SelectFieldComponent extends Component {
 	}
 }
 
-export default class SelectField extends Component {
-	static propTypes = {
-		name: PropTypes.string,
-		label: PropTypes.string,
-		options: PropTypes.arrayOf(PropTypes.shape({
-			value: PropTypes.any,
-			label: PropTypes.string
-		}))
-	};
-	
-	constructor(props) {
-		super(props);
-	}
-	
-	render() {
-		return (
-			<Field
-				component={SelectFieldComponent}
-				format={this._format}
-				parse={this._parse}
-				{...this.props}
-			/>
-		);
-	}
-}
+const SelectField = props => (
+	<Field
+		component={SelectFieldComponent}
+		{...props}
+	/>
+);
+
+SelectField.displayName = 'SelectField';
+
+SelectField.propTypes = {
+	name: PropTypes.string,
+	label: PropTypes.string,
+	options: PropTypes.arrayOf(PropTypes.shape({
+		value: PropTypes.any,
+		label: PropTypes.string
+	}))
+};
+
+export default SelectField;

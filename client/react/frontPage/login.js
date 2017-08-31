@@ -39,16 +39,18 @@ export default class LoginDialog extends Component {
 	render() {
 		let { classes, open, onRequestClose, logIn } = this.props;
 		
+		const labelWidth = '5em';
+		
 		return (
 			<Dialog open={open} onRequestClose={onRequestClose}>
 				<DialogTitle>Log In</DialogTitle>
 				<DialogContent>
 					<ReduxForm form="logIn" onSubmit={logIn}>
 						<TextField
-							name="email" label="Email"
+							name="email" label="Email" labelWidth={labelWidth}
 						/>
 						<TextField
-							name="password" type="password" label="Password"
+							name="password" type="password" label="Password" labelWidth={labelWidth}
 						/>
 						<div className={classes.buttons}>
 							<Button

@@ -256,6 +256,7 @@ export default class DateField extends Component {
 	static propTypes = {
 		name: PropTypes.string,
 		label: PropTypes.string,
+		labelWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		minDate: PropTypes.instanceOf(Date),
 		maxDate: PropTypes.instanceOf(Date),
 	};

@@ -1,17 +1,28 @@
-import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 
 import { connect } from 'react-redux';
 
-import { Flex, Paper, waitForInit } from '../../../components';
-import { ReduxForm, TextField, DateField } from '../../../components/form';
+import { Flex, Paper, Text, waitForInit } from '../../../components';
+import { DateField, ReduxForm, TextField } from '../../../components/form';
 
 import { editProfile } from '../../../../redux/actions/creators/user';
 import { selectUser } from '../../../../redux/selectors/user';
+
+const styles = ({ palette: { grey }, spacing }) => ({
+	headerUnderline: {
+		width: '40%',
+		marginRight: '60%',
+		backgroundColor: grey[700],
+	},
+	divider: {
+		height: 1,
+		backgroundColor: grey[300],
+		margin: `${spacing.unit * 2}px 0`
+	}
+});
 
 @waitForInit
 @connect(state => ({
@@ -19,13 +30,19 @@ import { selectUser } from '../../../../redux/selectors/user';
 }), {
 	editProfile
 })
+@withStyles(styles)
 export default class EditProfile extends Component {
 	render() {
-		let { user, editProfile } = this.props;
+		let { user, editProfile, classes } = this.props;
 		
 		return (
-			<Paper>
-				<Text type="title">Edit Profile</Text>
+			<div>
+				<Text
+					type="title" className={classes.heading}
+					color="primary" size="2em" weight={600}
+				>
+					Edit Profile
+				</Text>
 				<ReduxForm
 					form="editProfile" onSubmit={editProfile}
 					initialValues={user}
@@ -51,7 +68,7 @@ export default class EditProfile extends Component {
 						</Button>
 					</Flex>
 				</ReduxForm>
-			</Paper>
+			</div>
 		);
 	}
 }

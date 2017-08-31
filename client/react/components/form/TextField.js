@@ -57,13 +57,19 @@ class TextFieldClass extends React.Component {
 	};
 }
 
-export default class TextField extends React.Component {
-	render = () => {
-		return (
-			<Field
-				component={TextFieldClass}
-				{...this.props}
-			/>
-		);
-	};
-}
+const TextField = props => (
+	<Field
+		component={TextFieldClass}
+		{...props}
+	/>
+);
+
+TextField.displayName = 'TextField';
+
+TextField.propTypes = {
+	name: PropTypes.string,
+	label: PropTypes.string,
+	labelWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
+
+export default TextField;
