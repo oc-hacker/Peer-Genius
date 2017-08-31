@@ -2,7 +2,8 @@
 import io from 'socket.io-client';
 
 import types from '../types';
-import { serverURL } from '../../../config';
+
+const serverURL = process.env.SERVER_URL;
 
 /**
  * Normal action creator.
