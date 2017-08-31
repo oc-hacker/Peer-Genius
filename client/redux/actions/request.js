@@ -1,6 +1,6 @@
 import deepmerge from 'deepmerge';
 
-import { serverURL } from '../../config';
+const serverURL = process.env.SERVER_URL;
 
 export const status = {
 	INITIAL: 'INITIAL',
