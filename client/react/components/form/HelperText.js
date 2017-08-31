@@ -11,7 +11,8 @@ import { connect } from 'react-redux';
 const styles = ({ palette: { error } }) => ({
 	root: {
 		position: 'absolute',
-		top: '100%'
+		top: '100%',
+		right: 0,
 	},
 	error: {
 		color: error[500]

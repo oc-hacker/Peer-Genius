@@ -1,33 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
-import { orange } from 'material-ui/colors';
 import Menu, { MenuItem } from 'material-ui/Menu';
-import { FormHelperText } from 'material-ui/Form';
 import ArrowDropdown from 'material-ui-icons/ArrowDropDown';
 
 import Flex from '../Flex';
-import HelperText from './HelperText';
 import FieldControl from './FieldControl';
+import StyledLabel from './StyledLabel';
+import StyledInput from './StyledInput';
+import HelperText from './HelperText';
 
 const styles = ({ palette: { primary, grey, error, warning }, transitions, spacing }) => ({
-	sizing: {
-		width: '100%',
-		padding: spacing.unit,
-		boxSizing: 'border-box',
-	},
 	input: {
-		border: 'none',
-		backgroundColor: 'transparent',
-		fontSize: 'inherit',
-		cursor: 'pointer',
-		
-		'&:focus': {
-			outline: 'none'
-		}
+		cursor: 'pointer'
 	},
 	dropdownIconWrapper: {
 		position: 'absolute',
@@ -46,6 +33,7 @@ export class SelectFieldComponent extends Component {
 	static propTypes = {
 		name: PropTypes.string,
 		label: PropTypes.string,
+		labelWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		options: PropTypes.arrayOf(PropTypes.shape({
 			value: PropTypes.any,
 			label: PropTypes.string
@@ -63,9 +51,14 @@ export class SelectFieldComponent extends Component {
 		};
 	}
 	
+	_onInputClick = event => {
+		this.setState({
+			anchor: event.currentTarget
+		}, this._openMenu);
+	};
+	
 	_openMenu = () => {
 		this.setState({
-			anchor: this._input,
 			open: true
 		});
 	};
@@ -83,15 +76,16 @@ export class SelectFieldComponent extends Component {
 	
 	render() {
 		let {
-			input, meta, options, classes, className,
+			input, meta, label, options,
+			classes, className, labelWidth,
 			...inputProps
 		} = this.props;
 		let { open, anchor } = this.state;
 		
-		let label = '';
+		let selected = '';
 		for (let option of options) {
 			if (option.value === input.value) {
-				label = option.label;
+				selected = option.label;
 			}
 		}
 		
@@ -101,10 +95,16 @@ export class SelectFieldComponent extends Component {
 				warning={meta.touched && meta.warning}
 				error={meta.touched && meta.error}
 			>
-				<input
-					ref={self => this._input = self}
-					className={classNames(classes.input, classes.sizing)}
-					value={label} readOnly
+				<StyledLabel
+					htmlFor={input.name}
+					width={labelWidth}
+				>
+					{label}
+				</StyledLabel>
+				<StyledInput
+					compRef={self => this._input = self}
+					className={classes.input}
+					value={selected} readOnly
 					onClick={this._openMenu}
 				/>
 				<Menu

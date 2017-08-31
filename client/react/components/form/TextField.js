@@ -1,27 +1,15 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
 import { withStyles } from 'material-ui/styles';
 
 import FieldControl from './FieldControl';
+import StyledLabel from './StyledLabel';
+import StyledInput from './StyledInput';
 import HelperText from './HelperText';
 
-const styles = ({ palette: {}, spacing }) => ({
-	input: {
-		width: '100%',
-		padding: spacing.unit,
-		boxSizing: 'border-box',
-		
-		border: 'none',
-		backgroundColor: 'transparent',
-		fontSize: 'inherit',
-		
-		'&:focus': {
-			outline: 'none'
-		}
-	},
-});
+const styles = ({ palette: {}, spacing }) => ({});
 
 @withStyles(styles)
 	/**
@@ -33,16 +21,18 @@ class TextFieldClass extends React.Component {
 	}
 	
 	static propTypes = {
-		value: propTypes.string.isRequired,
-		placeholder: propTypes.string,
-		onChange: propTypes.func.isRequired,
-		type: propTypes.func.isRequired
+		name: PropTypes.string,
+		label: PropTypes.string,
+		placeholder: PropTypes.string,
+		labelWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	};
 	
 	render = () => {
 		let {
 			input, meta,
-			label, type, classes, className, ...fieldProps
+			label, type,
+			classes, className, labelWidth,
+			...fieldProps
 		} = this.props;
 		
 		return (
@@ -51,8 +41,13 @@ class TextFieldClass extends React.Component {
 				error={meta.touched && meta.error}
 				warning={meta.touched && meta.warning}
 			>
-				<input
-					className={classes.input}
+				<StyledLabel
+					htmlFor={input.name}
+					width={labelWidth}
+				>
+					{label}
+				</StyledLabel>
+				<StyledInput
 					type={type}
 					{...fieldProps}
 				/>

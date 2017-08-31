@@ -1,17 +1,15 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
-import { orange } from 'material-ui/colors';
 import Menu, { MenuItem } from 'material-ui/Menu';
 
-import { connect } from 'react-redux';
-
 import Flex from '../Flex';
-import HelperText from './HelperText';
 import FieldControl from './FieldControl';
+import StyledLabel from './StyledLabel';
+import StyledInput from './StyledInput';
+import HelperText from './HelperText';
 
 // Maximum date counts
 const dateCounts = [
@@ -23,13 +21,12 @@ const styles = ({ palette: { grey, error }, spacing }) => ({
 		display: 'flex',
 		flexDirection: 'row'
 	},
-	segment: {
-		cursor: 'pointer',
-		padding: spacing.unit,
+	input: {
+		cursor: 'pointer'
 	},
 	divider: {
 		width: 1,
-		margin: `${spacing.unit / 2}px 0`,
+		margin: `${-spacing.unit / 2}px 0`,
 		backgroundColor: grey[300]
 	}
 });
@@ -39,6 +36,7 @@ class DateFieldComponent extends Component {
 	static propTypes = {
 		name: PropTypes.string,
 		label: PropTypes.string,
+		labelWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		minDate: PropTypes.instanceOf(Date),
 		maxDate: PropTypes.instanceOf(Date),
 	};
@@ -151,7 +149,9 @@ class DateFieldComponent extends Component {
 	
 	render() {
 		let {
-			input: { value: { month, date, year } }, meta, classes, className,
+			input: { value: { month, date, year }, ...input }, meta,
+			label, placeholder,
+			classes, className, labelWidth,
 			minDate, maxDate,
 			...others
 		} = this.props;
@@ -162,78 +162,90 @@ class DateFieldComponent extends Component {
 		
 		return (
 			<FieldControl
-				className={classNames(classes.root, className)}
+				className={className}
 				error={meta.touched && meta.error}
 				warning={meta.touched && meta.warning}
 			>
-				<Flex
-					rootRef={self => this._monthInput = self}
-					grow={1} justify="center" basis={0} className={classes.segment}
-					onClick={this._openMonth}
+				<StyledLabel
+					htmlFor={input.name}
+					width={labelWidth}
 				>
-					{typeof month === 'number' ? month + 1 : 'MM'}
-					<Menu
-						anchorEl={anchor} style={{ width: this._monthInput ? this._monthInput.clientWidth : 0 }}
-						open={open === 'month'} onRequestClose={this._close}
-					>
-						{typeof month !== 'number' ? (
-							<MenuItem selected onClick={this._close}>
-								MM
-							</MenuItem>
-						) : <div />}
-						{months.map(m => (
-							<MenuItem selected={m === month} onClick={() => this._set('month', m)}>
-								{m + 1}
-							</MenuItem>
-						))}
-					</Menu>
-				</Flex>
-				<div className={classes.divider} />
-				<Flex
-					rootRef={self => this._dateInput = self}
-					grow={1} justify="center" basis={0} className={classes.segment}
-					onClick={this._openDate}
+					{label}
+				</StyledLabel>
+				<StyledInput
+					component={Flex}
+					className={classes.input}
+					placeholder={placeholder || 'Select one...'}
 				>
-					{typeof date === 'number' ? date : 'DD'}
-					<Menu
-						anchorEl={anchor} style={{ width: this._dateInput ? this._dateInput.clientWidth : 0 }}
-						open={open === 'date'} onRequestClose={this._close}
+					<Flex
+						rootRef={self => this._monthInput = self}
+						grow={1} justify="center" basis={0}
+						onClick={this._openMonth}
 					>
-						{typeof date !== 'number' ? (
-							<MenuItem selected onClick={this._close}>
-								DD
-							</MenuItem>
-						) : <div />}
-						{dates.map(d => (
-							<MenuItem selected={d === date} onClick={() => this._set('date', d)}>
-								{d}
-							</MenuItem>
-						))}
-					</Menu>
-				</Flex>
-				<div className={classes.divider} />
-				<Flex
-					rootRef={self => this._yearInput = self}
-					grow={2} justify="center" basis={0} className={classes.segment}
-					onClick={this._openYear}
-				>
-					{typeof year === 'number' ? year : 'YYYY'}
-					<Menu
-						anchorEl={anchor} style={{ width: this._yearInput ? this._yearInput.clientWidth : 0 }}
-						open={open === 'year'} onRequestClose={this._close}
+						{typeof month === 'number' ? month + 1 : 'MM'}
+						<Menu
+							anchorEl={anchor} style={{ width: this._monthInput ? this._monthInput.clientWidth : 0 }}
+							open={open === 'month'} onRequestClose={this._close}
+						>
+							{typeof month !== 'number' ? (
+								<MenuItem selected onClick={this._close}>
+									MM
+								</MenuItem>
+							) : <div />}
+							{months.map(m => (
+								<MenuItem selected={m === month} onClick={() => this._set('month', m)}>
+									{m + 1}
+								</MenuItem>
+							))}
+						</Menu>
+					</Flex>
+					<div className={classes.divider} />
+					<Flex
+						rootRef={self => this._dateInput = self}
+						grow={1} justify="center" basis={0}
+						onClick={this._openDate}
 					>
-						{typeof year !== 'number' ? (
-							<MenuItem selected onClick={this._close}>
-								YYYY
-							</MenuItem>
-						) : <div />}
-						{years.map(y => (
-							<MenuItem selected={y === year} onClick={() => this._set('year', y)}>
-								{y}
-							</MenuItem>
-						))}
-					</Menu>
-				</Flex>
+						{typeof date === 'number' ? date : 'DD'}
+						<Menu
+							anchorEl={anchor} style={{ width: this._dateInput ? this._dateInput.clientWidth : 0 }}
+							open={open === 'date'} onRequestClose={this._close}
+						>
+							{typeof date !== 'number' ? (
+								<MenuItem selected onClick={this._close}>
+									DD
+								</MenuItem>
+							) : <div />}
+							{dates.map(d => (
+								<MenuItem selected={d === date} onClick={() => this._set('date', d)}>
+									{d}
+								</MenuItem>
+							))}
+						</Menu>
+					</Flex>
+					<div className={classes.divider} />
+					<Flex
+						rootRef={self => this._yearInput = self}
+						grow={2} justify="center" basis={0}
+						onClick={this._openYear}
+					>
+						{typeof year === 'number' ? year : 'YYYY'}
+						<Menu
+							anchorEl={anchor} style={{ width: this._yearInput ? this._yearInput.clientWidth : 0 }}
+							open={open === 'year'} onRequestClose={this._close}
+						>
+							{typeof year !== 'number' ? (
+								<MenuItem selected onClick={this._close}>
+									YYYY
+								</MenuItem>
+							) : <div />}
+							{years.map(y => (
+								<MenuItem selected={y === year} onClick={() => this._set('year', y)}>
+									{y}
+								</MenuItem>
+							))}
+						</Menu>
+					</Flex>
+				</StyledInput>
 				<HelperText />
 			</FieldControl>
 		);

@@ -7,27 +7,13 @@ import { orange } from 'material-ui/colors';
 
 import { connect } from 'react-redux';
 
+import Flex from '../Flex';
+
 const styles = ({ palette: { grey, error }, spacing }) => ({
 	root: {
 		position: 'relative',
-		
-		borderWidth: 1,
-		borderRadius: spacing.unit / 2,
-		borderStyle: 'solid',
-		borderColor: grey[300],
-		boxSizing: 'border-box',
-		
-		marginBottom: spacing.unit * 4,
-		
-		fontSize: 'inherit',
-	},
-	error: {
-		borderColor: error[500],
-		boxShadow: `0 0 ${Math.round(spacing.unit / 2)}px ${error[500]}`
-	},
-	warning: {
-		borderColor: orange[500],
-		boxShadow: `0 0 ${Math.round(spacing.unit / 2)}px ${orange[500]}`
+		flexGrow: 1,
+		marginBottom: spacing.unit * 3
 	}
 });
 
@@ -51,12 +37,9 @@ export default class FieldControl extends Component {
 		} = this.props;
 		
 		return (
-			<div
-				className={classNames({
-					[classes.root]: true,
-					[classes.warning]: warning,
-					[classes.error]: error
-				}, className)}
+			<Flex
+				className={classNames(classes.root, className)}
+				align="center"
 				{...others}
 			>
 				{React.Children.map(children, child => {
@@ -65,7 +48,7 @@ export default class FieldControl extends Component {
 						warning
 					});
 				})}
-			</div>
+			</Flex>
 		);
 	}
 }
