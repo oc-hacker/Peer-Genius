@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
 import Menu, { MenuItem } from 'material-ui/Menu';
@@ -141,12 +142,10 @@ class DateFieldComponent extends Component {
 	
 	render() {
 		let {
-			input: { value: { month, date, year }, ...input }, meta,
-			label, placeholder,
+			input: { value: { month, date, year }, ...input }, meta, label,
 			classes, className,
 			inputClass, labelClass, labelWidth,
-			minDate, maxDate,
-			...others
+			minDate, maxDate
 		} = this.props;
 		let {
 			anchor, open,
@@ -167,9 +166,8 @@ class DateFieldComponent extends Component {
 					{label}
 				</StyledLabel>
 				<StyledInput
-					component={Flex}
+					Component={Flex}
 					className={classNames(classes.input, inputClass)}
-					placeholder={placeholder || 'Select one...'}
 				>
 					<Flex
 						rootRef={self => this._monthInput = self}
@@ -250,6 +248,7 @@ export default class DateField extends Component {
 	static propTypes = {
 		name: PropTypes.string,
 		label: PropTypes.string,
+		className: PropTypes.string,
 		inputClass: PropTypes.string,
 		labelClass: PropTypes.string,
 		labelWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

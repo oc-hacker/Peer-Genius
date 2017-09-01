@@ -77,9 +77,8 @@ export class SelectFieldComponent extends Component {
 	render() {
 		let {
 			input, meta, label, options,
-			classes, className,
-			inputClass, labelClass, labelWidth,
-			...inputProps
+			classes, className, placeholder,
+			inputClass, labelClass, labelWidth
 		} = this.props;
 		let { open, anchor } = this.state;
 		
@@ -107,6 +106,7 @@ export class SelectFieldComponent extends Component {
 					compRef={self => this._input = self}
 					className={classNames(classes.input, inputClass)}
 					value={selected} readOnly
+					placeholder={placeholder || 'Select one...'}
 					onClick={this._openMenu}
 				/>
 				<Menu
@@ -143,6 +143,7 @@ SelectField.displayName = 'SelectField';
 SelectField.propTypes = {
 	name: PropTypes.string,
 	label: PropTypes.string,
+	className: PropTypes.string,
 	inputClass: PropTypes.string,
 	labelClass: PropTypes.string,
 	options: PropTypes.arrayOf(PropTypes.shape({

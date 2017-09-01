@@ -68,8 +68,8 @@ export class Color {
 }
 
 /**
- * @param color1 A CSS-compatible color string
- * @param color2 A CSS-compatible color string
+ * @param color1 A CSS-compatible Color string
+ * @param color2 A CSS-compatible Color string
  * @param p A value between 0 and 1 to determine the balance between the two colors. Values closer to 0 makes the output closer to color1, and values closer to 1 makes the output closer to color2.
  */
 export const mix = (color1, color2, p = 0.5) => {

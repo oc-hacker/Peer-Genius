@@ -17,15 +17,15 @@ const styles = ({ palette: { primary, grey }, spacing }) => ({
 		margin: `${spacing.unit * 2}px 0`,
 		letterSpacing: spacing.unit * 0.3
 	},
-	headerUnderline: {
-		width: '40%',
-		marginRight: '60%',
-		backgroundColor: grey[700],
-	},
 	divider: {
 		height: 1,
 		backgroundColor: grey[300],
 		margin: `${spacing.unit * 2}px 0`
+	},
+	headerUnderline: {
+		width: '40%',
+		marginRight: '60%',
+		backgroundColor: grey[700],
 	}
 });
 

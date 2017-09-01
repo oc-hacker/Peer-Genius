@@ -11,7 +11,7 @@ const styles = {
 		justifyContent: props => props.justify,
 		flexGrow: props => props.grow,
 		flexShrink: props => props.shrink,
-		flexBasis: props => props.basis
+		flexBasis: props => props.basis,
 	}
 };
 
@@ -37,6 +37,7 @@ const Flex =
 	);
 
 Flex.propTypes = {
+	className: PropTypes.string,
 	component: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 	column: PropTypes.bool,
 	direction: PropTypes.string,

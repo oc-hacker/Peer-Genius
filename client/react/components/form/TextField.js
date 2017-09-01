@@ -19,7 +19,7 @@ class TextFieldClass extends React.Component {
 			label, type,
 			classes, className,
 			inputClass, labelClass, labelWidth,
-			...fieldProps
+			multiline
 		} = this.props;
 		
 		return (
@@ -38,7 +38,8 @@ class TextFieldClass extends React.Component {
 				<StyledInput
 					type={type}
 					className={inputClass}
-					{...fieldProps}
+					Component={multiline ? 'div' : 'input'}
+					contentEditable
 				/>
 				<HelperText />
 			</FieldControl>
@@ -58,8 +59,10 @@ TextField.displayName = 'TextField';
 TextField.propTypes = {
 	name: PropTypes.string,
 	label: PropTypes.string,
+	className: PropTypes.string,
 	inputClass: PropTypes.string,
 	labelClass: PropTypes.string,
+	multiline: PropTypes.bool,
 	labelWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 

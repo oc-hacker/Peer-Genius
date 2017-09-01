@@ -48,7 +48,7 @@ const styles = ({ palette: { text }, transitions, spacing }) => ({
 		padding: 0,
 		paddingRight: spacing.unit,
 		backgroundColor: 'transparent',
-		transition: transitions.create('background-color', {
+		transition: transitions.create('background-Color', {
 			duration: transitions.duration.shortest,
 		}),
 		'&:hover': {

@@ -1,20 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Color from 'color';
 
 import { withStyles } from 'material-ui/styles';
 import { orange } from 'material-ui/colors';
 
-const styles = ({ palette: { grey, error }, spacing }) => ({
+const styles = ({ palette: { primary, grey, error }, typography, spacing }) => ({
 	root: {
 		position: 'relative',
 		flexGrow: 1,
 		marginLeft: spacing.unit * 2,
+		fontFamily: typography.fontFamily,
 		
 		borderWidth: 1,
-		borderRadius: spacing.unit / 2,
+		borderRadius: spacing.unit * 2,
 		borderStyle: 'solid',
-		borderColor: grey[300],
+		borderColor: new Color(primary[500]).alpha(0.6).toString(),
 		boxSizing: 'border-box',
 		padding: spacing.unit,
 		
@@ -40,7 +42,7 @@ const StyledInput =
 			let {
 				classes, className,
 				error, warning,
-				component: Component, compRef,
+				Component, compRef,
 				...others
 			} = props;
 			
@@ -61,12 +63,12 @@ const StyledInput =
 StyledInput.displayName = 'StyledInput';
 
 StyledInput.propTypes = {
-	component: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+	Component: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 	compRef: PropTypes.func,
 };
 
 StyledInput.defaultProps = {
-	component: 'input'
+	Component: 'input'
 };
 
 export default StyledInput;
