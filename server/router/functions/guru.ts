@@ -20,19 +20,19 @@ export const getReviews: AsyncHandler<GetReviewsRequest> = async (request, respo
 	let sessions = await models.session.all({
 		where: {
 			guru: request.body.guru,
-	rating: {
-	$not: null
+			rating: {
+				$not: null
 			}
 		}
 	});
 	
 	let reviews = Promise.all(
 		sessions
-			.map(session => pick(session, 'mentee', 'subject', 'rating', 'comment'))
+			.map(session => pick(session, 'newbie', 'subject', 'rating', 'comment'))
 			.map(
-				(session: { mentee: string, subject: string, rating: string, comment: string }) => models.user.find({
+				(session: { newbie: string, subject: string, rating: number, comment: string }) => models.user.find({
 					where: {
-						id: session.mentee
+						id: session.newbie
 					}
 				}).then(user => ({
 					...session,

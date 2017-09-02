@@ -8,11 +8,7 @@ gulp.task('configure', function () {
 
 gulp.task('compile', function () {
 	return gulp.src('server/**/*.ts')
-		.pipe(gulpts({
-			module: 'commonjs',
-			target: 'es6',
-			outDir: 'build'
-		}))
+		.pipe(gulpts(require('./tsconfig.json').compilerOptions))
 		.pipe(gulp.dest('build'))
 });
 
