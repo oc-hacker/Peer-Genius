@@ -1,8 +1,4 @@
-import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
-
-import { withStyles } from 'material-ui/styles';
-import IconButton from 'material-ui/IconButton';
+import React, { Component } from 'react';
 import AccountIcon from 'material-ui-icons/AccountCircle';
 import { MenuItem } from 'material-ui/Menu';
 
@@ -54,9 +50,7 @@ export default class AccountMenu extends Component {
 		
 		return (
 			<AppBarMenu
-				button={
-					<AccountIcon />
-				}
+				button={<AccountIcon />}
 				open={open} onClick={this._openMenu} onRequestClose={this._closeMenu}
 			>
 				<MenuItem onClick={this._toAccountSettings}>Account Settings</MenuItem>

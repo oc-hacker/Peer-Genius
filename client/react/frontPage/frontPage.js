@@ -8,6 +8,7 @@ import throttle from 'lodash/throttle';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
+import { GuestAppBar } from '../components';
 import PageZero from './PageComponents/page0';
 import PageOne from './PageComponents/page1';
 import PageTwo from './PageComponents/page2';
@@ -120,6 +121,7 @@ export default class FrontPage extends Component {
 				className={classes.frontPage}
 				onWheel={this._onScroll}
 			>
+				<GuestAppBar />
 				<PageZero
 					currentPage={currentPage}
 					openLogIn={this._openLogIn} createAccount={this._openCreateAccount}

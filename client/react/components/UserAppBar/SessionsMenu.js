@@ -1,8 +1,4 @@
-import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
-
-import { withStyles } from 'material-ui/styles';
-import { MenuItem } from 'material-ui/Menu';
+import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
@@ -40,9 +36,7 @@ export default class SessionsMenu extends Component {
 
 		return (
 			<AppBarMenu
-				button={
-					'Sessions'
-				}
+				button='Sessions'
 				open={open} onClick={this._toPastSessions} onRequestClose={this._closeMenu}
 			/>
 		);

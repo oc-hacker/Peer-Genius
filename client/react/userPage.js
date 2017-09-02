@@ -5,7 +5,7 @@ import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
 
-import { AppBar, AppFooter, Flex } from './components';
+import { UserAppBar, AppFooter, Flex } from './components';
 import UserRouter from './userRouter';
 
 const styles = {
@@ -34,7 +34,7 @@ export default class UserPage extends Component {
 		
 		return (
 			<Flex column className={classes.root}>
-				<AppBar />
+				<UserAppBar />
 				<Flex grow={1} className={classes.body}>
 					<UserRouter />
 				</Flex>

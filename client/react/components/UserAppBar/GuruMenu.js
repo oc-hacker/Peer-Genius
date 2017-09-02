@@ -1,7 +1,4 @@
-import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
-
-import { withStyles } from 'material-ui/styles';
+import React, { Component } from 'react';
 import { MenuItem } from 'material-ui/Menu';
 
 import { connect } from 'react-redux';
@@ -40,9 +37,7 @@ export default class GuruMenu extends Component {
 		
 		return (
 			<AppBarMenu
-				button={
-					'Gurus'
-				}
+				button={'Gurus'}
 				open={open} onClick={this._openMenu} onRequestClose={this._closeMenu}
 			>
 				<MenuItem onClick={this._toGuruSignUp}>Become a Guru</MenuItem>

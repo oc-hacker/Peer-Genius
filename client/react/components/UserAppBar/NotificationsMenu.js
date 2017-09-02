@@ -1,8 +1,4 @@
-import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
-
-import { withStyles } from 'material-ui/styles';
-import { MenuItem } from 'material-ui/Menu';
+import React, { Component } from 'react';
 
 import { NotificationsNone } from 'material-ui-icons/NotificationsNone';
 
@@ -15,33 +11,33 @@ import AppBarMenu from './AppBarMenu';
 export default class SessionsMenu extends Component {
 	constructor(props) {
 		super(props);
-
+		
 		this.state = {
 			open: false
 		};
 	}
-
+	
 	_openMenu = () => {
 		this.setState({
 			open: true
 		});
 	};
-
+	
 	_closeMenu = () => {
 		this.setState({
 			open: false
 		});
 	};
-
+	
 	_toFeed = () => {
 		//this.props.push('');
 	};
-
+	
 	render() {
 		let { open } = this.state;
 		return (
 			<AppBarMenu
-				button='Notifications'
+				button={'Notifications'}
 				open={open} onClick={this._toFeed} onRequestClose={this._closeMenu}
 			/>
 		);

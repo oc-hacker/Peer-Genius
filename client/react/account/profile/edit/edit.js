@@ -55,6 +55,9 @@ const styles = ({ palette: { grey }, spacing }) => ({
 		fontWeight: 600,
 		color: '#68676c',
 		padding: '1em 3em'
+	},
+	biographyIcon: {
+		margin: `${spacing.unit}px 0`
 	}
 });
 
@@ -131,11 +134,11 @@ export default class EditProfile extends Component {
 							<TextField
 								{...fieldClasses}
 								name="school"
-								label="School distruct"
+								label="School district"
 							/>
 						</Flex>
 						<Flex align="flex-start" className={classes.row}>
-							<FieldIcon />
+							<FieldIcon className={classes.biographyIcon} />
 							<Spacer width="1em" />
 							<TextField
 								{...fieldClasses}
