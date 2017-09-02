@@ -1,3 +1,6 @@
+import { pick } from 'lodash';
+import * as httpStatus from 'http-status-codes';
+
 import * as  models from '../../database/models';
 
 import { AsyncHandler, VerifiedRequest } from '../../types';
@@ -8,12 +11,37 @@ interface GetReviewsRequest extends VerifiedRequest {
 		user: {
 			id;
 		};
+		/** The id of the guru */
 		guru: string;
 	}
 }
 
 export const getReviews: AsyncHandler<GetReviewsRequest> = async (request, response) => {
-	let { guru } = request.body;
+	let sessions = await models.session.all({
+		where: {
+			mentor: request.body.guru,
+			rating: {
+				$not: null
+			}
+		}
+	});
 	
-	// TODO
+	let reviews = Promise.all(
+		sessions
+			.map(session => pick(session, 'mentee', 'subject', 'rating', 'comment'))
+			.map(
+				(session: { mentee: string, subject: string, rating: string, comment: string }) => models.user.find({
+					where: {
+						id: session.mentee
+					}
+				}).then(user => ({
+					...session,
+					newbieName: `${user.firstName} ${user.lastName}`
+				}))
+			)
+	);
+	
+	response.status(httpStatus.OK).json({
+		reviews
+	});
 };

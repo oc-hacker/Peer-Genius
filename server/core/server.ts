@@ -53,9 +53,9 @@ app.use(cookieParser());
 // Assets
 app.use(serveStatic(path.join(__dirname, '../../public')));
 
-app.get(/^\/(?!api)/, sendIndex);
-
 app.use('/api', apiRouter);
+
+app.get(/^\/(?!api)/, sendIndex);
 
 // Ensure responses is ended
 app.use(endResponse);
