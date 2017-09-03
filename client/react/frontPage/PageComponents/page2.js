@@ -17,7 +17,7 @@ const styles = {
 };
 
 @withStyles(styles)
-export default class PageTwo extends Component {
+export default class PageTwo extends React.Component {
 	static propTypes = {
 		currentPage: PropTypes.number.isRequired
 	};
