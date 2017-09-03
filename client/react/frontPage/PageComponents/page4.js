@@ -39,12 +39,12 @@ export default class PageFour extends Component {
                 page={4} currentPage={currentPage}
                 className={classNames(classes.background, classes.withColor)}
 			>
-                <Text type="display2" className={classes.centerText}>Okay, We Know You Want To</Text>
-                <Text type="display2" className={classes.centerText} > So Join The Club</Text>
+                <Text type="display2" color="black" className={classes.centerText}>Okay, We Know You Want To</Text>
+                <Text type="display2" color="black" className={classes.centerText} > So Join The Club</Text>
                 <svg version="1.0"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 1604.000000 1492.000000"
-                    height="192pt" width="192pt"
+                    height="256pt" width="256pt"
                     preserveAspectRatio="xMidYMid meet"
                     fill="rgb(1,147,172)"
                     style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10, marginBottom: 10}}
