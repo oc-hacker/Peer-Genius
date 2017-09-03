@@ -21,10 +21,10 @@ export default class PageTwo extends React.Component {
 	static propTypes = {
 		currentPage: PropTypes.number.isRequired
 	};
-	
+
 	render() {
 		let { classes, currentPage } = this.props;
-		
+
 		return (
 			<Page
 				page={2} currentPage={currentPage}
@@ -40,7 +40,7 @@ export default class PageTwo extends React.Component {
 				<div className={classes.row}>
 					<p>[Icon]</p>
 					<Text>
-						- What is PVSA? Click <a href="https://www.presidentialserviceawards.gov/">here</a> to find out more.
+						- What is the PVSA? Click <a href="https://www.presidentialserviceawards.gov/">here</a> to find out more.
 					</Text>
 				</div>
 				<div className={classes.row}>
