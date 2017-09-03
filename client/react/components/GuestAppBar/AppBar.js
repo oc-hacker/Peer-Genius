@@ -30,31 +30,31 @@ const styles = ({ palette: { grey }, spacing }) => ({
 	}
 });
 
-const GuestAppBar =
-	withStyles(styles, { name: 'GuestAppBar' })(
-		props => {
-			let { className, classes, color } = props;
-			
-			return (
-				<AppBar
-					elevation={0}
-					className={classNames(classes.appBar, className)}
-				>
-					<Flex align="center" grow={1}>
-						<Logo />
-						<SearchBar />
-					</Flex>
-					<Flex grow={2} />
-					<Flex align="center" justify="space-around" grow={1}>
-						<FacebookIcon color={color} />
-						<TwitterIcon color={color} />
-						<GooglePlusIcon color={color} />
-						<LinkedInIcon color={color} />
-					</Flex>
-				</AppBar>
-			);
-		}
-	);
+@withStyles(styles, { name: 'GuestAppBar' })
+class GuestAppBar extends React.Component {
+    render = () => {
+        let { className, classes, color } = this.props;
+
+        return (
+            <AppBar
+                elevation={0}
+                className={classNames(classes.appBar, className)}
+            >
+                <Flex align="center" grow={1}>
+                    <Logo />
+                    <SearchBar />
+                </Flex>
+                <Flex grow={2} />
+                <Flex align="center" justify="space-around" grow={1}>
+                    <FacebookIcon color={color} />
+                    <TwitterIcon color={color} />
+                    <GooglePlusIcon color={color} />
+                    <LinkedInIcon color={color} />
+                </Flex>
+            </AppBar>
+        );
+    }
+}
 
 GuestAppBar.displayName = 'GuestAppBar';
 
