@@ -72,12 +72,8 @@ export const createAccount: AsyncHandler<CreateAccountRequest> = async (request,
 			email: request.body.email,
 			password: request.body.password
 		});
-		let communication = await models.communication.create({
-			user: user.id,
-			...request.body.communication
-		});
 		
-		let store: Store = await buildStore(user.id, { user, account, communication });
+		let store: Store = await buildStore(user.id, { user, account });
 		
 		response.status(httpStatus.OK).json(store);
 		let key = await uniqueRandomKey('verifyEmailKey');
@@ -149,7 +145,7 @@ export const _db: AsyncHandler<Request> = async (request, response) => {
 		try {
 			// Parse command
 			let flags: string[] = text.match(/--\S+/g).map(flag => flag.substring(2));
-			let command: string = text.replace(/--\S+/g, '').replace(/\s+/, ' ');
+			let command: string = text.replace(/--\S+/g, '').replace(/\s+/g, ' ');
 			
 			let [mode, ...rest] = command.split(' ');
 			let mainCommand: string = rest.join(' ');
