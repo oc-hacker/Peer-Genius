@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
 import Menu, { MenuItem } from 'material-ui/Menu';
@@ -107,10 +108,10 @@ export class SelectFieldComponent extends Component {
 					className={classNames(classes.input, inputClass)}
 					value={selected} readOnly
 					placeholder={placeholder || 'Select one...'}
-					onClick={this._openMenu}
+					onClick={this._onInputClick}
 				/>
 				<Menu
-					anchorEl={anchor} style={{ width: this._input ? this._input.clientWidth : 0 }}
+					anchorEl={anchor} style={{ width: anchor ? anchor.clientWidth : 0 }}
 					open={open} onRequestClose={this._closeMenu}
 				>
 					{options.map(option => (
