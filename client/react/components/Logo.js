@@ -3,7 +3,7 @@ import React from 'react';
 // TODO get SVG logo
 const PeerGeniusLogo = props => (
 	<img
-		src="/logo.png"
+		src="icon.png"
 		{...props}
 	/>
 );
