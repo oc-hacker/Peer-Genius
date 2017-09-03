@@ -9,10 +9,10 @@ import Page from './Page';
 
 const styles = {
 	withColor: {
-		backgroundColor: 'rgba(1,147,172, 0.5)'
+		backgroundColor: 'rgba(1,147,172, 0.9)'
     },
     background: {
-        backgroundImage: 'linear-gradient(to bottom, rgba(1,147,172, 0.7) 0%,rgba(1,147,172, 0.7) 100%), url(assets/home_page_2nd.jpg)',
+        backgroundImage: 'linear-gradient(to bottom, rgba(1,147,172, 0.9) 0%,rgba(1,147,172, 0.9) 100%), url(assets/home_page_2nd.jpg)',
         backgroundSize: 'cover',
         overflow: 'hidden'
     },
