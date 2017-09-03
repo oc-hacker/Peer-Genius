@@ -24,16 +24,16 @@ export default class PageThree extends Component {
 	static propTypes = {
 		currentPage: PropTypes.number.isRequired
 	};
-	
+
 	render() {
 		let { classes, currentPage } = this.props;
-		
+
 		return (
 			<Page
 				page={3} currentPage={currentPage}
 				className={classes.withColor}
 			>
-				<Text type="title">NEWBEE BENEFITS</Text>
+				<Text type="title">NEWBIE BENEFITS</Text>
 				<div className={classes.row}>
 					<p>[Icon]</p>
 					<Text>

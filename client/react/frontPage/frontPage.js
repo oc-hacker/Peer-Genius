@@ -121,7 +121,7 @@ export default class FrontPage extends Component {
 				className={classes.frontPage}
 				onWheel={this._onScroll}
 			>
-				<GuestAppBar />
+                <GuestAppBar currentPage={currentPage} />
 				<PageZero
 					currentPage={currentPage}
 					openLogIn={this._openLogIn} createAccount={this._openCreateAccount}

@@ -11,13 +11,13 @@ module.exports = {
 		path: path.resolve(__dirname, 'public'),
 		filename: 'app.js'
 	},
-	module: {
-		loaders: [{
-			test: /\.jsx?$/,
-			exclude: /(node_modules|bower_components)/,
-			loader: 'babel-loader'
-		}]
-	},
+    module: {
+        loaders: [{
+            test: /\.jsx?$/,
+            exclude: /(node_modules|bower_components)/,
+            loader: 'babel-loader'
+        }]
+    },
 	plugins: [
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify('production')

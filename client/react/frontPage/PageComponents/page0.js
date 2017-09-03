@@ -21,15 +21,16 @@ export default class PageZero extends Component {
 		openLogIn: PropTypes.func.isRequired,
 		createAccount: PropTypes.func.isRequired
 	};
-	
+
 	render() {
 		let { classes, currentPage, openLogIn, createAccount } = this.props;
-		
+
 		return (
 			<Page
 				page={0} currentPage={currentPage}
 				bg="white"
 			>
+				<img src='icon.png' alt="Peer Genius" />
 				<Text type="title">Peer Genius</Text>
 				<Text type="subheading">Eliminate the Grind</Text>
 				<div className={classes.buttons}>
