@@ -45,7 +45,7 @@ class GuestAppBar extends React.Component {
                 elevation={0}
                 className={classNames(classes.appBar, className)}
             >
-                <PeerGeniusLogo />
+                <PeerGeniusLogo fill={color} />
                 <Flex grow={2} />
                 <Flex align="center" justify="space-around" grow={1}>
                     <FacebookIcon color={color} />
