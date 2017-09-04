@@ -2,26 +2,28 @@
 import * as models from '../database/models';
 import { subjects } from '../database/models/guru';
 import { UserInstance } from '../database/models/user';
+import { UserSocket } from '../types';
+import * as sequelize from 'sequelize';
 
 /**
- * keys: socked ids
- * values: user ids
+ * Maps user id to socket id
  */
-interface SocketUserRegistry {
-	[socket: string]: string
+interface SocketRegistry {
+	[socket: string]: UserSocket
 }
 
-const registry: SocketUserRegistry = {};
+export const registry: SocketRegistry = {};
 
 const subjectOrCondition = Object.values(subjects).map(subject => ({ [subject]: true }));
 
-const attach = async (socket: SocketIO.Socket, user: string) => {
+const attach = async (socket: UserSocket, user: string) => {
 	// Save the socket id to registry
-	registry[socket.id] = user;
+	socket.user = user;
+	registry[user] = socket;
 	console.log('User', user, 'connected.');
 
 	socket.on('disconnect', () => {
-		delete registry[socket.id];
+		delete registry[user];
 		console.log('User', user, 'disconnected.');
 	});
 
@@ -31,7 +33,7 @@ const attach = async (socket: SocketIO.Socket, user: string) => {
 			where: {
 				user: {
 					$in: Object.values(socket.nsp.sockets) // Get all sockets
-						.map(socket => registry[socket.id]) // Get all user ids
+						.map((socket: UserSocket) => socket.user) // Get all user ids
 						.filter(user => user) // Ensure that the values are not null
 				},
 				$or: subjectOrCondition
@@ -39,12 +41,16 @@ const attach = async (socket: SocketIO.Socket, user: string) => {
 		}).then(gurus =>
 			Promise.all(
 				gurus.map(guru => models.user.find({
-					where: { id: guru.user }
+					where: { id: guru.user },
+					attributes: [
+						[sequelize.fn(
+							'CONCAT',
+							sequelize.col('firstName'), ' ', sequelize.col('lastName')
+						), 'name']
+					]
 				}))
 			)
-		).then(users => users.map((user: UserInstance) => ({
-			name: `${user.firstName} ${user.lastName}`
-		})));
+		);
 
 		let endTime = Date.now();
 

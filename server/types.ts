@@ -9,12 +9,10 @@ export interface VerifiedRequest extends Request {
 		user: {
 			id: string;
 		}
-	}
+	};
 }
 
-export interface AsyncHandler<RequestType extends Request> {
-	(request: RequestType, response: Response, next: NextFunction): Promise<any>;
-}
+export type AsyncHandler<RequestType extends Request> = (request: RequestType, response: Response, next: NextFunction) => Promise<any>;
 
 export interface Store {
 	account: {
@@ -33,4 +31,8 @@ export interface Store {
 		jwt: string,
 		expire: number
 	};
+}
+
+export interface UserSocket extends SocketIO.Socket {
+	user: string;
 }

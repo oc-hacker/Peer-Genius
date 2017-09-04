@@ -5,6 +5,7 @@ import * as jwt from 'jsonwebtoken';
 import server from './server';
 import { logError } from '../router/misc/utils';
 import { connection } from '../socket';
+import { UserSocket } from '../types';
 
 const { JWT_SECRET } = process.env;
 
@@ -20,7 +21,7 @@ io.on('connection', async (socket: SocketIO.Socket) => {
 		
 		try {
 			await Promise.all([
-				connection.attach(socket, user.id)
+				connection.attach(socket as UserSocket, user.id)
 			]);
 		}
 		catch (error) {
