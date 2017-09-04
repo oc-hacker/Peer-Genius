@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
-import { orange } from 'material-ui/colors';
 
 const styles = ({ typography }) => ({
 	label: {
