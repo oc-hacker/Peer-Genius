@@ -1,12 +1,16 @@
 import Color from 'color';
 import { createMuiTheme, createPalette, createTypography } from 'material-ui';
-import { orange } from 'material-ui/colors';
+import { orange, deepOrange } from 'material-ui/colors';
 
 const baseTheme = createMuiTheme({});
 
 const typography = createTypography(baseTheme.palette, {
     fontFamily: '"Open Sans", sans-serif',
 });
+typography.button = {
+    ...typography.button,
+    textTransform: 'none'
+};
 
 export const generateColorScheme = baseColor => {
     const color = new Color(baseColor);
@@ -41,6 +45,9 @@ export const muiTheme = {
     typography,
     palette: {
         ...palette,
-        warning: orange
+        warning: orange,
+        danger: deepOrange
     }
 };
+
+console.log(muiTheme);

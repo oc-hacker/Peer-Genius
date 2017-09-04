@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
 
 import { connect } from 'react-redux';
 
-import { Flex, Spacer, Text } from '../../../components';
+import { Flex, Spacer, Text, Button } from '../../../components';
 import { DateField, ReduxForm, TextField } from '../../../components/form';
 
 import { editProfile } from '../../../../redux/actions/creators/user';
@@ -49,9 +48,6 @@ const styles = ({ palette: { grey }, spacing }) => ({
 		flexGrow: 3
 	},
 	button: {
-		borderRadius: '100vh',
-		textTransform: 'none',
-		boxShadow: 'none',
 		fontWeight: 600,
 		color: '#68676c',
 		padding: '1em 3em'
@@ -150,7 +146,7 @@ export default class EditProfile extends Component {
 						<Flex>
 							<Button
 								className={classes.button}
-								raised color="accent"
+								raised round color="accent"
 								type="submit"
 							>
 								Save

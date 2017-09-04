@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
 import SettingsIcon from 'material-ui-icons/Settings';
 
 import { connect } from 'react-redux';
 
-import { Flex, Spacer, Text } from '../../../components';
+import { Flex, Spacer, Text, Button } from '../../../components';
 import { ReduxForm, TextField } from '../../../components/form';
 
 import { editPassword } from '../../../../redux/actions/creators/account';
@@ -40,11 +39,9 @@ const styles = ({ palette: { text }, spacing }) => ({
 		flexGrow: 1
 	},
 	button: {
-		borderRadius: '100vh',
-		textTransform: 'none',
-		boxShadow: 'none',
 		fontWeight: 600,
 		color: '#68676c',
+        padding: '1em 3em'
 	}
 });
 
@@ -102,7 +99,7 @@ export default class EditPassword extends Component {
 				<div>
 					<Button
 						className={classes.button}
-						raised color="accent"
+						raised round color="accent"
 						type="submit"
 					>
 						Save
