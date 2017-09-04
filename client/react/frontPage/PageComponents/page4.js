@@ -44,7 +44,7 @@ export default class PageFour extends Component {
                 className={classNames(classes.background, classes.withColor)}
             >
                 <Text type="display2" color="black" className={classes.centerText}>Okay, We Know You Want To</Text>
-                <Text type="display2" color="black" className={classes.centerText}> So Join The Club</Text>
+                <Text type="display2" color="black" className={classes.centerText}>So Join The Club</Text>
                 <Logo
                     height='256pt'
                     width='256pt'
