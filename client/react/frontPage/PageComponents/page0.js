@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from 'material-ui/styles';
 
-import { Text, Spacer, Button } from '../../components';
 import Page from './Page';
+import { Button, Spacer, Text } from '../../components';
 
 import PeerGeniusLogo from '../../components/Logo';
 
@@ -14,10 +14,12 @@ const styles = {
     withColor: {
 		backgroundColor: 'white'
     },
-    buttons: {
+    buttonContainer: {
         display: 'flex',
-        flexDirection: 'column',
-        borderRadius: 10
+        flexDirection: 'column'
+    },
+    button: {
+        borderRadius: 10,
     },
     background: {
         backgroundImage: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.6) 100%), url(assets/home_page_1st.jpg)',
@@ -45,11 +47,11 @@ export default class PageZero extends Component {
                 <PeerGeniusLogo height="50%" width="50%" />
                 <Text type="button" color="rgb(1,147,172)" size="200%" weight="bold">Eliminate the Grind</Text>
                 <Spacer height='3%' />
-                <div className={classes.buttons}>
+                <div className={classes.buttonContainer}>
                     <Button
                         raised color="primary"
                         onClick={openLogIn}
-                        style={styles.buttons}
+                        className={classes.button}
                     >
                         Log In
                     </Button>
@@ -57,7 +59,7 @@ export default class PageZero extends Component {
                     <Button
                         raised color="transparent"
                         onClick={createAccount}
-                        style={styles.buttons}
+                        className={classes.button}
                     >
                         Create Account
                     </Button>

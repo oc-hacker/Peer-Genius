@@ -14,21 +14,21 @@ typography.button = {
 
 export const generateColorScheme = baseColor => {
     const color = new Color(baseColor);
-    const lightColor = color.lighten(100 / color.lightness());
+    const lightColor = color.saturationv(100).lighten(0.30);
 
     return {
-        50: color.desaturate(0.90).hex(),
-        100: color.desaturate(0.70).hex(),
-        200: color.desaturate(0.50).hex(),
-        300: color.desaturate(0.30).hex(),
-        400: color.desaturate(0.15).hex(),
+        50: color.lighten(0.45).hex(),
+        100: color.lighten(0.40).hex(),
+        200: color.lighten(0.30).hex(),
+        300: color.lighten(0.20).hex(),
+        400: color.lighten(0.10).hex(),
         500: color.hex(),
         600: color.darken(0.1).hex(),
-        700: color.darken(0.3).hex(),
-        800: color.saturate(0.1).darken(0.5).hex(),
-        900: color.saturate(0.2).darken(0.7).hex(),
-        A100: lightColor.desaturate(0.4).hex(),
-        A200: lightColor.desaturate(0.1).hex(),
+        700: color.darken(0.25).hex(),
+        800: color.saturate(0.1).darken(0.3).hex(),
+        900: color.saturate(0.2).darken(0.4).hex(),
+        A100: lightColor.lighten(0.3).hex(),
+        A200: lightColor.lighten(0.1).hex(),
         A400: lightColor.hex(),
         A700: lightColor.darken(0.2).hex(),
         contrastDefaultColor: 'light'

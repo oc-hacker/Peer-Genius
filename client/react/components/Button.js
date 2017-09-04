@@ -26,6 +26,9 @@ const styles = {
     root: {
         cursor: 'pointer',
         boxShadow: 'none',
+        '&:active': {
+            boxShadow: 'none'
+        },
         borderRadius: props => props.round ? 'max(100vw, 100vh)' : null,
     },
     flat: {
@@ -56,13 +59,22 @@ export default class CustomButton extends Component<Props, void> {
 
     render() {
         let {
-            classes, className, theme, sheet,
+            classes, className,
+            theme, sheet, color,
             ...others
         } = this.props;
+        let raised = this.props.raised || this.props.fab;
 
         return (
             <Button
-                className={classNames(classes.button, className)}
+                className={classNames(
+                    classes.root,
+                    {
+                        [classes.flat]: !raised,
+                        [classes.raised]: raised
+                    },
+                    className
+                )}
                 {...others}
             />
         );
