@@ -8,12 +8,22 @@ import Page from './Page';
 
 import PeerGeniusLogo from '../../components/Logo';
 
+import classNames from 'classnames';
+
 const styles = {
+    withColor: {
+		backgroundColor: 'white'
+    },
     buttons: {
         display: 'flex',
         flexDirection: 'column',
         borderRadius: 10
-    }
+    },
+    background: {
+        backgroundImage: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.6) 100%), url(assets/home_page_1st.jpg)',
+        backgroundSize: 'cover',
+        overflow: 'hidden'
+    },
 };
 
 @withStyles(styles)
@@ -30,7 +40,7 @@ export default class PageZero extends Component {
         return (
             <Page
                 page={0} currentPage={currentPage}
-                bg="white"
+                className={classNames(classes.withColor, classes.background)}
             >
                 <PeerGeniusLogo height="50%" width="50%" />
                 <Text type="button" color="rgb(1,147,172)" size="200%" weight="bold">Eliminate the Grind</Text>

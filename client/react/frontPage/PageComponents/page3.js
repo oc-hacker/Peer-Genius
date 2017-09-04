@@ -6,13 +6,20 @@ import Typography from 'material-ui/Typography';
 
 import { connect } from 'react-redux';
 
-import {Text} from '../../components';
+import { Text } from '../../components';
 import Page from './Page';
+
+import classNames from 'classnames';
 
 const styles = {
 	withColor: {
 		backgroundColor: 'rgb(1,147,172)'
 	},
+	background: {
+        backgroundImage: 'linear-gradient(to bottom, rgba(1,147,172, 0.9) 0%, rgba(1,147,172, 0.9) 100%), url(assets/home_page_4th.jpg)',
+        backgroundSize: 'cover',
+        overflow: 'hidden'
+    },
 	row: {
 		display: 'flex',
 		justifyContent: 'center'
@@ -33,7 +40,10 @@ export default class PageThree extends Component {
 				page={3} currentPage={currentPage}
 				className={classes.withColor}
 			>
-				<Text type="title">NEWBIE BENEFITS</Text>
+				<Text type="button" size='24pt' weight='bold'>The Guru</Text>
+				<div className={classes.underlinedSection} />
+				<div className={classes.pushDown}>
+                </div>
 				<div className={classes.row}>
 					<p>[Icon]</p>
 					<Text>
