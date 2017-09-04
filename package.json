@@ -5,6 +5,7 @@
   "main": "server/entry.js",
   "scripts": {
     "test": "jest",
+    "lint": "tslint -p server/tslint.json",
     "dev:server": "nodemon --exec ts-node -- ./server/entry.ts",
     "dev:client": "node client/devServerEntry",
     "dev": "npm-run-all --parallel dev:*",
@@ -116,6 +117,7 @@
     "path": "^0.12.7",
     "ts-loader": "^2.3.1",
     "ts-node": "^3.3.0",
+    "tslint": "^5.7.0",
     "typescript": "^2.4.1",
     "webpack": "^3.5.5",
     "webpack-dev-middleware": "^1.11.0",
