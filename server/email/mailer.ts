@@ -6,7 +6,7 @@ const { XOAUTH2_ACCESS_URL, XOAUTH2_HEADERS, XOAUTH2_PARAMS } = process.env;
 let transport;
 
 export function initMailer() {
-	transport = nodemailer.createTransport(<object>{
+	transport = nodemailer.createTransport({
 		service: 'Gmail',
 		auth: {
 			xoauth2: createXOAuth2Generator({
@@ -15,13 +15,13 @@ export function initMailer() {
 				customParams: JSON.parse(XOAUTH2_PARAMS || '{}')
 			})
 		}
-	});
+	} as object);
 	
 	console.log('Mailer initialized.');
 }
 
 export function send(mailOptions) {
-	transport.sendMail(mailOptions, function (error, response) {
+	transport.sendMail(mailOptions, (error, response) => {
 		if (error) {
 			console.log(error);
 		}

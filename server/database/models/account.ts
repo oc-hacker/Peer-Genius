@@ -6,20 +6,20 @@ import user from './user';
 import { ProhibitedEditError } from '../errors';
 
 export interface AccountAttributes {
-	user?: string,
-	email?: string,
-	password?: string,
-	verified?: boolean
+	user?: string;
+	email?: string;
+	password?: string;
+	verified?: boolean;
 }
 
 export interface AccountInstance extends Sequelize.Instance<AccountAttributes> {
-	createdAt: Date,
-	updatedAt: Date,
+	createdAt: Date;
+	updatedAt: Date;
 	
-	user: string,
-	email: string,
-	password: string,
-	verified: string
+	user: string;
+	email: string;
+	password: string;
+	verified: string;
 }
 
 const attributes = {
@@ -54,7 +54,7 @@ const attributes = {
 
 const blockUserEdit = (instance: AccountInstance) => {
 	if (instance.changed('user')) {
-		throw new ProhibitedEditError('Editing the user FK of accounts table is prohibited.')
+		throw new ProhibitedEditError('Editing the user FK of accounts table is prohibited.');
 	}
 };
 
@@ -70,4 +70,4 @@ model.beforeUpdate('blockUserEdit', blockUserEdit);
 model.beforeUpdate('hashPassword', hashPassword);
 model.sync();
 
-export default model
+export default model;

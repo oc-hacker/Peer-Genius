@@ -29,7 +29,7 @@ export interface SessionInstance extends Sequelize.Instance<SessionAttributes> {
 	scheduledEnd: Date;
 	startTime?: Date;
 	endTime?: Date;
-	rating?: number,
+	rating?: number;
 	comment?: string;
 }
 
@@ -87,23 +87,23 @@ const attributes = {
 		type: Sequelize.STRING,
 		allowNull: true,
 		defaultValue: null
-    },
-    course: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    assignment: {
-        type: Sequelize.STRING,
-        allowNull: false
-    }
+	},
+	course: {
+		type: Sequelize.STRING,
+		allowNull: false
+	},
+	assignment: {
+		type: Sequelize.STRING,
+		allowNull: false
+	}
 };
 
 const blockUserEdit = (instance: SessionInstance) => {
 	if (instance.changed('guru')) {
-		throw new ProhibitedEditError('Editing the guru FK of sessions table is prohibited.')
+		throw new ProhibitedEditError('Editing the guru FK of sessions table is prohibited.');
 	}
 	if (instance.changed('newbie')) {
-		throw new ProhibitedEditError('Editing the newbie FK of sessions table is prohibited.')
+		throw new ProhibitedEditError('Editing the newbie FK of sessions table is prohibited.');
 	}
 };
 

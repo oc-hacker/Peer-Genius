@@ -9,7 +9,7 @@ import * as sequelize from 'sequelize';
  * Maps user id to socket id
  */
 interface SocketRegistry {
-	[socket: string]: UserSocket
+	[socket: string]: UserSocket;
 }
 
 export const registry: SocketRegistry = {};

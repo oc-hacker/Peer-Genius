@@ -12,7 +12,7 @@ interface QueryResults extends Array<RowData> {
 }
 
 export interface AsyncConnection extends mysql.IConnection {
-	asyncQuery: (string, any?) => Promise<QueryResults>
+	asyncQuery: (query: string, values?: any) => Promise<QueryResults>;
 }
 
 type ConnectionFactory = (...args: any[]) => Promise<AsyncConnection>;
@@ -27,7 +27,7 @@ const getConnection = (pool: mysql.IPool): Promise<mysql.IConnection> => {
 			else {
 				resolve(connection);
 			}
-		})
+		});
 	});
 };
 
@@ -38,7 +38,6 @@ const adminPool = mysql.createPool({
 	password: DB_ADMIN_PASS,
 	timezone: '+00'
 });
-
 
 export const newConnection: ConnectionFactory = async (logSQL?: boolean) => {
 	const connection: mysql.IConnection = await getConnection(adminPool);
@@ -78,7 +77,7 @@ export const newConnection: ConnectionFactory = async (logSQL?: boolean) => {
 	return {
 		...connection,
 		asyncQuery
-	}
+	};
 };
 
 const slackPool = mysql.createPool({

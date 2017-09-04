@@ -2,5 +2,5 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-require('./server');
-require('./socket');
+import './server';
+import './socket';

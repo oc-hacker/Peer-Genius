@@ -6,18 +6,18 @@ import user from './user';
 import { ProhibitedEditError } from '../errors';
 
 export interface KeyAttributes {
-	user?: string,
-	verifyEmailKey?: string,
-	nextEmail?: string
+	user?: string;
+	verifyEmailKey?: string;
+	nextEmail?: string;
 }
 
 export interface KeyInstance extends Sequelize.Instance<KeyAttributes> {
-	createdAt: Date,
-	updatedAt: Date,
+	createdAt: Date;
+	updatedAt: Date;
 	
-	user: string,
-	verifyEmailKey: string,
-	nextEmail: string
+	user: string;
+	verifyEmailKey: string;
+	nextEmail: string;
 }
 
 const attributes = {
@@ -44,7 +44,7 @@ const attributes = {
 
 const blockUserEdit = (instance: KeyInstance) => {
 	if (instance.changed('user')) {
-		throw new ProhibitedEditError('Editing the user FK of keys table is prohibited.')
+		throw new ProhibitedEditError('Editing the user FK of keys table is prohibited.');
 	}
 };
 
@@ -67,4 +67,4 @@ export const uniqueRandom = async (column: string) => {
 	return key;
 };
 
-export default model
+export default model;

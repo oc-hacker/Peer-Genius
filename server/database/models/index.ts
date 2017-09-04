@@ -20,4 +20,3 @@ export { default as user } from './user';
  This database uses 'id' instead of 'uuid'. The stored string is still UUID, though.
  This database uses user's id as primary key, as opposed to account's id
  */
-

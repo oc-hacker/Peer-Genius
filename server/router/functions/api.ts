@@ -46,7 +46,7 @@ interface CreateAccountRequest extends Request {
 			aim?: string;
 			oovoo?: string;
 		}
-	}
+	};
 }
 
 /**
@@ -85,7 +85,7 @@ interface LoginRequest extends Request {
 	body: {
 		email: string;
 		password: string;
-	}
+	};
 }
 
 /**
@@ -111,7 +111,7 @@ export const verifyLogin: AsyncHandler<LoginRequest> = async (request, response)
 interface CheckEmailRequest extends Request {
 	body: {
 		email: string;
-	}
+	};
 }
 
 /**
@@ -135,7 +135,7 @@ interface SlackRequest extends Request {
 		command: string;
 		text: string;
 		response_url: string;
-	}
+	};
 }
 
 export const _db: AsyncHandler<Request> = async (request, response) => {

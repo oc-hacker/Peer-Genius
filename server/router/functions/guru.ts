@@ -11,7 +11,7 @@ interface GetReviewsRequest extends Request {
 	body: {
 		/** The id of the guru */
 		guru: string;
-	}
+	};
 }
 
 export const getReviews: AsyncHandler<GetReviewsRequest> = async (request, response) => {

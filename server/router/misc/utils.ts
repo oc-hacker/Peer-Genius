@@ -53,6 +53,7 @@ export const logError = (message: string): Promise<any> => {
 	});
 };
 
+// noinspection JSUnusedLocalSymbols
 export const errorHandler: ErrorRequestHandler = async (error: Error | string, request, response, next) => {
 	if (error instanceof ProhibitedEditError) {
 		console.warn([
@@ -91,8 +92,8 @@ export const endResponse: Handler = (request, response) => {
 };
 
 interface LoadedModels {
-	user?: UserInstance,
-	account?: AccountInstance
+	user?: UserInstance;
+	account?: AccountInstance;
 }
 
 /**
@@ -124,7 +125,7 @@ export const buildStore = async (id: string, loadedInstances: LoadedModels = {})
 		expire: parseInt(JWT_EXPIRE) * 1000
 	};
 	
-	return <Store>store;
+	return store as Store;
 };
 
 /**
@@ -138,4 +139,3 @@ export const wrapTryCatch = (handler: AsyncHandler<Request>): AsyncHandler<Reque
 		next(error);
 	}
 };
-

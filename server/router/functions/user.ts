@@ -7,16 +7,16 @@ import { AsyncHandler, VerifiedRequest } from '../../types';
 interface EditUserRequest extends VerifiedRequest {
 	body: {
 		user: {
-			id: string
-		}
-		firstName: string,
-		lastName: string,
+			id: string;
+		};
+		firstName: string;
+		lastName: string;
 		birthday: {
-			year: number,
-			month: number,
-			day: number
+			year: number;
+			month: number;
+			day: number;
 		}
-	}
+	};
 }
 
 // One function for all user editing
@@ -35,9 +35,9 @@ export const edit: AsyncHandler<EditUserRequest> = async (request, response) => 
 	if (user) {
 		await user.update(request.body);
 		await user.save({fields: userAttributes});
-		response.status(httpStatus.OK).end()
+		response.status(httpStatus.OK).end();
 	}
 	else {
-		response.status(httpStatus.BAD_REQUEST).end()
+		response.status(httpStatus.BAD_REQUEST).end();
 	}
 };

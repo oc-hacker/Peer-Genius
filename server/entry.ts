@@ -1,5 +1,5 @@
-require('babel-core/register');
-require('babel-polyfill');
+import 'babel-core/register';
+import 'babel-polyfill';
 
 // Any file imported using require will be transformed by babel
-require('./core/loader');
+import './core/loader';

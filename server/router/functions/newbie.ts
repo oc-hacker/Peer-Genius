@@ -12,7 +12,7 @@ interface ReviewSessionRequest extends VerifiedRequest {
 		session: string;
 		rating: number;
 		comment?: string;
-	}
+	};
 }
 
 export const review: AsyncHandler<ReviewSessionRequest> = async (request, response) => {

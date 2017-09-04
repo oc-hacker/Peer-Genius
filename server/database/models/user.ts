@@ -5,20 +5,20 @@ import { sequelizeAdmin as admin } from '../reference';
 import { ProhibitedEditError } from '../errors';
 
 export interface UserAttributes {
-	id?: string,
-	firstName?: string,
-	lastName?: string,
-	birthday?: Date
+	id?: string;
+	firstName?: string;
+	lastName?: string;
+	birthday?: Date;
 }
 
 export interface UserInstance extends Sequelize.Instance<UserAttributes> {
-	createdAt: Date,
-	updatedAt: Date,
+	createdAt: Date;
+	updatedAt: Date;
 	
-	id: string,
-	firstName: string,
-	lastName: string,
-	birthday: Date
+	id: string;
+	firstName: string;
+	lastName: string;
+	birthday: Date;
 }
 
 export const attributes = {
@@ -42,16 +42,16 @@ export const attributes = {
 		allowNull: true,
 		set(value) {
 			if (value.year && value.month && value.date) {
-				this.setDataValue('birthday', new Date(Date.UTC(value.year, value.month, value.date, 12))) // hour = 12 because things are weird when it's set to midnight.
+				this.setDataValue('birthday', new Date(Date.UTC(value.year, value.month, value.date, 12))); // hour = 12 because things are weird when it's set to midnight.
 			}
 			else {
-				this.setDataValue('birthday', value)
+				this.setDataValue('birthday', value);
 			}
 		}
 	}
 };
 
-export const exposedAttributes: Array<string> = without(Object.keys(attributes), 'id');
+export const exposedAttributes: string[] = without(Object.keys(attributes), 'id');
 
 const blockIdEdit = (instance: UserInstance) => {
 	if (instance.changed('id')) {
@@ -63,4 +63,4 @@ const model: Sequelize.Model<UserInstance, UserAttributes> = admin.define<UserIn
 model.beforeUpdate(blockIdEdit);
 model.sync(); // Alter when in development mode
 
-export default model
+export default model;

@@ -16,7 +16,7 @@ interface EditAccountRequest extends VerifiedRequest {
 		password: string;
 		newEmail?: string;
 		newPassword?: string;
-	}
+	};
 }
 
 export const edit: AsyncHandler<EditAccountRequest> = async (request, response) => {

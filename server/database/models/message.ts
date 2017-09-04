@@ -5,20 +5,20 @@ import user from './user';
 import { ProhibitedEditError } from '../errors';
 
 export interface MessageAttributes {
-	id?: string,
-	from?: string,
-	to?: string,
-	message?: string
+	id?: string;
+	from?: string;
+	to?: string;
+	message?: string;
 }
 
 export interface MessageInstance extends Sequelize.Instance<MessageAttributes> {
-	createdAt: Date,
-	updatedAt: Date,
+	createdAt: Date;
+	updatedAt: Date;
 	
-	id: string,
-	from: string,
-	to: string,
-	message: string
+	id: string;
+	from: string;
+	to: string;
+	message: string;
 }
 
 const attributes = {
@@ -53,7 +53,7 @@ const attributes = {
 
 const blockUserEdit = (instance: MessageInstance) => {
 	if (instance.changed('user')) {
-		throw new ProhibitedEditError('Editing the user FK of messages table is prohibited.')
+		throw new ProhibitedEditError('Editing the user FK of messages table is prohibited.');
 	}
 };
 
@@ -61,4 +61,4 @@ const model: Sequelize.Model<MessageInstance, MessageAttributes> = admin.define<
 model.beforeUpdate(blockUserEdit);
 model.sync(); // Alter when in development mode
 
-export default model
+export default model;

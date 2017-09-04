@@ -21,12 +21,12 @@ review - Newbies post here to review a session
 interface RequestSessionRequest extends VerifiedRequest {
 	body: {
 		user: {
-			id: string
-		},
-		subject: string,
-		scheduledStart: Date,
-		scheduledEnd: Date
-	}
+			id: string;
+		};
+		subject: string;
+		scheduledStart: Date;
+		scheduledEnd: Date;
+	};
 }
 
 /**
@@ -75,10 +75,10 @@ ORDER BY startTime ASC`
 interface SessionInfoRequest extends VerifiedRequest {
 	body: {
 		user: {
-			id
-		},
-		session: string
-	}
+			id;
+		};
+		session: string;
+	};
 }
 
 /**
@@ -99,14 +99,14 @@ export const info = async (request: SessionInfoRequest, response: Response) => {
 interface ReviewSessionRequest extends VerifiedRequest {
 	body: {
 		user: {
-			id: string
-		},
+			id: string;
+		};
 		/** ID of session */
-		session: string,
+		session: string;
 		/** Number between 1 and 5 (inclusive) */
-		rating: number,
-		comment?: string
-	}
+		rating: number;
+		comment?: string;
+	};
 }
 
 // Used for both initial reviews and editing reviews.

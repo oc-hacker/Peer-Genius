@@ -11,8 +11,10 @@ import apiRouter from '../router/api';
 
 const { NODE_ENV, SERVER_PORT } = process.env;
 
+type CORSCallback = (error: any, allowed?: boolean) => void;
+
 const corsOptions = {
-	origin: (origin: string, cb: (any, boolean?) => any) => {
+	origin: (origin: string, cb: CORSCallback) => {
 		// console.log(origin);
 		// If origin is null or peergenius.io, it's good.
 		if (!origin || origin === 'https://peergenius.io') {
@@ -40,7 +42,7 @@ app.use(logger);
 app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));
 
-app.get('*.js', function (request, response, next) {
+app.get('*.js', (request, response, next) => {
 	request.url += '.gz';
 	response.set('Content-Encoding', 'gzip');
 	next();

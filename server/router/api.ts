@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
 import * as functions from './functions/api';
-import { verifySessionToken } from './misc/auth';
 import { wrapTryCatch } from './misc/utils';
 import accountRouter from './account';
 import guruRouter from './guru';
