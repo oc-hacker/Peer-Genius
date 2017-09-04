@@ -4,9 +4,8 @@ import classNames from 'classnames';
 import Color from 'color';
 
 import { withStyles } from 'material-ui/styles';
-import { orange } from 'material-ui/colors';
 
-const styles = ({ palette: { primary, grey, error }, typography, spacing }) => ({
+const styles = ({ palette: { primary, grey, error, warning }, typography, spacing }) => ({
 	root: {
 		position: 'relative',
 		flexGrow: 1,
@@ -16,7 +15,7 @@ const styles = ({ palette: { primary, grey, error }, typography, spacing }) => (
 		borderWidth: 1,
 		borderRadius: spacing.unit * 2,
 		borderStyle: 'solid',
-		borderColor: new Color(primary[500]).alpha(0.6).toString(),
+		borderColor: new Color(primary[500]).alpha(0.6).string(),
 		boxSizing: 'border-box',
 		padding: spacing.unit,
 		
@@ -30,8 +29,8 @@ const styles = ({ palette: { primary, grey, error }, typography, spacing }) => (
 		boxShadow: `0 0 ${Math.round(spacing.unit / 2)}px ${error[500]}`
 	},
 	warning: {
-		borderColor: orange[500],
-		boxShadow: `0 0 ${Math.round(spacing.unit / 2)}px ${orange[500]}`
+		borderColor: warning[500],
+		boxShadow: `0 0 ${Math.round(spacing.unit / 2)}px ${warning[500]}`
 	}
 });
 

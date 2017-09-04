@@ -1,11 +1,8 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
-import { orange } from 'material-ui/colors';
-
-import { connect } from 'react-redux';
 
 import Flex from '../Flex';
 

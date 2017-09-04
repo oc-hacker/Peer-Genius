@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from 'material-ui/styles';
 import Dialog, { DialogTitle, DialogContent } from 'material-ui/Dialog';
-import Button from 'material-ui/Button';
 
 import { connect } from 'react-redux';
 
+import { Button } from '../components';
 import { ReduxForm, TextField } from '../components/form';
 
 import { logIn } from '../../redux/actions/creators/session';

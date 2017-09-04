@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import MasterRouter from './masterRouter';
 import { UnexpectedErrorDialog } from './components';
-import { muiTheme } from './theme';
+import { muiTheme } from './style';
 
 import store from '../redux/store';
 

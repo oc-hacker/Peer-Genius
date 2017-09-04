@@ -11,7 +11,6 @@ import { AccountInstance } from '../../database/models/account';
 
 import { Handler, ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { AsyncHandler, Store, VerifiedRequest } from '../../types';
-import { CommunicationInstance, communicationMethods } from '../../database/models/communication';
 
 const { JWT_EXPIRE } = process.env;
 
@@ -93,8 +92,7 @@ export const endResponse: Handler = (request, response) => {
 
 interface LoadedModels {
 	user?: UserInstance,
-	account?: AccountInstance,
-	communication?: CommunicationInstance
+	account?: AccountInstance
 }
 
 /**
@@ -105,7 +103,7 @@ interface LoadedModels {
  * @return {Promise.<Store>}
  */
 export const buildStore = async (id: string, loadedInstances: LoadedModels = {}): Promise<Store> => {
-	let { user, account, communication } = loadedInstances;
+	let { user, account } = loadedInstances;
 	user = user || await models.user.find({
 		where: {
 			id
@@ -116,17 +114,11 @@ export const buildStore = async (id: string, loadedInstances: LoadedModels = {})
 			user: id
 		}
 	});
-	communication = communication || await models.communication.find({
-		where: {
-			user: id
-		}
-	});
 	
 	let store: any = {};
 	
 	store.account = pick(account, ['email', 'verified']);
 	store.user = pick(user, userAttributes);
-	store.communication = pick(communication, communicationMethods);
 	store.session = {
 		jwt: createSessionToken(id),
 		expire: parseInt(JWT_EXPIRE) * 1000

@@ -1,14 +1,11 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
-import { orange } from 'material-ui/colors';
 import { FormHelperText } from 'material-ui/Form';
 
-import { connect } from 'react-redux';
-
-const styles = ({ palette: { error } }) => ({
+const styles = ({ palette: { error, warning } }) => ({
 	root: {
 		position: 'absolute',
 		top: '100%',
@@ -18,7 +15,7 @@ const styles = ({ palette: { error } }) => ({
 		color: error[500]
 	},
 	warning: {
-		color: orange[500]
+		color: warning[500]
 	}
 });
 

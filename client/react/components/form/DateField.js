@@ -185,7 +185,11 @@ class DateFieldComponent extends Component {
 								</MenuItem>
 							) : <div />}
 							{months.map(m => (
-								<MenuItem selected={m === month} onClick={() => this._set('month', m)}>
+								<MenuItem
+									key={m}
+									selected={m === month}
+									onClick={() => this._set('month', m)}
+								>
 									{m + 1}
 								</MenuItem>
 							))}
@@ -208,7 +212,11 @@ class DateFieldComponent extends Component {
 								</MenuItem>
 							) : <div />}
 							{dates.map(d => (
-								<MenuItem selected={d === date} onClick={() => this._set('date', d)}>
+								<MenuItem
+									key={d}
+									selected={d === date}
+									onClick={() => this._set('date', d)}
+								>
 									{d}
 								</MenuItem>
 							))}
@@ -231,7 +239,11 @@ class DateFieldComponent extends Component {
 								</MenuItem>
 							) : <div />}
 							{years.map(y => (
-								<MenuItem selected={y === year} onClick={() => this._set('year', y)}>
+								<MenuItem
+									key={y}
+									selected={y === year}
+									onClick={() => this._set('year', y)}
+								>
 									{y}
 								</MenuItem>
 							))}
