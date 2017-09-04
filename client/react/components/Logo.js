@@ -4,12 +4,15 @@ const PeerGeniusLogo = props => (
 	<svg version="1.0"
 		xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1604.000000 1492.000000"
-        height={props.height ? props.height : '24pt'} width={props.width ? props.width : '24pt'}
+        height={props.height ? props.height : '38pt'} width={props.width ? props.width : '38pt'}
         preserveAspectRatio="xMidYMid meet"
         fill="rgb(1,147,172)"
+		style={props.style}
     >
         <g transform="translate(0.000000,1492.000000) scale(0.100000,-0.100000)"
-            fill={props.fill ? props.fill : 'rgb(1,147,172)'} stroke="none">
+            fill={props.fill ? props.fill : 'rgb(1,147,172)'} stroke="none"
+			{...props}
+			>
             <path d="M7945 14306 c-109 -18 -173 -39 -286 -98 -190 -98 -331 -248 -443
 				-468 -63 -125 -142 -346 -167 -469 l-13 -61 -128 0 -128 0 0 -425 0 -425 -364
 				0 -365 0 -6 43 c-3 23 -5 215 -3 426 l3 383 -120 -7 c-204 -11 -374 -52 -542

@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 
-import { Text } from '../../components';
+import { Text, Spacer } from '../../components';
 import Page from './Page';
+
+import PeerGeniusLogo from '../../components/Logo';
 
 const styles = {
 	buttons: {
 		display: 'flex',
-		flexDirection: 'column'
+		flexDirection: 'column',
+		borderRadius: 10
 	}
 };
 
@@ -30,21 +33,24 @@ export default class PageZero extends Component {
 				page={0} currentPage={currentPage}
 				bg="white"
 			>
-				<img src='icon.png' alt="Peer Genius" />
-				<Text type="title">Peer Genius</Text>
-				<Text type="subheading">Eliminate the Grind</Text>
+				<PeerGeniusLogo height="50%" width="50%" />
+				<Text type='button' color='rgb(1,147,172)' size='200%' weight='bold' >Eliminate the Grind</Text>
+				<Spacer height='3%' />
 				<div className={classes.buttons}>
 					<Button
-						raised color="primary"
-						onClick={createAccount}
-					>
-						Create Account
-					</Button>
-					<Button
-						raised color="primary"
+						raised color='primary'
 						onClick={openLogIn}
+						style={ styles.buttons }
 					>
 						Log In
+					</Button>
+					<Spacer height='20px' />
+					<Button
+						raised color='transparent'
+						onClick={ createAccount }
+						style={ styles.buttons }
+					>
+						Create Account
 					</Button>
 				</div>
 			</Page>
