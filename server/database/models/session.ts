@@ -87,7 +87,15 @@ const attributes = {
 		type: Sequelize.STRING,
 		allowNull: true,
 		defaultValue: null
-	}
+    },
+    course: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    assignment: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
 };
 
 const blockUserEdit = (instance: SessionInstance) => {
