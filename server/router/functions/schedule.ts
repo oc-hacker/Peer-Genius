@@ -1,7 +1,6 @@
 import * as httpStatus from 'http-status-codes';
 
 import * as models from '../../database/models';
-import { communicationMethods } from '../../database/models/communication';
 
 import { Request } from 'express';
 import { AsyncHandler, VerifiedRequest } from '../../types';
