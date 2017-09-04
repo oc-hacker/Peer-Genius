@@ -12,26 +12,26 @@ import { socketConnect } from './socket';
  * @param json
  */
 export const handleStore = json => async dispatch => {
-	let { session: { jwt, expire }, user: { birthday, ...user }, ...otherData } = json;
-	await cookies.set('sessionJWT', jwt, { expires: new Date(Date.now() + expire) });
-	
-	// Process user - server stores birthday in UTC, without timezone conversion, so the UTC values are the actually correct values.
-	birthday = new Date(birthday);
-	user = {
-		...user,
-		birthdate: new Date(birthday.getUTCFullYear(), birthday.getUTCMonth(), birthday.getUTCDate())
-	};
-	
-	dispatch({
-		type: types.INIT_USER,
-		payload: {
-			user,
-			...otherData
-		}
-	});
-	
-	// Connect sockets
-	dispatch(socketConnect(jwt))
+    let { session: { jwt, expire }, user: { birthday, ...user }, ...otherData } = json;
+    await cookies.set('sessionJWT', jwt, { expires: new Date(Date.now() + expire) });
+
+    // Process user - server stores birthday in UTC, without timezone conversion, so the UTC values are the actually correct values.
+    birthday = new Date(birthday);
+    user = {
+        ...user,
+        birthdate: new Date(birthday.getUTCFullYear(), birthday.getUTCMonth(), birthday.getUTCDate())
+    };
+
+    dispatch({
+        type: types.INIT_USER,
+        payload: {
+            user,
+            ...otherData
+        }
+    });
+
+    // Connect sockets
+    dispatch(socketConnect(jwt));
 };
 
 /**
@@ -40,18 +40,18 @@ export const handleStore = json => async dispatch => {
  * @param response
  */
 export const handleError = response => async dispatch => {
-	if (response.status === httpStatus.UNAUTHORIZED) {
-		let json = await response.json();
-		if (json.reason === 'Invalid session') {
-			// JWT is invalid. Delete it and redirect to front page.
-			cookies.remove('sessionJWT');
-			dispatch(push('/'));
-		}
-		else {
-			dispatch({ type: types.UNEXPECTED_ERROR });
-		}
-	}
-	else {
-		dispatch({ type: types.UNEXPECTED_ERROR });
-	}
+    if (response.status === httpStatus.UNAUTHORIZED) {
+        let json = await response.json();
+        if (json.reason === 'Invalid session') {
+            // JWT is invalid. Delete it and redirect to front page.
+            cookies.remove('sessionJWT');
+            dispatch(push('/'));
+        }
+        else {
+            dispatch({ type: types.UNEXPECTED_ERROR });
+        }
+    }
+    else {
+        dispatch({ type: types.UNEXPECTED_ERROR });
+    }
 };

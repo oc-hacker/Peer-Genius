@@ -5,7 +5,7 @@ import { push } from 'react-router-redux';
 import { SubmissionError } from 'redux-form';
 
 import types from '../types';
-import { post } from '../request';
+import { post } from '../network';
 import { handleStore } from './utils';
 
 

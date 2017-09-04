@@ -5,66 +5,47 @@ import { UserInstance } from '../database/models/user';
 import { UserSocket } from '../types';
 import * as sequelize from 'sequelize';
 
-/**
- * Maps user id to socket id
- */
-interface SocketRegistry {
-	[socket: string]: UserSocket;
+interface Registry<V> {
+	[key: string]: V;
 }
 
-export const registry: SocketRegistry = {};
+export const registry: Registry<UserSocket> = {};
 
-const subjectOrCondition = Object.values(subjects).map(subject => ({ [subject]: true }));
+export const onlineUsers: Registry<UserInstance> = {};
+
+// const subjectOrCondition = Object.values(subjects).map(subject => ({ [subject]: true }));
 
 const attach = async (socket: UserSocket, user: string) => {
-	// Save the socket id to registry
+	console.log('User', user, 'connected.');
+	const userInstance = await models.user.find({
+		where: {
+			id: user
+		},
+		attributes: [
+			'id',
+			[sequelize.fn('CONCAT', sequelize.col('firstName'), ' ', sequelize.col('lastName')), 'name'] // CONCAT(`firstName`, ' ', `lastName`)
+		]
+	});
+	
+	// Save the socket id to registry. Delete registry entries on disconnect.
 	socket.user = user;
 	registry[user] = socket;
-	console.log('User', user, 'connected.');
-
+	onlineUsers[user] = userInstance;
+	
 	socket.on('disconnect', () => {
-		delete registry[user];
 		console.log('User', user, 'disconnected.');
+		delete registry[user];
+		delete onlineUsers[user];
 	});
-
-	const getOnlineUsers = async () => {
-		let startTime = Date.now();
-		let onlineGurus = await models.guru.all({
-			where: {
-				user: {
-					$in: Object.values(socket.nsp.sockets) // Get all sockets
-						.map((socket: UserSocket) => socket.user) // Get all user ids
-						.filter(user => user) // Ensure that the values are not null
-				},
-				$or: subjectOrCondition
-			} as any // TODO Sequelize TypeScript does not allow nested where attributes?
-		}).then(gurus =>
-			Promise.all(
-				gurus.map(guru => models.user.find({
-					where: { id: guru.user },
-					attributes: [
-						[sequelize.fn(
-							'CONCAT',
-							sequelize.col('firstName'), ' ', sequelize.col('lastName')
-						), 'name']
-					]
-				}))
-			)
-		);
-
-		let endTime = Date.now();
-
-		// TODO is this the best way to find all online users?
-		console.log(`[Performance Monitor] Online users list compiled in ${endTime - startTime}ms`);
-		return {
-			onlineGurus
-		};
-	};
-
-	socket.broadcast.emit('update_online_users', await getOnlineUsers());
-
+	
+	// Send information about the users currently online
+	socket.emit('update_online_users', onlineUsers);
+	
+	// Broadcast that a user connected. Boradcast that a user disconnected on disconnect.
+	socket.broadcast.emit('user_connect', userInstance);
+	
 	socket.on('disconnect', async () => {
-		socket.broadcast.emit('update_online_users', await getOnlineUsers());
+		socket.broadcast.emit('user_disconnect', userInstance);
 	});
 };
 

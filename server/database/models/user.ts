@@ -51,7 +51,7 @@ export const attributes = {
 	}
 };
 
-export const exposedAttributes: string[] = without(Object.keys(attributes), 'id');
+export const exposedAttributes: string[] = Object.keys(attributes);
 
 const blockIdEdit = (instance: UserInstance) => {
 	if (instance.changed('id')) {

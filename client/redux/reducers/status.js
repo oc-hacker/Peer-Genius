@@ -1,7 +1,7 @@
 import deepmerge from 'deepmerge';
 
 import types from '../actions/types';
-import { status } from '../actions/request';
+import { status } from '../actions/network';
 
 const defaultState = {
 	init: status.INITIAL

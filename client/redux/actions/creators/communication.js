@@ -1,5 +1,5 @@
 // Actions related to user's communication settings go here.
-import { post } from '../request';
+import { post } from '../network';
 import types from '../types';
 import { handleError } from './utils';
 

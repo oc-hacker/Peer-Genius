@@ -1,5 +1,4 @@
 import * as sio from 'socket.io';
-import Socket = SocketIO.Socket;
 import * as jwt from 'jsonwebtoken';
 
 import server from './server';

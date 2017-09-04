@@ -3,7 +3,7 @@ import httpStatus from 'http-status-codes';
 import { SubmissionError } from 'redux-form';
 
 import types from '../types';
-import { post } from '../request';
+import { post } from '../network';
 import { handleError } from './utils';
 
 export const editEmail = values => async dispatch => {

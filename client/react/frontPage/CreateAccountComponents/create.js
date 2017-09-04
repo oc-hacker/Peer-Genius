@@ -15,7 +15,7 @@ import { Button, CommunicationFields, Spacer, Text } from '../../components';
 import { ReduxForm } from '../../components/form';
 import InfoFields, { infoFieldNames } from './info';
 
-import { post } from '../../../redux/actions/request';
+import { post } from '../../../redux/actions/network';
 import { createAccount } from '../../../redux/actions/creators/session';
 import HonorCodeDialog from './honorCode';
 

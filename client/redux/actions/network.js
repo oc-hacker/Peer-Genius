@@ -1,12 +1,12 @@
 import deepmerge from 'deepmerge';
 
-const serverURL = process.env.SERVER_URL;
+import { serverURL } from '../../config';
 
 export const status = {
-	INITIAL: 'INITIAL',
-	FETCHING: 'FETCHING',
-	COMPLETE: 'COMPLETE',
-	ERROR: 'ERROR'
+    INITIAL: 'INITIAL',
+    FETCHING: 'FETCHING',
+    COMPLETE: 'COMPLETE',
+    ERROR: 'ERROR'
 };
 
 /**
@@ -16,10 +16,10 @@ export const status = {
  * @return {Promise.<*>} Server response (<b>not</b> converted to JSON)
  */
 export const get = route => {
-	if (!route.startsWith('/')) {
-		route = '/' + route;
-	}
-	return fetch(serverURL + route);
+    if (!route.startsWith('/')) {
+        route = '/' + route;
+    }
+    return fetch(serverURL + route);
 };
 
 
@@ -33,17 +33,16 @@ export const get = route => {
  * @return {Promise.<*>} Server response (<b>not</b> converted to JSON)
  */
 export const post = (route, body = undefined, fetchParams = {}) => {
-	if (!route.startsWith('/')) {
-		route = '/' + route;
-	}
-	
-	return fetch(serverURL + route, deepmerge({
-		method: 'POST',
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json'
-		},
-		body: body && JSON.stringify(body),
-		credentials: 'include'
-	}, fetchParams));
+    if (!route.startsWith('/')) {
+        route = '/' + route;
+    }
+    return fetch(serverURL + route, deepmerge({
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: body && JSON.stringify(body),
+        credentials: 'include'
+    }, fetchParams));
 };

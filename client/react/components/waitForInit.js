@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import Flex from './Flex';
 
-import { status } from '../../redux/actions/request';
+import { status } from '../../redux/actions/network';
 import { selectInitStatus } from '../../redux/selectors/status';
 
 /**

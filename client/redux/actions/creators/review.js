@@ -1,5 +1,5 @@
 import types from '../types';
-import { post } from '../request';
+import { post } from '../network';
 import { handleError, handleStore } from './utils';
 
 import httpStatus from 'http-status-codes';
