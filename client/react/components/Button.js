@@ -32,7 +32,7 @@ const styles = {
         color: props => getColor(props),
         border: props => props.border ? `1px solid ${getColor(props)}` : null,
         '&:hover': {
-            backgroundColor: fade(getColor(props, 'A200'), 0.12)
+            backgroundColor: props => fade(getColor(props, 'A200'), 0.12)
         }
     },
     raised: {
