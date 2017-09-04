@@ -43,7 +43,7 @@ export default class PageZero extends Component {
                 className={classNames(classes.withColor, classes.background)}
             >
                 <PeerGeniusLogo height="50%" width="50%" />
-                <Text type="button" color="rgb(1,147,172)" size="200%" weight="bold">Eliminate the Grind</Text>
+                <Text type="button" color="rgb(1,147,172)" size="200%" weight="bold">ELIMINATE THE GRIND</Text>
                 <Spacer height='3%' />
                 <div className={classes.buttons}>
                     <Button
