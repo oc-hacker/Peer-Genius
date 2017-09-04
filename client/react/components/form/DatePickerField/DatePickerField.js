@@ -7,8 +7,8 @@ import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
 
-import ClickInput from './ClickInput';
-import DatePickerDialog from './DatePickerFieldComponents/DatePickerDialog';
+import ClickInput from '../ClickInput';
+import DatePickerDialog from './DatePickerDialog';
 
 const styles = {};
 

@@ -11,7 +11,7 @@ import { ReduxForm, TextField } from '../components/form';
 
 import { logIn } from '../../redux/actions/creators/session';
 
-const styles = ({ palette: { error, getContrastText } }) => ({
+const styles = ({ palette: { danger, getContrastText } }) => ({
 	buttons: {
 		display: 'flex',
 		flexDirection: 'row',
@@ -19,11 +19,11 @@ const styles = ({ palette: { error, getContrastText } }) => ({
 		justifyContent: 'space-between'
 	},
 	cancel: {
-		backgroundColor: error[500],
-		color: getContrastText(error[500]),
+		backgroundColor: danger[500],
+		color: getContrastText(danger[500]),
 		'&:hover': {
-			backgroundColor: error[700],
-			color: getContrastText(error[700])
+			backgroundColor: danger[700],
+			color: getContrastText(danger[700])
 		}
 	}
 });
