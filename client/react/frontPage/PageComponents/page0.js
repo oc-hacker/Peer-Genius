@@ -20,6 +20,7 @@ const styles = {
     },
     button: {
         borderRadius: 10,
+        borderColor: 'rgba(249,202,120, 0.9)'
     },
     background: {
         backgroundImage: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.6) 100%), url(assets/home_page_1st.jpg)',
@@ -57,7 +58,7 @@ export default class PageZero extends Component {
                     </Button>
                     <Spacer height="20px" />
                     <Button
-                        raised color="transparent"
+                        raised color="rgba(249,202,120, 0.9)"
                         onClick={createAccount}
                         className={classes.button}
                     >

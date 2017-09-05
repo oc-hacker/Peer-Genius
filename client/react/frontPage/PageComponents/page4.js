@@ -59,7 +59,7 @@ export default class PageFour extends Component {
                 <div className={classes.buttons}>
                     <Button
                         raised
-                        color="primary"
+                        color="rgba(249,202,120, 0.9)"
                         onClick={createAccount}
                         style={styles.button}
                     >
