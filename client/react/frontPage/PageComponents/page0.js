@@ -54,7 +54,7 @@ export default class PageZero extends Component {
                         onClick={openLogIn}
                         className={classes.button}
                     >
-                        Log In
+                        <Text type="button" weight='bold'>Log In</Text>
                     </Button>
                     <Spacer height="20px" />
                     <Button
@@ -62,7 +62,7 @@ export default class PageZero extends Component {
                         onClick={createAccount}
                         className={classes.button}
                     >
-                        Create Account
+                        <Text type="button" weight='bold'>Create Account</Text>
                     </Button>
                 </div>
             </Page>
