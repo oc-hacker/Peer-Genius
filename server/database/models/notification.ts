@@ -12,8 +12,8 @@ export interface NotificationAttributes {
 export interface NotificationInstance extends Sequelize.Instance<NotificationAttributes> {
 	createdAt: Date;
 	updatedAt: Date;
-
-    id?: string;
+	
+	id?: string;
 	notification?: string;
 }
 
