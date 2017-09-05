@@ -112,7 +112,7 @@ export interface GuruAttributes {
 export interface GuruInstance extends Sequelize.Instance<GuruAttributes> {
 	createdAt: Date;
 	updatedAt: Date;
-
+	
 	user: string;
 	'english:americanLiterature': boolean;
 	'english:britishLiterature': boolean;
@@ -340,6 +340,8 @@ const blockUserEdit = (instance: GuruInstance) => {
 
 const model: Sequelize.Model<GuruInstance, GuruAttributes> = admin.define('gurus', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync(); // Alter when in development mode
 
+user.hasOne(model, { foreignKey: 'user' });
+
+model.sync();
 export default model;

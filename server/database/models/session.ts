@@ -109,6 +109,15 @@ const blockUserEdit = (instance: SessionInstance) => {
 
 const model: Sequelize.Model<SessionInstance, SessionAttributes> = admin.define<SessionInstance, SessionAttributes>('sessions', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync(); // Alter when in development mode
 
+user.hasMany(model, {
+	as: 'guruSession',
+	foreignKey: 'user'
+});
+user.hasMany(model, {
+	as: 'newbieSession',
+	foreignKey: 'user'
+});
+
+model.sync();
 export default model;

@@ -50,7 +50,6 @@ const blockUserEdit = (instance: KeyInstance) => {
 
 const model: Sequelize.Model<KeyInstance, KeyAttributes> = admin.define<KeyInstance, KeyAttributes>('keys', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync(); // Alter when in development mode
 
 // Extra utility methods
 /**
@@ -67,4 +66,7 @@ export const uniqueRandom = async (column: string) => {
 	return key;
 };
 
+user.hasOne(model, { foreignKey: 'user' });
+
+model.sync();
 export default model;

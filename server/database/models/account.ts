@@ -68,6 +68,8 @@ const model: Sequelize.Model<AccountInstance, AccountAttributes> = admin.define<
 model.beforeCreate(hashPassword);
 model.beforeUpdate('blockUserEdit', blockUserEdit);
 model.beforeUpdate('hashPassword', hashPassword);
-model.sync();
 
+user.hasOne(model, { foreignKey: 'user' });
+
+model.sync();
 export default model;
