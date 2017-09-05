@@ -13,7 +13,7 @@ export const registry: Registry<UserSocket> = {};
 
 export const onlineUsers: Registry<UserInstance> = {};
 
-// const subjectOrCondition = Object.values(subjects).map(subject => ({ [subject]: true }));
+const guruCondition = subjects.map(subject => `\`guru\`.\`${subject}\``).join(' OR ');
 
 const attach = async (socket: UserSocket, user: string) => {
 	console.log('User', user, 'connected.');
@@ -21,10 +21,15 @@ const attach = async (socket: UserSocket, user: string) => {
 		where: {
 			id: user
 		},
+		include: [{
+			model: models.guru,
+			attributes: []
+		}],
 		attributes: [
 			'id',
-			[sequelize.fn('CONCAT', sequelize.col('firstName'), ' ', sequelize.col('lastName')), 'name'] // CONCAT(`firstName`, ' ', `lastName`)
-		]
+			[sequelize.fn('CONCAT', sequelize.col('firstName'), ' ', sequelize.col('lastName')), 'name'], // CONCAT(`firstName`, ' ', `lastName`)
+			[sequelize.literal(guruCondition), 'isGuru'] // subject1 OR subject2 OR ... AS isGuru
+		],
 	});
 	
 	// Save the socket id to registry. Delete registry entries on disconnect.
