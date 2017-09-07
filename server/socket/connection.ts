@@ -9,7 +9,11 @@ interface Registry<V> {
 	[key: string]: V;
 }
 
-export const registry: Registry<UserSocket> = {};
+/**
+ * Maps user id to a list of sockets (their ids) that the user has open.
+ * @type {{}}
+ */
+export const registry: Registry<UserSocket[]> = {};
 
 export const onlineUsers: Registry<UserInstance> = {};
 
@@ -32,26 +36,28 @@ const attach = async (socket: UserSocket, user: string) => {
 		],
 	});
 	
-	// Save the socket id to registry. Delete registry entries on disconnect.
+	// Save the socket id to registry.
 	socket.user = user;
-	registry[user] = socket;
+	registry[user] = [...(registry[user] || []), socket];
 	onlineUsers[user] = userInstance;
+	// Broadcast that a user connected.
+	socket.broadcast.emit('user_connect', userInstance);
 	
 	socket.on('disconnect', () => {
 		console.log('User', user, 'disconnected.');
-		delete registry[user];
-		delete onlineUsers[user];
+		// Delete registry entry when user fully disconnects
+		registry[user] = registry[user].filter(userSocket => userSocket.id !== socket.id);
+		// Check if user is completely disconnected.
+		if (registry[user].length === 0) {
+			delete onlineUsers[user];
+			// Broadcast that a user disconnected.
+			socket.broadcast.emit('user_disconnect', userInstance);
+		}
 	});
 	
 	// Send information about the users currently online
 	socket.emit('update_online_users', onlineUsers);
 	
-	// Broadcast that a user connected. Boradcast that a user disconnected on disconnect.
-	socket.broadcast.emit('user_connect', userInstance);
-	
-	socket.on('disconnect', async () => {
-		socket.broadcast.emit('user_disconnect', userInstance);
-	});
 };
 
 export default { attach };
