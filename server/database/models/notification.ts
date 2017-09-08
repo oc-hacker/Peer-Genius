@@ -6,15 +6,15 @@ import { ProhibitedEditError } from '../errors';
 
 export interface NotificationAttributes {
 	id?: string;
-	notification?: string;
+	message?: string;
 }
 
 export interface NotificationInstance extends Sequelize.Instance<NotificationAttributes> {
 	createdAt: Date;
 	updatedAt: Date;
-	
+
 	id?: string;
-	notification?: string;
+	message?: string;
 }
 
 const attributes = {
