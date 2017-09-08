@@ -10,11 +10,13 @@ interface Registry<V> {
 }
 
 /**
- * Maps user id to a list of sockets (their ids) that the user has open.
- * @type {{}}
+ * Maps user id to a list of sockets that the user has open.
  */
-export const registry: Registry<UserSocket[]> = {};
+export const socketRegistry: Registry<UserSocket[]> = {};
 
+/**
+ * Maps the user id to user sequelize instance. This registry only maintains record of the users currently online. Once a user is offline the corresponding record will be deleted.
+ */
 export const onlineUsers: Registry<UserInstance> = {};
 
 const guruCondition = subjects.map(subject => `\`guru\`.\`${subject}\``).join(' OR ');
@@ -38,19 +40,19 @@ const attach = async (socket: UserSocket, user: string) => {
 	
 	// Save the socket id to registry.
 	socket.user = user;
-	registry[user] = [...(registry[user] || []), socket];
+	socketRegistry[user] = [...(socketRegistry[user] || []), socket];
 	onlineUsers[user] = userInstance;
 	// Broadcast that a user connected.
 	socket.broadcast.emit('user_connect', userInstance);
 	
 	socket.on('disconnect', () => {
 		console.log('User', user, 'disconnected.');
-		// Delete registry entry when user fully disconnects
-		registry[user] = registry[user].filter(userSocket => userSocket.id !== socket.id);
+		// Remove the registry entry
+		socketRegistry[user] = socketRegistry[user].filter(userSocket => userSocket.id !== socket.id);
+		
 		// Check if user is completely disconnected.
-		if (registry[user].length === 0) {
+		if (socketRegistry[user].length === 0) {
 			delete onlineUsers[user];
-			// Broadcast that a user disconnected.
 			socket.broadcast.emit('user_disconnect', userInstance);
 		}
 	});
