@@ -7,8 +7,6 @@ import { slackConnection, newConnection } from '../../database/reference';
 
 import message, { MessageInstance } from '../../database/models/message';
 
-import Sequelize from 'sequelize';
-
 interface GetMessagesRequest extends VerifiedRequest {
     body: {
         user: {
