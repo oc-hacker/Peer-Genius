@@ -4,9 +4,18 @@ import { subjects } from '../database/models/guru';
 import { UserInstance } from '../database/models/user';
 import { UserSocket } from '../types';
 import * as sequelize from 'sequelize';
+import sendMessage from './chat';
 
 interface Registry<V> {
 	[key: string]: V;
+}
+
+/**
+ * The object for messages.
+ */
+export interface Message {
+    to: string,
+    message: string
 }
 
 /**
@@ -37,7 +46,9 @@ const attach = async (socket: UserSocket, user: string) => {
 			[sequelize.literal(guruCondition), 'isGuru'] // subject1 OR subject2 OR ... AS isGuru
 		],
 	});
-	
+    //join a room with the user's UUID
+    socket.join(user);
+
 	// Save the socket id to registry.
 	socket.user = user;
 	socketRegistry[user] = [...(socketRegistry[user] || []), socket];
@@ -55,7 +66,10 @@ const attach = async (socket: UserSocket, user: string) => {
 			delete onlineUsers[user];
 			socket.broadcast.emit('user_disconnect', userInstance);
 		}
-	});
+    });
+
+    //handle sending messages
+    socket.on('sendMessage', async (data: Message) => await sendMessage(data, user, socket));
 	
 	// Send information about the users currently online
 	socket.emit('update_online_users', onlineUsers);
