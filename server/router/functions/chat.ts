@@ -12,7 +12,7 @@ interface GetMessagesRequest extends VerifiedRequest {
         user: {
             id: string;
         };
-        participant: string,
+        participant: string;
         indexStart: number
     }
 }
