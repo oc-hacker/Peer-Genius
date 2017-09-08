@@ -2,8 +2,8 @@ import notification from '../database/models/notification';
 
 // Notification interface
 interface Notification {
-    to: string;
-    message: string;
+	to: string;
+	message: string;
 }
 
 /**
@@ -13,15 +13,15 @@ interface Notification {
  * @param {SocketIO.Socket} socket the socket object
  */
 export const sendNotification = async (data: Notification, id: string, socket: SocketIO.Socket) => {
-    let newNotif = {
-        to: data.to,
-        message: data.message,
-        createdAt: new Date()
-    };
-
-    //save the message to DB
-    await notification.upsert(newNotif);
-
-    //send the message to the recipient
-    socket.broadcast.to(data.to).emit('receiveNotification', newNotif);
+	let newNotif = {
+		to: data.to,
+		message: data.message,
+		createdAt: new Date()
+	};
+	
+	//save the message to DB
+	await notification.upsert(newNotif);
+	
+	//send the message to the recipient
+	socket.broadcast.to(data.to).emit('receiveNotification', newNotif);
 };

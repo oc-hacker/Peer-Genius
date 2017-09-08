@@ -4,7 +4,7 @@ import { subjects } from '../database/models/guru';
 import { UserInstance } from '../database/models/user';
 import { UserSocket } from '../types';
 import * as sequelize from 'sequelize';
-import sendMessage from './chat';
+import { sendMessage } from './chat';
 
 interface Registry<V> {
 	[key: string]: V;
@@ -14,8 +14,8 @@ interface Registry<V> {
  * The object for messages.
  */
 export interface Message {
-    to: string;
-    message: string;
+	to: string;
+	message: string;
 }
 
 /**
@@ -48,32 +48,32 @@ const attach = async (socket: UserSocket, user: string) => {
 	});
 	//join a room with the user's UUID
 	socket.join(user);
-
+	
 	// Save the socket id to registry.
 	socket.user = user;
 	socketRegistry[user] = [...(socketRegistry[user] || []), socket];
 	onlineUsers[user] = userInstance;
 	// Broadcast that a user connected.
 	socket.broadcast.emit('user_connect', userInstance);
-
+	
 	socket.on('disconnect', () => {
 		console.log('User', user, 'disconnected.');
 		// Remove the registry entry
 		socketRegistry[user] = socketRegistry[user].filter(userSocket => userSocket.id !== socket.id);
-
+		
 		// Check if user is completely disconnected.
 		if (socketRegistry[user].length === 0) {
 			delete onlineUsers[user];
 			socket.broadcast.emit('user_disconnect', userInstance);
 		}
 	});
-
+	
 	//handle sending messages
 	socket.on('sendMessage', async (data: Message) => await sendMessage(data, user, socket));
-
+	
 	// Send information about the users currently online
 	socket.emit('update_online_users', onlineUsers);
-
+	
 };
 
 export default { attach };

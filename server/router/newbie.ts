@@ -8,7 +8,6 @@ const router = Router();
 // Reminder: remember to use wrapTryCatch to enable express error handling on promise rejection errors!
 
 router.use('/', verifySessionToken);
-
 router.post('/review', wrapTryCatch(functions.review));
 
 export default router;

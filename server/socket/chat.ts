@@ -8,18 +8,18 @@ import { Message } from './connection';
  * @param {SocketIO.Socket} socket the socket object (so we can call emit() on it)
  */
 export const sendMessage = async (data: Message, id: string, socket: SocketIO.Socket) => {
-    let newMsg = {
-        from: id,
-        to: data.to,
-        message: data.message,
-        createdAt: new Date()
-    };
-
-    //save the message to DB
-    await message.upsert(newMsg);
-
-    //send the message to the recipient
-    socket.broadcast.to(data.to).emit('receiveMessage', newMsg);
+	let newMsg = {
+		from: id,
+		to: data.to,
+		message: data.message,
+		createdAt: new Date()
+	};
+	
+	//save the message to DB
+	await message.upsert(newMsg);
+	
+	//send the message to the recipient
+	socket.broadcast.to(data.to).emit('receiveMessage', newMsg);
 };
 
 export default { sendMessage };

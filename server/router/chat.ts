@@ -10,6 +10,6 @@ const router = Router();
 router.use('/', verifySessionToken);
 
 router.post('/getMessages', wrapTryCatch(functions.getMessages));
-router.post('/getConversations', wrapTryCatch(functions.getConversations);
+router.post('/getConversations', wrapTryCatch(functions.getConversations));
 
 export default router;
