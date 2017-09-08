@@ -46,8 +46,8 @@ const attach = async (socket: UserSocket, user: string) => {
 			[sequelize.literal(guruCondition), 'isGuru'] // subject1 OR subject2 OR ... AS isGuru
 		],
 	});
-    //join a room with the user's UUID
-    socket.join(user);
+	//join a room with the user's UUID
+	socket.join(user);
 
 	// Save the socket id to registry.
 	socket.user = user;
@@ -66,10 +66,10 @@ const attach = async (socket: UserSocket, user: string) => {
 			delete onlineUsers[user];
 			socket.broadcast.emit('user_disconnect', userInstance);
 		}
-    });
+	});
 
-    //handle sending messages
-    socket.on('sendMessage', async (data: Message) => await sendMessage(data, user, socket));
+	//handle sending messages
+	socket.on('sendMessage', async (data: Message) => await sendMessage(data, user, socket));
 
 	// Send information about the users currently online
 	socket.emit('update_online_users', onlineUsers);
