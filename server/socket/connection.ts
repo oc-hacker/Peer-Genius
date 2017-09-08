@@ -70,7 +70,7 @@ const attach = async (socket: UserSocket, user: string) => {
 
     //handle sending messages
     socket.on('sendMessage', async (data: Message) => await sendMessage(data, user, socket));
-	
+
 	// Send information about the users currently online
 	socket.emit('update_online_users', onlineUsers);
 	
