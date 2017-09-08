@@ -14,8 +14,8 @@ interface Registry<V> {
  * The object for messages.
  */
 export interface Message {
-    to: string,
-    message: string
+    to: string;
+    message: string;
 }
 
 /**
@@ -55,12 +55,12 @@ const attach = async (socket: UserSocket, user: string) => {
 	onlineUsers[user] = userInstance;
 	// Broadcast that a user connected.
 	socket.broadcast.emit('user_connect', userInstance);
-	
+
 	socket.on('disconnect', () => {
 		console.log('User', user, 'disconnected.');
 		// Remove the registry entry
 		socketRegistry[user] = socketRegistry[user].filter(userSocket => userSocket.id !== socket.id);
-		
+
 		// Check if user is completely disconnected.
 		if (socketRegistry[user].length === 0) {
 			delete onlineUsers[user];
@@ -73,7 +73,7 @@ const attach = async (socket: UserSocket, user: string) => {
 
 	// Send information about the users currently online
 	socket.emit('update_online_users', onlineUsers);
-	
+
 };
 
 export default { attach };
