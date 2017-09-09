@@ -21,7 +21,7 @@ const styles = {
         width: 100,
         marginTop: 20,
         height: 1,
-        backgroundColor: '7FB8BF',
+        backgroundColor: '#7FB8BF',
         marginBottom: 30
     },
     profileCircle: {
@@ -75,7 +75,7 @@ const styles = {
         paddingTop: 50
     },
     blueBackground: {
-        backgroundColor: '7FB8BF'
+        backgroundColor: '#7FB8BF'
     }
 };
 
@@ -91,7 +91,7 @@ export default class AboutUs extends React.Component {
                 </div>
                 <div>
                     <div>
-                        <Text type='display1' color='7FB8BF' className={classNames(classes.centerText, classes.topPaddingText)}>MEET THE TEAM</Text>
+                        <Text type='display1' color='#7FB8BF' className={classNames(classes.centerText, classes.topPaddingText)}>MEET THE TEAM</Text>
                         <div className={classNames(classes.line, classes.centerDiv)} />
                     </div>
                     <div className={classNames(classes.centerDiv, classes.middleTiles)}>
@@ -113,7 +113,7 @@ export default class AboutUs extends React.Component {
                         </div>
                     </div>
                     <div>
-                        <Text type='display1' color='7FB8BF' className={classNames(classes.centerText, classes.topPaddingText)}>SUMMARY OF HOW WE GOT INVOLVED</Text>
+                        <Text type='display1' color='#7FB8BF' className={classNames(classes.centerText, classes.topPaddingText)}>SUMMARY OF HOW WE GOT INVOLVED</Text>
                         <div className={classNames(classes.line, classes.centerDiv)} />
                     </div>
                     <div>
