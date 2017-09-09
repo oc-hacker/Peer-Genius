@@ -21,7 +21,11 @@ export const logIn = credentials => async dispatch => {
     let json = await response.json();
 
     dispatch(handleStore(json));
-    dispatch(push('/home'));
+    if (json.isGuru){
+      dispatch(push('/guru'));
+    } else {
+      dispatch(push('/newbie'));
+    }
   }
   else if (response.status === httpStatus.UNAUTHORIZED) {
     // Throw login error. Let redux form handle error display.
