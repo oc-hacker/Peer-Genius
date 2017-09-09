@@ -34,7 +34,7 @@ const styles = ({ palette: { grey }, spacing }) => ({
         boxSizing: 'border-box'
     },
     aboutUs: {
-        marginTop: 10,
+        marginTop: 15,
         textDecoration: 'none'
     }
 });
@@ -55,7 +55,7 @@ class GuestAppBar extends Component {
                 <PeerGeniusLogo fill={color} />
                 <Flex grow={2} />
                 <a href='/aboutUs' className={classes.aboutUs}>
-                    <Text type='title' color={color}>
+                    <Text type='subheading' color={color}>
                         About Us
                     </Text>
                 </a>

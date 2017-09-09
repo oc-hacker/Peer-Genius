@@ -21,13 +21,13 @@ const styles = ({ palette: { primary, getContrastText }, spacing }) => ({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		boxSizing: 'border-box',
-		padding: `${spacing.unit}px ${spacing.unit * 2}px`
+		boxSizing: 'border-box'
 	},
 	logo: {
 		width: 40,
 		height: '100%',
-		cursor: 'pointer'
+		cursor: 'pointer',
+		marginLeft: 90
 	},
 	appBarText: {
 		color: getContrastText(primary[500]),
@@ -54,10 +54,7 @@ const UserAppBar =
 							<Text type="title" noSelect className={classes.appBarText}>Peer Genius</Text>
 						</Flex>
 						<Flex align="center">
-							<GuruMenu />
 							<AboutUs />
-							<SessionsMenu />
-							<NotificationsMenu />
 							<AccountMenu />
 						</Flex>
 					</AppBar>
