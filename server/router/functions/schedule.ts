@@ -5,6 +5,8 @@ import * as models from '../../database/models';
 import { Request } from 'express';
 import { AsyncHandler, VerifiedRequest } from '../../types';
 
+import { socketRegistry } from '../../socket/connection';
+
 class SessionRequest {
 	public newbieID;
 	public course;
@@ -98,6 +100,7 @@ export const scheduleSession: AsyncHandler<ScheduleSessionRequest> = async (requ
 	let newRequest = new SessionRequest(request.body.user.id, request.body.course,
 		request.body.assignment, request.body.time, request.body.duration);
 	requestInterface.add(newRequest);
+	socketRegistry[request.body.user.id][0].to('gurusOnline').emit('newSession', newRequest);
 	response.status(httpStatus.OK);
 };
 
