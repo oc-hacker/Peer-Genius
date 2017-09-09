@@ -12,17 +12,17 @@ import { selectUserId } from '../../selectors/user';
  */
 export const socketConnect = jwt => async (dispatch, getState) => {
 
-    let socket = io(`${serverURL}?jwt=${jwt}`);
+  let socket = io(`${serverURL}?jwt=${jwt}`);
 
-    dispatch({
-        type: types.SOCKET_CONNECT,
-        payload: socket
-    });
+  dispatch({
+    type: types.SOCKET_CONNECT,
+    payload: socket
+  });
 
-    // Attach listeners
-    socket.on('update_online_users', onlineUsers => dispatch(updateOnlineUsers(onlineUsers)));
-    socket.on('user_connect', newUser => dispatch(userConnect(newUser)));
-    socket.on('user_disconnect', disconnectedUser => dispatch(userDisconnect(disconnectedUser, selectUserId(getState()))));
+  // Attach listeners
+  socket.on('update_online_users', onlineUsers => dispatch(updateOnlineUsers(onlineUsers)));
+  socket.on('user_connect', newUser => dispatch(userConnect(newUser)));
+  socket.on('user_disconnect', disconnectedUser => dispatch(userDisconnect(disconnectedUser, selectUserId(getState()))));
 };
 
 /**
@@ -30,8 +30,8 @@ export const socketConnect = jwt => async (dispatch, getState) => {
  * Signals initialization of online users.
  */
 const updateOnlineUsers = onlineUsers => ({
-    type: types.UPDATE_ONLINE_USERS,
-    payload: onlineUsers
+  type: types.UPDATE_ONLINE_USERS,
+  payload: onlineUsers
 });
 
 /**
@@ -39,8 +39,8 @@ const updateOnlineUsers = onlineUsers => ({
  * Signals a user connecting.
  */
 const userConnect = newUser => ({
-    type: types.USER_CONNECT,
-    payload: newUser
+  type: types.USER_CONNECT,
+  payload: newUser
 });
 
 /**
@@ -48,9 +48,9 @@ const userConnect = newUser => ({
  * Signals a user disconnecting.
  */
 const userDisconnect = (disconnectedUser, currentUserId) => ({
-    type: types.USER_DISCONNECT,
-    payload: disconnectedUser,
-    meta: {
-        currentUserId
-    }
+  type: types.USER_DISCONNECT,
+  payload: disconnectedUser,
+  meta: {
+    currentUserId
+  }
 });

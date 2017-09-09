@@ -1,5 +1,6 @@
 export { default as AppFooter } from './AppFooter';
 export { default as Button } from './Button';
+export { default as ChatScreen } from './Chat';
 export { default as CommunicationFields } from './CommunicationFields';
 export { default as Flex } from './Flex';
 export { default as Logo } from './Logo';

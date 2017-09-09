@@ -11,39 +11,39 @@ const port = 8081;
 
 const app = express();
 const webpackCompiler = webpack(webpackConfig, (error, stats) => {
-	if (error) {
-		console.error('Error when compiling:');
-		console.error(error);
-	}
-	else {
-		console.log(stats.toString({
-			chunks: false,
-			colors: true
-		}));
-	}
+  if (error) {
+    console.error('Error when compiling:');
+    console.error(error);
+  }
+  else {
+    console.log(stats.toString({
+      chunks: false,
+      colors: true
+    }));
+  }
 });
 
 app.use(webpackDevMiddleware(webpackCompiler, {
-	publicPath: '/',
-	stats: {
-		chunks: false,
-		colors: true
-	}
+  publicPath: '/',
+  stats: {
+    chunks: false,
+    colors: true
+  }
 }));
 
 app.use(webpackHotMiddleware(webpackCompiler));
 
 app.get('*.css', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '../public/style.css'))
+  res.sendFile(path.resolve(__dirname, '../public/style.css'));
 });
 app.get('*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '../public/index.html'));
+  res.sendFile(path.resolve(__dirname, '../public/index.html'));
 });
 
 app.listen(port, error => {
-	if (error) {
-		return console.error(error);
-	}
-	
-	console.log(`Webpack dev server running on port: ${port}`);
+  if (error) {
+    return console.error(error);
+  }
+
+  console.log(`Webpack dev server running on port: ${port}`);
 });

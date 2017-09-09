@@ -1,1 +1,1 @@
-export default from './StarField'
+export default from './StarField';
