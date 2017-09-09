@@ -1,7 +1,0 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-require("babel-core/register");
-require("babel-polyfill");
-// Any file imported using require will be transformed by babel
-require("./core/loader");
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiL21udC9jL1VzZXJzL0plZmYvUGVlci1HZW5pdXMvc2VydmVyL2VudHJ5LnRzIiwic291cmNlcyI6WyIvbW50L2MvVXNlcnMvSmVmZi9QZWVyLUdlbml1cy9zZXJ2ZXIvZW50cnkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSwrQkFBNkI7QUFDN0IsMEJBQXdCO0FBRXhCLCtEQUErRDtBQUMvRCx5QkFBdUIiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgJ2JhYmVsLWNvcmUvcmVnaXN0ZXInO1xuaW1wb3J0ICdiYWJlbC1wb2x5ZmlsbCc7XG5cbi8vIEFueSBmaWxlIGltcG9ydGVkIHVzaW5nIHJlcXVpcmUgd2lsbCBiZSB0cmFuc2Zvcm1lZCBieSBiYWJlbFxuaW1wb3J0ICcuL2NvcmUvbG9hZGVyJztcbiJdfQ==
