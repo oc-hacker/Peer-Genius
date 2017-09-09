@@ -8,6 +8,7 @@ const defaultState = {
 };
 
 export default (state = defaultState, action) => {
+  // eslint-disable-next-line
   let { type, payload, meta, error } = action;
   let diff = {};
 

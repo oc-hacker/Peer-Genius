@@ -7,38 +7,38 @@ import AppBarMenu from './AppBarMenu';
 
 @connect(null, { push })
 export default class SessionsMenu extends Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.state = {
-			open: false
-		};
-	}
+    this.state = {
+      open: false
+    };
+  }
 
-	_openMenu = () => {
-		this.setState({
-			open: true
-		});
-	};
+  _openMenu = () => {
+    this.setState({
+      open: true
+    });
+  };
 
-	_closeMenu = () => {
-		this.setState({
-			open: false
-		});
-	};
+  _closeMenu = () => {
+    this.setState({
+      open: false
+    });
+  };
 
-	_toPastSessions = () => {
-		//this.props.push('');
-	};
+  _toPastSessions = () => {
+    //this.props.push('');
+  };
 
-	render() {
-		let { open } = this.state;
+  render() {
+    let { open } = this.state;
 
-		return (
-			<AppBarMenu
-				button='Sessions'
-				open={open} onClick={this._toPastSessions} onRequestClose={this._closeMenu}
-			/>
-		);
-	}
+    return (
+      <AppBarMenu
+        button='Sessions'
+        open={open} onClick={this._toPastSessions} onRequestClose={this._closeMenu}
+      />
+    );
+  }
 }
