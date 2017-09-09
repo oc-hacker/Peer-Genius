@@ -49,7 +49,7 @@ const attach = async (socket: UserSocket, user: string) => {
 	//join a room with the user's UUID
 	socket.join(user);
 	//if user is guru, add them to the guruOnline list
-	if(userInstance['guru.isGuru']){
+	if (userInstance['guru.isGuru']){
 		socket.join('gurusOnline');
 	}
 	
