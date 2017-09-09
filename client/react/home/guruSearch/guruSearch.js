@@ -7,7 +7,7 @@ import { Text } from '../../components';
 
 let styles = {
   headerBackground: {
-    backgroundImage: '#00aeb7, url(assets/home_page_3rd.jpg)',
+    backgroundImage: '#00aeb7, url(assets/guru_search.jpg)',
     backgroundSize: 'cover',
     overflow: 'hidden'
   },
