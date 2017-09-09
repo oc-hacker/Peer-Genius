@@ -36,3 +36,9 @@ export const scheduleSession = (course, assignment, time, duration) => async dis
     duration: duration
   });
 }
+
+export const acceptSession = (newbieID) => async dispatch => {
+  await post('/api/schedule/acceptSession', {
+    sessionID: newbieID
+  });
+}
