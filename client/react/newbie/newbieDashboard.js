@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class GuruDashboard extends React.Component {
+export default class NewbieDashboard extends React.Component {
   render = () => {
     return null;
   };

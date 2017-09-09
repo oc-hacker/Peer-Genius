@@ -60,7 +60,7 @@ let styles = {
 
 
 @withStyles(styles)
-export default class NewbieDashboard extends React.Component {
+export default class GuruDashboard extends React.Component {
   render = () => {
     let { classes, currentHours } = this.props;
     if (!currentHours) {
