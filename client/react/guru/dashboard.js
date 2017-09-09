@@ -9,7 +9,7 @@ import Button from '../components/Button';
 
 let styles = {
   headerBackground: {
-    backgroundImage: 'linear-gradient(to bottom, rgba(244, 252, 0, 0.8) 0%,rgba(0, 174, 183, 0.8) 100%), url(assets/home_page_3rd.jpg)',
+    backgroundImage: 'linear-gradient(to bottom, rgba(244, 252, 0, 0.8) 0%,rgba(0, 174, 183, 0.8) 100%), url(assets/guru_dashboard.jpg)',
     backgroundSize: 'cover',
     overflow: 'hidden'
   },
@@ -127,4 +127,3 @@ export default class GuruDashboard extends React.Component {
     );
   };
 }
-
