@@ -7,6 +7,9 @@ import Text from '../components/Text';
 import ProgressBar from 'react-progressbar.js';
 import Button from '../components/Button';
 
+import { connect } from 'react-redux';
+import acceptSession from '../../redux/actions/creators/PGsession';
+
 let styles = {
   headerBackground: {
     backgroundImage: 'linear-gradient(to bottom, rgba(244, 252, 0, 0.8) 0%,rgba(0, 174, 183, 0.8) 100%), url(assets/guru_dashboard.jpg)',
@@ -58,15 +61,36 @@ let styles = {
   }
 };
 
-
+@connect((state) => {
+  return {
+    newSessions: state.PGsession.sessionRequests
+  };
+}, dispatch => {
+  return {
+    acceptSession: async (newbieID) => dispatch() 
+  };
+})
 @withStyles(styles)
 export default class GuruDashboard extends React.Component {
   render = () => {
-    let { classes, currentHours } = this.props;
+    let { classes, currentHours, newSessions, acceptSession } = this.props;
     if (!currentHours) {
       currentHours = 25;
     }
-    let notifications = null;
+    let notifications = newSessions.map((session) => {
+      return (
+        <div>
+          <Text type='subheading' color='black' style={{marginLeft: 20, display: 'inline-block'}}>{session.course + ", " + session.assignment}</Text>
+          <Button
+              flat color="primary"
+              onClick={() => acceptSession(session.newbieID)}
+              style={{ display: 'inline-block', marginLeft: 25 }}
+            >
+              <Text type="button" weight='bold'>✔</Text>
+            </Button>
+        </div>
+      );
+    });
 
     return (
       <div style={{ display: 'block', width: '100%' }}>
