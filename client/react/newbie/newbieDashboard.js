@@ -74,13 +74,14 @@ export default class NewbieDashboard extends React.Component {
         <div className={classNames(classes.headerText, classes.headerBackground)}>
           <Text type='display1' color='white' className={classNames(classes.centerText, classes.headerText)}>YOUR
             DASHBOARD</Text>
-          <Button
-            flat color="primary"
-            onClick={() => push('/home/schedule')}
-            style={{ display: 'block' }}
-          >
-            <Text type="button" weight='bold'>REQUEST FOR ANOTHER SESSION</Text>
-          </Button>
+          <div style={{ display: 'inline-block', borderStyle: '2px solid', borderColor: 'white' }}>
+            <Button
+              flat color="primary"
+              onClick={() => push('/home/schedule')}
+            >
+              <Text type="button" color='white' weight='bold'>REQUEST FOR ANOTHER SESSION</Text>
+            </Button>
+          </div>
         </div>
         <div style={{ width: '100%', height: 20 }} />
         <div className={classNames(classes.sidePadding)}>
@@ -119,7 +120,7 @@ export default class NewbieDashboard extends React.Component {
               <div className={classes.roundedDot} />
               <br />Silver<br />Courses
             </Text>
-           <Text
+            <Text
               type='subheading' color='rgb(1,147,172)'
               className={classNames(classes.inlineDiv, classes.textPadding, classes.centerText)}
               style={{ marginLeft: 90 }}>
