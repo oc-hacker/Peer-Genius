@@ -26,7 +26,7 @@ export const addNotifications = notifications => {
 
 	return {
 		type: types.ADD_NOTIFICATIONS,
-		notifications
+		payload: { notifications }
 	};
 }
 

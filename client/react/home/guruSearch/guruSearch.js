@@ -48,7 +48,7 @@ let styles = {
 };
 
 @withStyles(styles)
-export class GuruSearch extends React.Component {
+export default class GuruSearch extends React.Component {
   render = () => {
     let { classes } = this.props;
 
