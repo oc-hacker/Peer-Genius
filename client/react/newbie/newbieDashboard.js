@@ -2,6 +2,7 @@ import React from 'react';
 
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
+import { push } from 'react-router-redux';
 
 import Text from '../components/Text';
 import ProgressBar from 'react-progressbar.js';
@@ -75,7 +76,7 @@ export default class NewbieDashboard extends React.Component {
             DASHBOARD</Text>
           <Button
             flat color="primary"
-            onClick={() = {}}
+            onClick={() => push('/home/schedule')}
             style={{ display: 'block' }}
           >
             <Text type="button" weight='bold'>REQUEST FOR ANOTHER SESSION</Text>
