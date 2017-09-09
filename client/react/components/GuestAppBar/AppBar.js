@@ -12,6 +12,9 @@ import Flex from '../Flex';
 import Logo from '../Logo';
 import { FacebookIcon, GooglePlusIcon, LinkedInIcon, TwitterIcon } from './IconComponents';
 import SearchBar from './SearchBar';
+import Text from '../Text';
+
+import serverURL from '../../../config.js';
 
 import PeerGeniusLogo from '../Logo';
 
@@ -29,6 +32,10 @@ const styles = ({ palette: { grey }, spacing }) => ({
         padding: `${spacing.unit}px ${spacing.unit * 2}px`,
         borderBottom: `1px solid ${new Color(grey[700]).alpha(0.6)}`,
         boxSizing: 'border-box'
+    },
+    aboutUs: {
+        marginTop: 10,
+        textDecoration: 'none'
     }
 });
 
@@ -47,6 +54,11 @@ class GuestAppBar extends Component {
             >
                 <PeerGeniusLogo fill={color} />
                 <Flex grow={2} />
+                <a href='/aboutUs' className={classes.aboutUs}>
+                    <Text type='title' color={color}>
+                        About Us
+                    </Text>
+                </a>
                 <Flex align="center" justify="space-around" grow={1}>
                     <FacebookIcon color={color} />
                     <TwitterIcon color={color} />
