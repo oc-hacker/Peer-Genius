@@ -20,3 +20,19 @@ export const getPastSessions = () => async dispatch => {
     dispatch(handleError(response));
   }
 };
+
+/**
+ * Schedules a session with the server. Doesn't indicate success or failure b/c why not.
+ * @param {String} course the name of the course
+ * @param {String} assignment the name of the assignment
+ * @param {Date} time the start time, in Date object form
+ * @param {Number} duration the duration in minutes
+ */
+export const scheduleSession = (course, assignment, time, duration) => async dispatch => {
+  await post('/api/schedule/scheduleSession', {
+    course: course,
+    assignment: assignment,
+    time: time,
+    duration: duration
+  });
+}
