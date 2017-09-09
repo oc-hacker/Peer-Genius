@@ -5,6 +5,7 @@ import types from '../actions/types';
 
 const defaultState = {
   pastSessions: {},
+  sessionRequests: [],
 };
 
 export default (state = defaultState, action) => {
@@ -18,6 +19,12 @@ export default (state = defaultState, action) => {
     }
     case types.INIT_PAST_SESSIONS: {
       diff = payload;
+      break;
+    }
+    case types.INIT_NEW_SESSION_REQUEST: {
+      diff = {
+        sessionRequests: [...state.sessionRequests, payload]
+      };
       break;
     }
   }

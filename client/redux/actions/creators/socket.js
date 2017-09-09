@@ -23,6 +23,7 @@ export const socketConnect = jwt => async (dispatch, getState) => {
   socket.on('update_online_users', onlineUsers => dispatch(updateOnlineUsers(onlineUsers)));
   socket.on('user_connect', newUser => dispatch(userConnect(newUser)));
   socket.on('user_disconnect', disconnectedUser => dispatch(userDisconnect(disconnectedUser, selectUserId(getState()))));
+  socket.on('newSession', newRequest => dispatch(newSession(newRequest)));
 };
 
 /**
@@ -32,6 +33,11 @@ export const socketConnect = jwt => async (dispatch, getState) => {
 const updateOnlineUsers = onlineUsers => ({
   type: types.UPDATE_ONLINE_USERS,
   payload: onlineUsers
+});
+
+const newSession = newRequest => ({
+  type: types.INIT_NEW_SESSION_REQUEST,
+  payload: newRequest
 });
 
 /**
