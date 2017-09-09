@@ -1,7 +1,5 @@
 import Color from 'color';
-import { createMuiTheme } from 'material-ui/styles';
-import createPalette from 'material-ui/styles/palette';
-import createTypography from 'material-ui/styles/typography';
+import { createMuiTheme, createPalette, createTypography } from 'material-ui/styles;
 import { deepOrange, orange } from 'material-ui/colors';
 
 const baseTheme = createMuiTheme({});
