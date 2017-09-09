@@ -6,7 +6,7 @@ import { withStyles } from 'material-ui/styles';
 
 import FieldControl from './FieldControl';
 import StyledLabel from './StyledLabel';
-import StyledInput from './StyledInput';
+import StyledInput from '../StyledInput';
 import HelperText from './HelperText';
 
 const styles = ({ palette: {}, spacing }) => ({});
