@@ -6,6 +6,7 @@ import accountRouter from './account';
 import guruRouter from './guru';
 import newbieRouter from './newbie';
 import userRouter from './user';
+import notificationRouter from './notification';
 import { urlencoded } from 'body-parser';
 
 const router = Router();
@@ -24,5 +25,6 @@ router.use('/account', accountRouter);
 router.use('/guru', guruRouter);
 router.use('/newbie', newbieRouter);
 router.use('/user', userRouter);
+router.use('/notification', notificationRouter);
 
 export default router;

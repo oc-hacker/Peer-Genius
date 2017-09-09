@@ -6,6 +6,7 @@ import { ProhibitedEditError } from '../errors';
 
 export interface NotificationAttributes {
 	id?: string;
+	to?: string;
 	message?: string;
 }
 
@@ -14,6 +15,7 @@ export interface NotificationInstance extends Sequelize.Instance<NotificationAtt
 	updatedAt: Date;
 
 	id?: string;
+	to?: string;
 	message?: string;
 }
 
@@ -22,6 +24,10 @@ const attributes = {
 		type: Sequelize.UUID,
 		defaultValue: Sequelize.UUIDV4,
 		primaryKey: true
+	},
+	to: {
+		type: Sequelize.UUID,
+		allowNull: false
 	},
 	notification: {
 		type: Sequelize.STRING,

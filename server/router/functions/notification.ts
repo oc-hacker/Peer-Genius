@@ -49,4 +49,23 @@ class NotificationInterface {
 	}
 }
 
+interface GetNotificationsRequest extends Request {
+	body: {
+		/* The id of who */
+		to: string;
+	};
+}
+
+export const getNotifications: AsyncHandler<GetNotificationsRequest> = async (request, response) => {
+	let notifications = await models.notification.all({
+		where: {
+			to: request.body.to,
+		}
+	});
+
+	response.status(httpStatus.OK).json({
+		notifications
+	});
+};
+
 export let notificationInterface = new NotificationInterface();
