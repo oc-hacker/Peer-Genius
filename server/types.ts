@@ -31,6 +31,7 @@ export interface Store {
 		jwt: string,
 		expire: number
 	};
+	isGuru: boolean;
 }
 
 export interface UserSocket extends SocketIO.Socket {
