@@ -10,7 +10,7 @@ import ArrowDropdown from 'material-ui-icons/ArrowDropDown';
 import Flex from '../Flex';
 import FieldControl from './FieldControl';
 import StyledLabel from './StyledLabel';
-import StyledInput from './StyledInput';
+import StyledInput from '../StyledInput';
 import HelperText from './HelperText';
 
 const styles = ({ palette: { primary, grey, error, warning }, transitions, spacing }) => ({

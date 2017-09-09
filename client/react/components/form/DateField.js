@@ -9,7 +9,7 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import Flex from '../Flex';
 import FieldControl from './FieldControl';
 import StyledLabel from './StyledLabel';
-import StyledInput from './StyledInput';
+import StyledInput from '../StyledInput';
 import HelperText from './HelperText';
 
 // Maximum date counts
