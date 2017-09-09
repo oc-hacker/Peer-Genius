@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
+import { withStyles } from 'material-ui/styles';
+
 import debounce from 'lodash/debounce';
 
+import Button from '../Button';
 import StyledInput from '../StyledInput';
 
+const styles = {
+    input: {
+        position: 'relative'
+    },
+    sendButton: {
+        position: 'absolute',
+        right: 0,
+        bottom: 0
+    }
+};
+
+@withStyles(styles)
 export default class ChatInput extends Component {
     static propTypes = {
         // Controlled component
@@ -55,24 +71,38 @@ export default class ChatInput extends Component {
 
     _onKeyPress = event => {
         if (event.key === 'Enter') {
-            // Immediately trigger onTypeEnd
-            this._onTypeEnd.flush();
             // Enter key pressed, submit
-            this.props.onSubmit();
+            this._submit();
         }
     };
 
+    _submit = () => {
+        this.props.onSubmit();
+        // Immediately trigger onTypeEnd with submitted=true to indicate a submit.
+        this._onTypeEnd(true);
+        this._onTypeEnd.flush();
+    };
+
     render() {
-        let { onTypeStart, onTypeEnd, onChange, onSubmit, ...others } = this.props;
+        let { classes, onTypeStart, onTypeEnd, onChange, onSubmit, ...others } = this.props;
 
         return (
             <StyledInput
                 Component={'div'}
                 contentEditable
+                className={classes.input}
                 onChange={this._onChange}
                 onKeyPress={this._onKeyPress}
                 {...others}
-            />
+            >
+                <Button
+                    raised color="primary"
+                    className={classes.sendButton}
+                    onClick={this._submit}
+                >
+                    Send
+                </Button>
+            </StyledInput>
         );
     }
 }

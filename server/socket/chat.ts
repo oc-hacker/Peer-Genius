@@ -19,7 +19,7 @@ export const sendMessage = async (data: Message, id: string, socket: SocketIO.So
 	await message.upsert(newMsg);
 	
 	//send the message to the recipient
-	socket.broadcast.to(data.to).emit('receiveMessage', newMsg);
+	socket.to(data.to).emit('receiveMessage', newMsg);
 };
 
 export default { sendMessage };
