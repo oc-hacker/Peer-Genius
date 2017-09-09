@@ -1,8 +1,5 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-
-import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
 import { selectSocket } from '../../../redux/selectors/socket';
@@ -10,7 +7,6 @@ import { selectSocket } from '../../../redux/selectors/socket';
 import Flex from '../Flex';
 import ChatDisplay from './ChatDisplay';
 import ChatInput from './ChatInput';
-import { post } from '../../../redux/actions/network';
 
 @connect(state => ({
   socket: selectSocket(state)

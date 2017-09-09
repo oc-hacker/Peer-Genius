@@ -25,7 +25,7 @@ export default class CommunicationFields extends Component {
   };
 
   render() {
-    let { className, classes, methods } = this.props;
+    let { classes, methods } = this.props;
 
     return (
       <div>

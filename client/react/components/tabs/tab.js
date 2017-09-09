@@ -27,10 +27,6 @@ export default (title = '') => RawComponent => {
   return class TabComponent extends Component {
     static isTab = true;
 
-    constructor(props) {
-      super(props);
-    }
-
     componentDidMount() {
       let { title: tabTitle, registerTab } = this.props;
 
@@ -51,4 +47,4 @@ export default (title = '') => RawComponent => {
       );
     }
   };
-}
+};

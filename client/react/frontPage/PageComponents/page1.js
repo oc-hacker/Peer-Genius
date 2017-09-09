@@ -65,7 +65,7 @@ export default class PageOne extends React.Component {
   };
 
   render() {
-    let { classes, currentPage, next } = this.props;
+    let { classes, currentPage } = this.props;
 
     return (
       <Page

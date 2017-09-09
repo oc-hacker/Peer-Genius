@@ -28,4 +28,4 @@ export default (state = defaultState, action) => {
   }
 
   return deepmerge(state, diff || {});
-}
+};

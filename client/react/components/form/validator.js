@@ -34,7 +34,7 @@ const validator = (validate, defaultMessage = 'Validation error.') => {
 
 export const required = validator(value => value, 'Required');
 
-export const number = validator(value => typeof value === 'number' || /^[\d\.]+$/.test(value), 'Not a number');
+export const number = validator(value => typeof value === 'number' || /^[\d.]+$/.test(value), 'Not a number');
 
 export const email = validator(value => /^[\w-]+(?:\.[\w-]+)*@(?:\w+\.)+[a-zA-Z]{2,4}$/.test(value), 'Not an email');
 

@@ -145,7 +145,6 @@ class DateFieldComponent extends Component {
       input: { value: { month, date, year }, ...input }, meta, label,
       classes, className,
       inputClass, labelClass, labelWidth,
-      minDate, maxDate
     } = this.props;
     let {
       anchor, open,

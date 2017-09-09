@@ -8,4 +8,4 @@ export default (inputProps = {}, merge = shallowMerge) => RawComponent => {
       {...merge(inputProps, componentProps)}
     />
   );
-}
+};

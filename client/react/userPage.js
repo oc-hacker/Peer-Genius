@@ -22,10 +22,6 @@ const styles = {
  * All things that require the user to be logged in go here.
  */
 export default class UserPage extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let { classes } = this.props;
 

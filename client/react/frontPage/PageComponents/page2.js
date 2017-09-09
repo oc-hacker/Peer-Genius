@@ -9,8 +9,10 @@ import Page from './Page';
 import classNames from 'classnames';
 
 const awardIcon = (
-  <svg x="0px" y="0px" width="72px" height="72px" viewBox="0 0 32 32"
-       style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginBottom: 15 }}>
+  <svg
+    x="0px" y="0px" width="72px" height="72px" viewBox="0 0 32 32"
+    style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginBottom: 15 }}
+  >
     <g>
       <g>
         <path
@@ -63,42 +65,14 @@ const awardIcon = (
           fill="#0193ac" />
       </g>
     </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
   </svg>
 );
 
 const teacherIcon = (
-  <svg x="0px" y="0px" width="72px" height="72px" viewBox="0 0 31.312 31.312"
-       style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginBottom: 15 }}>
+  <svg
+    x="0px" y="0px" width="72px" height="72px" viewBox="0 0 31.312 31.312"
+    style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginBottom: 15 }}
+  >
     <g>
       <g>
         <rect x="23.695" y="15.25" width="5.052" height="1.878" fill="#0193ac" />
@@ -111,42 +85,14 @@ const teacherIcon = (
           fill="#0193ac" />
       </g>
     </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
   </svg>
 );
 
 const handIcon = (
-  <svg x="0px" y="0px" viewBox="0 0 511.999 511.999" width="72px" height="72px"
-       style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginBottom: 15 }}>
+  <svg
+    x="0px" y="0px" viewBox="0 0 511.999 511.999" width="72px" height="72px"
+    style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginBottom: 15 }}
+  >
     <g>
       <g>
         <path
@@ -154,42 +100,14 @@ const handIcon = (
           fill="#0193ac" />
       </g>
     </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
   </svg>
 );
 
 const ratePersonIcon = (
-  <svg x="0px" y="0px" viewBox="0 0 512 512" width="72px" height="72px"
-       style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginBottom: 15 }}>
+  <svg
+    x="0px" y="0px" viewBox="0 0 512 512" width="72px" height="72px"
+    style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginBottom: 15 }}
+  >
     <g>
       <g>
         <polygon
@@ -225,8 +143,10 @@ const ratePersonIcon = (
     </g>
     <g>
       <g>
-        <rect x="158.511" y="34.748" transform="matrix(0.7071 -0.7071 0.7071 0.7071 8.6121 140.3069)" width="30.321"
-              height="50.019" fill="#0193ac" />
+        <rect
+          x="158.511" y="34.748" transform="matrix(0.7071 -0.7071 0.7071 0.7071 8.6121 140.3069)" width="30.321"
+          height="50.019" fill="#0193ac"
+        />
       </g>
     </g>
     <g>
@@ -242,39 +162,11 @@ const ratePersonIcon = (
     <g>
       <g>
 
-        <rect x="313.313" y="44.603" transform="matrix(0.7071 -0.7071 0.7071 0.7071 56.8332 256.7344)" width="50.019"
-              height="30.321" fill="#0193ac" />
+        <rect
+          x="313.313" y="44.603" transform="matrix(0.7071 -0.7071 0.7071 0.7071 56.8332 256.7344)" width="50.019"
+          height="30.321" fill="#0193ac"
+        />
       </g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
-    </g>
-    <g>
     </g>
   </svg>
 );
@@ -322,9 +214,6 @@ const styles = {
     width: '15%',
     height: '6%'
   },
-  row: {
-    display: 'inline-block'
-  },
   fullWidth: {
     width: '100%'
   },
@@ -357,8 +246,12 @@ export default class PageTwo extends React.Component {
         <div className={classes.underlinedSection} />
         <div className={classes.pushDown}>
           <div className={classes.centerSection}>
-            <Text type="title" color="black"
-                  className={classNames(classes.centerText, classes.centerTextSection)}>IANS</Text>
+            <Text
+              type="title" color="black"
+              className={classNames(classes.centerText, classes.centerTextSection)}
+            >
+              IANS
+            </Text>
           </div>
         </div>
         <div>

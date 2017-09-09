@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { NotificationsNone } from 'material-ui-icons/NotificationsNone';
-
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 

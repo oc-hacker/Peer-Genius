@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import stylesheet from 'react-jss';
@@ -22,12 +22,12 @@ const Flex =
       let {
         className, classes, sheet,
         column, direction, align, justify, grow, shrink, basis,
-        component: Component, rootRef,
+        component: RootComponent, rootRef,
         ...componentProps
       } = props;
 
       return (
-        <Component
+        <RootComponent
           ref={rootRef}
           className={classNames(classes.flex, className)}
           {...componentProps}

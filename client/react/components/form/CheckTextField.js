@@ -98,7 +98,7 @@ class CheckTextFieldComponent extends Component {
   render() {
     let {
       input: { name }, meta: { touched, error, warning },
-      fullWidth, checkLabel, textLabel, uncheckedValue, autoClear, classes,
+      fullWidth, checkLabel, textLabel, classes,
       checkboxProps, inputProps
     } = this.props;
     let { checked, value } = this.state;
