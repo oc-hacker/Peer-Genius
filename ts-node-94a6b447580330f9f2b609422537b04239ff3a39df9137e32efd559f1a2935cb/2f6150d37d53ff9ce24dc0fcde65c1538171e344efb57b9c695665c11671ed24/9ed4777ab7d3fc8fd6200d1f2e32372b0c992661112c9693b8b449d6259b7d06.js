@@ -1,0 +1,28 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+// Import and re-export all models for better management.
+var account_1 = require("./account");
+exports.account = account_1.default;
+var key_1 = require("./key");
+exports.key = key_1.default;
+var guru_1 = require("./guru");
+exports.guru = guru_1.default;
+var session_1 = require("./session");
+exports.session = session_1.default;
+var user_1 = require("./user");
+exports.user = user_1.default;
+/*
+ Database architecture:
+ accounts - user login information
+ users - user's personal info
+ communications - user's communication method preferences
+ gurus - the subjects that user can be a guru in
+ sessions - represents a session of tutoring between guru and newbie
+ keys - stores generated keys and other temporary data for user
+ */
+/*
+ Differences from Voluntu:
+ This database uses 'id' instead of 'uuid'. The stored string is still UUID, though.
+ This database uses user's id as primary key, as opposed to account's id
+ */
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiL21udC9jL1VzZXJzL0plZmYvUGVlci1HZW5pdXMvc2VydmVyL2RhdGFiYXNlL21vZGVscy9pbmRleC50cyIsInNvdXJjZXMiOlsiL21udC9jL1VzZXJzL0plZmYvUGVlci1HZW5pdXMvc2VydmVyL2RhdGFiYXNlL21vZGVscy9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLHlEQUF5RDtBQUN6RCxxQ0FBK0M7QUFBdEMsNEJBQUEsT0FBTyxDQUFXO0FBQzNCLDZCQUF1QztBQUE5QixvQkFBQSxPQUFPLENBQU87QUFDdkIsK0JBQXlDO0FBQWhDLHNCQUFBLE9BQU8sQ0FBUTtBQUN4QixxQ0FBK0M7QUFBdEMsNEJBQUEsT0FBTyxDQUFXO0FBQzNCLCtCQUF5QztBQUFoQyxzQkFBQSxPQUFPLENBQVE7QUFFeEI7Ozs7Ozs7O0dBUUc7QUFFSDs7OztHQUlHIiwic291cmNlc0NvbnRlbnQiOlsiLy8gSW1wb3J0IGFuZCByZS1leHBvcnQgYWxsIG1vZGVscyBmb3IgYmV0dGVyIG1hbmFnZW1lbnQuXG5leHBvcnQgeyBkZWZhdWx0IGFzIGFjY291bnQgfSBmcm9tICcuL2FjY291bnQnO1xuZXhwb3J0IHsgZGVmYXVsdCBhcyBrZXkgfSBmcm9tICcuL2tleSc7XG5leHBvcnQgeyBkZWZhdWx0IGFzIGd1cnUgfSBmcm9tICcuL2d1cnUnO1xuZXhwb3J0IHsgZGVmYXVsdCBhcyBzZXNzaW9uIH0gZnJvbSAnLi9zZXNzaW9uJztcbmV4cG9ydCB7IGRlZmF1bHQgYXMgdXNlciB9IGZyb20gJy4vdXNlcic7XG5cbi8qXG4gRGF0YWJhc2UgYXJjaGl0ZWN0dXJlOlxuIGFjY291bnRzIC0gdXNlciBsb2dpbiBpbmZvcm1hdGlvblxuIHVzZXJzIC0gdXNlcidzIHBlcnNvbmFsIGluZm9cbiBjb21tdW5pY2F0aW9ucyAtIHVzZXIncyBjb21tdW5pY2F0aW9uIG1ldGhvZCBwcmVmZXJlbmNlc1xuIGd1cnVzIC0gdGhlIHN1YmplY3RzIHRoYXQgdXNlciBjYW4gYmUgYSBndXJ1IGluXG4gc2Vzc2lvbnMgLSByZXByZXNlbnRzIGEgc2Vzc2lvbiBvZiB0dXRvcmluZyBiZXR3ZWVuIGd1cnUgYW5kIG5ld2JpZVxuIGtleXMgLSBzdG9yZXMgZ2VuZXJhdGVkIGtleXMgYW5kIG90aGVyIHRlbXBvcmFyeSBkYXRhIGZvciB1c2VyXG4gKi9cblxuLypcbiBEaWZmZXJlbmNlcyBmcm9tIFZvbHVudHU6XG4gVGhpcyBkYXRhYmFzZSB1c2VzICdpZCcgaW5zdGVhZCBvZiAndXVpZCcuIFRoZSBzdG9yZWQgc3RyaW5nIGlzIHN0aWxsIFVVSUQsIHRob3VnaC5cbiBUaGlzIGRhdGFiYXNlIHVzZXMgdXNlcidzIGlkIGFzIHByaW1hcnkga2V5LCBhcyBvcHBvc2VkIHRvIGFjY291bnQncyBpZFxuICovXG4iXX0=

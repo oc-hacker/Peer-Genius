@@ -8,6 +8,7 @@ import { Route } from './components';
 import FrontPage from './frontPage';
 import UserPage from './userPage';
 import { initialize } from '../redux/actions/creators/init';
+import AboutUs from './aboutUs';
 
 import { browserHistory } from '../redux/store';
 import { UnexpectedErrorDialog } from './components';
@@ -24,6 +25,7 @@ export default class MasterRouter extends Component {
 			<ConnectedRouter history={browserHistory}>
 				<Switch>
 					<Route access="public" exact path="/" component={FrontPage} />
+					<Route access="public" exact path="/aboutUs" component={AboutUs} />
 					<Route path="/" component={UserPage} />
 				</Switch>
 			</ConnectedRouter>
