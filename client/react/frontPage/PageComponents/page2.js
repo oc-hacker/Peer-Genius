@@ -19,10 +19,6 @@ const styles = {
         backgroundSize: 'cover',
         overflow: 'hidden'
     },
-    row: {
-        display: 'flex',
-        justifyContent: 'center'
-    },
     centerText: {
         textAlign: 'center'
     },
