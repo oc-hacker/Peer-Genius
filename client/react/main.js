@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { MuiThemeProvider } from 'material-ui';
+import { MuiThemeProvider } from 'material-ui/styles';
 
 import MasterRouter from './masterRouter';
 import { UnexpectedErrorDialog } from './components';
