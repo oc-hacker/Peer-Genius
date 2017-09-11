@@ -5,6 +5,7 @@ import { withStyles } from 'material-ui/styles';
 import { CircularProgress } from 'material-ui/Progress';
 
 import Flex from '../Flex';
+import ChatMessage from './ChatMessage';
 
 const styles = ({ palette: { grey }, spacing }) => ({
   window: {
@@ -45,17 +46,7 @@ export default class ChatDisplay extends Component {
             <CircularProgress className={classes.loading} />
           )}
           {messages.map(({ type, content, timestamp }, index) => (
-            <Flex column>
-              {content}
-              <div style={{
-                textAlign: {
-                  'in': 'left',
-                  'out': 'right'
-                }[type]
-              }}>
-                {timestamp.toDateString()}
-              </div>
-            </Flex>
+            <ChatMessage type={type} content={content} />
           ))}
         </Flex>
       </Flex>

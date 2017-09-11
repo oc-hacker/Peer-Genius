@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
 
@@ -8,18 +9,32 @@ const styles = ({ palette: { primary, grey }, spacing }) => ({
     position: 'relative',
     backgroundColor: grey[200],
     padding: spacing.unit / 2,
-    marginLeft: 25,
-    borderRadius: 4,
+    borderRadius: 8,
 
     '&:before': {
       position: 'absolute',
       content: '""',
-      right: '100%',
       top: 'auto',
       bottom: 'auto',
-      borderWidth: '15px 20px 15px 0',
+      borderWidth: '15px 0',
       borderStyle: 'solid',
       borderColor: ` transparent ${grey[200]}`
+    }
+  },
+  incomingMessage: {
+    alignSelf: 'flex-start',
+    marginLeft: 20,
+    '&:before': {
+      right: '100%',
+      borderRightWidth: '15px'
+    }
+  },
+  outgoingMessage: {
+    alignSelf: 'flex-end',
+    marginRight: 20,
+    '&:before': {
+      left: '100%',
+      borderLeftWidth: '15px'
     }
   }
 });
@@ -27,17 +42,18 @@ const styles = ({ palette: { primary, grey }, spacing }) => ({
 @withStyles(styles)
 export default class ChatMessage extends Component {
   static propTypes = {
-    content: PropTypes.string
-  };
-
-  static defaultProps = {
-    content: ''
+    type: PropTypes.oneOf(['in', 'out']).isRequired,
+    content: PropTypes.string.isRequired
   };
 
   render() {
-    let { classes, content } = this.props;
+    let { classes, type, content } = this.props;
     return (
-      <div className={classes.root}>
+      <div className={classNames({
+        [classes.root]: true,
+        [classes.incomingMessage]: type === 'in',
+        [classes.outgoingMessage]: type === 'out'
+      })}>
         {content}
       </div>
     );
