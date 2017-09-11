@@ -71,7 +71,7 @@ export default class ChatInput extends Component {
   };
 
   render() {
-    let { classes, onTypeStart, onTypeEnd, onChange, onSubmit, ...others } = this.props;
+    let { classes, value, onTypeStart, onTypeEnd, onChange, onSubmit, ...others } = this.props;
 
     return (
       <StyledInput
@@ -82,6 +82,7 @@ export default class ChatInput extends Component {
         onKeyPress={this._onKeyPress}
         {...others}
       >
+        {value}
         <Button
           raised color="primary"
           className={classes.sendButton}

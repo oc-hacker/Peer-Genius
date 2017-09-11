@@ -59,6 +59,15 @@ const blockUserEdit = (instance: MessageInstance) => {
 
 const model: Sequelize.Model<MessageInstance, MessageAttributes> = admin.define<MessageInstance, MessageAttributes>('messages', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync(); // Alter when in development mode
 
+user.hasMany(model, {
+	as: 'incomingMessage',
+	foreignKey: 'to'
+});
+user.hasMany(model, {
+	as: 'outgoingMessage',
+	foreignKey: 'from'
+});
+
+model.sync(); // Alter when in development mode
 export default model;

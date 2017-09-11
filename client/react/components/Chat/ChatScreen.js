@@ -7,7 +7,12 @@ import { selectSocket } from '../../../redux/selectors/socket';
 import Flex from '../Flex';
 import ChatDisplay from './ChatDisplay';
 import ChatInput from './ChatInput';
+import TypingHintText from './TypingHintText';
+import { post } from '../../../redux/actions/network';
 
+/**
+ * The right side of the screen, where the actual chat is taking place.
+ */
 @connect(state => ({
   socket: selectSocket(state)
 }))
@@ -22,7 +27,9 @@ export default class ChatScreen extends Component {
     this.state = {
       loading: false,
       input: '',
-      messages: []
+      messages: [],
+      participantTyping: false,
+      participantName: ''
     };
   }
 
@@ -39,11 +46,10 @@ export default class ChatScreen extends Component {
     });
   };
 
-  _onTypeEnd = submitted => {
+  _onTypeEnd = () => {
     let { to, socket } = this.props;
     socket.emit('type_end', {
-      to,
-      hasMessage: !submitted && Boolean(this.state.input)
+      to
     });
   };
 
@@ -82,34 +88,79 @@ export default class ChatScreen extends Component {
     }
   };
 
+  _onIncomingTypeStart = () => {
+    this.setState({
+      participantTyping: true
+    });
+  };
+
+  _onIncomingTypeEnd = () => {
+    this.setState({
+      participantTyping: false
+    });
+  };
+
   componentWillMount() {
     new Promise(resolve => this.setState({
       loading: true
-    }, resolve)).then(); // TODO query server and load recent messages
+    }, resolve)).then(() => Promise.all([
+      post('/chat/getMessages', {
+        participant: this.props.to,
+        indexStart: 0
+      }),
+      post('/user/getName', {
+        target: this.props.to
+      })
+    ])).then(responses => Promise.all(
+      responses.map(response => response.body())
+    )).then(([messageResponseBody, nameResponseBody]) => {
+      this.setState({
+        participantName: nameResponseBody.name,
+        messages: messageResponseBody.messages
+          ? messageResponseBody.messages.map(({ createdAt, from, message }) => ({
+            type: from === this.props.to ? 'in' : 'out',
+            content: message,
+            timestamp: new Date(createdAt)
+          }))
+          : [],
+        loading: false
+      });
+    });
   }
 
   componentDidMount() {
+    let { socket } = this.props;
     // Register socket event listeners
-    this.props.socket.addListener('receiveMessage', this._onReceiveMessage);
+    socket.addListener('receiveMessage', this._onReceiveMessage);
+    socket.addListener('type_start', this._onIncomingTypeStart);
+    socket.addListener('type_end', this._onIncomingTypeEnd);
+
   }
 
   componentWillUnmount() {
+    let { socket } = this.props;
     // Unregister socket event listeners
-    this.props.socket.removeListener('receiveMessage', this._onReceiveMessage);
+    socket.removeListener('receiveMessage', this._onReceiveMessage);
+    socket.removeListener('type_start', this._onIncomingTypeStart);
+    socket.removeListener('type_end', this._onIncomingTypeEnd);
   }
 
   render() {
+    let { input, messages, participantName, participantTyping } = this.state;
+
     return (
-      <Flex column>
+      <Flex column grow={1}>
         <ChatDisplay
-          messages={this.state.messages}
+          messages={messages}
         />
         <ChatInput
+          value={input}
           onChange={this._onChange}
           onTypeStart={this._onTypeStart}
           onTypeEnd={this._onTypeEnd}
           onSubmit={this._onSubmit}
         />
+        {participantTyping && <TypingHintText participantName={participantName} />}
       </Flex>
     );
   }
