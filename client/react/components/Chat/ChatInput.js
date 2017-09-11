@@ -29,7 +29,6 @@ export default class ChatInput extends Component {
     // User status indicator
     onTypeStart: PropTypes.func,
     onTypeEnd: PropTypes.func,
-    onInactive: PropTypes.func,
     // Debounce setting
     delay: PropTypes.number, // Amount of time to wait before indicating that the user stopped typing
     timeout: PropTypes.number // Amount of time to wait before indicating that the user is inactive
@@ -52,17 +51,10 @@ export default class ChatInput extends Component {
     { leading: false, trailing: true }
   );
 
-  _monitorInactive = debounce(
-    this.props.onInactive,
-    this.props.timeout,
-    { leading: false, trailing: true }
-  );
-
   _onChange = event => {
     this._onTypeStart();
     this.props.onChange(event.target.value);
     this._onTypeEnd();
-    this._monitorInactive();
   };
 
   _onKeyPress = event => {
@@ -75,7 +67,6 @@ export default class ChatInput extends Component {
   _submit = () => {
     this.props.onSubmit();
     // Immediately trigger onTypeEnd with submitted=true to indicate a submit.
-    this._onTypeEnd(true);
     this._onTypeEnd.flush();
   };
 
