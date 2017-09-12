@@ -28,6 +28,38 @@ export const socketConnect = jwt => async (dispatch, getState) => {
 
 /**
  * Normal action creator.
+ * Creates an action that instructs the socket to emit an event.
+ */
+export const socketEmit = (event, data) => ({
+  type: types.SOCKET_EMIT,
+  payload: {
+    event,
+    data
+  }
+});
+
+/**
+ * Normal action creator.
+ * Creates an action that attaches the listener to the socket.
+ */
+export const socketAttachListener = (event, listener) => ({
+  type: types.SOCKET_ATTACH_LISTENER,
+  payload: {
+    event,
+    listener
+  }
+});
+
+export const socketDetachListener = (event, listener) => ({
+  type: types.SOCKET_DETACH_LISTENER,
+  payload: {
+    event,
+    listener
+  }
+});
+
+/**
+ * Normal action creator.
  * Signals initialization of online users.
  */
 const updateOnlineUsers = onlineUsers => ({

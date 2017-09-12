@@ -5,7 +5,7 @@ import createHistory from 'history/createBrowserHistory';
 import { reducer as formReducer } from 'redux-form';
 
 import * as reducers from './reducers';
-import { standardize } from './middlewares';
+import { standardize, createSocketMiddleware } from './middlewares';
 
 // import appReducer from './reducer.js';
 
@@ -24,6 +24,7 @@ let store = createStore(
   composeWithDevTools(
     applyMiddleware(
       standardize,
+      createSocketMiddleware(),
       thunkMiddleware,
       routerMiddleware(browserHistory),
     )

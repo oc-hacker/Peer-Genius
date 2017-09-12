@@ -2,20 +2,22 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { selectSocket } from '../../../redux/selectors/socket';
 
 import Flex from '../Flex';
 import ChatDisplay from './ChatDisplay';
 import ChatInput from './ChatInput';
 import TypingHintText from './TypingHintText';
 import { post } from '../../../redux/actions/network';
+import { socketAttachListener, socketDetachListener, socketEmit } from '../../../redux/actions/creators/socket';
 
 /**
  * The right side of the screen, where the actual chat is taking place.
  */
-@connect(state => ({
-  socket: selectSocket(state)
-}))
+@connect(null, {
+  socketEmit,
+  socketAttachListener,
+  socketDetachListener
+})
 export default class ChatScreen extends Component {
   static propTypes = {
     to: PropTypes.string // ID of the receiving is currently talking to.
@@ -40,15 +42,15 @@ export default class ChatScreen extends Component {
   };
 
   _onTypeStart = () => {
-    let { to, socket } = this.props;
-    socket.emit('type_start', {
+    let { to, socketEmit } = this.props;
+    socketEmit('type_start', {
       to
     });
   };
 
   _onTypeEnd = () => {
-    let { to, socket } = this.props;
-    socket.emit('type_end', {
+    let { to, socketEmit } = this.props;
+    socketEmit('type_end', {
       to
     });
   };
@@ -57,10 +59,10 @@ export default class ChatScreen extends Component {
     // Empty submit check
     if (!this.state.value) return;
 
-    let { to, socket } = this.props;
+    let { to, socketEmit } = this.props;
 
     // Send submission over socket
-    socket.emit('sendMessage', {
+    socketEmit('sendMessage', {
       to,
       message: this.state.value
     });
@@ -129,20 +131,20 @@ export default class ChatScreen extends Component {
   }
 
   componentDidMount() {
-    let { socket } = this.props;
+    let { socketAttachListener } = this.props;
     // Register socket event listeners
-    socket.addListener('receiveMessage', this._onReceiveMessage);
-    socket.addListener('type_start', this._onIncomingTypeStart);
-    socket.addListener('type_end', this._onIncomingTypeEnd);
+    socketAttachListener('receiveMessage', this._onReceiveMessage);
+    socketAttachListener('type_start', this._onIncomingTypeStart);
+    socketAttachListener('type_end', this._onIncomingTypeEnd);
 
   }
 
   componentWillUnmount() {
-    let { socket } = this.props;
+    let { socketDetachListener } = this.props;
     // Unregister socket event listeners
-    socket.removeListener('receiveMessage', this._onReceiveMessage);
-    socket.removeListener('type_start', this._onIncomingTypeStart);
-    socket.removeListener('type_end', this._onIncomingTypeEnd);
+    socketDetachListener('receiveMessage', this._onReceiveMessage);
+    socketDetachListener('type_start', this._onIncomingTypeStart);
+    socketDetachListener('type_end', this._onIncomingTypeEnd);
   }
 
   render() {

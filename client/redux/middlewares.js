@@ -1,3 +1,5 @@
+import types from './actions/types';
+
 const standardProps = ['type', 'payload', 'meta', 'error'];
 
 /**
@@ -14,4 +16,35 @@ export const standardize = store => next => action => {
     }
   }
   return next(action);
+};
+
+export const createSocketMiddleware = () => {
+  let socket = null;
+
+  return store => next => action => {
+    let { type, payload } = action;
+
+    switch (type) {
+      case types.SOCKET_CONNECT: {
+        // Intercept and dispatch
+        socket = payload;
+        return;
+      }
+      case types.SOCKET_EMIT: {
+        socket && socket.emit(payload.event, payload.data);
+        return;
+      }
+      case types.SOCKET_ATTACH_LISTENER: {
+        socket && socket.addListener(payload.event, payload.listener);
+        return;
+      }
+      case types.SOCKET_DETACH_LISTENER: {
+        socket && socket.removeListener(payload.event, payload.listener);
+        return;
+      }
+      default: {
+        return next(action);
+      }
+    }
+  };
 };
