@@ -11,8 +11,8 @@ export default class NewbieRouter extends Component {
 
     return (
       <Switch>
-        <Route path={`${url}`} component={NewbieDashboard} />
-        <Route path={`${url}/sessions`} component={SessionsRouter} />
+        <Route exact path={`${url}`} component={NewbieDashboard} />
+        <Route path={`${url}/sessions/:sessionID`} component={SessionsRouter} />
       </Switch>
     );
   }

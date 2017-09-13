@@ -27,7 +27,7 @@ export default class ChatScreen extends Component {
     super(props);
 
     this.state = {
-      loading: false,
+      loading: true,
       input: '',
       messages: [],
       participantTyping: false,
@@ -103,9 +103,7 @@ export default class ChatScreen extends Component {
   };
 
   componentWillMount() {
-    new Promise(resolve => this.setState({
-      loading: true
-    }, resolve)).then(() => Promise.all([
+    Promise.all([
       post('/chat/getMessages', {
         participant: this.props.to,
         indexStart: 0
@@ -113,7 +111,7 @@ export default class ChatScreen extends Component {
       post('/user/getName', {
         target: this.props.to
       })
-    ])).then(responses => Promise.all(
+    ]).then(responses => Promise.all(
       responses.map(response => response.body())
     )).then(([messageResponseBody, nameResponseBody]) => {
       this.setState({
@@ -148,11 +146,12 @@ export default class ChatScreen extends Component {
   }
 
   render() {
-    let { input, messages, participantName, participantTyping } = this.state;
+    let { loading, input, messages, participantName, participantTyping } = this.state;
 
     return (
       <Flex column grow={1}>
         <ChatDisplay
+          loading={loading}
           messages={messages}
         />
         <ChatInput

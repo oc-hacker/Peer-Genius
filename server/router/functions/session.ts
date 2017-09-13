@@ -1,76 +1,9 @@
-// @deprecated switching to socket.io for session stuff
 import * as httpStatus from 'http-status-codes';
-import { omit, pick } from 'lodash';
 
 import * as models from '../../database/models';
 
 import { Response } from 'express';
-import { VerifiedRequest } from '../../types';
-import { newConnection } from '../../database/reference';
-
-/*
-Workflow:
-request - Newbies post here to send requests to gurus
-check - Gurus post here to check if there are sessions needing a guru
-accept - Gurus post here to accept a session
-start - Gurus post here to start a session
-end - Gurus post here to stop a session
-review - Newbies post here to review a session
- */
-
-interface RequestSessionRequest extends VerifiedRequest {
-	body: {
-		user: {
-			id: string;
-		};
-		subject: string;
-		scheduledStart: Date;
-		scheduledEnd: Date;
-	};
-}
-
-/**
- * @deprecated Moving to socket.io handling
- */
-export const request = async (request: RequestSessionRequest, response: Response) => {
-	let { user: { id }, scheduledStart, scheduledEnd } = request.body;
-	
-	await models.session.create({
-		newbie: id,
-		scheduledStart,
-		scheduledEnd
-	});
-	
-	response.status(200).end();
-};
-
-/**
- * @deprecated Moving to socket.io handling
- */
-export const check = async (request: VerifiedRequest, response: Response) => {
-	let { user: { id } } = request.body;
-	
-	let guru = await models.guru.find({
-		where: {
-			user: id
-		}
-	});
-	let subjects = Object.keys(omit(guru, 'user')).filter(subject => guru[subject]);
-	
-	const connection = await newConnection();
-	// language=MYSQL-SQL
-	let results = await connection.asyncQuery(
-		`SELECT id, newbie, subject, startTime, endTime FROM sessions
-WHERE guru IS NULL
-AND subject IN (${subjects.map(connection.escape).join(', ')})
-ORDER BY startTime ASC`
-	);
-	connection.release();
-	
-	response.status(httpStatus.OK).json({
-		requests: results
-	});
-};
+import { AsyncHandler, VerifiedRequest } from '../../types';
 
 interface SessionInfoRequest extends VerifiedRequest {
 	body: {
@@ -81,10 +14,7 @@ interface SessionInfoRequest extends VerifiedRequest {
 	};
 }
 
-/**
- * @deprecated Moving to socket.io handling
- */
-export const info = async (request: SessionInfoRequest, response: Response) => {
+export const info: AsyncHandler<SessionInfoRequest> = async (request, response) => {
 	let result = await models.session.find({
 		where: {
 			id: request.body.session
@@ -94,45 +24,4 @@ export const info = async (request: SessionInfoRequest, response: Response) => {
 	response.status(httpStatus.OK).json({
 		session: result
 	});
-};
-
-interface ReviewSessionRequest extends VerifiedRequest {
-	body: {
-		user: {
-			id: string;
-		};
-		/** ID of session */
-		session: string;
-		/** Number between 1 and 5 (inclusive) */
-		rating: number;
-		comment?: string;
-	};
-}
-
-// Used for both initial reviews and editing reviews.
-/**
- * @deprecated Moving to socket.io handling
- */
-export const review = async (request: ReviewSessionRequest, response: Response) => {
-	let { user, session: sessionId, rating, comment } = request.body;
-	
-	let session = await models.session.find({
-		where: {
-			id: sessionId,
-			newbie: user.id
-		}
-	});
-	
-	// Null check
-	if (!session) {
-		response.status(httpStatus.BAD_REQUEST).end();
-		return;
-	}
-	
-	await session.update({
-		rating,
-		comment
-	});
-	await session.save();
-	response.status(httpStatus.OK).end();
 };

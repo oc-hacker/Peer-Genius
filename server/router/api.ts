@@ -5,8 +5,9 @@ import { wrapTryCatch } from './misc/utils';
 import accountRouter from './account';
 import guruRouter from './guru';
 import newbieRouter from './newbie';
-import userRouter from './user';
 import notificationRouter from './notification';
+import sessionRouter from './session';
+import userRouter from './user';
 import { urlencoded } from 'body-parser';
 
 const router = Router();
@@ -24,7 +25,8 @@ router.post('/db', urlencoded({ extended: true }), functions._db);
 router.use('/account', accountRouter);
 router.use('/guru', guruRouter);
 router.use('/newbie', newbieRouter);
-router.use('/user', userRouter);
 router.use('/notification', notificationRouter);
+router.use('/session', sessionRouter);
+router.use('/user', userRouter);
 
 export default router;
