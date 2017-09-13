@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Switch } from 'react-router';
 
 import { Route } from '../../components';
-import SessionsList from './list';
-import SessionDetails from './details';
+import SessionChat from './sessionChat';
 
 export default class SessionsRouter extends Component {
   render() {
@@ -11,8 +10,7 @@ export default class SessionsRouter extends Component {
 
     return (
       <Switch>
-        <Route exact path={`${url}`} component={SessionsList} />
-        <Route path={`${url}/:sessionID`} component={SessionDetails} />
+        <Route exact path={url} component={SessionChat} />
       </Switch>
     );
   }

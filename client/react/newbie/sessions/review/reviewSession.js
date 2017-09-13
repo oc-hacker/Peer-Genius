@@ -19,7 +19,7 @@ export default class ReviewSession extends Component {
 
     return (
       <Dialog
-        open onRequestClose={() => push('')}
+        open onRequestClose={() => push('.')}
       >
         <DialogTitle>
           Review Session
