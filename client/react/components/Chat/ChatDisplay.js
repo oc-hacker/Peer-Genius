@@ -46,7 +46,7 @@ export default class ChatDisplay extends Component {
             <CircularProgress className={classes.loading} />
           )}
           {messages.map(({ type, content, timestamp }, index) => (
-            <ChatMessage type={type} content={content} />
+            <ChatMessage key={timestamp.getTime()} type={type} content={content} timestamp={timestamp} />
           ))}
         </Flex>
       </Flex>

@@ -19,8 +19,11 @@ const styles = {
   },
   sendButton: {
     position: 'absolute',
-    right: 0,
-    bottom: 0
+    right: 12,
+    bottom: 12,
+    padding: 0,
+    minWidth: 64,
+    minHeight: 20
   }
 };
 
@@ -102,7 +105,7 @@ export default class ChatInput extends Component {
         >
         </StyledInput>
         <Button
-          raised color="primary"
+          round={true} raised color="primary"
           className={classes.sendButton}
           onClick={this._submit}
         >
