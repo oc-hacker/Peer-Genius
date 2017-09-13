@@ -7,10 +7,15 @@ import debounce from 'lodash/debounce';
 
 import Button from '../Button';
 import StyledInput from '../StyledInput';
+import Flex from '../Flex';
 
 const styles = {
-  input: {
+  root: {
     position: 'relative'
+  },
+  input: {
+    flexGrow: 1,
+    margin: 10
   },
   sendButton: {
     position: 'absolute',
@@ -39,6 +44,14 @@ export default class ChatInput extends Component {
     timeout: 5 * 60 * 1000
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      autoSubmit: true
+    };
+  }
+
   _onTypeStart = debounce(
     this.props.onTypeStart,
     this.props.delay,
@@ -59,14 +72,18 @@ export default class ChatInput extends Component {
 
   _onKeyPress = event => {
     if (event.key === 'Enter') {
-      // Enter key pressed, submit
-      this._submit();
+      // Slightly hacky XOR
+      if (!this.state.autoSubmit !== !event.shiftKey) {
+        // Enter key pressed, submit
+        this._submit();
+        event.preventDefault();
+      }
     }
   };
 
   _submit = () => {
     this.props.onSubmit();
-    // Immediately trigger onTypeEnd with submitted=true to indicate a submit.
+    // Immediately trigger onTypeEnd
     this._onTypeEnd.flush();
   };
 
@@ -74,15 +91,16 @@ export default class ChatInput extends Component {
     let { classes, value, onTypeStart, onTypeEnd, onChange, onSubmit, ...others } = this.props;
 
     return (
-      <StyledInput
-        Component={'div'}
-        contentEditable
-        className={classes.input}
-        onChange={this._onChange}
-        onKeyPress={this._onKeyPress}
-        {...others}
-      >
-        {value}
+      <Flex className={classes.root}>
+        <StyledInput
+          Component={'textarea'}
+          className={classes.input}
+          value={value}
+          onChange={this._onChange}
+          onKeyDown={this._onKeyPress}
+          {...others}
+        >
+        </StyledInput>
         <Button
           raised color="primary"
           className={classes.sendButton}
@@ -90,7 +108,7 @@ export default class ChatInput extends Component {
         >
           Send
         </Button>
-      </StyledInput>
+      </Flex>
     );
   }
 }

@@ -40,13 +40,16 @@ const palette = createPalette({
   accent: generateColorScheme('#f5bd66')
 });
 
+const black = new Color('#000');
+
 export const muiTheme = {
   ...baseTheme,
   typography,
   palette: {
     ...palette,
     warning: orange,
-    danger: deepOrange
+    danger: deepOrange,
+    getContrastText: color => new Color(color).contrast(black) < 5 ? '#000' : '#fff'
   }
 };
 

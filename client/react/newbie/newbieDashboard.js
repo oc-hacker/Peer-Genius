@@ -40,7 +40,7 @@ export default class NewbieDashboard extends React.Component {
             DASHBOARD</Text>
           <div style={{ display: 'block', borderStyle: 'solid', borderColor: 'white', marginLeft: 'auto', marginRight: 'auto', width: '20%' }}>
             <Button
-              flat color="primary"
+              color="primary"
               onClick={() => push('/home/schedule')}
             >
               <Text type="button" color='white' weight='bold'>REQUEST FOR ANOTHER SESSION</Text>

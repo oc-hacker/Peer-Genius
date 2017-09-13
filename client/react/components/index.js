@@ -13,5 +13,8 @@ export { default as SubjectFields } from './SubjectFields';
 export { default as Text } from './Text';
 export { default as UnexpectedErrorDialog } from './UnexpectedErrorDialog';
 export { default as UserAppBar } from './UserAppBar';
+
+// Decorators
+export { default as decorate } from './decorate';
 export { default as waitForInit } from './waitForInit';
 export { default as withProps } from './withProps';

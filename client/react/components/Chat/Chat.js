@@ -30,11 +30,17 @@ export default class Chat extends Component {
     post('/api/session/info', {
       session: this.props.sessionID
     })
-      .then(response => response.body())
+      .then(response => response.json())
       .then(({ session }) => this.setState({
         loading: false,
         to: this.props.selectParticipant(session)
-      }));
+      }))
+      .catch(error => {
+        console.error(error);
+        this.setState({
+          loading: false
+        });
+      });
   }
 
   render() {

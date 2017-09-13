@@ -57,22 +57,22 @@ export default class ChatScreen extends Component {
 
   _onSubmit = () => {
     // Empty submit check
-    if (!this.state.value) return;
+    if (!this.state.input) return;
 
     let { to, socketEmit } = this.props;
 
     // Send submission over socket
     socketEmit('sendMessage', {
       to,
-      message: this.state.value
+      message: this.state.input
     });
 
     // Update own state
     this.setState(state => ({
-      value: '',
+      input: '',
       messages: state.messages.concat({
         type: 'out',
-        content: state.value,
+        content: state.input,
         timestamp: new Date()
       })
     }));
@@ -112,7 +112,7 @@ export default class ChatScreen extends Component {
         target: this.props.to
       })
     ]).then(responses => Promise.all(
-      responses.map(response => response.body())
+      responses.map(response => response.json())
     )).then(([messageResponseBody, nameResponseBody]) => {
       this.setState({
         participantName: nameResponseBody.name,

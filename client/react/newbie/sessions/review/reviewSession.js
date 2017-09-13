@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
-import Dialog, {} from 'material-ui/Dialog';
+import Dialog, { DialogTitle, DialogContent} from 'material-ui/Dialog';
 
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
@@ -21,7 +21,12 @@ export default class ReviewSession extends Component {
       <Dialog
         open onRequestClose={() => push('')}
       >
-
+        <DialogTitle>
+          Review Session
+        </DialogTitle>
+        <DialogContent>
+          Page under construction.
+        </DialogContent>
       </Dialog>
     );
   }

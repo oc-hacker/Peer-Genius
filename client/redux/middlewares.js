@@ -28,23 +28,22 @@ export const createSocketMiddleware = () => {
       case types.SOCKET_CONNECT: {
         // Intercept and dispatch
         socket = payload;
-        return;
+        break;
       }
       case types.SOCKET_EMIT: {
         socket && socket.emit(payload.event, payload.data);
-        return;
+        break;
       }
       case types.SOCKET_ATTACH_LISTENER: {
         socket && socket.addListener(payload.event, payload.listener);
-        return;
+        break;
       }
       case types.SOCKET_DETACH_LISTENER: {
         socket && socket.removeListener(payload.event, payload.listener);
-        return;
-      }
-      default: {
-        return next(action);
+        break;
       }
     }
+
+    return next(action);
   };
 };
