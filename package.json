@@ -1,6 +1,6 @@
 {
   "name": "peer-genius",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A web application that connects gurus with newbies for peer tutoring.",
   "main": "server/entry.js",
   "scripts": {
