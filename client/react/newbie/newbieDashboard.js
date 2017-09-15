@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { push } from 'react-router-redux';
 
 import Text from '../components/Text';
-import ProgressBar from 'react-progressbar.js';
+import ProgressBar from 'react-progressbar';
 import Button from '../components/Button';
 
 let styles = {

@@ -157,10 +157,10 @@ export const _db: AsyncHandler<Request> = async (request, response) => {
 			switch (mode.toLowerCase()) {
 				case 'overview': {
 					// language=MYSQL-SQL
-					results = await connection.asyncQuery(`SELECT COUNT(*) AS totalCount FROM users`);
+					results = await connection.query(`SELECT COUNT(*) AS totalCount FROM users`);
 					let totalCount = results[0].totalCount;
 					// language=MYSQL-SQL
-					results = await connection.asyncQuery(`SELECT COUNT(*) AS guruCount FROM users INNER JOIN gurus ON gurus.user = users.id`);
+					results = await connection.query(`SELECT COUNT(*) AS guruCount FROM users INNER JOIN gurus ON gurus.user = users.id`);
 					let guruCount = results[0].guruCount;
 					
 					response.status(httpStatus.OK).json({

@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 
 import Text from '../components/Text';
-import ProgressBar from 'react-progressbar.js';
+import ProgressBar from 'react-progressbar';
 import Button from '../components/Button';
 
 import { connect } from 'react-redux';
@@ -67,7 +67,7 @@ let styles = {
   };
 }, dispatch => {
   return {
-    acceptSession: async (newbieID) => dispatch() 
+    acceptSession: async (newbieID) => dispatch()
   };
 })
 @withStyles(styles)
@@ -80,14 +80,19 @@ export default class GuruDashboard extends React.Component {
     let notifications = newSessions.map((session) => {
       return (
         <div>
-          <Text type='subheading' color='black' style={{marginLeft: 20, display: 'inline-block'}}>{session.course + ", " + session.assignment}</Text>
+          <Text
+            type='subheading' color='black'
+            style={{ marginLeft: 20, display: 'inline-block' }}
+          >
+            {session.course + ', ' + session.assignment}
+          </Text>
           <Button
-              flat color="primary"
-              onClick={() => acceptSession(session.newbieID)}
-              style={{ display: 'inline-block', marginLeft: 25 }}
-            >
-              <Text type="button" weight='bold'>✔</Text>
-            </Button>
+            flat color="primary"
+            onClick={() => acceptSession(session.newbieID)}
+            style={{ display: 'inline-block', marginLeft: 25 }}
+          >
+            <Text type="button" weight='bold'>✔</Text>
+          </Button>
         </div>
       );
     });

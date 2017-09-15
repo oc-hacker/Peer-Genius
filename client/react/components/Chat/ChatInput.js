@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from 'material-ui/styles';
 
-import debounce from 'lodash/debounce';
+import debounce from 'lodash.debounce';
 
 import Button from '../Button';
 import StyledInput from '../StyledInput';
@@ -105,7 +105,7 @@ export default class ChatInput extends Component {
         >
         </StyledInput>
         <Button
-          round={true} raised color="primary"
+          round raised color="primary"
           className={classes.sendButton}
           onClick={this._submit}
         >

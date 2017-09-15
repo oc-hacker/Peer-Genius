@@ -29,7 +29,7 @@ const styles = {
     '&:active': {
       boxShadow: 'none'
     },
-    borderRadius: props => props.round && '100vh',
+    borderRadius: props => props.round && 'max(100vw,100vh)',
   },
   flat: {
     color: props => getColor(props),

@@ -62,9 +62,9 @@ export const getConversations = async (request: VerifiedRequest, response: Respo
 	let { user: { id } } = request.body;
 	
 	let connection = await newConnection();
-	let conversations1 = await connection.asyncQuery('SELECT message.to, message.from, message.message, MAX(createdAt) FROM message GROUP BY message.to WHERE message.to=\''
+	let conversations1 = await connection.query('SELECT message.to, message.from, message.message, MAX(createdAt) FROM message GROUP BY message.to WHERE message.to=\''
 		+ id + '\' LIMIT 10;', { raw: true });
-	let conversations2 = await connection.asyncQuery('SELECT message.to, message.from, message.message, MAX(createdAt) FROM message GROUP BY message.from WHERE message.from=\''
+	let conversations2 = await connection.query('SELECT message.to, message.from, message.message, MAX(createdAt) FROM message GROUP BY message.from WHERE message.from=\''
 		+ id + '\' LIMIT 10;', { raw: true });
 	let conversations = conversations1.concat(conversations2);
 	
