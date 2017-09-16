@@ -45,7 +45,9 @@ class GuestAppBar extends Component {
         elevation={0}
         className={classNames(classes.appBar, className)}
       >
-        <PeerGeniusLogo fill={color} />
+        <a href='/'>
+          <PeerGeniusLogo fill={color} />
+        </a>
         <Flex grow={2} />
         <a href='/aboutUs' className={classes.aboutUs}>
           <Text type='subheading' color={color}>
