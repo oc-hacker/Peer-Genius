@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 
 import Text from '../components/Text';
-import ProgressBar from 'react-progressbar';
+import ProgressBar from 'react-progressbar.js';
 import Button from '../components/Button';
 
 import { connect } from 'react-redux';

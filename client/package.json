@@ -30,7 +30,7 @@
     "react-dom": "^15.6.1",
     "react-hot-loader": "^3.0.0-beta.7",
     "react-jss": "^7.1.0",
-    "react-progressbar": "^15.4.1",
+    "react-progressbar.js": "^0.2.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-redux": "5.0.0-alpha.3",
