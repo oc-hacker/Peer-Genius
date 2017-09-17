@@ -19,10 +19,6 @@ import { socketAttachListener, socketDetachListener, socketEmit } from '../../..
   socketDetachListener
 })
 export default class ChatScreen extends Component {
-  static propTypes = {
-    to: PropTypes.string // ID of the receiving is currently talking to.
-  };
-
   constructor(props) {
     super(props);
 
@@ -103,29 +99,43 @@ export default class ChatScreen extends Component {
   };
 
   componentWillMount() {
-    Promise.all([
-      post('/chat/getMessages', {
-        participant: this.props.to,
-        indexStart: 0
-      }),
-      post('/user/getName', {
-        target: this.props.to
+    let { match: { params } } = this.props;
+
+    // Get session info
+    post('/api/session/info', {
+      session: params.sessionID
+    })
+      .then(response => response.json())
+      .then(({ session }) => {
+      // Get message history
+        let to = this.props.selectParticipant(session);
+
+        return Promise.all([
+          post('/api/chat/getMessages', {
+            participant: to,
+            indexStart: 0
+          }),
+          post('/api/user/getName', {
+            target: to,
+          })
+        ]);
       })
-    ]).then(responses => Promise.all(
-      responses.map(response => response.json())
-    )).then(([messageResponseBody, nameResponseBody]) => {
-      this.setState({
-        participantName: nameResponseBody.name,
-        messages: messageResponseBody.messages
-          ? messageResponseBody.messages.map(({ createdAt, from, message }) => ({
-            type: from === this.props.to ? 'in' : 'out',
-            content: message,
-            timestamp: new Date(createdAt)
-          }))
-          : [],
-        loading: false
+      .then(responses => Promise.all(
+        responses.map(response => response.json())
+      ))
+      .then(([messageResponseBody, nameResponseBody]) => {
+        this.setState({
+          participantName: nameResponseBody.name,
+          messages: messageResponseBody.messages
+            ? messageResponseBody.messages.map(({ createdAt, from, message }) => ({
+              type: from === this.props.to ? 'in' : 'out',
+              content: message,
+              timestamp: new Date(createdAt)
+            }))
+            : [],
+          loading: false
+        });
       });
-    });
   }
 
   componentDidMount() {

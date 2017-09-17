@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import { withStyles } from 'material-ui/styles';
 
-import throttle from 'lodash/throttle';
+import debounce from 'lodash.debounce';
+import throttle from 'lodash.throttle';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
@@ -99,16 +100,19 @@ export default class FrontPage extends Component {
     });
   };
 
-  _onScroll = throttle(event => {
-    if (event.deltaY < 0) {
-      // Scroll up
-      this._previousPage();
-    }
-    else {
-      // Scroll down
-      this._nextPage();
-    }
-  }, 1000, { trailing: false });
+  _onScroll = debounce(
+    throttle(event => {
+      if (event.deltaY < 0) {
+        // Scroll up
+        this._previousPage();
+      }
+      else {
+        // Scroll down
+        this._nextPage();
+      }
+    }, 1000, { trailing: false }),
+    50, { leading: true, trailing: false }
+  );
 
   render() {
     let { classes } = this.props;

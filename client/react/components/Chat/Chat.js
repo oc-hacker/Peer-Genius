@@ -6,55 +6,38 @@ import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
 
+import Flex from '../Flex';
+import Route from '../Route';
 import ChatScreen from './ChatScreen';
+import withProps from '../withProps';
 
 import { post } from '../../../redux/actions/network';
 import { selectUserId } from '../../../redux/selectors/user';
+import RecentChats from './RecentChats';
 
 export default class Chat extends Component {
-  static defaultProps = {
-    sessionID: PropTypes.string.isRequired,
+  static propTypes = {
+    match: PropTypes.shape({
+      url: PropTypes.string
+    }),
     selectParticipant: PropTypes.func.isRequired, // Will be called with the ORM session object, should return the id of the other participant.
   };
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      loading: true,
-      to: ''
-    };
-  }
-
-  componentWillMount() {
-    post('/api/session/info', {
-      session: this.props.sessionID
-    })
-      .then(response => response.json())
-      .then(({ session }) => this.setState({
-        loading: false,
-        to: this.props.selectParticipant(session)
-      }))
-      .catch(error => {
-        console.error(error);
-        this.setState({
-          loading: false
-        });
-      });
   }
 
   render() {
-    let { loading, to } = this.state;
-    // TODO Currently only has message, no recent messages panel
+    let { match: { url } } = this.props;
 
-    if (loading) {
-      return null;
-    }
-    else {
-      // Giving ChatScreen a key forces it to remount when `to` changes.
-      return (
-        <ChatScreen key={to} to={to} {...this.props} />
-      );
-    }
+    return (
+      <Flex>
+        <Route path={url} component={RecentChats} />
+        <Route
+          path={`${url}/:sessionID`}
+          render={withProps({ selectParticipant: this.props.selectParticipant })(ChatScreen)}
+        />
+      </Flex>
+    );
   }
 }
