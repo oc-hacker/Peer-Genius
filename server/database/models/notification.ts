@@ -6,16 +6,16 @@ import { ProhibitedEditError } from '../errors';
 
 export interface NotificationAttributes {
 	id?: string;
-	to?: string;
+	toId?: string;
 	message?: string;
 }
 
 export interface NotificationInstance extends Sequelize.Instance<NotificationAttributes> {
 	createdAt: Date;
 	updatedAt: Date;
-
+	
 	id?: string;
-	to?: string;
+	toId?: string;
 	message?: string;
 }
 
@@ -25,7 +25,7 @@ const attributes = {
 		defaultValue: Sequelize.UUIDV4,
 		primaryKey: true
 	},
-	to: {
+	toId: {
 		type: Sequelize.UUID,
 		allowNull: false
 	},
@@ -36,13 +36,24 @@ const attributes = {
 };
 
 const blockUserEdit = (instance: NotificationInstance) => {
-	if (instance.changed('user')) {
+	if (instance.changed('toId')) {
 		throw new ProhibitedEditError('Editing the user FK of messages table is prohibited.');
 	}
 };
 
 const model: Sequelize.Model<NotificationInstance, NotificationAttributes> = admin.define<NotificationInstance, NotificationAttributes>('messages', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync(); // Alter when in development mode
 
+model.belongsTo(user, {
+	foreignKey: 'toId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+user.hasMany(model, {
+	foreignKey: 'toId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+
+model.sync();
 export default model;

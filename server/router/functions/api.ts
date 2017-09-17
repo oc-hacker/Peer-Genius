@@ -68,7 +68,7 @@ export const createAccount: AsyncHandler<CreateAccountRequest> = async (request,
 		// OK
 		let user = await models.user.create(pick(request.body, userAttributes));
 		let account = await models.account.create({
-			user: user.id,
+			userId: user.id,
 			email: request.body.email,
 			password: request.body.password
 		});
@@ -101,7 +101,7 @@ export const verifyLogin: AsyncHandler<LoginRequest> = async (request, response)
 	});
 	
 	if (account && await argon2.verify(account.password, request.body.password)) {
-		response.status(httpStatus.OK).json(await buildStore(account.user, { account }));
+		response.status(httpStatus.OK).json(await buildStore(account.userId, { account }));
 	}
 	else {
 		response.status(httpStatus.UNAUTHORIZED).end();

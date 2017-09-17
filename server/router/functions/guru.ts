@@ -17,7 +17,7 @@ interface GetReviewsRequest extends Request {
 export const getReviews: AsyncHandler<GetReviewsRequest> = async (request, response) => {
 	let sessions = await models.session.all({
 		where: {
-			guru: request.body.guru,
+			guruId: request.body.guru,
 			rating: {
 				$not: null
 			}

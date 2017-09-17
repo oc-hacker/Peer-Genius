@@ -6,8 +6,8 @@ import { ProhibitedEditError } from '../errors';
 
 export interface SessionAttributes {
 	id?: string;
-	newbie?: string;
-	guru?: string;
+	newbieId?: string;
+	guruId?: string;
 	subject?: string;
 	scheduledStart?: Date;
 	scheduledEnd?: Date;
@@ -22,8 +22,8 @@ export interface SessionInstance extends Sequelize.Instance<SessionAttributes> {
 	updatedAt: Date;
 	
 	id: string;
-	newbie: string;
-	guru?: string;
+	newbieId: string;
+	guruId: string;
 	subject: string;
 	scheduledStart: Date;
 	scheduledEnd: Date;
@@ -39,7 +39,7 @@ const attributes = {
 		defaultValue: Sequelize.UUIDV4,
 		primaryKey: true
 	},
-	newbie: {
+	newbieId: {
 		type: Sequelize.UUID,
 		allowNull: false,
 		references: {
@@ -49,7 +49,7 @@ const attributes = {
 			onDelete: 'cascade'
 		}
 	},
-	guru: {
+	guruId: {
 		type: Sequelize.UUID,
 		allowNull: true,
 		defaultValue: null,
@@ -99,10 +99,10 @@ const attributes = {
 };
 
 const blockUserEdit = (instance: SessionInstance) => {
-	if (instance.changed('guru')) {
+	if (instance.changed('guruId')) {
 		throw new ProhibitedEditError('Editing the guru FK of sessions table is prohibited.');
 	}
-	if (instance.changed('newbie')) {
+	if (instance.changed('newbieId')) {
 		throw new ProhibitedEditError('Editing the newbie FK of sessions table is prohibited.');
 	}
 };
@@ -110,13 +110,29 @@ const blockUserEdit = (instance: SessionInstance) => {
 const model: Sequelize.Model<SessionInstance, SessionAttributes> = admin.define<SessionInstance, SessionAttributes>('sessions', attributes);
 model.beforeUpdate(blockUserEdit);
 
+model.belongsTo(user, {
+	as: 'guru',
+	foreignKey: 'newbieId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
 user.hasMany(model, {
 	as: 'guruSession',
-	foreignKey: 'user'
+	foreignKey: 'newbieId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+model.belongsTo(user, {
+	as: 'newbie',
+	foreignKey: 'guruId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
 });
 user.hasMany(model, {
 	as: 'newbieSession',
-	foreignKey: 'user'
+	foreignKey: 'guruId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
 });
 
 model.sync();

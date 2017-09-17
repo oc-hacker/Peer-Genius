@@ -61,6 +61,6 @@ const blockIdEdit = (instance: UserInstance) => {
 
 const model: Sequelize.Model<UserInstance, UserAttributes> = admin.define<UserInstance, UserAttributes>('users', attributes);
 model.beforeUpdate(blockIdEdit);
-model.sync(); // Alter when in development mode
+model.sync();
 
 export default model;

@@ -9,5 +9,6 @@ const router = Router();
 
 router.use('/', verifySessionToken);
 router.post('/info', wrapTryCatch(functions.info));
+router.post('/recent', wrapTryCatch(functions.recent));
 
 export default router;

@@ -6,7 +6,7 @@ import user from './user';
 import { ProhibitedEditError } from '../errors';
 
 export interface AccountAttributes {
-	user?: string;
+	userId?: string;
 	email?: string;
 	password?: string;
 	verified?: boolean;
@@ -16,21 +16,15 @@ export interface AccountInstance extends Sequelize.Instance<AccountAttributes> {
 	createdAt: Date;
 	updatedAt: Date;
 	
-	user: string;
+	userId: string;
 	email: string;
 	password: string;
 	verified: string;
 }
 
 const attributes = {
-	user: {
+	userId: {
 		type: Sequelize.UUID,
-		references: {
-			model: user,
-			key: 'id',
-			onUpdate: 'cascade',
-			onDelete: 'cascade'
-		},
 		primaryKey: true
 	},
 	email: {
@@ -53,7 +47,7 @@ const attributes = {
 };
 
 const blockUserEdit = (instance: AccountInstance) => {
-	if (instance.changed('user')) {
+	if (instance.changed('userId')) {
 		throw new ProhibitedEditError('Editing the user FK of accounts table is prohibited.');
 	}
 };
@@ -69,7 +63,16 @@ model.beforeCreate(hashPassword);
 model.beforeUpdate('blockUserEdit', blockUserEdit);
 model.beforeUpdate('hashPassword', hashPassword);
 
-user.hasOne(model, { foreignKey: 'user' });
+model.belongsTo(user, {
+	foreignKey: 'userId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+user.hasOne(model, {
+	foreignKey: 'userId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
 
 model.sync();
 export default model;

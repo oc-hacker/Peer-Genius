@@ -6,7 +6,7 @@ import user from './user';
 import { ProhibitedEditError } from '../errors';
 
 export interface KeyAttributes {
-	user?: string;
+	userId?: string;
 	verifyEmailKey?: string;
 	nextEmail?: string;
 }
@@ -15,13 +15,13 @@ export interface KeyInstance extends Sequelize.Instance<KeyAttributes> {
 	createdAt: Date;
 	updatedAt: Date;
 	
-	user: string;
+	userId: string;
 	verifyEmailKey: string;
 	nextEmail: string;
 }
 
 const attributes = {
-	user: {
+	userId: {
 		type: Sequelize.UUID,
 		references: {
 			model: user,
@@ -43,7 +43,7 @@ const attributes = {
 };
 
 const blockUserEdit = (instance: KeyInstance) => {
-	if (instance.changed('user')) {
+	if (instance.changed('userId')) {
 		throw new ProhibitedEditError('Editing the user FK of keys table is prohibited.');
 	}
 };
@@ -66,7 +66,16 @@ export const uniqueRandom = async (column: string) => {
 	return key;
 };
 
-user.hasOne(model, { foreignKey: 'user' });
+model.belongsTo(user, {
+	foreignKey: 'userId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+user.hasOne(model, {
+	foreignKey: 'userId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
 
 model.sync();
 export default model;

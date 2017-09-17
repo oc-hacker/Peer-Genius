@@ -28,8 +28,8 @@ export const getMessages = async (request: GetMessagesRequest, response: Respons
 	
 	let messages1 = await message.findAll({
 		where: {
-			from: id,
-			to: participant
+			fromId: id,
+			toId: participant
 		},
 		raw: true,
 		offset: indexStart,
@@ -37,8 +37,8 @@ export const getMessages = async (request: GetMessagesRequest, response: Respons
 	});
 	let messages2 = await message.findAll({
 		where: {
-			from: participant,
-			to: id
+			fromId: participant,
+			toId: id
 		},
 		raw: true,
 		offset: indexStart,

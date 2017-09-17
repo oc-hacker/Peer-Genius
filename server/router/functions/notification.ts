@@ -59,7 +59,7 @@ interface GetNotificationsRequest extends Request {
 export const getNotifications: AsyncHandler<GetNotificationsRequest> = async (request, response) => {
 	let notifications = await models.notification.all({
 		where: {
-			to: request.body.to,
+			toId: request.body.to,
 		}
 	});
 

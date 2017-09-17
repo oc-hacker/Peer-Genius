@@ -6,8 +6,8 @@ import { ProhibitedEditError } from '../errors';
 
 export interface MessageAttributes {
 	id?: string;
-	from?: string;
-	to?: string;
+	fromId?: string;
+	toId?: string;
 	message?: string;
 }
 
@@ -16,8 +16,8 @@ export interface MessageInstance extends Sequelize.Instance<MessageAttributes> {
 	updatedAt: Date;
 	
 	id: string;
-	from: string;
-	to: string;
+	fromId: string;
+	toId: string;
 	message: string;
 }
 
@@ -27,7 +27,7 @@ const attributes = {
 		defaultValue: Sequelize.UUIDV4,
 		primaryKey: true
 	},
-	from: {
+	fromId: {
 		type: Sequelize.UUID,
 		references: {
 			model: user,
@@ -36,7 +36,7 @@ const attributes = {
 			onDelete: 'cascade'
 		}
 	},
-	to: {
+	toId: {
 		type: Sequelize.UUID,
 		references: {
 			model: user,
@@ -52,7 +52,7 @@ const attributes = {
 };
 
 const blockUserEdit = (instance: MessageInstance) => {
-	if (instance.changed('user')) {
+	if (instance.changed('fromId') || instance.changed('toId')) {
 		throw new ProhibitedEditError('Editing the user FK of messages table is prohibited.');
 	}
 };
@@ -60,13 +60,29 @@ const blockUserEdit = (instance: MessageInstance) => {
 const model: Sequelize.Model<MessageInstance, MessageAttributes> = admin.define<MessageInstance, MessageAttributes>('messages', attributes);
 model.beforeUpdate(blockUserEdit);
 
+model.belongsTo(user, {
+	as: 'incomingMessage',
+	foreignKey: 'toId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
 user.hasMany(model, {
 	as: 'incomingMessage',
-	foreignKey: 'to'
+	foreignKey: 'toId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+model.belongsTo(user, {
+	as: 'outgoingMessage',
+	foreignKey: 'fromId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
 });
 user.hasMany(model, {
 	as: 'outgoingMessage',
-	foreignKey: 'from'
+	foreignKey: 'fromId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
 });
 
 model.sync(); // Alter when in development mode

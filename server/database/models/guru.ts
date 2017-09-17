@@ -6,7 +6,7 @@ import { sequelizeAdmin as admin } from '../reference';
 import user from './user';
 
 export interface GuruAttributes {
-	user?: string;
+	userId?: string;
 	'english:americanLiterature'?: boolean;
 	'english:britishLiterature'?: boolean;
 	'english:contemporaryLiterature'?: boolean;
@@ -113,7 +113,7 @@ export interface GuruInstance extends Sequelize.Instance<GuruAttributes> {
 	createdAt: Date;
 	updatedAt: Date;
 	
-	user: string;
+	userId: string;
 	'english:americanLiterature': boolean;
 	'english:britishLiterature': boolean;
 	'english:contemporaryLiterature': boolean;
@@ -217,7 +217,7 @@ export interface GuruInstance extends Sequelize.Instance<GuruAttributes> {
 }
 
 const attributes = {
-	user: {
+	userId: {
 		type: Sequelize.UUID,
 		references: {
 			model: user,
@@ -333,7 +333,7 @@ const attributes = {
 export const subjects = without(Object.keys(attributes), 'user');
 
 const blockUserEdit = (instance: GuruInstance) => {
-	if (instance.changed('user')) {
+	if (instance.changed('userId')) {
 		throw new ProhibitedEditError('Editing the user FK of gurus table is prohibited.');
 	}
 };
@@ -341,7 +341,16 @@ const blockUserEdit = (instance: GuruInstance) => {
 const model: Sequelize.Model<GuruInstance, GuruAttributes> = admin.define('gurus', attributes);
 model.beforeUpdate(blockUserEdit);
 
-user.hasOne(model, { foreignKey: 'user' });
+model.belongsTo(user, {
+	foreignKey: 'userId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+user.hasOne(model, {
+	foreignKey: 'userId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
 
 model.sync();
 export default model;

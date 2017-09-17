@@ -24,7 +24,7 @@ export const edit: AsyncHandler<EditAccountRequest> = async (request, response) 
 	
 	let account = await models.account.find({
 		where: {
-			user: user.id
+			userId: user.id
 		}
 	});
 	
