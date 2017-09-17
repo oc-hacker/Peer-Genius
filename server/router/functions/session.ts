@@ -40,12 +40,19 @@ export const recent: AsyncHandler<VerifiedRequest> = async (request, response) =
 		} as any,
 		include: [{
 			model: models.user,
-			attributes: [],
+			attributes: [
+				[sequelize.fn('CONCAT', sequelize.col('guru.firstName'), ' ', sequelize.col('guru.lastName')), 'guruName'],
+			],
 			as: 'guru',
-			
+		}, {
+			model: models.user,
+			attributes: [
+				[sequelize.fn('CONCAT', sequelize.col('newbie.firstName'), ' ', sequelize.col('newbie.lastName')), 'newbieName']
+			],
+			as: 'newbie'
 		}],
 		attributes: [],
-		limit: 10 // TODO pagination?
+		limit: 10, // TODO pagination?
 	});
 	
 	response.status(httpStatus.OK).json({

@@ -30,7 +30,7 @@ export const sendIndex: Handler = (request, response) => {
 export const checkReview = async (request: VerifiedRequest, response: Response, next: NextFunction) => {
 	let unfinishedReview = await models.session.find({
 		where: {
-			newbie: request.body.user.id,
+			newbieId: request.body.user.id,
 			rating: null
 		}
 	});
@@ -84,6 +84,10 @@ export const errorHandler: ErrorRequestHandler = async (error: Error | string, r
 			`[${timeStamp}] Server handling error!`,
 			`Error message:`,
 			`${error}`,
+			`Stacktrace;`,
+			(error instanceof Error
+				? error.stack
+				: 'Not available'),
 			`Request details:`,
 			JSON.stringify(request.body, null, '\t')
 		].join('\n'));
@@ -116,10 +120,10 @@ export const buildStore = async (id: string, loadedInstances: LoadedModels = {})
 	});
 	account = account || await models.account.find({
 		where: {
-			user: id
+			userId: id
 		}
 	});
-
+	
 	let userInstance = await models.user.find({
 		where: {
 			id
