@@ -29,7 +29,9 @@ const styles = {
     '&:active': {
       boxShadow: 'none'
     },
-    borderRadius: props => props.round && 'max(100vw,100vh)',
+    borderRadius: props => props.round && 'calc(100vw + 100vh)'
+  },
+  round: {
   },
   flat: {
     color: props => getColor(props),
@@ -51,16 +53,17 @@ const styles = {
 
 @withTheme
 @stylesheet(styles)
-export default class CustomButton extends Component<Props, void> {
+export default class CustomButton extends Component {
   static propTypes = {
     /** Can be one of MUI's theme colors, or a css color string */
     color: PropTypes.string,
+    round: PropTypes.bool,
   };
 
   render() {
     let {
       classes, className,
-      theme, sheet, color,
+      theme, sheet, color, round,
       ...others
     } = this.props;
     let raised = this.props.raised || this.props.fab;
