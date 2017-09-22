@@ -9,7 +9,6 @@ const styles = ({ palette: { primary, grey, error, warning }, typography, spacin
   root: {
     position: 'relative',
     flexGrow: 1,
-    marginLeft: spacing.unit * 2,
     fontFamily: typography.fontFamily,
 
     borderWidth: 1,

@@ -2,6 +2,7 @@
 	"extends": "react-app",
 	"rules": {
 		"indent": ["error", 2, {"SwitchCase": 1}],
-		"semi": ["warn", "always"]
+		"semi": ["warn", "always"],
+		"jsx-a11y/href-no-hash": 0
 	}
 }

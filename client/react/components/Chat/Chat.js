@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import Flex from '../Flex';
 import Route from '../Route';
 import ChatScreen from './ChatScreen';
-import withProps from '../withProps';
+import withProps from '../HOC/withProps';
 
 import { post } from '../../../redux/actions/network';
 import { selectUserId } from '../../../redux/selectors/user';
@@ -22,10 +22,6 @@ export default class Chat extends Component {
     }),
     selectParticipant: PropTypes.func.isRequired, // Will be called with the ORM session object, should return the id of the other participant.
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     let { match: { url } } = this.props;

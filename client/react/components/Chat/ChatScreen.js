@@ -98,44 +98,45 @@ export default class ChatScreen extends Component {
     });
   };
 
+  _loadMessageHistory = async (params) => {
+    // Get session info
+    let response = await  post('/api/session/info', {
+      session: params.sessionID
+    });
+    let { session } = await response.json();
+
+    // Get message history
+    let to = this.props.selectParticipant(session);
+
+    let [messageResponseBody, nameResponseBody] = await Promise.all([
+      post('/api/chat/getMessages', {
+        participant: to,
+        indexStart: 0
+      }).then(response => response.json()),
+      post('/api/user/getName', {
+        target: to,
+      }).then(response => response.json())
+    ]);
+
+    this.setState({
+      participantName: nameResponseBody.name,
+      messages: messageResponseBody.messages
+        ? messageResponseBody.messages.map(({ createdAt, from, message }) => ({
+          type: from === this.props.to ? 'in' : 'out',
+          content: message,
+          timestamp: new Date(createdAt)
+        }))
+        : [],
+      loading: false
+    });
+  };
+
   componentWillMount() {
     let { match: { params } } = this.props;
 
-    // Get session info
-    post('/api/session/info', {
-      session: params.sessionID
-    })
-      .then(response => response.json())
-      .then(({ session }) => {
-      // Get message history
-        let to = this.props.selectParticipant(session);
-
-        return Promise.all([
-          post('/api/chat/getMessages', {
-            participant: to,
-            indexStart: 0
-          }),
-          post('/api/user/getName', {
-            target: to,
-          })
-        ]);
-      })
-      .then(responses => Promise.all(
-        responses.map(response => response.json())
-      ))
-      .then(([messageResponseBody, nameResponseBody]) => {
-        this.setState({
-          participantName: nameResponseBody.name,
-          messages: messageResponseBody.messages
-            ? messageResponseBody.messages.map(({ createdAt, from, message }) => ({
-              type: from === this.props.to ? 'in' : 'out',
-              content: message,
-              timestamp: new Date(createdAt)
-            }))
-            : [],
-          loading: false
-        });
-      });
+    this._loadMessageHistory(params).catch(error => {
+      console.error('Unexpected error when loading message history:\n', error);
+    });
   }
 
   componentDidMount() {

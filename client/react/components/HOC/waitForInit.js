@@ -4,10 +4,10 @@ import { CircularProgress } from 'material-ui/Progress';
 
 import { connect } from 'react-redux';
 
-import Flex from './Flex';
+import Flex from '../Flex';
 
-import { status } from '../../redux/actions/network';
-import { selectInitStatus } from '../../redux/selectors/status';
+import { status } from '../../../redux/actions/network';
+import { selectInitStatus } from '../../../redux/selectors/status';
 
 /**
  * A decorator that makes a component wait for initialization to complete before rendering its contents.

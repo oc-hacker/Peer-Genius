@@ -78,6 +78,11 @@ class StarFieldComponent extends Component {
 }
 
 export default class StarField extends Component {
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    maxValue: PropTypes.number,
+  };
+
   render() {
     return (
       <Field

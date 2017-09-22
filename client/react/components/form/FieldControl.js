@@ -36,7 +36,7 @@ export default class FieldControl extends Component {
         {...others}
       >
         {React.Children.map(children, child => {
-          return child.type.$$errorDisplay
+          return child && child.type.$$errorDisplay
             ? React.cloneElement(child, {
               error,
               warning

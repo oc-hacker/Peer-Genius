@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint -c .eslintrc.json .",
-    "dev": "node devServerEntry.js"
+    "dev": "node devServerEntry.js",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "authors": [
     "jasonftw",
@@ -62,7 +64,8 @@
     "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-dev-server": "^2.8.2",
-    "webpack-hot-middleware": "^2.19.1"
+    "webpack-hot-middleware": "^2.19.1",
+    "@storybook/react": "^3.2.8"
   },
   "private": true
 }

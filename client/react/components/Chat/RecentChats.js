@@ -20,13 +20,19 @@ export default class RecentChats extends Component {
     };
   }
 
-  componentWillMount() {
+  _loadRecentSessions = async () => {
     // Fetch recent sessions
-    post('/api/session/recent')
-      .then(response => response.json())
-      .then(({ recentSessions }) => Promise.all([
-        recentSessions.map(session => session)
-      ]));
+    let response = await post('/api/session/recent');
+
+    let { recentSessions } = await response.json();
+
+    // TODO
+  };
+
+  componentWillMount() {
+    this._loadRecentSessions().catch(error => {
+      console.error('Unexpected error when loading recent sessions:\n', error);
+    });
   }
 
   render() {

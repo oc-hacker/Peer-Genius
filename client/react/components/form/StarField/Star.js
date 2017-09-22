@@ -8,7 +8,6 @@ import StarBorderIcon from 'material-ui-icons/StarBorder';
 
 const styles = ({ spacing }) => ({
   icon: {
-    margin: spacing.unit,
     color: yellow[700],
     cursor: 'pointer'
   }

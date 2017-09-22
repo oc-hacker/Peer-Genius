@@ -4,9 +4,10 @@ import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
 
-const styles = ({ typography }) => ({
+const styles = ({ typography, spacing }) => ({
   label: {
-    fontFamily: typography.fontFamily
+    fontFamily: typography.fontFamily,
+    marginRight: spacing.unit * 2
   }
 });
 
