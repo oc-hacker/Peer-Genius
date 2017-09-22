@@ -257,7 +257,7 @@ class DateFieldComponent extends Component {
 
 export default class DateField extends Component {
   static propTypes = {
-    name: PropTypes.string,
+    name: PropTypes.string.isRequired,
     label: PropTypes.string,
     className: PropTypes.string,
     inputClass: PropTypes.string,

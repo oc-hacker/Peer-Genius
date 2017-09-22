@@ -142,7 +142,7 @@ const SelectField = props => (
 SelectField.displayName = 'SelectField';
 
 SelectField.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   label: PropTypes.string,
   className: PropTypes.string,
   inputClass: PropTypes.string,

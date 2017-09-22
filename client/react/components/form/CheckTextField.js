@@ -148,7 +148,7 @@ class CheckTextFieldComponent extends Component {
 
 export default class CheckTextField extends Component {
   static propTypes = {
-    name: PropTypes.string,
+    name: PropTypes.string.isRequired,
     checkLabel: PropTypes.string,
     textLabel: PropTypes.string,
     uncheckedValue: PropTypes.any,

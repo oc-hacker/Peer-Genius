@@ -28,7 +28,7 @@ export class CheckboxFieldComponent extends Component {
 
 export default class CheckboxField extends Component {
   static propTypes = {
-    name: PropTypes.string,
+    name: PropTypes.string.isRequired,
     label: PropTypes.string
   };
 

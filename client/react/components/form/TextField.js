@@ -53,7 +53,7 @@ const TextField = props => (
 TextField.displayName = 'TextField';
 
 TextField.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   label: PropTypes.string,
   className: PropTypes.string,
   inputClass: PropTypes.string,
