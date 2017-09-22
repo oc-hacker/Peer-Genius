@@ -3,15 +3,15 @@ import { reduxForm, SubmissionError, Form } from 'redux-form';
 
 import Button from 'material-ui/Button';
 
-import ReduxForm from '../client/react/components/form/ReduxForm';
-import CheckboxField from '../client/react/components/form/CheckboxField';
-import CheckTextField from '../client/react/components/form/CheckTextField';
-import DateField from '../client/react/components/form/DateField';
-import TextField from '../client/react/components/form/TextField';
-import SelectField from '../client/react/components/form/SelectField';
-import StarField from '../client/react/components/form/StarField';
-import CommunicationFields from '../client/react/components/CommunicationFields';
-import validator, { required } from '../client/react/components/form/validator';
+import ReduxForm from '../react/components/form/ReduxForm';
+import CheckboxField from '../react/components/form/CheckboxField';
+import CheckTextField from '../react/components/form/CheckTextField';
+import DateField from '../react/components/form/DateField';
+import TextField from '../react/components/form/TextField';
+import SelectField from '../react/components/form/SelectField';
+import StarField from '../react/components/form/StarField/index';
+import CommunicationFields from '../react/components/CommunicationFields';
+import validator, { required } from '../react/components/form/validator';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';

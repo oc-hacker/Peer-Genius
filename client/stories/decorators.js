@@ -2,9 +2,9 @@ import React from 'react';
 import { Provider as StoreProvider } from 'react-redux';
 import { MuiThemeProvider } from 'material-ui/styles';
 
-import { muiTheme } from '../client/react/style';
+import { muiTheme } from '../react/style';
 
-import store from '../client/redux/store';
+import store from '../redux/store';
 
 export const withRedux = story => (
     <StoreProvider store={store}>

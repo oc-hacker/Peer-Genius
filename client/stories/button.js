@@ -1,6 +1,6 @@
 import React, { Component, Children } from 'react';
 
-import Button from '../client/react/components/Button';
+import Button from '../react/components/Button';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';

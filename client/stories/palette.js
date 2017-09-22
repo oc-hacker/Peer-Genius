@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import stylesheet from 'react-jss';
 
-import Flex from '../client/react/components/Flex';
+import Flex from '../react/components/Flex';
 
-import { muiTheme } from '../client/react/style';
+import { muiTheme } from '../react/style';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';

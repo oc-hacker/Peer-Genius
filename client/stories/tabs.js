@@ -1,6 +1,6 @@
 import React, { Component, Children } from 'react';
 
-import { Tabs, tab, tabControl } from '../client/react/components/tabs';
+import { Tabs, tab, tabControl } from '../react/components/tabs/index';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
