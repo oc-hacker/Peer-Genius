@@ -4,7 +4,6 @@ import { subjects } from '../database/models/guru';
 import { UserInstance } from '../database/models/user';
 import { UserSocket } from '../types';
 import * as sequelize from 'sequelize';
-import { sendMessage } from './chat';
 
 interface Registry<V> {
 	[key: string]: V;
@@ -30,11 +29,11 @@ export const onlineUsers: Registry<UserInstance> = {};
 
 const guruCondition = subjects.map(subject => `\`guru\`.\`${subject}\``).join(' OR ');
 
-const attach = async (socket: UserSocket, user: string) => {
-	console.log('User', user, 'connected.');
+const attach = async (socket: UserSocket, userId: string) => {
+	console.log('User', userId, 'connected.');
 	const userInstance = await models.user.find({
 		where: {
-			id: user
+			id: userId
 		},
 		include: [{
 			model: models.guru,
@@ -46,34 +45,35 @@ const attach = async (socket: UserSocket, user: string) => {
 			[sequelize.literal(guruCondition), 'isGuru'] // subject1 OR subject2 OR ... AS isGuru
 		],
 	});
-	//join a room with the user's UUID
-	socket.join(user);
-	//if user is guru, add them to the guruOnline list
+	
+	console.log(userInstance);
+	
+	// Join a room with the user's UUID
+	socket.join(userId);
+	
+	// If user is guru, add them to the guruOnline list
 	if (userInstance['guru.isGuru']){
 		socket.join('gurusOnline');
 	}
 	
 	// Save the socket id to registry.
-	socket.user = user;
-	socketRegistry[user] = [...(socketRegistry[user] || []), socket];
-	onlineUsers[user] = userInstance;
+	socket.user = userId;
+	socketRegistry[userId] = [...(socketRegistry[userId] || []), socket];
+	onlineUsers[userId] = userInstance;
 	// Broadcast that a user connected.
 	socket.broadcast.emit('user_connect', userInstance);
 	
 	socket.on('disconnect', () => {
-		console.log('User', user, 'disconnected.');
+		console.log('User', userId, 'disconnected.');
 		// Remove the registry entry
-		socketRegistry[user] = socketRegistry[user].filter(userSocket => userSocket.id !== socket.id);
+		socketRegistry[userId] = socketRegistry[userId].filter(userSocket => userSocket.id !== socket.id);
 		
 		// Check if user is completely disconnected.
-		if (socketRegistry[user].length === 0) {
-			delete onlineUsers[user];
+		if (socketRegistry[userId].length === 0) {
+			delete onlineUsers[userId];
 			socket.broadcast.emit('user_disconnect', userInstance);
 		}
 	});
-	
-	//handle sending messages
-	socket.on('sendMessage', async (data: Message) => await sendMessage(data, user, socket));
 	
 	// Send information about the users currently online
 	socket.emit('update_online_users', onlineUsers);
