@@ -59,3 +59,39 @@ export const recent: AsyncHandler<VerifiedRequest> = async (request, response) =
 		recentSessions
 	});
 };
+
+interface ReviewSessionRequest extends VerifiedRequest {
+	body: {
+		user: {
+			id: string;
+		};
+		/** UUID of session */
+		session: string;
+		rating: number;
+		comment?: string;
+	};
+}
+
+export const review: AsyncHandler<ReviewSessionRequest> = async (request, response) => {
+	let { user, session: sessionId, rating, comment } = request.body;
+	
+	let session = await models.session.find({
+		where: {
+			id: sessionId,
+			newbieId: user.id
+		}
+	});
+	
+	if (session) {
+		await session.update({
+			rating,
+			comment
+		});
+		await session.save();
+		
+		response.status(httpStatus.OK).end();
+	}
+	else {
+		response.status(httpStatus.BAD_REQUEST).end();
+	}
+};
