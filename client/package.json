@@ -28,6 +28,7 @@
     "lodash.throttle": "^4.1.1",
     "material-ui": "1.0.0-beta.5",
     "material-ui-icons": "^1.0.0-beta.10",
+    "peerjs": "^0.3.14",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
@@ -45,6 +46,7 @@
     "socket.io-client": "^2.0.3"
   },
   "devDependencies": {
+    "@storybook/react": "^3.2.8",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.0",
     "babel-loader": "^7.1.2",
@@ -64,8 +66,7 @@
     "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-dev-server": "^2.8.2",
-    "webpack-hot-middleware": "^2.19.1",
-    "@storybook/react": "^3.2.8"
+    "webpack-hot-middleware": "^2.19.1"
   },
   "private": true
 }

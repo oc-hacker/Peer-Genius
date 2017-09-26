@@ -4,6 +4,7 @@ import * as cors from 'cors';
 import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 import * as serveStatic from 'serve-static';
+import { ExpressPeerServer } from 'peer';
 
 import { initMailer } from '../email/mailer';
 import { logger, sendIndex, endResponse, errorHandler } from '../router/misc/utils';
@@ -35,6 +36,11 @@ const app = express();
 
 initMailer();
 
+// Listen; also get the server.
+const server = app.listen(SERVER_PORT, () => {
+	console.log('Listening on port ' + SERVER_PORT + '!');
+});
+
 // Logger
 app.use(logger);
 
@@ -57,6 +63,8 @@ app.use(serveStatic(path.join(__dirname, '../../public')));
 
 app.use('/api', apiRouter);
 
+app.use('/peerjs', ExpressPeerServer(server, {}));
+
 app.get(/^\/(?!api)/, sendIndex);
 
 // Ensure responses is ended
@@ -65,6 +73,4 @@ app.use(endResponse);
 // Errors
 app.use(errorHandler);
 
-export default app.listen(SERVER_PORT, () => {
-	console.log('Listening on port ' + SERVER_PORT + '!');
-});
+export default server;
