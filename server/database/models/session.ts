@@ -2,13 +2,14 @@ import * as Sequelize from 'sequelize';
 
 import { sequelizeAdmin as admin } from '../reference';
 import user from './user';
+import course from './course';
 import { ProhibitedEditError } from '../errors';
 
 export interface SessionAttributes {
 	id?: string;
 	newbieId?: string;
 	guruId?: string;
-	subject?: string;
+	courseId?: string;
 	scheduledStart?: Date;
 	scheduledEnd?: Date;
 	startTime?: Date;
@@ -24,7 +25,7 @@ export interface SessionInstance extends Sequelize.Instance<SessionAttributes> {
 	id: string;
 	newbieId: string;
 	guruId: string;
-	subject: string;
+	courseId: string;
 	scheduledStart: Date;
 	scheduledEnd: Date;
 	startTime?: Date;
@@ -52,9 +53,18 @@ const attributes: Sequelize.DefineAttributes = {
 	guruId: {
 		type: Sequelize.UUID,
 		allowNull: true,
-		defaultValue: null,
 		references: {
 			model: user,
+			key: 'id',
+			onUpdate: 'cascade',
+			onDelete: 'cascade'
+		}
+	},
+	courseId: {
+		type: Sequelize.UUID,
+		allowNull: false,
+		references: {
+			model: course,
 			key: 'id',
 			onUpdate: 'cascade',
 			onDelete: 'cascade'
@@ -88,10 +98,6 @@ const attributes: Sequelize.DefineAttributes = {
 		allowNull: true,
 		defaultValue: null
 	},
-	course: {
-		type: Sequelize.STRING,
-		allowNull: false
-	},
 	assignment: {
 		type: Sequelize.STRING,
 		allowNull: false
@@ -122,6 +128,7 @@ user.hasMany(model, {
 	onUpdate: 'cascade',
 	onDelete: 'cascade'
 });
+
 model.belongsTo(user, {
 	as: 'newbie',
 	foreignKey: 'guruId',
@@ -131,6 +138,17 @@ model.belongsTo(user, {
 user.hasMany(model, {
 	as: 'newbieSession',
 	foreignKey: 'guruId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+
+model.belongsTo(course, {
+	foreignKey: 'courseId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+course.hasMany(model, {
+	foreignKey: 'courseId',
 	onUpdate: 'cascade',
 	onDelete: 'cascade'
 });

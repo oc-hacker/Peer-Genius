@@ -25,6 +25,7 @@ export interface GuruInstance extends Sequelize.Instance<GuruAttributes> {
 const attributes: Sequelize.DefineAttributes = {
 	userId: {
 		type: Sequelize.UUID,
+		allowNull: false,
 		references: {
 			model: user,
 			key: 'id',
@@ -35,6 +36,7 @@ const attributes: Sequelize.DefineAttributes = {
 	},
 	courseId: {
 		type: Sequelize.UUID,
+		allowNull: false,
 		references: {
 			model: course,
 			key: 'id',

@@ -97,11 +97,19 @@ interface ScheduleSessionRequest extends VerifiedRequest {
  * @param {Number} request.body.duration the duration of the session, in minutes
  */
 export const scheduleSession: AsyncHandler<ScheduleSessionRequest> = async (request, response) => {
-	let newRequest = new SessionRequest(request.body.user.id, request.body.course,
-		request.body.assignment, request.body.time, request.body.duration);
+	let { user, course, assignment, time, duration } = request.body;
+	
+	let newRequest = new SessionRequest(
+		user.id,
+		course,
+		assignment,
+		time,
+		duration
+	);
+	
 	requestInterface.add(newRequest);
-	socketRegistry[request.body.user.id][0].to('gurusOnline').emit('newSession', newRequest);
-	response.status(httpStatus.OK);
+	socketRegistry[user.id][0].to('gurusOnline').emit('newSession', newRequest);
+	response.status(httpStatus.OK).end();
 };
 
 interface GetPastSessionsRequest extends VerifiedRequest {
@@ -159,6 +167,7 @@ interface AcceptSessionRequest extends VerifiedRequest {
  */
 export const acceptSession: AsyncHandler<AcceptSessionRequest> = async (request, response) => {
 	let result = requestInterface.acceptRequest(request.body.sessionID);
+	
 	if (result) {
 		//save the scheduled session
 		let newSession = {
