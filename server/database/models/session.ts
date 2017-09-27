@@ -33,7 +33,7 @@ export interface SessionInstance extends Sequelize.Instance<SessionAttributes> {
 	comment?: string;
 }
 
-const attributes = {
+const attributes: Sequelize.DefineAttributes = {
 	id: {
 		type: Sequelize.UUID,
 		defaultValue: Sequelize.UUIDV4,

@@ -21,7 +21,7 @@ export interface UserInstance extends Sequelize.Instance<UserAttributes> {
 	birthday: Date;
 }
 
-export const attributes = {
+export const attributes: Sequelize.DefineAttributes = {
 	id: {
 		type: Sequelize.UUID,
 		defaultValue: Sequelize.UUIDV4,

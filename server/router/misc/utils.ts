@@ -3,8 +3,6 @@ import * as fs from 'fs';
 import { pick } from 'lodash';
 import * as httpStatus from 'http-status-codes';
 
-import { subjects } from '../../database/models/guru';
-
 import * as models from '../../database/models';
 import * as sequelize from 'sequelize';
 import { exposedAttributes as userAttributes, UserInstance } from '../../database/models/user';
@@ -16,7 +14,6 @@ import { Handler, ErrorRequestHandler, NextFunction, Request, Response } from 'e
 import { AsyncHandler, Store, VerifiedRequest } from '../../types';
 
 const { JWT_EXPIRE } = process.env;
-const guruCondition = subjects.map(subject => `\`guru\`.\`${subject}\``).join(' OR ');
 
 export const logger: Handler = (request, response, next) => {
 	console.log(`[${new Date().toUTCString()}]`, 'Request received at', request.originalUrl);
@@ -124,31 +121,33 @@ export const buildStore = async (id: string, loadedInstances: LoadedModels = {})
 		}
 	});
 	
-	let userInstance = await models.user.find({
+	let userInstance: any = await models.user.find({
 		where: {
 			id
 		},
 		include: [{
 			model: models.guru,
-			attributes: []
+			attributes: [],
 		}],
 		attributes: [
 			'id',
 			[sequelize.fn('CONCAT', sequelize.col('firstName'), ' ', sequelize.col('lastName')), 'name'], // CONCAT(`firstName`, ' ', `lastName`)
-			[sequelize.literal(guruCondition), 'isGuru'] // subject1 OR subject2 OR ... AS isGuru
+			[sequelize.fn('MAX', sequelize.col('enabled')), 'isGuru'] // MAX(`enabled`) AS isGuru
 		],
+		group: 'id'
 	});
 	
 	let store: any = {};
 	
 	store.account = pick(account, ['email', 'verified']);
 	store.user = pick(user, userAttributes);
-	store.isGuru = userInstance['guru.isGuru'];
+	store.isGuru = Boolean(userInstance.isGuru);
 	store.session = {
 		jwt: createSessionToken(id),
 		expire: parseInt(JWT_EXPIRE) * 1000
 	};
 	
+	console.log(store);
 	return store as Store;
 };
 

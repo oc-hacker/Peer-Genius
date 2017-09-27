@@ -20,7 +20,7 @@ export interface KeyInstance extends Sequelize.Instance<KeyAttributes> {
 	nextEmail: string;
 }
 
-const attributes = {
+const attributes: Sequelize.DefineAttributes = {
 	userId: {
 		type: Sequelize.UUID,
 		references: {

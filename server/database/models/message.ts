@@ -21,7 +21,7 @@ export interface MessageInstance extends Sequelize.Instance<MessageAttributes> {
 	message: string;
 }
 
-const attributes = {
+const attributes: Sequelize.DefineAttributes = {
 	id: {
 		type: Sequelize.UUID,
 		defaultValue: Sequelize.UUIDV4,

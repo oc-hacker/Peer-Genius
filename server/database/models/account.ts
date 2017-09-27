@@ -22,7 +22,7 @@ export interface AccountInstance extends Sequelize.Instance<AccountAttributes> {
 	verified: string;
 }
 
-const attributes = {
+const attributes: Sequelize.DefineAttributes = {
 	userId: {
 		type: Sequelize.UUID,
 		primaryKey: true

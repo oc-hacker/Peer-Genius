@@ -19,7 +19,7 @@ export interface NotificationInstance extends Sequelize.Instance<NotificationAtt
 	message?: string;
 }
 
-const attributes = {
+const attributes: Sequelize.DefineAttributes = {
 	id: {
 		type: Sequelize.UUID,
 		defaultValue: Sequelize.UUIDV4,

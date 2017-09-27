@@ -1,6 +1,5 @@
 // All actions related to handing connection and online status.
 import * as models from '../database/models';
-import { subjects } from '../database/models/guru';
 import { UserInstance } from '../database/models/user';
 import { UserSocket } from '../types';
 import * as sequelize from 'sequelize';
@@ -27,8 +26,6 @@ export const socketRegistry: Registry<UserSocket[]> = {};
  */
 export const onlineUsers: Registry<UserInstance> = {};
 
-const guruCondition = subjects.map(subject => `\`guru\`.\`${subject}\``).join(' OR ');
-
 const attach = async (socket: UserSocket, userId: string) => {
 	console.log('User', userId, 'connected.');
 	const userInstance = await models.user.find({
@@ -42,17 +39,15 @@ const attach = async (socket: UserSocket, userId: string) => {
 		attributes: [
 			'id',
 			[sequelize.fn('CONCAT', sequelize.col('firstName'), ' ', sequelize.col('lastName')), 'name'], // CONCAT(`firstName`, ' ', `lastName`)
-			[sequelize.literal(guruCondition), 'isGuru'] // subject1 OR subject2 OR ... AS isGuru
+			[sequelize.fn('MAX', sequelize.col('enabled')), 'isGuru'] // MAX(`enabled`) AS isGuru
 		],
 	});
-	
-	console.log(userInstance);
 	
 	// Join a room with the user's UUID
 	socket.join(userId);
 	
 	// If user is guru, add them to the guruOnline list
-	if (userInstance['guru.isGuru']){
+	if (userInstance['isGuru']){
 		socket.join('gurusOnline');
 	}
 	

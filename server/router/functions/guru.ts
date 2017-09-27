@@ -43,3 +43,25 @@ export const getReviews: AsyncHandler<GetReviewsRequest> = async (request, respo
 		reviews
 	});
 };
+
+interface UpdateGuruRequest extends VerifiedRequest {
+	body: {
+		user: {
+			id: string;
+		};
+		courseId: string;
+		enabled: boolean;
+	};
+}
+
+export const update: AsyncHandler<UpdateGuruRequest> = async (request, response) => {
+	let { user, courseId, enabled } = request.body;
+	
+	await models.guru.upsert({
+		userId: user.id,
+		courseId,
+		enabled
+	});
+	
+	response.status(httpStatus.OK).end();
+};
