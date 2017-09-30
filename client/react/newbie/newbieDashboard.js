@@ -41,7 +41,7 @@ export default class NewbieDashboard extends React.Component {
           <div style={{ display: 'block', borderStyle: 'solid', borderColor: 'white', marginLeft: 'auto', marginRight: 'auto', width: '20%' }}>
             <Button
               color="primary"
-              onClick={() => push('/home/schedule')}
+              onClick={() => push('/newbie/schedule')}
             >
               <Text type="button" color='white' weight='bold'>REQUEST FOR ANOTHER SESSION</Text>
             </Button>

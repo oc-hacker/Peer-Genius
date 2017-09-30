@@ -220,6 +220,6 @@ export const getScheduledSessions: AsyncHandler<GetScheduledSessionsRequest> = a
 	if (scheduledSessions || scheduledSessions2) {
 		response.status(httpStatus.OK).json(scheduledSessions.concat(scheduledSessions2));
 	} else {
-		response.status(httpStatus.INTERNAL_SERVER_ERROR);
+		response.status(httpStatus.INTERNAL_SERVER_ERROR).end();
 	}
 };
