@@ -27,17 +27,33 @@ export const info: AsyncHandler<SessionInfoRequest> = async (request, response) 
 	});
 };
 
-export const recent: AsyncHandler<VerifiedRequest> = async (request, response) => {
-	let { user: { id: userID } } = request.body;
+interface RecentSessionRequest extends VerifiedRequest {
+	body: {
+		user: {
+			id: string;
+		};
+		mode?: 'guru' | 'newbie'; // The user is ... in the session (leave undefined to accept both)
+		limit?: number;
+		page?: number; // 0-indexed
+	};
+}
+
+export const recent: AsyncHandler<RecentSessionRequest> = async (request, response) => {
+	let { user: { id: userID }, mode, limit = 20, page = 0 } = request.body;
+	limit = Math.min(limit, 50); // Cap limit at 50 to protect server resources
 	
 	let recentSessions = await models.session.all({
-		where: {
-			$or: [{
-				newbieId: userID
-			}, {
-				guruId: userID
-			}]
-		} as any,
+		where: mode
+			? {
+				[`${mode}Id`]: userID
+			}
+			: {
+				$or: [{
+					newbieId: userID
+				}, {
+					guruId: userID
+				}]
+			} as any,
 		include: [{
 			model: models.user,
 			attributes: [
@@ -51,8 +67,9 @@ export const recent: AsyncHandler<VerifiedRequest> = async (request, response) =
 			],
 			as: 'newbie'
 		}],
-		attributes: [],
-		limit: 10, // TODO pagination?
+		attributes: ['id'],
+		limit,
+		offset: limit * page
 	});
 	
 	response.status(httpStatus.OK).json({

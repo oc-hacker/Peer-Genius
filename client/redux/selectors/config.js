@@ -7,9 +7,9 @@ export const selectCommunicationMethods = createSelector(
   config => config.communicationMethods
 );
 
-export const selectSubjects = createSelector(
+export const selectCourses = createSelector(
   selectConfig,
-  config => config.subjects
+  config => config.courses
 );
 
 export const selectServerConfig = createSelector(

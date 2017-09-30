@@ -4,11 +4,11 @@ import List from 'material-ui/List';
 
 import { connect } from 'react-redux';
 
-import { selectSubjects } from '../../../redux/selectors/config';
+import { selectCourses } from '../../../redux/selectors/config';
 import CategoryListItem from './CategoryListItem';
 
 @connect(state => ({
-  subjects: selectSubjects(state)
+  subjects: selectCourses(state)
 }))
 export default class SubjectFields extends Component {
   // Tap into context provided by redux-form to determine the form name

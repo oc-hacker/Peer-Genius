@@ -14,38 +14,27 @@ export const initialize = () => async dispatch => {
 
   // Retrieve basic server information
   let [
-    subjectsResponse,
-    configResponse
+    courseResponse,
+    configResponse,
   ] = await Promise.all([
-    get('/loc/subjects.json'),
+    get('/api/course/list'),
     get('/api/config')
   ]);
 
-  if (subjectsResponse.ok && configResponse.ok) {
-    let flatSubjects = await subjectsResponse.json();
+  if (courseResponse.ok && configResponse.ok) {
+    let courseData = await courseResponse.json();
     let serverConfig = await configResponse.json();
 
-    // Unflatten flatSubjects
-    let subjects = {};
-
-    for (let s in flatSubjects) {
-      if (flatSubjects.hasOwnProperty(s)) {
-        let [category, subject] = s.split(':', 2);
-        if (!subjects[category]) {
-          subjects[category] = {
-            [subject]: flatSubjects[s]
-          };
-        }
-        else {
-          subjects[category][subject] = flatSubjects[s];
-        }
-      }
+    // Normalize courses
+    let courses = {};
+    for (let course of courseData.courses) {
+      courses[course.id] = course;
     }
 
     dispatch({
       type: types.INIT_CONFIG,
       payload: {
-        subjects,
+        courses,
         serverConfig
       }
     });

@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 
 import { CheckboxField } from '../form';
 
-import { selectSubjects } from '../../../redux/selectors/config';
+import { selectCourses } from '../../../redux/selectors/config';
 
 const decamelize = camelCaseWord =>
   camelCaseWord
@@ -89,7 +89,7 @@ const styles = ({ palette: { text }, transitions, spacing }) => ({
   }
 
   return {
-    subjects: selectSubjects(state)[props.category],
+    subjects: selectCourses(state)[props.category],
     values: values || {}
   };
 }, {

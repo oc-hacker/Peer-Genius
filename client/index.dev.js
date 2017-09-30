@@ -4,14 +4,6 @@ import { AppContainer } from 'react-hot-loader';
 
 import App from './react/main';
 
-// Render the app.
-ReactDOM.render(
-  <AppContainer>
-    <App />
-  </AppContainer>,
-  document.getElementById('app')
-);
-
 // Hot Module Replacement
 if (module.hot) {
   module.hot.accept('./react/main', () => {
@@ -24,3 +16,11 @@ if (module.hot) {
     );
   });
 }
+
+// Render the app.
+ReactDOM.render(
+  <AppContainer>
+    <App />
+  </AppContainer>,
+  document.getElementById('app')
+);

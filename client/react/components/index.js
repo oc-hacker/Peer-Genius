@@ -9,7 +9,8 @@ export { default as GuestAppBar } from './GuestAppBar';
 export { default as Paper } from './Paper';
 export { default as Route } from './Route';
 export { default as Spacer } from './Spacer';
-export { default as SubjectFields } from './SubjectFields';
+// TODO Use the new courses system
+// export { default as SubjectFields } from './SubjectFields';
 export { default as Text } from './Text';
 export { default as UnexpectedErrorDialog } from './UnexpectedErrorDialog';
 export { default as UserAppBar } from './UserAppBar';

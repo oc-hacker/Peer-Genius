@@ -1,12 +1,15 @@
 import React from 'react';
+import ProgressBar from 'react-progressbar.js';
+import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
-import classNames from 'classnames';
+
 import { push } from 'react-router-redux';
 
 import Text from '../components/Text';
-import ProgressBar from 'react-progressbar.js';
 import Button from '../components/Button';
+import { Flex } from '../components';
+import PreviousSession from './previousSession';
 
 let styles = {
   headerBackground: {
@@ -20,6 +23,17 @@ let styles = {
   },
   centerText: {
     textAlign: 'center'
+  },
+  buttonContainer: {
+    display: 'block',
+    borderStyle: 'solid',
+    borderColor: 'white',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: '20%'
+  },
+  previousSessionContainer: {
+    padding: '50px 0'
   }
 };
 
@@ -34,11 +48,16 @@ export default class NewbieDashboard extends React.Component {
     let notifications = null;
 
     return (
-      <div style={{ display: 'block', width: '100%' }}>
+      <Flex column grow={1}>
         <div className={classNames(classes.headerText, classes.headerBackground)}>
-          <Text type='display1' color='white' className={classNames(classes.centerText, classes.headerText)}>YOUR
-            DASHBOARD</Text>
-          <div style={{ display: 'block', borderStyle: 'solid', borderColor: 'white', marginLeft: 'auto', marginRight: 'auto', width: '20%' }}>
+          <Text
+            type='display1'
+            color='white'
+            className={classNames(classes.centerText, classes.headerText)}
+          >
+            YOUR DASHBOARD
+          </Text>
+          <div className={classes.buttonContainer}>
             <Button
               color="primary"
               onClick={() => push('/newbie/schedule')}
@@ -47,7 +66,8 @@ export default class NewbieDashboard extends React.Component {
             </Button>
           </div>
         </div>
-      </div>
+        <PreviousSession/>
+      </Flex>
     );
   };
 }
