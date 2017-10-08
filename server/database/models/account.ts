@@ -25,6 +25,12 @@ export interface AccountInstance extends Sequelize.Instance<AccountAttributes> {
 const attributes: Sequelize.DefineAttributes = {
 	userId: {
 		type: Sequelize.UUID,
+		references: {
+			model: user,
+			key: 'id',
+			onUpdate: 'cascade',
+			onDelete: 'cascade'
+		},
 		primaryKey: true
 	},
 	email: {

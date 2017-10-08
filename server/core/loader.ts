@@ -5,3 +5,4 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 import './server';
 import './socket';
+import './backup';
