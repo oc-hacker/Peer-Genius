@@ -21,7 +21,8 @@ const styles = {
     fontSize: props => props.size,
     fontWeight: props => props.weight,
     cursor: props => props.noSelect ? 'default' : null,
-    userSelect: props => props.noSelect ? 'none' : null
+    userSelect: props => props.noSelect ? 'none' : null,
+    letterSpacing: props => props.spacing
   }
 };
 
@@ -32,7 +33,7 @@ const Text =
         // Take out extra props using destructure
         let {
           classes: { text, ...classes }, className,
-          color, shade, size, weight, noSelect,
+          color, shade, size, spacing, weight, noSelect,
           sheet, theme,
           ...others
         } = props;
@@ -63,6 +64,7 @@ Text.propTypes = {
   paragraph: PropTypes.bool, // MUI prop - add space at bottom?
   shade: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // Defaults to 500, used for selecting the shade of color in a set of color scheme
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // fontSize
+  spacing: PropTypes.number, // letterSpacing
   type: PropTypes.oneOf(['display4', 'display3', 'display2', 'display1', 'headline', 'title', 'subheading', 'body2', 'body1', 'caption', 'button']), // MUI prop - text type
   weight: PropTypes.number // fontWeight
 };

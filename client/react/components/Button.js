@@ -19,7 +19,12 @@ const getColor = (props, shade = 500) => {
 
 const getContrastColor = (props, shade) => {
   let { theme: { palette } } = props;
-  return palette.getContrastText(getColor(props));
+  try {
+    return palette.getContrastText(getColor(props));
+  }
+  catch (error) {
+    return getColor(props);
+  }
 };
 
 const styles = {
@@ -31,13 +36,19 @@ const styles = {
     },
     borderRadius: props => props.round && 'calc(100vw + 100vh)'
   },
-  round: {
-  },
+  round: {},
   flat: {
     color: props => getColor(props),
     border: props => props.border ? `1px solid ${getColor(props)}` : null,
     '&:hover': {
-      backgroundColor: props => fade(getColor(props, 'A200'), 0.12)
+      backgroundColor: props => {
+        try {
+          return fade(getColor(props, 'A200'), 0.12);
+        }
+        catch (error) {
+          return getColor(props, 'A200');
+        }
+      }
     }
   },
   raised: {

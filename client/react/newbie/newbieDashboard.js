@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
 
+import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import Text from '../components/Text';
@@ -39,9 +40,10 @@ let styles = {
 
 
 @withStyles(styles)
+@connect(null, {push})
 export default class NewbieDashboard extends React.Component {
   render = () => {
-    let { classes, currentHours } = this.props;
+    let { classes, currentHours, push } = this.props;
     if (!currentHours) {
       currentHours = 25;
     }
