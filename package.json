@@ -35,6 +35,7 @@
   },
   "private": true,
   "dependencies": {
+    "babel-core": "^6.26.0",
     "peer": "^0.2.8"
   }
 }
