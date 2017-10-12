@@ -49,20 +49,26 @@ const styles = {
     width: '15%',
     height: '6%'
   },
-  row: {
-    display: 'inline-block'
+  flex: {
+    display: 'flex'
+  },
+  flexRow: {
+    display: 'inline-flex'
   },
   fullWidth: {
     width: '100%'
   },
-  firstRow: {
-    marginLeft: 250,
-    marginRight: 250,
-    marginTop: -65
+  spaceBetween: {
+    justifyContent: 'space-between'
   },
-  secondRow: {
-    marginLeft: 350,
-    marginTop: 75
+  spaceAround: {
+    justifyContent: 'space-around'
+  },
+  block: {
+    display: 'block'
+  },
+  inline: {
+    display: 'inline'
   }
 };
 
@@ -87,23 +93,25 @@ export default class PageTwo extends Component {
             <Text type="title" color="black" className={classNames(classes.centerText, classes.centerTextSection)}>IANS</Text>
           </div>
         </div>
-        <div>
-          <div className={classes.fullWidth}>
-            <div className={classNames(classes.row, classes.firstRow)}>
+        <div style={{width: '90%'}}>
+          <div className={classNames(classes.flex, classes.spaceBetween)}>
+            <div>
               {awardIcon}
-              <Text type="title" color="black" className={classes.centerText} > Guaranteed Tutoring</Text>
+              <Text type="title" color="black" className={classNames(classes.centerText, classes.block)} > Guaranteed Tutoring</Text>
             </div>
-            <div className={classNames(classes.row, classes.firstRow)}>
+            
+            <div>
               {ratePersonIcon}
               <Text type="title" color="black" className={classes.centerText}>Rate your Guru</Text>
             </div>
           </div>
-          <div>
-            <div className={classNames(classes.row, classes.secondRow)}>
+          <div style={{height: 15}}/>
+          <div className={classNames(classes.flex, classes.spaceAround)}>
+            <div>
               {teacherIcon}
               <Text type="title" color="black" className={classes.centerText}>Find the Perfect Guru</Text>
             </div>
-            <div className={classNames(classes.row, classes.secondRow)}>
+            <div>
               {handIcon}
               <Text type="title" color="black" className={classes.centerText}>3 Clicks</Text>
             </div>
