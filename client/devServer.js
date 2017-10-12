@@ -36,6 +36,7 @@ app.use(webpackHotMiddleware(webpackCompiler));
 app.get('*.css', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../public/style.css'));
 });
+app.use(express.static('../public'));
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../public/index.html'));
 });
