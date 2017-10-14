@@ -14,6 +14,10 @@ export default class InfoFields extends Component {
     className: PropTypes.string
   };
 
+  shouldComponentUpdate() {
+    return false;
+  }
+
   render() {
     let minDate = new Date(), maxDate = new Date();
     minDate.setFullYear(minDate.getFullYear() - 19);
