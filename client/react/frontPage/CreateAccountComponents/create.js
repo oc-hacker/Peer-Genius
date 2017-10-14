@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormSection, isValid, SubmissionError, submit, touch } from 'redux-form';
+import { isValid, SubmissionError, submit, touch } from 'redux-form';
 
 import { withStyles } from 'material-ui/styles';
 import { fade } from 'material-ui/styles/colorManipulator';
@@ -11,7 +11,7 @@ import ClearIcon from 'material-ui-icons/Clear';
 
 import { connect } from 'react-redux';
 
-import { Button, CommunicationFields, Spacer, Text } from '../../components';
+import { Button, Spacer, Text } from '../../components';
 import { ReduxForm } from '../../components/form';
 import InfoFields, { infoFieldNames } from './info';
 
@@ -136,11 +136,6 @@ export default class CreateAccountDialog extends Component {
             asyncValidate={asyncValidate} asyncBlurFields={['email']}
           >
             <InfoFields />
-            <Spacer height="2em" />
-            <Text type="title">Communication methods</Text>
-            <FormSection name="communication">
-              <CommunicationFields />
-            </FormSection>
           </ReduxForm>
         </DialogContent>
         <DialogActions>
