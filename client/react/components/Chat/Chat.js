@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 import Flex from '../Flex';
 import Route from '../Route';
-import ChatScreen from './ChatScreen';
+import ChatScreenManager from './ChatScreenManager';
 import withProps from '../HOC/withProps';
 
 import { post } from '../../../redux/actions/network';
@@ -30,8 +30,8 @@ export default class Chat extends Component {
       <Flex>
         <Route path={url} component={RecentChats} />
         <Route
-          path={`${url}/:sessionID`}
-          render={withProps({ selectParticipant: this.props.selectParticipant })(ChatScreen)}
+          path={`${url}/:sessionId`}
+          render={withProps({ selectParticipant: this.props.selectParticipant })(ChatScreenManager)}
         />
       </Flex>
     );

@@ -18,7 +18,13 @@ import { socketAttachListener, socketDetachListener, socketEmit } from '../../..
   socketAttachListener,
   socketDetachListener
 })
-export default class ChatScreen extends Component {
+// FixMe chat screen undergoing revamp
+export default class ChatTextScreen extends Component {
+  static propTypes = {
+    to: PropTypes.string.isRequired,
+    sessionId: PropTypes.string.isRequired
+  };
+
   constructor(props) {
     super(props);
 
@@ -98,6 +104,7 @@ export default class ChatScreen extends Component {
     });
   };
 
+  // FixMe chat screen under revamp
   _loadMessageHistory = async (params) => {
     // Get session info
     let response = await  post('/api/session/info', {
