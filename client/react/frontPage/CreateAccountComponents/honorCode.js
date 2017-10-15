@@ -20,7 +20,10 @@ export default class HonorCodeDialog extends Component {
           Peer Genius Honor Code
         </DialogTitle>
         <DialogContent>
-          Insert honor code here.
+          As a user of Peer Genius, I adhere to the principles of truth, integrity, and respect.
+          I will not lie, cheat, or take photos or video record without the other person’s consent.
+          I am held accountable for the sessions I commit to; regardless whether I am the Newbee or the Guru.
+          I will respect other’s opinions, space, and personal information at all times.
         </DialogContent>
         <DialogActions>
           <Button color="danger" onClick={onDecline}>
