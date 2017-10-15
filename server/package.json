@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "tslint -p tslint.json",
-		"dev": "nodemon --exec ts-node -- ./entry.ts"
+		"dev": "nodemon ./entry.ts"
 	},
 	"authors": [
 		"jasonftw",
@@ -62,5 +62,11 @@
 		"tslint": "^5.7.0",
 		"typescript": "^2.5.2"
 	},
-	"private": true
+	"private": true,
+	"nodemonConfig": {
+		"execMap": {
+			"ts": "ts-node"
+		},
+		"delay": 2000
+	}
 }

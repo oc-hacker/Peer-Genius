@@ -1,6 +1,5 @@
 var path = require('path');
 var webpack = require('webpack');
-var CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   devtool: 'cheap-module-source-map',
@@ -8,7 +7,7 @@ module.exports = {
     'babel-polyfill',
     'react-hot-loader/patch',
     'webpack-hot-middleware/client?quiet=true',
-    path.resolve(__dirname, './client/index.dev.js')
+    path.resolve(__dirname, './index.dev.js')
   ],
   output: {
     path: path.resolve(__dirname, 'public'),
