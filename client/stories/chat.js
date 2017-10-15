@@ -8,6 +8,11 @@ import { withRedux, withTheme } from './decorators';
 import ChatMessage from '../react/components/Chat/ChatMessage';
 import Flex from '../react/components/Flex';
 import ReviewSession from '../react/newbie/sessions/review/reviewSession';
+import ChatVideo from '../react/components/Chat/ChatVideo';
+
+import { serverURL } from '../config';
+
+import Peer from 'peerjs';
 
 storiesOf('chat', module)
   .addDecorator(withRedux)
@@ -26,4 +31,7 @@ storiesOf('chat', module)
   ))
   .add('review popup', () => (
     <ReviewSession />
+  ))
+  .add('video chat', () => (
+    <ChatVideo peer={new Peer({ host: serverURL, port: 80, path: '/peerjs' })} />
   ));
