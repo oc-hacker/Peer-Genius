@@ -5,52 +5,57 @@ import * as httpStatus from 'http-status-codes';
 import { AsyncHandler, Store } from '../../types';
 import { slackConnection, newConnection } from '../../database/reference';
 
-import message, { MessageInstance } from '../../database/models/message';
+import * as models from '../../database/models';
 
 interface GetMessagesRequest extends VerifiedRequest {
 	body: {
 		user: {
 			id: string;
 		};
-		participant: string;
-		indexStart: number;
+		sessionId: string;
+		/** A 0-indexed page number. Defaults to 0 if not set. */
+		page?: number;
 	};
 }
 
 /**
- * Gets indexStart to indexStart + 50 messages for a user. indexStart should only be incremented in 25's.
- * @param request
- * @param response
- * Returns messages between the two users, sorted by time.
+ * Used to retrieve message history of a session.
  */
-export const getMessages = async (request: GetMessagesRequest, response: Response) => {
-	let { user: { id }, participant, indexStart } = request.body;
+export const getMessages: AsyncHandler<GetMessagesRequest> = async (request, response) => {
+	let { user: { id }, sessionId, page = 0 } = request.body;
 	
-	let messages1 = await message.findAll({
-		where: {
-			fromId: id,
-			toId: participant
-		},
-		raw: true,
-		offset: indexStart,
-		limit: 25
-	});
-	let messages2 = await message.findAll({
-		where: {
-			fromId: participant,
-			toId: id
-		},
-		raw: true,
-		offset: indexStart,
-		limit: 25
-	});
-	let messages = messages1.concat(messages2);
+	let [session, messages] = await Promise.all([
+		models.session.find({
+			where: {
+				id: sessionId,
+				$or: [{
+					newbieId: id
+				}, {
+					guruId: id
+				}]
+			} as any
+		}),
+		models.message.all({
+			where: {
+				sessionId
+			},
+			limit: 25,
+			offset: 25 * page,
+			order: [
+				['createdOn', 'DESC']
+			]
+		})
+	]);
 	
-	//sort messages by time
-	messages.sort((a: MessageInstance, b: MessageInstance) => {
-		return (new Date(a.createdAt)).getTime() - (new Date(b.createdAt)).getTime();
-	});
-	response.status(httpStatus.OK).json(messages);
+	// Security nad null check - must be querying for own session that exists
+	if (!session) {
+		response.status(httpStatus.BAD_REQUEST).end();
+	}
+	else {
+		response.status(httpStatus.OK).json({
+			messages
+		});
+	}
 };
 
 /**

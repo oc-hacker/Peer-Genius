@@ -1,22 +1,29 @@
-import message from '../database/models/message';
-import { Message } from './connection';
+import * as models from '../database/models';
 import { UserSocket } from '../types';
 
-const attach = async (socket: SocketIO.Socket, userId: string) => {
+interface Message {
+	sessionId: string;
+	receiverId: string;
+	message: string;
+}
+
+const attach = async (socket: UserSocket, userId: string) => {
 	// On message events
 	socket.on('sendMessage', async (data: Message) => {
-		let newMsg = {
-			from: userId,
-			to: data.to,
-			message: data.message,
-			createdAt: new Date()
-		};
+		let { sessionId, receiverId, message } = data;
 		
-		//save the message to DB
-		await message.upsert(newMsg);
+		// Save message to database
+		await models.message.create({
+			senderId: socket.user,
+			sessionId,
+			message
+		});
 		
-		//send the message to the recipient
-		socket.to(data.to).emit('receiveMessage', newMsg);
+		// Emit to recipient
+		socket.to(receiverId).emit('receiveMessage', {
+			sessionId,
+			message
+		});
 	});
 };
 

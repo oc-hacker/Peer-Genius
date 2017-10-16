@@ -1,13 +1,15 @@
 import * as Sequelize from 'sequelize';
+import { AssociationOptions } from 'sequelize';
 
 import { sequelizeAdmin as admin } from '../reference';
 import user from './user';
+import session from './session';
 import { ProhibitedEditError } from '../errors';
 
 export interface MessageAttributes {
 	id?: string;
-	fromId?: string;
-	toId?: string;
+	senderId?: string;
+	sessionId?: string;
 	message?: string;
 }
 
@@ -16,8 +18,8 @@ export interface MessageInstance extends Sequelize.Instance<MessageAttributes> {
 	updatedAt: Date;
 	
 	id: string;
-	fromId: string;
-	toId: string;
+	senderId: string;
+	sessionId: string;
 	message: string;
 }
 
@@ -27,7 +29,7 @@ const attributes: Sequelize.DefineAttributes = {
 		defaultValue: Sequelize.UUIDV4,
 		primaryKey: true
 	},
-	fromId: {
+	senderId: {
 		type: Sequelize.UUID,
 		references: {
 			model: user,
@@ -36,10 +38,10 @@ const attributes: Sequelize.DefineAttributes = {
 			onDelete: 'cascade'
 		}
 	},
-	toId: {
+	sessionId: {
 		type: Sequelize.UUID,
 		references: {
-			model: user,
+			model: session,
 			key: 'id',
 			onUpdate: 'cascade',
 			onDelete: 'cascade'
@@ -60,29 +62,29 @@ const blockUserEdit = (instance: MessageInstance) => {
 const model: Sequelize.Model<MessageInstance, MessageAttributes> = admin.define<MessageInstance, MessageAttributes>('messages', attributes);
 model.beforeUpdate(blockUserEdit);
 
-model.belongsTo(user, {
-	as: 'incomingMessage',
-	foreignKey: 'toId',
+const hookOptions: AssociationOptions = {
 	onUpdate: 'cascade',
 	onDelete: 'cascade'
+};
+
+model.belongsTo(user, {
+	as: 'sender',
+	foreignKey: 'senderId',
+	...hookOptions
 });
 user.hasMany(model, {
-	as: 'incomingMessage',
-	foreignKey: 'toId',
-	onUpdate: 'cascade',
-	onDelete: 'cascade'
+	as: 'sentMessages',
+	foreignKey: 'senderId',
+	...hookOptions
 });
-model.belongsTo(user, {
-	as: 'outgoingMessage',
-	foreignKey: 'fromId',
-	onUpdate: 'cascade',
-	onDelete: 'cascade'
+
+model.belongsTo(session, {
+	foreignKey: 'sessionId',
+	...hookOptions
 });
-user.hasMany(model, {
-	as: 'outgoingMessage',
-	foreignKey: 'fromId',
-	onUpdate: 'cascade',
-	onDelete: 'cascade'
+session.hasMany(model, {
+	foreignKey: 'sessionId',
+	...hookOptions
 });
 
 model.sync(); // Alter when in development mode

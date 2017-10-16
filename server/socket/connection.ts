@@ -9,14 +9,6 @@ interface Registry<V> {
 }
 
 /**
- * The object for messages.
- */
-export interface Message {
-	to: string;
-	message: string;
-}
-
-/**
  * Maps user id to a list of sockets that the user has open.
  */
 export const socketRegistry: Registry<UserSocket[]> = {};
