@@ -22,7 +22,8 @@ import { socketAttachListener, socketDetachListener, socketEmit } from '../../..
 export default class ChatTextScreen extends Component {
   static propTypes = {
     to: PropTypes.string.isRequired,
-    sessionId: PropTypes.string.isRequired
+    sessionId: PropTypes.string.isRequired,
+    switch: PropTypes.func.isRequired // Used to switch between video and chat
   };
 
   constructor(props) {
@@ -80,13 +81,13 @@ export default class ChatTextScreen extends Component {
     }));
   };
 
-  _onReceiveMessage = ({ from, message, createdAt }) => {
-    if (from === this.props.to) { // Check if it is from the current connected user
+  _onReceiveMessage = ({ senderId, message, timestamp }) => {
+    if (senderId === this.props.to) { // Check if it is from the current connected user
       this.setState(state => ({
         messages: state.messages.concat({
           type: 'in',
           content: message,
-          timestamp: new Date(createdAt)
+          timestamp: new Date(timestamp)
         })
       }));
     }
@@ -106,16 +107,10 @@ export default class ChatTextScreen extends Component {
 
   // FixMe chat screen under revamp
   _loadMessageHistory = async (params) => {
-    // Get session info
-    let response = await  post('/api/session/info', {
-      session: params.sessionID
-    });
-    let { session } = await response.json();
+    let { to } = this.props;
 
-    // Get message history
-    let to = this.props.selectParticipant(session);
-
-    let [messageResponseBody, nameResponseBody] = await Promise.all([
+    // Get name and message history
+    let [messageData, nameData] = await Promise.all([
       post('/api/chat/getMessages', {
         participant: to,
         indexStart: 0
@@ -126,9 +121,9 @@ export default class ChatTextScreen extends Component {
     ]);
 
     this.setState({
-      participantName: nameResponseBody.name,
-      messages: messageResponseBody.messages
-        ? messageResponseBody.messages.map(({ createdAt, from, message }) => ({
+      participantName: nameData.name,
+      messages: messageData.messages
+        ? messageData.messages.map(({ createdAt, from, message }) => ({
           type: from === this.props.to ? 'in' : 'out',
           content: message,
           timestamp: new Date(createdAt)

@@ -13,7 +13,7 @@ const attach = async (socket: UserSocket, userId: string) => {
 		let { sessionId, receiverId, message } = data;
 		
 		// Save message to database
-		await models.message.create({
+		let messageInstance = await models.message.create({
 			senderId: socket.user,
 			sessionId,
 			message
@@ -21,8 +21,10 @@ const attach = async (socket: UserSocket, userId: string) => {
 		
 		// Emit to recipient
 		socket.to(receiverId).emit('receiveMessage', {
+			senderId: socket.user,
 			sessionId,
-			message
+			message,
+			timestamp: messageInstance.createdAt.toISOString()
 		});
 	});
 };

@@ -28,12 +28,24 @@ export default class ChatScreenManager extends Component {
   }
 
   _init = async () => {
+    let to = await this._initInfo();
+    let peer = await this._initPeer();
+
+    this.setState({
+      to,
+      peer
+    });
+  };
+
+  _initInfo = async () => {
     // Load session data
     let response = await post('/api/session/info');
     let { session } = await response.json();
 
-    let to = this.props.selectParticipant(session);
+    return this.props.selectParticipant(session);
+  };
 
+  _initPeer = async to => {
     // Initialize peerjs connection
     let peer = new Peer(to, {
       host: serverURL,
@@ -41,10 +53,20 @@ export default class ChatScreenManager extends Component {
       path: '/peerjs'
     });
 
-    this.setState({
-      to,
-      peer
+    // Attach call hook. Only switch screen - leave handling of actual display change to the video screen.
+    peer.on('call', () => {
+      this.setState({
+        video: true
+      });
     });
+
+    return peer;
+  };
+
+  _switchScreen = () => {
+    this.setState(state => ({
+      video: !state.video
+    }));
   };
 
   componentWillMount() {
@@ -67,9 +89,17 @@ export default class ChatScreenManager extends Component {
     }
 
     return video ? (
-      <ChatVideoScreen to={to} peer={peer} />
+      <ChatVideoScreen
+        to={to}
+        peer={peer}
+        switch={this._switchScreen}
+      />
     ) : (
-      <ChatTextScreen to={to} sessionId={this.props.match.params.sessionId} />
+      <ChatTextScreen
+        to={to}
+        sessionId={this.props.match.params.sessionId}
+        switch={this._switchScreen}
+      />
     );
   }
 }
