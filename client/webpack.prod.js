@@ -8,7 +8,7 @@ module.exports = {
     path.resolve(__dirname, './index.prod.js')
   ],
   output: {
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname, '../public'),
     filename: 'app.js'
   },
   module: {
