@@ -48,7 +48,7 @@ export default class ChatScreenManager extends Component {
   _initPeer = async to => {
     // Initialize peerjs connection
     let peer = new Peer(to, {
-      host: serverURL,
+      host: /^https?:\/\/(\S+)$/.exec(serverURL)[1],
       port: 80,
       path: '/peerjs'
     });
