@@ -35,6 +35,9 @@ let styles = {
   },
   previousSessionContainer: {
     padding: '50px 0'
+  },
+  textAlignCenter: {
+    textAlign: 'center'
   }
 };
 
@@ -64,7 +67,7 @@ export default class NewbieDashboard extends React.Component {
               color="primary"
               onClick={() => push('/newbie/schedule')}
             >
-              <Text type="button" color='white' weight='bold'>REQUEST FOR ANOTHER SESSION</Text>
+              <Text type="button" color='white' weight='bold' className={classes.textAlignCenter}>REQUEST FOR ANOTHER SESSION</Text>
             </Button>
           </div>
         </div>
