@@ -3,6 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 import { routerMiddleware, routerReducer } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import { reducer as formReducer } from 'redux-form';
+import { createLogger } from 'redux-logger';
 
 import * as reducers from './reducers';
 import { standardize, createSocketMiddleware } from './middlewares';
@@ -27,6 +28,7 @@ let store = createStore(
       createSocketMiddleware(),
       thunkMiddleware,
       routerMiddleware(browserHistory),
+      createLogger()
     )
   )
 );
