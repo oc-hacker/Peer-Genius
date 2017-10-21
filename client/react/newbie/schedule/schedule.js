@@ -10,10 +10,18 @@ import { push } from 'react-router-redux';
 import { Flex, Text, Spacer, Button } from '../../components';
 import ModePanel from './ModePanel';
 
+import { serverURL } from '../../../config';
+
 const styles = {
   title: {
     // backgroundImage: 'url(assets/)'
     backgroundColor: '#3bb3d8' // TODO background picture
+  },
+  lightGrayBackground: {
+    backgroundColor: '#F5F5F5'
+  },
+  whiteBackground: {
+    backgroundColor: 'white'
   }
 };
 
@@ -44,19 +52,32 @@ export default class Schedule extends Component {
           </Text>
         </Flex>
         <Flex column grow={2}>
-          <Flex>
-            {/* TODO */}
+          <Flex row align='center' justify='space-evenly' className={classes.lightGrayBackground}>
+            <Flex column align='center' justify='center' className={classNames(classes.whiteBackground)}>
+              <img src={serverURL + '/assets/teachericon.png'} />
+              <Text>Course</Text>
+            </Flex>
+            <Flex column align='center' justify='center' className={classNames(classes.whiteBackground)}>
+              <img src={serverURL + '/assets/clipboardicon.png'} />
+              <Text>Assignment</Text>
+            </Flex>
+            <Flex column align='center' justify='center' className={classNames(classes.whiteBackground)}>
+              <img src={serverURL + '/assets/calendaricon.png'} />
+              <Text>Schedule</Text>
+            </Flex>
+            <Flex column align='center' justify='center' className={classNames(classes.whiteBackground)}>
+              <img src={serverURL + '/assets/timeclockicon.png'} />
+              <Text>How Long?</Text>
+            </Flex>
           </Flex>
-          <Flex align='center' justify='center'>
-            <Button
-              round
-              onClick={() => {
-                // TODO
-              }}
-            >
-              Request
-            </Button>
-          </Flex>
+          <Button
+            round
+            onClick={() => {
+              // TODO
+            }}
+          >
+            Request
+          </Button>
         </Flex>
       </Flex>
     );
