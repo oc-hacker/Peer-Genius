@@ -125,5 +125,4 @@ fabric.properties
 
 /server/build/
 /server/backup/
-public/app.js
-public/app.js.gz
+!/server/gulpfile.js
