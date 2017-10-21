@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import AppBarMenu from './AppBarMenu';
+import Text from '../Text';
 
 const AboutUs =
   connect(null, { push })(
     props => (
       <AppBarMenu
-        button={'About Us'}
+        button={<Text style={{color: 'white'}}>About Us</Text>}
         onClick={() => props.push('/aboutUs')}
       />
     )
