@@ -20,7 +20,7 @@ io.on('connection', async (socket: SocketIO.Socket) => {
 		
 		try {
 			await connection.attach(socket as UserSocket, user.id);
-			await chat.attach(socket, user.id);
+			await chat.attach(socket as UserSocket, user.id);
 		}
 		catch (error) {
 			console.error('Unexpected error when configuring socket connection for user', user.id);
