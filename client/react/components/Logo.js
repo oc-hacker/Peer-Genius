@@ -22,8 +22,8 @@ const PeerGeniusLogo = @withStyles({
         viewBox="0 0 356 374.5"
         data-name="Layer 1"
         id="Layer_1"
-        height={props.height ? props.height : '38pt'} width={props.width ? props.width : '38pt'}
-        style={props.style}
+        height={this.props.height ? this.props.height : '38pt'} width={this.props.width ? this.props.width : '38pt'}
+        style={this.props.style}
     >
         <metadata
             id="metadata53"
