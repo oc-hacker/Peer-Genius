@@ -17,7 +17,7 @@ const PeerGeniusLogo = @withStyles({
     "cls-5": {
         fill:'#fcfcfc'
     }
-})class PeerGeniusLogo extends React.Component { render() { return (
+}) class PeerGeniusLogo extends React.Component { render() { return (
     <svg
         viewBox="0 0 356 374.5"
         data-name="Layer 1"
