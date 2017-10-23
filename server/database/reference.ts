@@ -2,7 +2,7 @@
 import * as mysql from 'mysql2/promise';
 import * as Sequelize from 'sequelize';
 
-const { DB_NAME, DB_ADMIN_USER, DB_ADMIN_PASS, DB_SLACK_USER, DB_SLACK_PASS } = process.env;
+const { DB_HOST, DB_NAME, DB_ADMIN_USER, DB_ADMIN_PASS, DB_SLACK_USER, DB_SLACK_PASS } = process.env;
 
 interface QueryResults extends Array<mysql.RowDataPacket> {
 	affectedRows: number;
@@ -15,7 +15,7 @@ export interface AsyncConnection extends mysql.Connection {
 }
 
 const adminPool = mysql.createPool({
-	host: 'localhost',
+	host: DB_HOST,
 	database: DB_NAME,
 	user: DB_ADMIN_USER,
 	password: DB_ADMIN_PASS,
@@ -27,7 +27,7 @@ export const newConnection = async (logSQL?: boolean): Promise<mysql.PoolConnect
 };
 
 const slackPool = mysql.createPool({
-	host: 'localhost',
+	host: DB_HOST,
 	database: DB_NAME,
 	user: DB_SLACK_USER,
 	password: DB_SLACK_PASS,
@@ -43,7 +43,7 @@ export const sequelizeAdmin: Sequelize.Sequelize = new Sequelize(
 	DB_ADMIN_USER,
 	DB_ADMIN_PASS,
 	{
-		host: '127.0.0.1',
+		host: (DB_HOST === 'localhost' ? '127.0.0.1' : DB_HOST),
 		dialect: 'mysql',
 		logging: false,
 		timezone: '+00:00'

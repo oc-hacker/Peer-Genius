@@ -1,4 +1,5 @@
 # This file shows the values that should be in the .env file and can be used as a template.
+DB_HOST=localhost
 DB_NAME=
 DB_ADMIN_USER=
 DB_ADMIN_PASS=
