@@ -22,6 +22,12 @@ const styles = {
   },
   whiteBackground: {
     backgroundColor: 'white'
+  },
+  paddingTop: {
+    paddingTop: 10
+  },
+  fullHeight: {
+    height: '100%'
   }
 };
 
@@ -51,24 +57,36 @@ export default class Schedule extends Component {
             The Grind
           </Text>
         </Flex>
-        <Flex column grow={2}>
-          <Flex row align='center' justify='space-evenly' className={classes.lightGrayBackground}>
-            <Flex column align='center' justify='center' className={classNames(classes.whiteBackground)}>
-              <img src={serverURL + '/assets/teachericon.png'} />
-              <Text>Course</Text>
-            </Flex>
-            <Flex column align='center' justify='center' className={classNames(classes.whiteBackground)}>
-              <img src={serverURL + '/assets/clipboardicon.png'} />
-              <Text>Assignment</Text>
-            </Flex>
-            <Flex column align='center' justify='center' className={classNames(classes.whiteBackground)}>
-              <img src={serverURL + '/assets/calendaricon.png'} />
-              <Text>Schedule</Text>
-            </Flex>
-            <Flex column align='center' justify='center' className={classNames(classes.whiteBackground)}>
-              <img src={serverURL + '/assets/timeclockicon.png'} />
-              <Text>How Long?</Text>
-            </Flex>
+        <Flex column grow={2} className={classNames(classes.lightGrayBackground)}>
+          <Flex row align='center' justify='space-evenly' grow={2} className={classNames(classes.lightGrayBackground, classes.paddingTop)}>
+            <div style={{ height: 190, width: 160 }}>
+              <Flex column align='center' justify='center' className={classNames(classes.whiteBackground, classes.fullHeight)}>
+                <img src={serverURL + '/assets/teachericon.png'}/>
+                <Text className={classes.paddingTop}>Course</Text>
+                <div style={{ display: 'block', width: 120, height: 1 }} />
+              </Flex>
+            </div>
+            <div style={{ height: 190, width: 160 }}>
+              <Flex column align='center' justify='center' className={classNames(classes.whiteBackground, classes.fullHeight)}>
+                <img src={serverURL + '/assets/clipboardicon.png'}/>
+                <Text>Assignment</Text>
+                <div style={{ display: 'block', width: 120, height: 1 }} />
+              </Flex>
+            </div>
+            <div style={{ height: 190, width: 160 }}>
+              <Flex column align='center' justify='center' className={classNames(classes.whiteBackground, classes.fullHeight)}>
+                <img src={serverURL + '/assets/calendaricon.png'}/>
+                <Text>Schedule</Text>
+                <div style={{ display: 'block', width: 120, height: 1 }} />
+              </Flex>
+            </div>
+            <div style={{ height: 190, width: 160 }}>
+              <Flex column align='center' justify='center' className={classNames(classes.whiteBackground, classes.fullHeight)}>
+                <img src={serverURL + '/assets/timeclockicon.png'}/>
+                <Text>How Long?</Text>
+                <div style={{ display: 'block', width: 120, height: 1 }} />
+              </Flex>
+            </div>
           </Flex>
           <Button
             round
