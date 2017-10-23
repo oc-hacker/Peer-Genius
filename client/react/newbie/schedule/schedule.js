@@ -6,6 +6,7 @@ import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { scheduleSession } from '../../../redux/actions/creators/PGsession';
 
 import { Flex, Text, Spacer, Button } from '../../components';
 import ModePanel from './ModePanel';
@@ -32,10 +33,21 @@ const styles = {
 };
 
 @withStyles(styles)
-@connect(null, { push })
+@connect(null, { push, scheduleSession })
 export default class Schedule extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      course: "",
+      assignment: "",
+      time: new Date(),
+      duration: 0
+    }
+  }
+
   render() {
-    let { classes } = this.props;
+    let { classes, scheduleSession, push } = this.props;
 
     return (
       <Flex column grow={1}>
@@ -91,7 +103,8 @@ export default class Schedule extends Component {
           <Button
             round
             onClick={() => {
-              // TODO
+              scheduleSession(this.state.course, this.state.assignment, this.state.time, this.state.duration);
+              push('/newbie');
             }}
           >
             Request
