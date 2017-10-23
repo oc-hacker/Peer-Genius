@@ -2,7 +2,6 @@ import React from 'react';
 import { withStyles } from 'material-ui';
 
 const PeerGeniusLogo = @withStyles({
-<<<<<<< HEAD
     "cls-1": {
         fill:'#3991a5'
     },
@@ -20,28 +19,6 @@ const PeerGeniusLogo = @withStyles({
     }
 }) class PeerGeniusLogo extends React.Component { render() { return (
     <svg
-=======
-  "cls-1": {
-    fill:'#3991a5'
-  },
-  "cls-2": {
-    fill:'#81b8c1'
-  },
-  "cls-3": {
-    fill:'#f7c884'
-  },
-  "cls-4": {
-    fill:'#e5ac72'
-  },
-  "cls-5": {
-    fill:'#fcfcfc'
-  }
-})
-class PeerGeniusLogo extends React.Component { 
-  render() { 
-    return (
-      <svg
->>>>>>> 9ef84dce1420f15931d1186f226584839d0e0e2d
         viewBox="0 0 356 374.5"
         data-name="Layer 1"
         id="Layer_1"
