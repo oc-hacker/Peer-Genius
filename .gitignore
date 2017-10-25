@@ -126,3 +126,5 @@ fabric.properties
 /server/build/
 /server/backup/
 !/server/gulpfile.js
+
+# Backups

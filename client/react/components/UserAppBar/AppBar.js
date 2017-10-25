@@ -11,7 +11,7 @@ import Flex from '../Flex';
 import Text from '../Text';
 import AccountMenu from './AccountMenu';
 import AboutUs from './AboutUs';
-import Logo from '../Logo';
+import PeerGeniusLogo from '../Logo';
 
 const styles = ({ palette: { primary, getContrastText }, spacing }) => ({
   appBar: {
@@ -44,10 +44,11 @@ const UserAppBar =
         return (
           <AppBar position="static" className={classNames(classes.appBar, className)}>
             <Flex align="center">
-              <Logo
-                className={classes.logo}
-                onClick={() => push('/home')}
-              />
+              <a href='/'>
+                <PeerGeniusLogo
+                  className={classes.logo}
+                />
+              </a>
               <Text type="title" noSelect className={classes.appBarText}>Peer Genius</Text>
             </Flex>
             <Flex align="center">
