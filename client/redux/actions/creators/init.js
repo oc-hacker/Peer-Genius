@@ -17,19 +17,13 @@ export const initialize = () => async dispatch => {
     courseResponse,
     configResponse,
   ] = await Promise.all([
-    get('/api/course/list'),
+    post('/api/course/list'),
     get('/api/config')
   ]);
 
   if (courseResponse.ok && configResponse.ok) {
-    let courseData = await courseResponse.json();
+    let courses = await courseResponse.json();
     let serverConfig = await configResponse.json();
-
-    // Normalize courses
-    let courses = {};
-    for (let course of courseData.courses) {
-      courses[course.id] = course;
-    }
 
     dispatch({
       type: types.INIT_CONFIG,

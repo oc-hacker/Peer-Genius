@@ -8,6 +8,7 @@ import newbieRouter from './newbie';
 import notificationRouter from './notification';
 import sessionRouter from './session';
 import userRouter from './user';
+import courseRouter from './course';
 import { urlencoded } from 'body-parser';
 
 const router = Router();
@@ -22,6 +23,7 @@ router.post('/checkEmail', wrapTryCatch(functions.checkEmail));
 router.post('/db', urlencoded({ extended: true }), functions._db);
 
 // If JWT token is  verifying session token will give UNAUTHORIZED and return {reason: 'Invalid session'}
+router.use('/course', courseRouter);
 router.use('/account', accountRouter);
 router.use('/guru', guruRouter);
 router.use('/newbie', newbieRouter);

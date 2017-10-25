@@ -10,6 +10,9 @@ import { scheduleSession } from '../../../redux/actions/creators/PGsession';
 
 import { Flex, Text, Spacer, Button } from '../../components';
 import ModePanel from './ModePanel';
+import SelectField from 'material-ui/SelectField';
+import { MenuItem } from 'material-ui/Menu';
+import TextField from 'material-ui/TextField';
 
 import { serverURL } from '../../../config';
 
@@ -33,7 +36,7 @@ const styles = {
 };
 
 @withStyles(styles)
-@connect(null, { push, scheduleSession })
+@connect(state => { return { courses: state.config.courses.courses };}, { push, scheduleSession })
 export default class Schedule extends Component {
   constructor(props){
     super(props);
@@ -47,7 +50,7 @@ export default class Schedule extends Component {
   }
 
   render() {
-    let { classes, scheduleSession, push } = this.props;
+    let { classes, scheduleSession, push, courses } = this.props;
 
     return (
       <Flex column grow={1}>
@@ -76,6 +79,9 @@ export default class Schedule extends Component {
                 <img src={serverURL + '/assets/teachericon.png'}/>
                 <Text className={classes.paddingTop}>Course</Text>
                 <div style={{ display: 'block', width: 120, height: 1 }} />
+                <select value={this.state.course} onChange={(event) => this.setState({course: event.target.value})}>
+                  {courses ? courses.map((course) => <option value={course.id}>{course.name}</option>) : null}
+                </select>
               </Flex>
             </div>
             <div style={{ height: 190, width: 160 }}>
@@ -83,6 +89,7 @@ export default class Schedule extends Component {
                 <img src={serverURL + '/assets/clipboardicon.png'}/>
                 <Text>Assignment</Text>
                 <div style={{ display: 'block', width: 120, height: 1 }} />
+                <TextField placeholder="Assignment" value={this.state.assignment} onChange={(event) => this.setState({assignment: event.target.value})} />
               </Flex>
             </div>
             <div style={{ height: 190, width: 160 }}>
@@ -90,6 +97,7 @@ export default class Schedule extends Component {
                 <img src={serverURL + '/assets/calendaricon.png'}/>
                 <Text>Schedule</Text>
                 <div style={{ display: 'block', width: 120, height: 1 }} />
+                <TextField placeholder="Date (MM/DD/YYYY)" value={this.state.schedule} onChange={(event) => this.setState({schedule: event.target.value})} />
               </Flex>
             </div>
             <div style={{ height: 190, width: 160 }}>
@@ -97,12 +105,14 @@ export default class Schedule extends Component {
                 <img src={serverURL + '/assets/timeclockicon.png'}/>
                 <Text>How Long?</Text>
                 <div style={{ display: 'block', width: 120, height: 1 }} />
+                <TextField placeholder="Duration (minutes)" value={this.state.duration} onChange={(event) => this.setState({duration: event.target.value})} />
               </Flex>
             </div>
           </Flex>
           <Button
             round
             onClick={() => {
+              this.setState({schedule: new Date(this.state.schedule)})
               scheduleSession(this.state.course, this.state.assignment, this.state.time, this.state.duration);
               push('/newbie');
             }}

@@ -4,7 +4,7 @@ import types from '../actions/types';
 
 const defaultState = {
   communicationMethods: {},
-  subjects: {},
+  courses: [],
   serverConfig: {
     devMode: false
   }

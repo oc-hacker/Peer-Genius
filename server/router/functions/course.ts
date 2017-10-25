@@ -8,8 +8,9 @@ import { AsyncHandler, VerifiedRequest } from '../../types';
  * Lists all the courses stored in database.
  */
 export const list: AsyncHandler<Request> = async (request, response) => {
-	let courses = await models.course.all();
-	
+	console.log("Fetching courses");
+	let courses = await models.course.findAll();
+	console.log("COURSES: " + courses);
 	response.status(httpStatus.OK).json({
 		courses
 	});
