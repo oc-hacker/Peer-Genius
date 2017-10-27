@@ -14,7 +14,7 @@ import { serverURL } from '../../../config';
 
 export default class ChatScreenManager extends Component {
   static propTypes = {
-    selectParticipant: PropTypes.func.isRequired
+    mode: PropTypes.oneOf(['guru', 'newbie'])
   };
 
   constructor(props) {
@@ -28,8 +28,11 @@ export default class ChatScreenManager extends Component {
   }
 
   _init = async () => {
+    console.log('Initializing chat');
+    console.log(this);
+
     let to = await this._initInfo();
-    let peer = await this._initPeer();
+    let peer = await this._initPeer(to);
 
     this.setState({
       to,
@@ -39,10 +42,12 @@ export default class ChatScreenManager extends Component {
 
   _initInfo = async () => {
     // Load session data
-    let response = await post('/api/session/info');
+    let response = await post('/api/session/info', {
+      sessionId: this.props.match.params.sessionID
+    });
     let { session } = await response.json();
 
-    return this.props.selectParticipant(session);
+    return session[`${this.props.mode}Id`];
   };
 
   _initPeer = async to => {

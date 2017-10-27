@@ -16,8 +16,8 @@ export default class SessionChat extends Component {
   render() {
     return (
       <Chat
-        selectParticipant={session => session.guru}
         {...this.props}
+        mode='newbie'
       />
     );
   }

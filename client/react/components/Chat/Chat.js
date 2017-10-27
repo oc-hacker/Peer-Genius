@@ -20,18 +20,23 @@ export default class Chat extends Component {
     match: PropTypes.shape({
       url: PropTypes.string
     }),
-    selectParticipant: PropTypes.func.isRequired, // Will be called with the ORM session object, should return the id of the other participant.
+    mode: PropTypes.oneOf(['newbie', 'guru'])
   };
 
   render() {
     let { match: { url } } = this.props;
 
     return (
-      <Flex>
-        <Route path={url} component={RecentChats} />
+      <Flex grow={1}>
+        <Route path={url} render={withProps({ mode: this.props.mode })(RecentChats)} />
         <Route
           path={`${url}/:sessionId`}
-          render={withProps({ selectParticipant: this.props.selectParticipant })(ChatScreenManager)}
+          render={props => (
+            <ChatScreenManager
+              mode={this.props.mode}
+              {...props}
+            />
+          )}
         />
       </Flex>
     );
