@@ -7,7 +7,7 @@ import { verifySessionToken } from './misc/auth';
 const router = Router();
 // Reminder: remember to use wrapTryCatch to enable express error handling on promise rejection errors!
 
-router.post('/list', wrapTryCatch(functions.list));
+router.get('/list', wrapTryCatch(functions.list));
 router.use('/', verifySessionToken);
 
 export default router;

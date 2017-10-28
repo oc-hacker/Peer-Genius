@@ -52,5 +52,3 @@ export const muiTheme = {
     getContrastText: color => new Color(color).contrast(black) < 5 ? '#000' : '#fff'
   }
 };
-
-console.log(muiTheme);

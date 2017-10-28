@@ -27,8 +27,7 @@ let store = createStore(
       standardize,
       createSocketMiddleware(),
       thunkMiddleware,
-      routerMiddleware(browserHistory),
-      createLogger()
+      routerMiddleware(browserHistory)
     )
   )
 );

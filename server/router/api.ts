@@ -3,6 +3,8 @@ import { Router } from 'express';
 import * as functions from './functions/api';
 import { wrapTryCatch } from './misc/utils';
 import accountRouter from './account';
+import chatRouter from './chat';
+import courseRouter from './course';
 import guruRouter from './guru';
 import newbieRouter from './newbie';
 import notificationRouter from './notification';
@@ -23,6 +25,8 @@ router.post('/db', urlencoded({ extended: true }), functions._db);
 
 // If JWT token is  verifying session token will give UNAUTHORIZED and return {reason: 'Invalid session'}
 router.use('/account', accountRouter);
+router.use('/chat', chatRouter);
+router.use('/course', courseRouter);
 router.use('/guru', guruRouter);
 router.use('/newbie', newbieRouter);
 router.use('/notification', notificationRouter);

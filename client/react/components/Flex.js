@@ -52,4 +52,6 @@ Flex.defaultProps = {
   component: 'div',
 };
 
+Flex.displayName = 'Flex';
+
 export default Flex;

@@ -42,7 +42,7 @@ export const getMessages: AsyncHandler<GetMessagesRequest> = async (request, res
 			limit: 25,
 			offset: 25 * page,
 			order: [
-				['createdOn', 'DESC']
+				['createdAt', 'DESC']
 			]
 		})
 	]);
