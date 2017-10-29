@@ -10,7 +10,6 @@ import newbieRouter from './newbie';
 import notificationRouter from './notification';
 import sessionRouter from './session';
 import userRouter from './user';
-import courseRouter from './course';
 import { urlencoded } from 'body-parser';
 
 const router = Router();
