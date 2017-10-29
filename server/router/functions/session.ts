@@ -6,6 +6,10 @@ import * as models from '../../database/models';
 import { Response } from 'express';
 import { AsyncHandler, VerifiedRequest } from '../../types';
 
+import { requestInterface } from './schedule';
+
+import { socketRegistry } from '../../socket/connection';
+
 interface SessionInfoRequest extends VerifiedRequest {
 	body: {
 		user: {
@@ -124,3 +128,20 @@ export const review: AsyncHandler<ReviewSessionRequest> = async (request, respon
 		response.status(httpStatus.BAD_REQUEST).end();
 	}
 };
+
+interface AcceptSessionRequest extends VerifiedRequest {
+	body: {
+		user: {
+			id: string;
+		},
+		sessionID: string;
+	};
+}
+
+export const acceptSession: AsyncHandler<AcceptSessionRequest> = async (request, response) => {
+	let session = requestInterface.acceptRequest(request.body.sessionID);
+	socketRegistry[request.body.user.id][0].emit('acceptSession', session);
+	socketRegistry[session.newbieID][0].emit('acceptSession', session);
+
+	response.statusCode(httpStatus.OK).end();
+}

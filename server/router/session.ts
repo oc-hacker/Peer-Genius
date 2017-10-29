@@ -11,5 +11,6 @@ router.use('/', verifySessionToken);
 router.post('/recent', wrapTryCatch(functions.recent));
 router.post('/info', wrapTryCatch(functions.info));
 router.post('/review', wrapTryCatch(functions.review));
+router.post('/acceptSession', wrapTryCatch(functions.acceptSession));
 
 export default router;
