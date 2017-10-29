@@ -33,13 +33,13 @@ const attach = async (socket: UserSocket, userId: string) => {
 			[sequelize.fn('CONCAT', sequelize.col('firstName'), ' ', sequelize.col('lastName')), 'name'], // CONCAT(`firstName`, ' ', `lastName`)
 			[sequelize.fn('MAX', sequelize.col('enabled')), 'isGuru'] // MAX(`enabled`) AS isGuru
 		],
-	});
+	}) as any;
 	
 	// Join a room with the user's UUID
 	socket.join(userId);
 	
 	// If user is guru, add them to the guruOnline list
-	if (userInstance['isGuru']){
+	if (userInstance.isGuru){
 		socket.join('gurusOnline');
 	}
 	

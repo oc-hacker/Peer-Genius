@@ -10,10 +10,11 @@ import Flex from '../../Flex';
 import MessageDisplay from './MessageDisplay';
 import ChatInput from './ChatInput';
 
-import { socketAttachListener, socketDetachListener } from '../../../../redux/actions/creators/socket';
+import { socketEmit, socketAttachListener, socketDetachListener } from '../../../../redux/actions/creators/socket';
 import { post } from '../../../../redux/actions/network';
 
 @connect(null, {
+  socketEmit,
   socketAttachListener,
   socketDetachListener
 })
@@ -54,12 +55,13 @@ export default class TextChat extends Component {
     // Empty submit check
     if (!this.state.input) return;
 
-    let { to, socketEmit } = this.props;
+    let { toId, socketEmit, match: { params } } = this.props;
 
     // Send submission over socket
     socketEmit('sendMessage', {
-      to,
-      message: this.state.input
+      receiverId: toId,
+      message: this.state.input,
+      sessionId: params.sessionId
     });
 
     // Update own state
@@ -74,7 +76,9 @@ export default class TextChat extends Component {
   };
 
   _onReceiveMessage = ({ senderId, message, timestamp }) => {
-    if (senderId === this.props.to) { // Check if it is from the current connected user
+    console.log(message)
+
+    if (senderId === this.props.toId) { // Check if it is from the current connected user
       this.setState(state => ({
         messages: state.messages.concat({
           type: 'in',
@@ -113,11 +117,11 @@ export default class TextChat extends Component {
     this.setState({
       participantName: nameData.name,
       messages: messageData.messages
-        ? messageData.messages.map(({ createdAt, from, message }) => ({
-          type: from === this.props.to ? 'in' : 'out',
+        ? messageData.messages.map(({ createdAt, senderId, message }) => ({
+          type: senderId === this.props.toId ? 'in' : 'out',
           content: message,
           timestamp: new Date(createdAt)
-        }))
+        })).reverse()
         : [],
       loading: false
     });

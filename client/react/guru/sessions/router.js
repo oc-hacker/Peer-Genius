@@ -10,7 +10,10 @@ export default class SessionsRouter extends Component {
 
     return (
       <Switch>
-        <Route exact path={url} component={SessionChat} />
+        <Route
+          path={url}
+          component={SessionChat}
+        />
       </Switch>
     );
   }

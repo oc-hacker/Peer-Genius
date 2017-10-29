@@ -1,5 +1,4 @@
-import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
@@ -8,10 +7,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { scheduleSession } from '../../../redux/actions/creators/PGsession';
 
-import { Flex, Text, Spacer, Button } from '../../components';
-import ModePanel from './ModePanel';
-import SelectField from 'material-ui/SelectField';
-import { MenuItem } from 'material-ui/Menu';
+import { Button, Flex, Spacer, Text } from '../../components';
 import TextField from 'material-ui/TextField';
 
 import { serverURL } from '../../../config';

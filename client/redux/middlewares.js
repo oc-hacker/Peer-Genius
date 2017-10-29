@@ -20,6 +20,7 @@ export const standardize = store => next => action => {
 
 export const createSocketMiddleware = () => {
   let socket = null;
+  let actionQueue = [];
 
   return store => next => action => {
     let { type, payload } = action;
@@ -28,6 +29,15 @@ export const createSocketMiddleware = () => {
       case types.SOCKET_CONNECT: {
         // Intercept and dispatch
         socket = payload;
+        // Run all the action backlogs
+        while (true) {
+          action = actionQueue.shift();
+          if (!action) {
+            break;
+          }
+
+          socket[action.name](...action.args);
+        }
         break;
       }
       case types.SOCKET_EMIT: {
@@ -35,11 +45,24 @@ export const createSocketMiddleware = () => {
         break;
       }
       case types.SOCKET_ATTACH_LISTENER: {
-        socket && socket.addListener(payload.event, payload.listener);
+        if (socket) {
+          socket.on(payload.event, payload.listener);
+        }
+        else {
+          actionQueue.push({ name: 'on', args: [payload.event, payload.listener] });
+        }
         break;
       }
       case types.SOCKET_DETACH_LISTENER: {
-        socket && socket.removeListener(payload.event, payload.listener);
+        if (socket) {
+          socket.on(payload.event, payload.listener);
+        }
+        else {
+          actionQueue.push({ name: 'off', args: [payload.event, payload.listener] });
+        }
+        break;
+      }
+      default: {
         break;
       }
     }
