@@ -1,6 +1,7 @@
 import types from '../types';
 import { post } from '../network';
 import { handleError } from './utils';
+import { push } from 'react-router-redux';
 
 // Redux action creators for guru actions
 
@@ -50,3 +51,21 @@ export const getGuruReviews = guruUUID => async dispatch => {
     return await dispatch(handleError(response));
   }
 };
+
+/**
+ * Updates the user's guru status for the given course;
+ * @param user the user's UUID
+ * @param courseID the ID of the course
+ * @param enabled if the user should be allowed to be a guru for this course
+ */
+export const update = (user, courseId, enabled) => async dispatch => {
+  let response = await post('/api/guru/update', {
+    user, courseId, enabled
+  });
+
+  if (response.ok) {
+    dispatch(push('/guru'));
+  } else {
+    return await dispatch(handleError(response));
+  }
+}

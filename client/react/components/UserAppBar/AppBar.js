@@ -12,6 +12,7 @@ import Text from '../Text';
 import AccountMenu from './AccountMenu';
 import AboutUs from './AboutUs';
 import PeerGeniusLogo from '../Logo';
+import GuruMenu from './GuruMenu';
 
 const styles = ({ palette: { primary, getContrastText }, spacing }) => ({
   appBar: {
@@ -52,6 +53,7 @@ const UserAppBar =
               <Text type="title" noSelect className={classes.appBarText}>Peer Genius</Text>
             </Flex>
             <Flex align="center">
+              <GuruMenu />
               <AboutUs />
               <AccountMenu />
             </Flex>

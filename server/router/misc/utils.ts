@@ -141,7 +141,7 @@ export const buildStore = async (id: string, loadedInstances: LoadedModels = {})
 	
 	store.account = pick(account, ['email', 'verified']);
 	store.user = pick(user, userAttributes);
-	store.isGuru = Boolean(userInstance.isGuru);
+	store.isGuru = userInstance.dataValues.isGuru === 1;
 	store.session = {
 		jwt: createSessionToken(id),
 		expire: parseInt(JWT_EXPIRE) * 1000
