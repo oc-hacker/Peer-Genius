@@ -1,12 +1,6 @@
-import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import React, { Component } from 'react';
 
-import { withStyles } from 'material-ui/styles';
-
-import { connect } from 'react-redux';
-
-import { Chat } from '../../components';
+import { PeerChat } from '../../components';
 
 export default class SessionChat extends Component {
   constructor(props) {
@@ -15,9 +9,9 @@ export default class SessionChat extends Component {
 
   render() {
     return (
-      <Chat
+      <PeerChat
         {...this.props}
-        selectParticipant={session => session.newbieId}
+        mode='guru'
       />
     );
   }

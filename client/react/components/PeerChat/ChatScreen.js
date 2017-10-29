@@ -43,13 +43,12 @@ export default class ChatScreen extends Component {
       sessionId: params.sessionId
     });
     let { session } = await response.json();
-    console.log(session);
 
     if (mode === 'newbie') {
-      return session.guru.id;
+      return session.guruId;
     }
     if (mode === 'guru') {
-      return session.newbie.id;
+      return session.newbieId;
     }
     return null;
   };
