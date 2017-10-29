@@ -122,7 +122,12 @@ export default class ChatScreen extends Component {
     }
 
     if (video) {
-      return (<VideoChat />);
+      return (
+        <VideoChat
+          toId={toId}
+          match={match}
+        />
+      );
     }
     else {
       return (
