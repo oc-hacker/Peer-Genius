@@ -46,7 +46,7 @@ export default class PageZero extends Component {
         className={classNames(classes.withColor, classes.background)}
       >
         <PeerGeniusLogo height="50%" width="50%" />
-        <Text type="button" color="rgb(1,147,172)" size="200%" weight="bold">ELIMINATE THE GRIND</Text>
+        <Text type="button" color="rgb(1,147,172)" size="200%" fontWeight="bold">ELIMINATE THE GRIND</Text>
         <Spacer height='3%' />
         <div className={classes.buttonContainer}>
           <Button
@@ -54,7 +54,7 @@ export default class PageZero extends Component {
             onClick={openLogIn}
             className={classes.button}
           >
-            <Text type="button" weight='bold'>Log In</Text>
+            <Text type="button" fontWeight='bold'>Log In</Text>
           </Button>
           <Spacer height="20px" />
           <Button
@@ -62,7 +62,7 @@ export default class PageZero extends Component {
             onClick={createAccount}
             className={classes.button}
           >
-            <Text type="button" weight='bold'>Create Account</Text>
+            <Text type="button" fontWeight='bold'>Create Account</Text>
           </Button>
         </div>
       </Page>

@@ -63,7 +63,7 @@ export default class PageFour extends Component {
             onClick={createAccount}
             style={styles.button}
           >
-            <Text type="button" weight='bold'>Sign Up</Text>
+            <Text type="button" fontWeight='bold'>Sign Up</Text>
           </Button>
         </div>
       </Page>
