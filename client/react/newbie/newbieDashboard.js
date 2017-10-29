@@ -67,7 +67,7 @@ export default class NewbieDashboard extends React.Component {
               color="primary"
               onClick={() => push('/newbie/schedule')}
             >
-              <Text type="button" color='white' weight='bold' className={classes.textAlignCenter}>REQUEST FOR ANOTHER SESSION</Text>
+              <Text type="button" color='white' fontWeight='bold' className={classes.textAlignCenter}>REQUEST FOR ANOTHER SESSION</Text>
             </Button>
           </div>
         </div>

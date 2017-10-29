@@ -125,6 +125,8 @@ private/
 
 /server/build/
 /server/backup/
+/server/backup/*
 !/server/gulpfile.js
+backup-*
 
 # Backups
