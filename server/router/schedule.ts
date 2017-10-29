@@ -8,10 +8,10 @@ const router = Router();
 // Reminder: remember to use wrapTryCatch to enable express error handling on promise rejection errors!
 
 router.use('/', verifySessionToken);
-router.use('/getCurrentRequests', wrapTryCatch(functions.getCurrentRequests));
-router.use('/scheduleSession', wrapTryCatch(functions.scheduleSession));
-router.use('/getPastSessions', wrapTryCatch(functions.getPastSessions));
-router.use('/acceptSession', wrapTryCatch(functions.acceptSession));
-router.use('/getScheduledSessions', wrapTryCatch(functions.getScheduledSessions));
+router.post('/getCurrentRequests', wrapTryCatch(functions.getCurrentRequests));
+router.post('/scheduleSession', wrapTryCatch(functions.scheduleSession));
+router.post('/getPastSessions', wrapTryCatch(functions.getPastSessions));
+router.post('/acceptSession', wrapTryCatch(functions.acceptSession));
+router.post('/getScheduledSessions', wrapTryCatch(functions.getScheduledSessions));
 
 export default router;

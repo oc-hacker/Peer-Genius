@@ -8,6 +8,7 @@ import courseRouter from './course';
 import guruRouter from './guru';
 import newbieRouter from './newbie';
 import notificationRouter from './notification';
+import scheduleRouter from './schedule';
 import sessionRouter from './session';
 import userRouter from './user';
 import { urlencoded } from 'body-parser';
@@ -31,6 +32,7 @@ router.use('/course', courseRouter);
 router.use('/guru', guruRouter);
 router.use('/newbie', newbieRouter);
 router.use('/notification', notificationRouter);
+router.use('/schedule', scheduleRouter);
 router.use('/session', sessionRouter);
 router.use('/user', userRouter);
 
