@@ -7,7 +7,7 @@ import * as serveStatic from 'serve-static';
 import { ExpressPeerServer } from 'peer';
 
 import { initMailer } from '../email/mailer';
-import { logger, sendIndex, endResponse, errorHandler } from '../router/misc/utils';
+import { logger, sendIndex, notFound, errorHandler } from '../router/misc/utils';
 import apiRouter from '../router/api';
 
 const { NODE_ENV, SERVER_PORT } = process.env;
@@ -67,8 +67,8 @@ app.use('/peerjs', ExpressPeerServer(server, {}));
 
 app.get(/^\/(?!api)/, sendIndex);
 
-// Ensure responses is ended
-app.use(endResponse);
+// If none of the above match, 404 not found.
+app.use(notFound);
 
 // Errors
 app.use(errorHandler);

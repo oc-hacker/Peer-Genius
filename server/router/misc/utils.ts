@@ -16,7 +16,7 @@ import { AsyncHandler, Store, VerifiedRequest } from '../../types';
 const { JWT_EXPIRE } = process.env;
 
 export const logger: Handler = (request, response, next) => {
-	console.log(`[${new Date().toUTCString()}]`, 'Request received at', request.originalUrl);
+	console.log(`[${new Date().toUTCString()}] ${request.method} request received at ${request.originalUrl}`);
 	next();
 };
 
@@ -92,8 +92,8 @@ export const errorHandler: ErrorRequestHandler = async (error: Error | string, r
 	}
 };
 
-export const endResponse: Handler = (request, response) => {
-	response.end();
+export const notFound: Handler = (request, response) => {
+	response.status(httpStatus.NOT_FOUND).end();
 };
 
 interface LoadedModels {
@@ -147,7 +147,6 @@ export const buildStore = async (id: string, loadedInstances: LoadedModels = {})
 		expire: parseInt(JWT_EXPIRE) * 1000
 	};
 	
-	console.log(store);
 	return store as Store;
 };
 

@@ -5,9 +5,9 @@ import { withStyles } from 'material-ui/styles';
 
 import debounce from 'lodash.debounce';
 
-import Button from '../Button';
-import StyledInput from '../StyledInput';
-import Flex from '../Flex';
+import Button from '../../Button';
+import StyledInput from '../../StyledInput';
+import Flex from '../../Flex';
 
 const styles = {
   root: {

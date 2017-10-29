@@ -6,19 +6,12 @@ import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
 
-import { PeerChat } from '../../components';
-
-export default class SessionChat extends Component {
+export default class VideoChat extends Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    return (
-      <PeerChat
-        {...this.props}
-        mode='newbie'
-      />
-    );
+    return (<div />)
   }
 }

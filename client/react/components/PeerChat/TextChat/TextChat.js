@@ -1,31 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
+import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
 
-import Flex from '../Flex';
-import ChatDisplay from './ChatDisplay';
+import Flex from '../../Flex';
+import MessageDisplay from './MessageDisplay';
 import ChatInput from './ChatInput';
-import TypingHintText from './TypingHintText';
-import { post } from '../../../redux/actions/network';
-import { socketAttachListener, socketDetachListener, socketEmit } from '../../../redux/actions/creators/socket';
 
-/**
- * The right side of the screen, where the actual chat is taking place.
- */
+import { socketAttachListener, socketDetachListener } from '../../../../redux/actions/creators/socket';
+import { post } from '../../../../redux/actions/network';
+
 @connect(null, {
-  socketEmit,
   socketAttachListener,
   socketDetachListener
 })
-// FixMe chat screen undergoing revamp
-export default class ChatTextScreen extends Component {
-  static propTypes = {
-    to: PropTypes.string.isRequired,
-    sessionId: PropTypes.string.isRequired,
-    switch: PropTypes.func.isRequired // Used to switch between video and chat
-  };
-
+export default class TextChat extends Component {
   constructor(props) {
     super(props);
 
@@ -105,18 +97,16 @@ export default class ChatTextScreen extends Component {
     });
   };
 
-  // FixMe chat screen under revamp
   _loadMessageHistory = async (params) => {
-    let { to } = this.props;
+    let { toId } = this.props;
 
     // Get name and message history
     let [messageData, nameData] = await Promise.all([
       post('/api/chat/getMessages', {
-        participant: to,
-        indexStart: 0
+        sessionId: params.sessionId
       }).then(response => response.json()),
       post('/api/user/getName', {
-        target: to,
+        target: toId,
       }).then(response => response.json())
     ]);
 
@@ -162,8 +152,11 @@ export default class ChatTextScreen extends Component {
     let { loading, input, messages, participantName, participantTyping } = this.state;
 
     return (
-      <Flex column grow={1}>
-        <ChatDisplay
+      <Flex
+        column
+        grow={1}
+      >
+        <MessageDisplay
           loading={loading}
           messages={messages}
         />
@@ -174,7 +167,6 @@ export default class ChatTextScreen extends Component {
           onTypeEnd={this._onTypeEnd}
           onSubmit={this._onSubmit}
         />
-        {participantTyping && <TypingHintText participantName={participantName} />}
       </Flex>
     );
   }

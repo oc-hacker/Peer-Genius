@@ -1,7 +1,6 @@
 export { default as AppFooter } from './AppFooter';
 export { default as Button } from './Button';
-export { default as Chat } from './Chat';
-export { default as CommunicationFields } from './CommunicationFields';
+export { default as PeerChat } from './PeerChat';
 export { default as Flex } from './Flex';
 export { default as Logo } from './Logo';
 export { default as GuestAppBar } from './GuestAppBar';

@@ -4,16 +4,13 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { CircularProgress } from 'material-ui/Progress';
 
-import Flex from '../Flex';
-import ChatMessage from './ChatMessage';
+import Flex from '../../Flex';
+import TextChatMessage from './TextChatMessage';
 
 const styles = ({ palette: { grey }, spacing }) => ({
   window: {
     overflowX: 'hidden',
     overflowY: 'auto'
-  },
-  loading: {
-    alignSelf: 'center'
   },
   inboundMessage: {
     alignSelf: 'flex-end'
@@ -26,7 +23,7 @@ const styles = ({ palette: { grey }, spacing }) => ({
 });
 
 @withStyles(styles)
-export default class ChatDisplay extends Component {
+export default class MessageDisplay extends Component {
   static propTypes = {
     loading: PropTypes.bool,
     messages: PropTypes.arrayOf(PropTypes.shape({
@@ -39,16 +36,33 @@ export default class ChatDisplay extends Component {
   render() {
     let { classes, loading, messages } = this.props;
 
-    return (
-      <Flex column grow={1}>
-        <Flex column justify="flex-end">
-          {loading && (
-            <CircularProgress className={classes.loading} />
-          )}
-          {messages.map(({ type, content, timestamp }, index) => (
-            <ChatMessage key={timestamp.getTime()} type={type} content={content} timestamp={timestamp} />
-          ))}
+    if (loading) {
+      return (
+        <Flex
+          column
+          grow={1}
+          align='center'
+          justify='flex-start'
+        >
+          <CircularProgress />
         </Flex>
+      );
+    }
+
+    return (
+      <Flex
+        column
+        grow={1}
+        justify="flex-end"
+      >
+        {messages.map(({ type, content, timestamp }, index) => (
+          <TextChatMessage
+            key={timestamp.getTime()}
+            type={type}
+            content={content}
+            timestamp={timestamp}
+          />
+        ))}
       </Flex>
     );
   }

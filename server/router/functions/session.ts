@@ -11,15 +11,22 @@ interface SessionInfoRequest extends VerifiedRequest {
 		user: {
 			id: string;
 		};
-		session: string;
+		sessionId: string;
 	};
 }
 
 export const info: AsyncHandler<SessionInfoRequest> = async (request, response) => {
 	let result = await models.session.find({
 		where: {
-			id: request.body.session
-		}
+			id: request.body.sessionId
+		},
+		include: [{
+			model: models.user,
+			as: 'guru'
+		}, {
+			model: models.user,
+			as: 'newbie'
+		}, models.course]
 	});
 	
 	response.status(httpStatus.OK).json({
@@ -57,15 +64,20 @@ export const recent: AsyncHandler<RecentSessionRequest> = async (request, respon
 		include: [{
 			model: models.user,
 			attributes: [
-				[sequelize.fn('CONCAT', sequelize.col('guru.firstName'), ' ', sequelize.col('guru.lastName')), 'guruName'],
+				[sequelize.fn('CONCAT', sequelize.col('guru.firstName'), ' ', sequelize.col('guru.lastName')), 'name'],
+				'id'
 			],
 			as: 'guru',
 		}, {
 			model: models.user,
 			attributes: [
-				[sequelize.fn('CONCAT', sequelize.col('newbie.firstName'), ' ', sequelize.col('newbie.lastName')), 'newbieName']
+				[sequelize.fn('CONCAT', sequelize.col('newbie.firstName'), ' ', sequelize.col('newbie.lastName')), 'name'],
+				'id'
 			],
 			as: 'newbie'
+		}, {
+			model: models.course,
+			attributes: ['name']
 		}],
 		attributes: ['id'],
 		limit,

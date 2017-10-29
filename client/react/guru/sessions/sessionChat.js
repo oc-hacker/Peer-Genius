@@ -14,12 +14,10 @@ export default class SessionChat extends Component {
   }
 
   render() {
-    let { match: { params } } = this.props;
-
     return (
       <Chat
-        sessionID={params.sessionID}
-        selectParticipant={session => session.newbie}
+        {...this.props}
+        selectParticipant={session => session.newbieId}
       />
     );
   }

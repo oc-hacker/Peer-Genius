@@ -109,7 +109,7 @@ fabric.properties
 /public/app.js.gz
 /server/core/config.json
 /client/config.js
-/private/
+private/
 /Invoice.docx
 /server-files/
 /public/app.js.map
@@ -126,3 +126,5 @@ fabric.properties
 /server/build/
 /server/backup/
 !/server/gulpfile.js
+
+# Backups
