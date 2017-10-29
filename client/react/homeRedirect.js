@@ -9,11 +9,13 @@ import { selectIsGuru } from '../redux/selectors/user';
 }))
 export default class HomeRedirect extends Component {
   render() {
+    if(this.props.isGuru !== undefined){
     if (this.props.isGuru) {
       return (<Redirect to={'/guru'} />);
     }
     else {
       return (<Redirect to={'/newbie'} />);
     }
+  } else return null;
   }
 }
