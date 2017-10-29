@@ -143,5 +143,5 @@ export const acceptSession: AsyncHandler<AcceptSessionRequest> = async (request,
 	socketRegistry[request.body.user.id][0].emit('acceptSession', session);
 	socketRegistry[session.newbieID][0].emit('acceptSession', session);
 
-	response.statusCode(httpStatus.OK).end();
-}
+	response.status(httpStatus.OK).end();
+};

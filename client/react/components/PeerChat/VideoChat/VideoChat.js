@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import Peer from 'peerjs';
 
 import { serverURL } from '../../../../config';
-import { post } from '../../../redux/actions/network';
+import { post } from '../../../../redux/actions/network';
 
 export default class VideoChat extends Component {
   constructor(props) {
