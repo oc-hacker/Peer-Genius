@@ -41,7 +41,7 @@ export default class Schedule extends Component {
       course: "",
       assignment: "",
       time: new Date(),
-      duration: 0
+      duration: ""
     }
   }
 
