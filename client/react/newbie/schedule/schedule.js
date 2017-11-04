@@ -110,7 +110,7 @@ export default class Schedule extends Component {
             onClick={() => {
               this.setState({schedule: new Date(this.state.schedule)})
               scheduleSession(this.state.course, this.state.assignment, this.state.time, this.state.duration);
-              push('/newbie');
+              push('/newbie/finding');
             }}
           >
             Request
