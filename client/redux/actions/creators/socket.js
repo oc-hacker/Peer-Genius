@@ -6,6 +6,8 @@ import types from '../types';
 import { serverURL } from '../../../config';
 import { selectUserId } from '../../selectors/user';
 
+import { push } from 'react-router-redux';
+
 /**
  * Thunk action creator.
  * Establishes a socket.io connection with server.
@@ -23,7 +25,11 @@ export const socketConnect = jwt => async (dispatch, getState) => {
   socket.on('update_online_users', onlineUsers => dispatch(updateOnlineUsers(onlineUsers)));
   socket.on('user_connect', newUser => dispatch(userConnect(newUser)));
   socket.on('user_disconnect', disconnectedUser => dispatch(userDisconnect(disconnectedUser, selectUserId(getState()))));
-  socket.on('newSession', newRequest => dispatch(newSession(newRequest)));
+  socket.on('newSession', (newRequest) => {
+    dispatch(newSession(newRequest));
+    // We can assume it's a newbie because socket doesn't push messages to their sender
+    dispatch(push('/newbie/sessions/:' + newRequest));
+  });
 };
 
 /**
