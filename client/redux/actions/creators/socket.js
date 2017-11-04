@@ -72,6 +72,11 @@ const newSession = newRequest => ({
   payload: newRequest
 });
 
+const acceptSession = newRequest => ({
+  type: types.INIT_SESSION,
+  payload: newRequest
+});
+
 /**
  * Normal action creator.
  * Signals a user connecting.

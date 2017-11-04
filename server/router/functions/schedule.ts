@@ -108,6 +108,7 @@ export const scheduleSession: AsyncHandler<ScheduleSessionRequest> = async (requ
 	);
 	
 	requestInterface.add(newRequest);
+	console.log(socketRegistry[user.id][0]);
 	socketRegistry[user.id][0].to('gurusOnline').emit('newSession', newRequest);
 	response.status(httpStatus.OK).end();
 };
@@ -167,18 +168,20 @@ interface AcceptSessionRequest extends VerifiedRequest {
  */
 export const acceptSession: AsyncHandler<AcceptSessionRequest> = async (request, response) => {
 	let result = requestInterface.acceptRequest(request.body.sessionID);
+	console.log(JSON.stringify(result));
 	
 	if (result) {
 		//save the scheduled session
 		let newSession = {
-			newbie: result.newbieID,
-			guru: request.body.user.id,
+			newbieId: result.newbieID,
+			guruId: request.body.user.id,
 			scheduledStart: result.time,
 			scheduledEnd: (new Date(result.time.getTime() + (result.duration * 60 * 1000))),
-			course: result.course,
+			courseId: result.course,
 			assignment: result.assignment
 		};
 		await models.session.upsert(newSession);
+		socketRegistry[result.newbieID][0].to(result.newbieID).emit('acceptSession', newSession);
 		response.status(httpStatus.OK);
 	} else {
 		response.status(httpStatus.NOT_FOUND);

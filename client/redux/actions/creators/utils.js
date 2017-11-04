@@ -5,6 +5,7 @@ import { push } from 'react-router-redux';
 
 import types from '../types';
 import { socketConnect } from './socket';
+import { getCurrentRequests } from './PGsession';
 
 /**
  * Thunk action creator.
@@ -30,6 +31,8 @@ export const handleStore = json => async dispatch => {
       ...otherData
     }
   });
+
+  dispatch(getCurrentRequests());
 
   // Connect sockets
   dispatch(socketConnect(jwt));

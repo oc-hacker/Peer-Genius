@@ -42,3 +42,12 @@ export const acceptSession = (newbieID) => async dispatch => {
     sessionID: newbieID
   });
 };
+
+export const getCurrentRequests = () => async dispatch => {
+  let response = await post('/api/schedule/getCurrentRequests');
+  let json = await response.json();
+  dispatch({
+    type: types.INIT_CURRENT_REQUESTS,
+    payload: json
+  });
+}

@@ -8,7 +8,7 @@ import ProgressBar from 'react-progressbar.js';
 import Button from '../components/Button';
 
 import { connect } from 'react-redux';
-import acceptSession from '../../redux/actions/creators/PGsession';
+import { acceptSession } from '../../redux/actions/creators/PGsession';
 
 let styles = {
   headerBackground: {
@@ -63,11 +63,11 @@ let styles = {
 
 @connect((state) => {
   return {
-    newSessions: state.PGsession.sessionRequests
+    newSessions: state.PGsession.currentRequests
   };
 }, dispatch => {
   return {
-    acceptSession: async (newbieID) => dispatch()
+    acceptSession: async (newbieID) => dispatch(acceptSession(newbieID))
   };
 })
 @withStyles(styles)
