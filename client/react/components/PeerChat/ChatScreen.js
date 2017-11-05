@@ -31,7 +31,6 @@ export default class ChatScreen extends Component {
       error: false,
       video: false,
       toId: '',
-      peer: null,
     };
   }
 
@@ -53,35 +52,15 @@ export default class ChatScreen extends Component {
     return null;
   };
 
-  _getPeer = async toId => {
-    // Initialize peerjs connection
-    let peer = new Peer(toId, {
-      host: /^https?:\/\/(\S+)$/.exec(serverURL)[1],
-      port: 80,
-      path: '/peerjs'
-    });
-
-    // Attach call hook. Only switch screen - leave handling of actual display change to the video screen.
-    peer.on('call', () => {
-      this.setState({
-        video: true
-      });
-    });
-
-    return peer;
-  };
-
   _init = async () => {
     this.setState({
       loading: true
     });
 
     let toId = await this._getToId();
-    let peer = await this._getPeer(toId);
 
     this.setState({
       toId,
-      peer,
       loading: false
     });
   };
@@ -98,11 +77,11 @@ export default class ChatScreen extends Component {
 
   render() {
     let { classes, match } = this.props;
-    let { loading, error, video, toId, peer } = this.state;
+    let { loading, error, video, toId } = this.state;
 
     if (error) {
       return (
-        <Text color='error'>
+        <Text color="error">
           Error when initializing chat client.
         </Text>
       );
@@ -113,29 +92,27 @@ export default class ChatScreen extends Component {
         <Flex
           grow={1}
           column
-          align='center'
-          justify='flex-start'
+          align="center"
+          justify="flex-start"
         >
           <CircularProgress />
         </Flex>
       );
     }
 
-    if (video) {
-      return (
+    return (
+      <Flex grow={1} align="stretch">
         <VideoChat
+          active={video}
           toId={toId}
           match={match}
         />
-      );
-    }
-    else {
-      return (
         <TextChat
+          active={!video}
           toId={toId}
           match={match}
         />
-      );
-    }
+      </Flex>
+    );
   }
 }

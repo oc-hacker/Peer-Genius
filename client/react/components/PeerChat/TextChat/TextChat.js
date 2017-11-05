@@ -6,6 +6,7 @@ import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
 
+import Button from '../../Button';
 import Flex from '../../Flex';
 import MessageDisplay from './MessageDisplay';
 import ChatInput from './ChatInput';
@@ -76,8 +77,6 @@ export default class TextChat extends Component {
   };
 
   _onReceiveMessage = ({ senderId, message, timestamp }) => {
-    console.log(message)
-
     if (senderId === this.props.toId) { // Check if it is from the current connected user
       this.setState(state => ({
         messages: state.messages.concat({
@@ -154,6 +153,10 @@ export default class TextChat extends Component {
 
   render() {
     let { loading, input, messages, participantName, participantTyping } = this.state;
+
+    if (!this.props.active) {
+      return null;
+    }
 
     return (
       <Flex

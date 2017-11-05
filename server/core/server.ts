@@ -4,7 +4,6 @@ import * as cors from 'cors';
 import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 import * as serveStatic from 'serve-static';
-import { ExpressPeerServer } from 'peer';
 
 import { initMailer } from '../email/mailer';
 import { logger, sendIndex, notFound, errorHandler } from '../router/misc/utils';
@@ -62,8 +61,6 @@ app.use(cookieParser());
 app.use(serveStatic(path.join(__dirname, '../../public')));
 
 app.use('/api', apiRouter);
-
-app.use('/peerjs', ExpressPeerServer(server, {}));
 
 app.get(/^\/(?!api)/, sendIndex);
 

@@ -9,6 +9,9 @@ export const standardize = store => next => action => {
   if (typeof action === 'function') {
     return next(action);
   }
+  if (!action) {
+    return next(action);
+  }
   for (let prop in action) {
     if (action.hasOwnProperty(prop) && !standardProps.includes(prop)) {
       console.error(`Redux action of type ${action.type} does not follow flux standard action standards.`);
@@ -23,6 +26,10 @@ export const createSocketMiddleware = () => {
   let actionQueue = [];
 
   return store => next => action => {
+    if (!action) {
+      return next(action);
+    }
+
     let { type, payload } = action;
 
     switch (type) {

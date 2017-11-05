@@ -26,7 +26,6 @@
 		"lodash": "^4.17.4",
 		"mysql2": "^1.4.2",
 		"nodemailer": "^4.1.0",
-		"peer": "^0.2.8",
 		"randomstring": "^1.1.5",
 		"sequelize": "^4.8.4",
 		"server-static": "^2.0.5",
