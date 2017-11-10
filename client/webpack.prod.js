@@ -1,6 +1,9 @@
 var path = require('path');
 var webpack = require('webpack');
 var CompressionPlugin = require('compression-webpack-plugin');
+const HappyPack = require('happypack');
+
+var os = require('os');
 
 module.exports = {
   entry: [
@@ -15,7 +18,7 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /(node_modules|bower_components)/,
-      loader: 'babel-loader'
+      loader: 'happypack/loader'
     }]
   },
   plugins: [
@@ -43,6 +46,10 @@ module.exports = {
       test: /\.js$|\.css$|\.html$/,
       threshold: 10240,
       minRatio: 0.8
+    }),
+    new HappyPack({
+      loaders: ['babel-loader'],
+      threads: os.cpus().length
     })
   ]
 };

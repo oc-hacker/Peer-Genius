@@ -41,7 +41,7 @@ export default class Schedule extends Component {
       course: "",
       assignment: "",
       time: new Date(),
-      duration: 0
+      duration: ""
     }
   }
 
@@ -76,6 +76,7 @@ export default class Schedule extends Component {
                 <Text className={classes.paddingTop}>Course</Text>
                 <div style={{ display: 'block', width: 120, height: 1 }} />
                 <select value={this.state.course} onChange={(event) => this.setState({course: event.target.value})}>
+                  <option value=""> </option>
                   {courses ? courses.map((course) => <option value={course.id}>{course.name}</option>) : null}
                 </select>
               </Flex>
@@ -110,7 +111,7 @@ export default class Schedule extends Component {
             onClick={() => {
               this.setState({schedule: new Date(this.state.schedule)})
               scheduleSession(this.state.course, this.state.assignment, this.state.time, this.state.duration);
-              push('/newbie');
+              push('/newbie/finding');
             }}
           >
             Request

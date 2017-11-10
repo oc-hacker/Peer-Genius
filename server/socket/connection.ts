@@ -39,7 +39,8 @@ const attach = async (socket: UserSocket, userId: string) => {
 	socket.join(userId);
 	
 	// If user is guru, add them to the guruOnline list
-	if (userInstance.isGuru){
+	if (userInstance.dataValues.isGuru === 1){
+		console.log("GURU JOINED: " + userInstance.dataValues.id);
 		socket.join('gurusOnline');
 	}
 	

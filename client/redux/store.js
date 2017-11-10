@@ -25,9 +25,9 @@ let store = createStore(
   composeWithDevTools(
     applyMiddleware(
       standardize,
-      createSocketMiddleware(),
       thunkMiddleware,
-      routerMiddleware(browserHistory)
+      routerMiddleware(browserHistory),
+      createSocketMiddleware()
     )
   )
 );

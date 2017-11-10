@@ -23,7 +23,6 @@ export const standardize = store => next => action => {
 
 export const createSocketMiddleware = () => {
   let socket = null;
-  let actionQueue = [];
 
   return store => next => action => {
     if (!action) {
@@ -36,15 +35,6 @@ export const createSocketMiddleware = () => {
       case types.SOCKET_CONNECT: {
         // Intercept and dispatch
         socket = payload;
-        // Run all the action backlogs
-        while (true) {
-          action = actionQueue.shift();
-          if (!action) {
-            break;
-          }
-
-          socket[action.name](...action.args);
-        }
         break;
       }
       case types.SOCKET_EMIT: {
