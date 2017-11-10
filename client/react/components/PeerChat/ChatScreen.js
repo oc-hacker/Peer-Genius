@@ -1,27 +1,14 @@
-import React, { Component, PureComponent } from 'react';
-import classNames from 'classnames';
+import React, { Component } from 'react';
 
 import { CircularProgress } from 'material-ui/Progress';
-import { withStyles } from 'material-ui/styles';
-
-import { connect } from 'react-redux';
-import Peer from 'peerjs';
 
 import Flex from '../Flex';
 import Text from '../Text';
-
-import { serverURL } from '../../../config';
 import { post } from '../../../redux/actions/network';
 import TextChat from './TextChat';
 import VideoChat from './VideoChat';
 
-const styles = {
-  root: {
-    position: 'relative',
-  }
-};
 
-@withStyles(styles)
 export default class ChatScreen extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +20,12 @@ export default class ChatScreen extends Component {
       toId: '',
     };
   }
+
+  setVideo = video => {
+    this.setState({
+      video
+    });
+  };
 
   _getToId = async () => {
     let { match: { params }, mode } = this.props;
@@ -76,7 +69,7 @@ export default class ChatScreen extends Component {
   }
 
   render() {
-    let { classes, match } = this.props;
+    let { match } = this.props;
     let { loading, error, video, toId } = this.state;
 
     if (error) {
@@ -101,14 +94,19 @@ export default class ChatScreen extends Component {
     }
 
     return (
-      <Flex grow={1} align="stretch">
+      <Flex
+        grow={1}
+        align="stretch"
+      >
         <VideoChat
           active={video}
+          setVideo={this.setVideo}
           toId={toId}
           match={match}
         />
         <TextChat
           active={!video}
+          setVideo={this.setVideo}
           toId={toId}
           match={match}
         />

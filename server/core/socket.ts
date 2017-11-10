@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken';
 
 import server from './server';
 import { logError } from '../router/misc/utils';
-import { connection, chat } from '../socket';
+import { connection, chat, peer } from '../socket';
 import { UserSocket } from '../types';
 
 const { JWT_SECRET } = process.env;
@@ -11,7 +11,7 @@ const { JWT_SECRET } = process.env;
 export const io = sio(server);
 const secret = new Buffer(JWT_SECRET, 'base64');
 
-io.on('connection', async (socket: SocketIO.Socket) => {
+io.on('connection', async (socket: UserSocket) => {
 	// Verify valid JWT
 	let { jwt: token } = socket.handshake.query;
 	
@@ -19,8 +19,11 @@ io.on('connection', async (socket: SocketIO.Socket) => {
 		let user = jwt.verify(token, secret) as { id: string };
 		
 		try {
-			await connection.attach(socket as UserSocket, user.id);
-			await chat.attach(socket as UserSocket, user.id);
+			await Promise.all([
+				connection.attach(socket, user.id),
+				chat.attach(socket),
+				peer.attach(socket)
+			]);
 		}
 		catch (error) {
 			console.error('Unexpected error when configuring socket connection for user', user.id);

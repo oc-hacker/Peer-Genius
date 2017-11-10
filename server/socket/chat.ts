@@ -7,7 +7,7 @@ interface Message {
 	message: string;
 }
 
-const attach = async (socket: UserSocket, userId: string) => {
+const attach = async (socket: UserSocket) => {
 	// On message events
 	socket.on('sendMessage', async (data: Message) => {
 		let { sessionId, receiverId, message } = data;

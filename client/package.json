@@ -46,7 +46,8 @@
     "redux-saga": "^0.15.6",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
-    "socket.io-client": "^2.0.3"
+    "socket.io-client": "^2.0.3",
+    "webrtc-adapter": "^5.0.6"
   },
   "devDependencies": {
     "@storybook/react": "^3.2.12",

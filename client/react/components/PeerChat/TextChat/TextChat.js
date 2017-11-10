@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
+import IconButton from 'material-ui/IconButton';
+import VideoIcon from 'material-ui-icons/VideoCall';
 
 import { connect } from 'react-redux';
 
@@ -14,11 +16,28 @@ import ChatInput from './ChatInput';
 import { socketEmit, socketAttachListener, socketDetachListener } from '../../../../redux/actions/creators/socket';
 import { post } from '../../../../redux/actions/network';
 
+const styles = {
+  root: {
+    position: 'relative'
+  },
+  callButton: {
+    position: 'absolute',
+    top: '1em',
+    right: '1em'
+  },
+  videoButton: {
+    position: 'absolute',
+    top: '1em',
+    right: '1em'
+  }
+};
+
 @connect(null, {
   socketEmit,
   socketAttachListener,
   socketDetachListener
 })
+@withStyles(styles)
 export default class TextChat extends Component {
   constructor(props) {
     super(props);
@@ -152,14 +171,16 @@ export default class TextChat extends Component {
   }
 
   render() {
+    let { classes, active, setVideo } = this.props;
     let { loading, input, messages, participantName, participantTyping } = this.state;
 
-    if (!this.props.active) {
+    if (!active) {
       return null;
     }
 
     return (
       <Flex
+        className={classes.root}
         column
         grow={1}
       >
@@ -174,6 +195,12 @@ export default class TextChat extends Component {
           onTypeEnd={this._onTypeEnd}
           onSubmit={this._onSubmit}
         />
+        <IconButton
+          className={classes.videoButton}
+          onClick={() => setVideo(true)}
+        >
+          <VideoIcon />
+        </IconButton>
       </Flex>
     );
   }

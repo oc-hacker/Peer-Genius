@@ -35,5 +35,6 @@ export interface Store {
 }
 
 export interface UserSocket extends SocketIO.Socket {
+	/** The user id of the socket */
 	user: string;
 }

@@ -6025,6 +6025,12 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^2.0.0"
     inherits "^2.0.1"
 
+rtcpeerconnection-shim@^1.1.13:
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/rtcpeerconnection-shim/-/rtcpeerconnection-shim-1.1.13.tgz#019fb9d5250675ed0a20cd5d9a49614e4482e1e0"
+  dependencies:
+    sdp "^2.2.0"
+
 run-async@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/run-async/-/run-async-2.3.0.tgz#0371ab4ae0bdd720d4166d7dfda64ff7a445a6c0"
@@ -6064,6 +6070,10 @@ scroll@^2.0.0:
   resolved "https://registry.yarnpkg.com/scroll/-/scroll-2.0.0.tgz#55cba0d84eb845d98fe3579a801e5722a6a3a81f"
   dependencies:
     rafl "~1.2.1"
+
+sdp@^2.2.0, sdp@^2.3.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/sdp/-/sdp-2.4.0.tgz#0ea682319c0dbc91550aad19e9e53edcd7b1cdaa"
 
 select-hose@^2.0.0:
   version "2.0.0"
@@ -6959,6 +6969,13 @@ webpack@^3.6.0, webpack@^3.7.1:
     watchpack "^1.4.0"
     webpack-sources "^1.0.1"
     yargs "^8.0.2"
+
+webrtc-adapter@^5.0.6:
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/webrtc-adapter/-/webrtc-adapter-5.0.6.tgz#7946fca194dadf869bb6c8cae1011dfda03f40c7"
+  dependencies:
+    rtcpeerconnection-shim "^1.1.13"
+    sdp "^2.3.0"
 
 websocket-driver@>=0.5.1:
   version "0.7.0"

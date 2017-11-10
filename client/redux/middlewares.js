@@ -6,10 +6,10 @@ const standardProps = ['type', 'payload', 'meta', 'error'];
  * Redux middleware that checks to ensure that the actions are following flux standard actions.
  */
 export const standardize = store => next => action => {
-  if (typeof action === 'function') {
+  if (!action) {
     return next(action);
   }
-  if (!action) {
+  if (typeof action === 'function') {
     return next(action);
   }
   for (let prop in action) {
