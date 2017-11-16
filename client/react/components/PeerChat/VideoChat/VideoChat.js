@@ -14,6 +14,7 @@ import Spacer from '../../Spacer';
 
 import { socketAttachListener, socketDetachListener, socketEmit } from '../../../../redux/actions/creators/socket';
 import { waitUntil } from '../../HOC';
+import Text from '../../Text';
 
 const styles = {
   root: {
@@ -46,8 +47,8 @@ const styles = {
   socketAttachListener,
   socketDetachListener
 })
-@withStyles(styles)
 @waitUntil(props => props.hasSocket)
+@withStyles(styles)
 export default class VideoChat extends Component {
   constructor(props) {
     super(props);
@@ -56,6 +57,8 @@ export default class VideoChat extends Component {
       peerConnection: null,
       sessionDescription: null,
       incomingSession: null,
+      outgoingVideo: false,
+      outgoingAudio: false
     };
   }
 
@@ -116,15 +119,96 @@ export default class VideoChat extends Component {
 
   _onRemoteOffer = incomingOffer => {
     if (incomingOffer.senderId === this.props.toId) {
+      let incomingSession = JSON.parse(incomingOffer.data);
+      console.log(incomingSession);
+
       this.setState({
-        incomingSession: JSON.parse(incomingOffer.data)
+        incomingSession
+      }, () => {
+        this.props.setVideo(true);
+
+        if (this.state.outgoingVideo) {
+          // Already have video outgoing, this is the other side's response.
+          // TODO
+        }
       });
+
     }
   };
 
   _onRemoteCandidate = incomingCandidate => {
     let iceCandidate = new RTCIceCandidate(JSON.parse(incomingCandidate.data));
     this.state.peerConnection.addIceCandidate(iceCandidate);
+  };
+
+  _setOutgoing = (outgoingVideo, outgoingAudio) => {
+    this.setState({
+      outgoingVideo,
+      outgoingAudio
+    });
+  };
+
+  _startVideo = async () => {
+    await this._initMedia({ video: true, audio: true });
+    this._sendSessionOffer();
+    this._setOutgoing(true, false);
+  };
+
+  _startAudio = async () => {
+    await  this._initMedia({ audio: true });
+    this._sendSessionOffer();
+    this._setOutgoing(false, true);
+  };
+
+  _acceptVideo = async () => {
+    await this._initMedia({ video: true, audio: true });
+
+    let { peerConnection, incomingSession } = this.state;
+    // Display incoming stream
+    peerConnection.setRemoteDescription(incomingSession.sdp);
+    // Reply with outgoing stream
+    this._sendSessionOffer();
+
+    this._setOutgoing(true, false);
+  };
+
+  _acceptAudio = async () => {
+    await this._initMedia({ audio: true });
+    // TODO
+    this._setOutgoing(false, true);
+  };
+
+  _endCall = () => {
+    // TODO
+    this._setOutgoing(false, false);
+  };
+
+  _onVideoButtonClick = () => {
+    let { incomingSession, outgoingVideo } = this.state;
+
+    if (outgoingVideo) {
+      this._endCall();
+    }
+    else if (incomingSession) {
+      this._acceptVideo();
+    }
+    else {
+      this._startVideo();
+    }
+  };
+
+  _onAudioButtonClick = () => {
+    let { incomingSession, outgoingAudio } = this.state;
+
+    if (outgoingAudio) {
+      this._endCall();
+    }
+    else if (incomingSession) {
+      this._acceptAudio();
+    }
+    else {
+      this._startAudio();
+    }
   };
 
   componentWillMount() {
@@ -144,7 +228,8 @@ export default class VideoChat extends Component {
   }
 
   render() {
-    const { classes, toId, match } = this.props;
+    let { classes, toId, match } = this.props;
+    let { incomingSession, outgoingVideo, outgoingAudio } = this.state;
 
     if (!this.props.active) {
       return null;
@@ -168,29 +253,37 @@ export default class VideoChat extends Component {
         />
         <Flex
           className={classes.buttonBar}
-          justify="center"
+          align="center"
+          column
         >
-          <Button
-            fab
-            colors={green}
-            onClick={async () => {
-              await this._initMedia({ video: true, audio: true });
-              this._sendSessionOffer();
-            }}
+          {incomingSession && (
+            <Text>
+              Incoming call.
+            </Text>
+          )}
+          <Flex
+            justify="center"
           >
-            <VideoIcon />
-          </Button>
-          {/*<Spacer width="1em" />*/}
-          <Button
-            fab
-            colors={green}
-            onClick={async () => {
-              await  this._initMedia({ audio: true });
-              this._sendSessionOffer();
-            }}
-          >
-            <AudioIcon />
-          </Button>
+            {outgoingAudio ? null : (
+              <Button
+                fab
+                colors={outgoingVideo ? red : green}
+                onClick={this._onVideoButtonClick}
+              >
+                <VideoIcon />
+              </Button>
+            )}
+            <Spacer width="1em" />
+            {outgoingVideo ? null : (
+              <Button
+                fab
+                colors={outgoingAudio ? red : green}
+                onClick={this._onAudioButtonClick}
+              >
+                <AudioIcon />
+              </Button>
+            )}
+          </Flex>
         </Flex>
       </Flex>
     );
