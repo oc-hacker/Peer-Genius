@@ -91,7 +91,11 @@ export default class ChatInput extends Component {
   };
 
   render() {
-    let { classes, value, onTypeStart, onTypeEnd, onChange, onSubmit, ...others } = this.props;
+    let {
+      classes, value,
+      onTypeStart, onTypeEnd, onChange, onSubmit, delay, timeout,
+      ...others
+    } = this.props;
 
     return (
       <Flex className={classes.root}>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { withStyles } from 'material-ui/styles';
+import { green, red } from 'material-ui/colors';
 import VideoIcon from 'material-ui-icons/Videocam';
 import AudioIcon from 'material-ui-icons/Call';
 
@@ -9,8 +10,10 @@ import { connect } from 'react-redux';
 
 import Flex from '../../Flex';
 import Button from '../../Button';
+import Spacer from '../../Spacer';
 
 import { socketAttachListener, socketDetachListener, socketEmit } from '../../../../redux/actions/creators/socket';
+import { waitUntil } from '../../HOC';
 
 const styles = {
   root: {
@@ -26,7 +29,8 @@ const styles = {
     width: '25%',
     height: '25%',
     right: '1em',
-    bottom: '1em'
+    bottom: '1em',
+    transform: 'rotateY(180deg)'
   },
   buttonBar: {
     position: 'absolute',
@@ -35,12 +39,15 @@ const styles = {
   }
 };
 
-@connect(null, {
+@connect(state => ({
+  hasSocket: state.socket
+}), {
   socketEmit,
   socketAttachListener,
   socketDetachListener
 })
 @withStyles(styles)
+@waitUntil(props => props.hasSocket)
 export default class VideoChat extends Component {
   constructor(props) {
     super(props);
@@ -151,11 +158,13 @@ export default class VideoChat extends Component {
         <video
           className={classes.remoteVideo}
           ref={video => this._remoteVideo = video}
+          autoPlay
         />
         <video
           className={classes.localVideo}
           ref={video => this._localVideo = video}
           muted
+          autoPlay
         />
         <Flex
           className={classes.buttonBar}
@@ -163,6 +172,7 @@ export default class VideoChat extends Component {
         >
           <Button
             fab
+            colors={green}
             onClick={async () => {
               await this._initMedia({ video: true, audio: true });
               this._sendSessionOffer();
@@ -170,8 +180,10 @@ export default class VideoChat extends Component {
           >
             <VideoIcon />
           </Button>
+          {/*<Spacer width="1em" />*/}
           <Button
             fab
+            colors={green}
             onClick={async () => {
               await  this._initMedia({ audio: true });
               this._sendSessionOffer();

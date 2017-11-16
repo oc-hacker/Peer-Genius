@@ -8,8 +8,11 @@ import { fade } from 'material-ui/styles/colorManipulator';
 import Button from 'material-ui/Button';
 
 const getColor = (props, shade = 500) => {
-  let { theme: { palette }, color } = props;
-  if (color in palette) {
+  let { theme: { palette }, color, colors } = props;
+  if (colors) {
+    return colors[shade];
+  }
+  else if (color in palette) {
     return palette[color][shade];
   }
   else {
@@ -68,13 +71,15 @@ export default class CustomButton extends Component {
   static propTypes = {
     /** Can be one of MUI's theme colors, or a css color string */
     color: PropTypes.string,
+    /** A material ui color set */
+    colors: PropTypes.object,
     round: PropTypes.bool,
   };
 
   render() {
     let {
       classes, className,
-      theme, sheet, color, round,
+      theme, sheet, color, colors, round,
       ...others
     } = this.props;
     let raised = this.props.raised || this.props.fab;

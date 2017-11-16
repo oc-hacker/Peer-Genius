@@ -8,6 +8,11 @@ import Flex from '../../Flex';
 import TextChatMessage from './TextChatMessage';
 
 const styles = ({ palette: { grey }, spacing }) => ({
+  root: {
+    overflowY: 'auto',
+    listStyle: 'none',
+    padding: 0
+  },
   window: {
     overflowX: 'hidden',
     overflowY: 'auto'
@@ -27,7 +32,7 @@ export default class MessageDisplay extends Component {
   static propTypes = {
     loading: PropTypes.bool,
     messages: PropTypes.arrayOf(PropTypes.shape({
-      type: PropTypes.oneOf(['in', 'out']), // Inbound vs outbound messages,
+      type: PropTypes.oneOf(['in', 'out']), // Inbound vs outbound messages
       content: PropTypes.string,
       timestamp: PropTypes.instanceOf(Date)
     }))
@@ -51,6 +56,8 @@ export default class MessageDisplay extends Component {
 
     return (
       <Flex
+        component="ul"
+        className={classes.root}
         column
         grow={1}
         justify="flex-end"

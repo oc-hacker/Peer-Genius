@@ -12,10 +12,6 @@ import RecentChats from './RecentChats';
 import ChatScreen from './ChatScreen';
 
 export default class ChatRouter extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let { match, mode } = this.props;
 
