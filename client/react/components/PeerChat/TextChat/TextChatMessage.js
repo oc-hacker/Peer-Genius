@@ -70,7 +70,7 @@ export default class TextChatMessage extends Component {
     let { classes, type, content, timestamp } = this.props;
 
     return (
-      <div
+      <li
         className={classNames({
           [classes.root]: true,
           [classes.incomingMessage]: type === 'in',
@@ -87,7 +87,7 @@ export default class TextChatMessage extends Component {
         >
           {`${timestamp.getDate()} ${months[timestamp.getMonth()]} ${timestamp.getHours() % 12}:${timestamp.getMinutes()} ${timestamp.getHours() >= 12 ? 'pm' : 'am'}`}
         </div>
-      </div>
+      </li>
     );
   }
 }

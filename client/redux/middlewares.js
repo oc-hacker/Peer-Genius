@@ -25,10 +25,6 @@ export const createSocketMiddleware = () => {
   let socket = null;
 
   return store => next => action => {
-    if (!action) {
-      return next(action);
-    }
-
     let { type, payload } = action;
 
     switch (type) {
@@ -42,21 +38,11 @@ export const createSocketMiddleware = () => {
         break;
       }
       case types.SOCKET_ATTACH_LISTENER: {
-        if (socket) {
-          socket.on(payload.event, payload.listener);
-        }
-        else {
-          actionQueue.push({ name: 'on', args: [payload.event, payload.listener] });
-        }
+        socket.on(payload.event, payload.listener);
         break;
       }
       case types.SOCKET_DETACH_LISTENER: {
-        if (socket) {
-          socket.on(payload.event, payload.listener);
-        }
-        else {
-          actionQueue.push({ name: 'off', args: [payload.event, payload.listener] });
-        }
+        socket.on(payload.event, payload.listener);
         break;
       }
       default: {

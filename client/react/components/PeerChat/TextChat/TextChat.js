@@ -15,29 +15,26 @@ import ChatInput from './ChatInput';
 
 import { socketEmit, socketAttachListener, socketDetachListener } from '../../../../redux/actions/creators/socket';
 import { post } from '../../../../redux/actions/network';
+import { waitUntil } from '../../HOC';
 
 const styles = {
   root: {
     position: 'relative'
   },
-  callButton: {
-    position: 'absolute',
-    top: '1em',
-    right: '1em'
-  },
-  videoButton: {
-    position: 'absolute',
-    top: '1em',
-    right: '1em'
+  statusBar: {
+    borderBottom: '1px solid lightgrey'
   }
 };
 
-@connect(null, {
+@connect(state => ({
+  hasSocket: state.socket
+}), {
   socketEmit,
   socketAttachListener,
   socketDetachListener
 })
 @withStyles(styles)
+@waitUntil(props => props.hasSocket)
 export default class TextChat extends Component {
   constructor(props) {
     super(props);
@@ -184,6 +181,22 @@ export default class TextChat extends Component {
         column
         grow={1}
       >
+        <Flex
+          className={classes.statusBar}
+          align="center"
+          justify="space-between"
+        >
+          <Flex>
+            {participantName}
+          </Flex>
+          <Flex>
+            <IconButton
+              onClick={() => setVideo(true)}
+            >
+              <VideoIcon />
+            </IconButton>
+          </Flex>
+        </Flex>
         <MessageDisplay
           loading={loading}
           messages={messages}
@@ -195,12 +208,6 @@ export default class TextChat extends Component {
           onTypeEnd={this._onTypeEnd}
           onSubmit={this._onSubmit}
         />
-        <IconButton
-          className={classes.videoButton}
-          onClick={() => setVideo(true)}
-        >
-          <VideoIcon />
-        </IconButton>
       </Flex>
     );
   }
