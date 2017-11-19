@@ -4,6 +4,8 @@ import { CircularProgress } from 'material-ui/Progress';
 
 import Flex from '../Flex';
 
+import displayName from './displayName';
+
 const waitUntil = condition => Component => {
   const DecoratedComponent = props => {
     if (!condition(props)) {
@@ -20,7 +22,7 @@ const waitUntil = condition => Component => {
     }
   };
 
-  DecoratedComponent.displayName = `waited(${Component.displayName})`;
+  DecoratedComponent.displayName = `waited(${displayName(Component)})`;
 
   return DecoratedComponent;
 };

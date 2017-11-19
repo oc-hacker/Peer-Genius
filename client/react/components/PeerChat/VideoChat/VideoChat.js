@@ -4,8 +4,10 @@ import { withStyles } from 'material-ui/styles';
 import { green, red } from 'material-ui/colors';
 import VideoIcon from 'material-ui-icons/Videocam';
 import AudioIcon from 'material-ui-icons/Call';
+import HangIcon from 'material-ui-icons/CallEnd';
 
-import 'webrtc-adapter';
+// import 'webrtc-adapter';
+import SimplePeer from 'simple-peer';
 import { connect } from 'react-redux';
 
 import Flex from '../../Flex';
@@ -54,182 +56,251 @@ export default class VideoChat extends Component {
     super(props);
 
     this.state = {
-      peerConnection: null,
-      sessionDescription: null,
-      incomingSession: null,
-      outgoingVideo: false,
-      outgoingAudio: false
+      peer: null,
+      inType: null,
+      outType: null
     };
   }
 
-  _init = async () => {
-    let peerConnection = new RTCPeerConnection({
-      iceServers: [{
-        urls: 'stun:stun.stunprotocol.org:3478'
-      }, {
-        urls: [
-          'stun:stun1.l.google.com:19302',
-          'stun:stun2.l.google.com:19302',
-          'stun:stun3.l.google.com:19302',
-          'stun:stun4.l.google.com:19302',
-        ]
-      }]
-    });
-
-    // Create a session offer and set it as the local description
-    let sessionDescription = await peerConnection.createOffer();
-    peerConnection.setLocalDescription(sessionDescription);
-
-    // Save connection to state for future use
-    this.setState({
-      peerConnection,
-      sessionDescription
-    });
-
-    // Connection event handlers
-    peerConnection.onicecandidate = event => {
-      if (event.candidate) {
-        socketEmit('peer_candidate', {
-          receiverId: this.props.toId,
-          data: JSON.stringify(event.candidate)
-        });
-      }
-    };
-
-    peerConnection.onaddstream = event => {
-      this._remoteVideo.srcObject = event.stream;
-    };
-  };
-
-  _initMedia = async constraints => {
-    let stream = await navigator.mediaDevices.getUserMedia(constraints);
-    this._localVideo.srcObject = stream;
-    this.state.peerConnection.addStream(stream);
-  };
-
-  _sendSessionOffer = () => {
-    let { toId, socketEmit } = this.props;
-    let { sessionDescription } = this.state;
-
-    socketEmit('peer_offer', {
-      receiverId: toId,
-      data: JSON.stringify(sessionDescription)
-    });
-  };
-
-  _onRemoteOffer = incomingOffer => {
-    if (incomingOffer.senderId === this.props.toId) {
-      let incomingSession = JSON.parse(incomingOffer.data);
-      console.log(incomingSession);
-
-      this.setState({
-        incomingSession
-      }, () => {
-        this.props.setVideo(true);
-
-        if (this.state.outgoingVideo) {
-          // Already have video outgoing, this is the other side's response.
-          // TODO
-        }
-      });
-
+  _basePeerOptions = {
+    offerConstraints: {
+      offerToReceiveAudio: true,
+      offerToReceiveVideo: true
+    },
+    answerConstraints: {
+      offerToReceiveAudio: true,
+      offerToReceiveVideo: true
     }
   };
 
-  _onRemoteCandidate = incomingCandidate => {
-    let iceCandidate = new RTCIceCandidate(JSON.parse(incomingCandidate.data));
-    this.state.peerConnection.addIceCandidate(iceCandidate);
-  };
+  get _actionButtons() {
+    const spacer = <Spacer width="1em" />;
+    let { inType, outType, peer } = this.state;
 
-  _setOutgoing = (outgoingVideo, outgoingAudio) => {
-    this.setState({
-      outgoingVideo,
-      outgoingAudio
-    });
-  };
+    switch (outType) {
+      case 'V':
+      case 'A':
+        return (
+          <Button
+            key="hang"
+            fab
+            colors={red}
+            onClick={this._stopCall}
+          >
+            <HangIcon />
+          </Button>
+        );
+      default:
+        switch (inType) {
+          case 'V':
+          case 'A':
+            return [
+              <Button
+                key="video"
+                fab
+                colors={green}
+                onClick={this._acceptVideo}
+              >
+                <VideoIcon />
+              </Button>,
+              spacer,
+              <Button
+                key="audio"
+                fab
+                colors={green}
+                onClick={this._acceptAudio}
+              >
+                <AudioIcon />
+              </Button>,
+              spacer,
+              <Button
+                key="hang"
+                fab
+                colors={red}
+                onClick={this._stopCall}
+              >
+                <HangIcon />
+              </Button>
+            ];
+          default:
+            return [
+              <Button
+                key="video"
+                fab
+                colors={green}
+                onClick={this._startVideo}
+              >
+                <VideoIcon />
+              </Button>,
+              spacer,
+              <Button
+                key="audio"
+                fab
+                colors={green}
+                onClick={this._startAudio}
+              >
+                <AudioIcon />
+              </Button>
+            ];
+        }
+    }
+  }
 
   _startVideo = async () => {
-    await this._initMedia({ video: true, audio: true });
-    this._sendSessionOffer();
-    this._setOutgoing(true, false);
+    let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    let peer = new SimplePeer({ initiator: true, stream, ...this._basePeerOptions });
+
+    this._localVideo.srcObject = stream;
+    this._initPeer(peer);
+
+    let { socketEmit, toId } = this.props;
+
+    this.setState({
+      outType: 'V'
+    });
+    socketEmit('webrtc_offer', {
+      receiverId: toId,
+      data: 'V'
+    });
   };
 
   _startAudio = async () => {
-    await  this._initMedia({ audio: true });
-    this._sendSessionOffer();
-    this._setOutgoing(false, true);
+    let stream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
+    let peer = new SimplePeer({ initiator: true, stream, ...this._basePeerOptions });
+
+    this._localVideo.srcObject = stream;
+    this._initPeer(peer);
+
+    let { socketEmit, toId } = this.props;
+
+    this.setState({
+      outType: 'A'
+    });
+    socketEmit('webrtc_offer', {
+      receiverId: toId,
+      data: 'A'
+    });
   };
 
+  /**
+   * Respond with a video stream.
+   */
   _acceptVideo = async () => {
-    await this._initMedia({ video: true, audio: true });
+    let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    let peer = new SimplePeer({ stream, ...this._basePeerOptions });
 
-    let { peerConnection, incomingSession } = this.state;
-    // Display incoming stream
-    peerConnection.setRemoteDescription(incomingSession.sdp);
-    // Reply with outgoing stream
-    this._sendSessionOffer();
+    this._localVideo.srcObject = stream;
+    this._initPeer(peer);
 
-    this._setOutgoing(true, false);
+    this.setState({
+      outType: 'V'
+    });
   };
 
+  /**
+   * Respond with an audio stream.
+   */
   _acceptAudio = async () => {
-    await this._initMedia({ audio: true });
-    // TODO
-    this._setOutgoing(false, true);
+    let stream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
+    let peer = new SimplePeer({ stream, ...this._basePeerOptions });
+
+    this._localVideo.srcObject = stream;
+    this._initPeer(peer);
+
+    this.setState({
+      outType: 'A'
+    });
   };
 
-  _endCall = () => {
-    // TODO
-    this._setOutgoing(false, false);
+  _initPeer = peer => {
+    let { toId, socketEmit } = this.props;
+
+    this.setState({ peer });
+
+    peer.on('signal', data => {
+      socketEmit('webrtc_signal', {
+        receiverId: toId,
+        data: JSON.stringify(data)
+      });
+    });
+
+    peer.on('stream', stream => {
+      console.log(stream);
+      this._remoteVideo.srcObject = stream;
+    });
   };
 
-  _onVideoButtonClick = () => {
-    let { incomingSession, outgoingVideo } = this.state;
+  _stopCall = () => {
+    let { toId, socketEmit } = this.props;
 
-    if (outgoingVideo) {
-      this._endCall();
-    }
-    else if (incomingSession) {
-      this._acceptVideo();
-    }
-    else {
-      this._startVideo();
+    socketEmit('webrtc_stop', {
+      receiverId: toId
+    });
+
+    // Cleanup
+    this._cleanupPeer();
+  };
+
+  /**
+   * Called when a webrtc call ends to clean up peer and state.
+   */
+  _cleanupPeer = () => {
+    this.state.peer && this.state.peer.destroy();
+    this._localVideo.srcObject = null;
+    this._remoteVideo.srcObject = null;
+
+    this.setState({
+      inType: null,
+      outType: null,
+      peer: null
+    });
+
+    setTimeout(() => {
+      this.props.setVideo(false);
+    }, 500);
+  };
+
+  // Socket event handlers
+  _onOffer = ({ senderId, data }) => {
+    let { toId, setVideo } = this.props;
+    if (senderId === toId) {
+      setVideo(true);
+      this.setState({ inType: data });
     }
   };
 
-  _onAudioButtonClick = () => {
-    let { incomingSession, outgoingAudio } = this.state;
+  _onSignal = ({ senderId, data }) => {
+    let { toId } = this.props;
+    let { peer } = this.state;
 
-    if (outgoingAudio) {
-      this._endCall();
-    }
-    else if (incomingSession) {
-      this._acceptAudio();
-    }
-    else {
-      this._startAudio();
+    if (senderId === toId && peer) {
+      peer.signal(JSON.parse(data));
     }
   };
 
-  componentWillMount() {
-    this._init();
-  }
+  _onStop = ({ senderId }) => {
+    if (senderId === this.props.toId) {
+      // Cleanup
+      this._cleanupPeer();
+    }
+  };
 
   componentDidMount() {
     let { socketAttachListener } = this.props;
-    socketAttachListener('peer_offer', this._onRemoteOffer);
-    socketAttachListener('peer_candidate', this._onRemoteCandidate);
+    socketAttachListener('webrtc_offer', this._onOffer);
+    socketAttachListener('webrtc_signal', this._onSignal);
+    socketAttachListener('webrtc_stop', this._onStop);
   }
 
   componentWillUnmount() {
     let { socketDetachListener } = this.props;
-    socketDetachListener('peer_offer', this._onRemoteOffer);
-    socketDetachListener('peer_candidate', this._onRemoteCandidate);
+    socketDetachListener('webrtc_offer', this._onOffer);
+    socketDetachListener('webrtc_signal', this._onSignal);
+    socketDetachListener('webrtc_stop', this._onStop);
   }
 
   render() {
     let { classes, toId, match } = this.props;
-    let { incomingSession, outgoingVideo, outgoingAudio } = this.state;
 
     if (!this.props.active) {
       return null;
@@ -256,33 +327,8 @@ export default class VideoChat extends Component {
           align="center"
           column
         >
-          {incomingSession && (
-            <Text>
-              Incoming call.
-            </Text>
-          )}
-          <Flex
-            justify="center"
-          >
-            {outgoingAudio ? null : (
-              <Button
-                fab
-                colors={outgoingVideo ? red : green}
-                onClick={this._onVideoButtonClick}
-              >
-                <VideoIcon />
-              </Button>
-            )}
-            <Spacer width="1em" />
-            {outgoingVideo ? null : (
-              <Button
-                fab
-                colors={outgoingAudio ? red : green}
-                onClick={this._onAudioButtonClick}
-              >
-                <AudioIcon />
-              </Button>
-            )}
+          <Flex justify="center">
+            {this._actionButtons}
           </Flex>
         </Flex>
       </Flex>

@@ -7,24 +7,30 @@ interface PeerOffer {
 	data: string;
 }
 
-interface PeerCandidate {
+interface PeerSignal {
 	receiverId: string;
 	data: string;
 }
 
 const attach = async (socket: UserSocket) => {
 	// Simply act as a relay.
-	socket.on('peer_offer', (offer: PeerOffer) => {
-		socket.to(offer.receiverId).emit('peer_offer', {
+	socket.on('webrtc_offer', (offer: PeerSignal) => {
+		socket.to(offer.receiverId).emit('webrtc_offer', {
 			senderId: socket.user,
 			data: offer.data
 		});
 	});
 	
-	socket.on('peer_candidate', (candidate: PeerCandidate) => {
-		socket.to(candidate.receiverId).emit('peer_candidate', {
+	socket.on('webrtc_signal', (signal: PeerSignal) => {
+		socket.to(signal.receiverId).emit('webrtc_signal', {
 			senderId: socket.user,
-			data: candidate.data
+			data: signal.data
+		});
+	});
+	
+	socket.on('webrtc_stop', (signal: { receiverId: string }) => {
+		socket.to(signal.receiverId).emit('webrtc_stop', {
+			senderId: socket.user
 		});
 	});
 };
