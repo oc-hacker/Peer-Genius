@@ -10,7 +10,7 @@ const AboutUs =
   connect(null, { push })(
     props => (
       <AppBarMenu
-        button={<Text style={{color: 'white'}}>About Us</Text>}
+        button={<Text style={{color: 'white', fontFamily: 'sans-serif'}}>About Us</Text>}
         onClick={() => props.push('/aboutUs')}
       />
     )
