@@ -121,7 +121,7 @@ export default class GuruDashboard extends React.Component {
             <Text type='title' color='black' className={classes.textPadding}>HOUR TIMELINE</Text>
             <ProgressBar.Line progress={(currentHours / 250)} text={currentHours + ' hours'} options={{
               color: 'rgb(1,147,172)',
-              strokeWidth: 6
+              strokeWidth: 8
             }} initialAnimate={true} containerStyle={{ width: 600, height: 35, marginBottom: 15 }} />
             <div className={classNames(classes.flexRow)}>
               <Text
