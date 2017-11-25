@@ -11,11 +11,14 @@ import Flex from '../../Flex';
 
 const styles = {
   root: {
-    position: 'relative'
+    position: 'relative',
+    minHeight: '6em'
   },
   input: {
     flexGrow: 1,
-    margin: 10
+    margin: 10,
+    overflow: 'hidden',
+    resize: 'none',
   },
   sendButton: {
     position: 'absolute',
@@ -74,6 +77,8 @@ export default class ChatInput extends Component {
   };
 
   _onKeyPress = event => {
+    event.persist();
+
     if (event.key === 'Enter') {
       // Slightly hacky XOR
       if (!this.state.autoSubmit !== !event.shiftKey) {
@@ -98,7 +103,10 @@ export default class ChatInput extends Component {
     } = this.props;
 
     return (
-      <Flex className={classes.root}>
+      <Flex
+        className={classes.root}
+        grow={1}
+      >
         <StyledInput
           Component={'textarea'}
           className={classes.input}
@@ -106,8 +114,7 @@ export default class ChatInput extends Component {
           onChange={this._onChange}
           onKeyDown={this._onKeyPress}
           {...others}
-        >
-        </StyledInput>
+        />
         <Button
           round raised color="primary"
           className={classes.sendButton}

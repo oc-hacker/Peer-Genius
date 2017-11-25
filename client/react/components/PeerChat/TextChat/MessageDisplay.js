@@ -59,7 +59,7 @@ export default class MessageDisplay extends Component {
         component="ul"
         className={classes.root}
         column
-        grow={1}
+        grow={9}
         justify="flex-end"
       >
         {messages.map(({ type, content, timestamp }, index) => (

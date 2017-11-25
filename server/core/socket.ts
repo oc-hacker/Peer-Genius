@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken';
 
 import server from './server';
 import { logError } from '../router/misc/utils';
-import { connection, chat, peer } from '../socket';
+import { connection, chat, webrtc } from '../socket';
 import { UserSocket } from '../types';
 
 const { JWT_SECRET } = process.env;
@@ -22,7 +22,7 @@ io.on('connection', async (socket: UserSocket) => {
 			await Promise.all([
 				connection.attach(socket, user.id),
 				chat.attach(socket),
-				peer.attach(socket)
+				webrtc.attach(socket)
 			]);
 		}
 		catch (error) {
