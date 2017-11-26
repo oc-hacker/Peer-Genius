@@ -30,9 +30,11 @@ export default class ChatScreen extends Component {
   _getToId = async () => {
     let { match: { params }, mode } = this.props;
 
+    // fix a routing bug?
+    let id = params.sessionId.slice(1);
     // Load session data
     let response = await post('/api/session/info', {
-      sessionId: params.sessionId
+      sessionId: id
     });
     let { session } = await response.json();
 

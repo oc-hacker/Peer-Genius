@@ -71,14 +71,15 @@ export default class TextChat extends Component {
   _onSubmit = () => {
     // Empty submit check
     if (!this.state.input) return;
+    // fix a routing bug?
 
     let { toId, socketEmit, match: { params } } = this.props;
-
+    let id = params.sessionId.slice(1);
     // Send submission over socket
     socketEmit('sendMessage', {
       receiverId: toId,
       message: this.state.input,
-      sessionId: params.sessionId
+      sessionId: id
     });
 
     // Update own state
@@ -119,10 +120,12 @@ export default class TextChat extends Component {
   _loadMessageHistory = async (params) => {
     let { toId } = this.props;
 
+    // fix a routing bug?
+    let id = params.sessionId.slice(1);
     // Get name and message history
     let [messageData, nameData] = await Promise.all([
       post('/api/chat/getMessages', {
-        sessionId: params.sessionId
+        sessionId: id
       }).then(response => response.json()),
       post('/api/user/getName', {
         target: toId,
@@ -167,6 +170,29 @@ export default class TextChat extends Component {
     socketDetachListener('type_end', this._onIncomingTypeEnd);
   }
 
+  _sendImage(imageStr) {
+    let { toId, socketEmit, match: { params } } = this.props;
+
+    // fix a routing bug?
+    let id = params.sessionId.slice(1);
+    // Send submission over socket
+    socketEmit('sendMessage', {
+      receiverId: toId,
+      message: imageStr,
+      sessionId: id
+    });
+
+    // Update own state
+    this.setState(state => ({
+      input: '',
+      messages: state.messages.concat({
+        type: 'out',
+        content: imageStr,
+        timestamp: new Date()
+      })
+    }));
+  }
+
   render() {
     let { classes, active, setVideo } = this.props;
     let { loading, input, messages, participantName, participantTyping } = this.state;
@@ -207,6 +233,7 @@ export default class TextChat extends Component {
           onTypeStart={this._onTypeStart}
           onTypeEnd={this._onTypeEnd}
           onSubmit={this._onSubmit}
+          sendImage={this._sendImage}
         />
       </Flex>
     );
