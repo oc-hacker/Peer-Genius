@@ -48,7 +48,7 @@ const attributes: Sequelize.DefineAttributes = {
 		}
 	},
 	message: {
-		type: Sequelize.STRING,
+		type: Sequelize.TEXT({length: 'medium'}),
 		allowNull: false
 	}
 };
