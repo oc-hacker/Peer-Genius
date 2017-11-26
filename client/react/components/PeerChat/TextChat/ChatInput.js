@@ -9,6 +9,8 @@ import Button from '../../Button';
 import StyledInput from '../../StyledInput';
 import Flex from '../../Flex';
 
+import Webcam from 'react-webcam';
+
 const styles = {
   root: {
     position: 'relative',
@@ -54,7 +56,8 @@ export default class ChatInput extends Component {
     super(props);
 
     this.state = {
-      autoSubmit: true
+      autoSubmit: true,
+      webcam: false
     };
   }
 
@@ -95,6 +98,25 @@ export default class ChatInput extends Component {
     this._onTypeEnd.flush();
   };
 
+  getBase64Image(img) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+  }
+  _sendImage = () => {
+    let imgSrc = this.webcam.getScreenshot();
+    let imgStr = this.getBase64Image(imgSrc);
+    this.props.sendImage(imgStr);
+  }
+
+  setRef = (webcam) => {
+    this.webcam = webcam;
+  }
+
   render() {
     let {
       classes, value,
@@ -102,11 +124,46 @@ export default class ChatInput extends Component {
       ...others
     } = this.props;
 
+
+    if (this.state.webcam) {
+      return (
+        <div>
+          <Webcam
+            audio={false}
+            height={500}
+            ref={this.setRef}
+            screenshotFormat="image/jpeg"
+            width={500}
+          />
+          <div style={{display: 'inline'}}>
+            <Button
+              round raised color="primary"
+              onClick={this._sendImage}
+            >
+              Send
+            </Button>
+            <Button
+              round color='primary'
+              onClick={() => this.setState({webcam: false})}
+            >
+            Close
+            </Button>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <Flex
         className={classes.root}
         grow={1}
       >
+        <Button
+          round color="primary"
+          onClick={() => this.setState({webcam: true})}
+        >
+        📷
+        </Button>
         <StyledInput
           Component={'textarea'}
           className={classes.input}

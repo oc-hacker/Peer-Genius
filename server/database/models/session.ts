@@ -16,6 +16,7 @@ export interface SessionAttributes {
 	endTime?: Date;
 	rating?: number;
 	comment?: string;
+	assignment: string;
 }
 
 export interface SessionInstance extends Sequelize.Instance<SessionAttributes> {
@@ -32,6 +33,7 @@ export interface SessionInstance extends Sequelize.Instance<SessionAttributes> {
 	endTime?: Date;
 	rating?: number;
 	comment?: string;
+	assignment: string;
 }
 
 const attributes: Sequelize.DefineAttributes = {

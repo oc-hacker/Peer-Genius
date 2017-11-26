@@ -169,7 +169,6 @@ interface AcceptSessionRequest extends VerifiedRequest {
 export const acceptSession: AsyncHandler<AcceptSessionRequest> = async (request, response) => {
 	let result = requestInterface.acceptRequest(request.body.sessionID);
 	console.log(JSON.stringify(result));
-	
 	if (result) {
 		//save the scheduled session
 		let newSession = {
@@ -181,8 +180,21 @@ export const acceptSession: AsyncHandler<AcceptSessionRequest> = async (request,
 			assignment: result.assignment
 		};
 		await models.session.upsert(newSession);
-		socketRegistry[result.newbieID][0].to(result.newbieID).emit('acceptSession', newSession);
-		response.status(httpStatus.OK);
+
+		let sess = await models.session.find({
+			where: {
+				newbieId: result.newbieID,
+				guruId: request.body.user.id,
+				scheduledStart: result.time,
+				courseId: result.course,
+				assignment: result.assignment
+			},
+			raw: true
+		});
+
+		socketRegistry[result.newbieID][0].emit('acceptSession', sess);
+		console.log("New session " + sess.id + " accepted...");
+		response.status(httpStatus.OK).json({session: sess});
 	} else {
 		response.status(httpStatus.NOT_FOUND);
 	}

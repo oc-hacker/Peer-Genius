@@ -1,6 +1,7 @@
 import types from '../types';
 import { post } from '../network';
 import { handleError } from './utils';
+import { push } from 'react-router-redux';
 
 /* Holds action creators for functions related to handling of PeerGenius sessions.
 */
@@ -38,9 +39,10 @@ export const scheduleSession = (course, assignment, time, duration) => async dis
 };
 
 export const acceptSession = (newbieID) => async dispatch => {
-  await post('/api/schedule/acceptSession', {
+  let response = await post('/api/schedule/acceptSession', {
     sessionID: newbieID
   });
+  dispatch(push('/guru/sessions/:' + response.session.id));
 };
 
 export const getCurrentRequests = () => async dispatch => {
