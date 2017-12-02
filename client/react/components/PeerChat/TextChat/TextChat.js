@@ -22,7 +22,9 @@ const styles = {
     position: 'relative'
   },
   statusBar: {
-    borderBottom: '1px solid lightgrey'
+    borderBottom: '1px solid lightgrey',
+    minHeight: 'fit-content',
+    padding: 8
   }
 };
 
@@ -117,15 +119,13 @@ export default class TextChat extends Component {
     });
   };
 
-  _loadMessageHistory = async (params) => {
+  _loadMessageHistory = async params => {
     let { toId } = this.props;
 
-    // fix a routing bug?
-    let id = params.sessionId.slice(1);
     // Get name and message history
     let [messageData, nameData] = await Promise.all([
       post('/api/chat/getMessages', {
-        sessionId: id
+        sessionId: params.sessionId
       }).then(response => response.json()),
       post('/api/user/getName', {
         target: toId,
@@ -215,13 +215,13 @@ export default class TextChat extends Component {
           <Flex>
             {participantName}
           </Flex>
-          <Flex>
-            <IconButton
-              onClick={() => setVideo(true)}
-            >
-              <VideoIcon />
-            </IconButton>
-          </Flex>
+          {/*<Flex>*/}
+          {/*<IconButton*/}
+          {/*onClick={() => setVideo(true)}*/}
+          {/*>*/}
+          {/*<VideoIcon />*/}
+          {/*</IconButton>*/}
+          {/*</Flex>*/}
         </Flex>
         <MessageDisplay
           loading={loading}

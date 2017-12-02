@@ -99,23 +99,24 @@ export default class ChatInput extends Component {
   };
 
   getBase64Image(img) {
-    var canvas = document.createElement("canvas");
+    var canvas = document.createElement('canvas');
     canvas.width = img.width;
     canvas.height = img.height;
-    var ctx = canvas.getContext("2d");
+    var ctx = canvas.getContext('2d');
     ctx.drawImage(img, 0, 0);
-    var dataURL = canvas.toDataURL("image/png");
-    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    var dataURL = canvas.toDataURL('image/png');
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
   }
+
   _sendImage = () => {
     let imgSrc = this.webcam.getScreenshot();
     let imgStr = this.getBase64Image(imgSrc);
     this.props.sendImage(imgStr);
-  }
+  };
 
   setRef = (webcam) => {
     this.webcam = webcam;
-  }
+  };
 
   render() {
     let {
@@ -128,14 +129,16 @@ export default class ChatInput extends Component {
     if (this.state.webcam) {
       return (
         <div>
-          <Webcam
-            audio={false}
-            height={500}
-            ref={this.setRef}
-            screenshotFormat="image/jpeg"
-            width={500}
-          />
-          <div style={{display: 'inline'}}>
+          <Flex justify="center">
+            <Webcam
+              audio={false}
+              height={500}
+              ref={this.setRef}
+              screenshotFormat="image/jpeg"
+              width={500}
+            />
+          </Flex>
+          <Flex justify="center" style={{ widht: '100%', paddingBottom: 10 }}>
             <Button
               round raised color="primary"
               onClick={this._sendImage}
@@ -144,11 +147,11 @@ export default class ChatInput extends Component {
             </Button>
             <Button
               round color='primary'
-              onClick={() => this.setState({webcam: false})}
+              onClick={() => this.setState({ webcam: false })}
             >
-            Close
+              Close
             </Button>
-          </div>
+          </Flex>
         </div>
       );
     }
@@ -160,9 +163,15 @@ export default class ChatInput extends Component {
       >
         <Button
           round color="primary"
-          onClick={() => this.setState({webcam: true})}
+          onClick={() => this.setState({ webcam: true })}
         >
-        📷
+          <span
+            role="img"
+            aria-label="Webcam"
+            style={{ fontSize: 'x-large' }}
+          >
+            📷
+          </span>
         </Button>
         <StyledInput
           Component={'textarea'}

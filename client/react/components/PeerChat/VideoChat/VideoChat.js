@@ -43,13 +43,13 @@ const styles = {
 };
 
 @connect(state => ({
-  hasSocket: state.socket
+  socketReady: state.socket
 }), {
   socketEmit,
   socketAttachListener,
   socketDetachListener
 })
-@waitUntil(props => props.hasSocket)
+@waitUntil(props => props.socketReady)
 @withStyles(styles)
 export default class VideoChat extends Component {
   constructor(props) {

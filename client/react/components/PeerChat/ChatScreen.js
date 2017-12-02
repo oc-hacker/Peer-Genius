@@ -30,11 +30,9 @@ export default class ChatScreen extends Component {
   _getToId = async () => {
     let { match: { params }, mode } = this.props;
 
-    // fix a routing bug?
-    let id = params.sessionId.slice(1);
     // Load session data
     let response = await post('/api/session/info', {
-      sessionId: id
+      sessionId: params.sessionId
     });
     let { session } = await response.json();
 
@@ -77,7 +75,9 @@ export default class ChatScreen extends Component {
     if (error) {
       return (
         <Text color="error">
-          Error when initializing chat client.
+          Error when initializing chat client. Please reload.
+          <br />
+          If the problem persists, contact a developer.
         </Text>
       );
     }
