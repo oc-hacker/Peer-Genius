@@ -100,10 +100,13 @@ export default class ChatInput extends Component {
 
   getBase64Image(img) {
     var canvas = document.createElement('canvas');
-    canvas.width = img.width;
-    canvas.height = img.height;
+
+    let image = new Image();
+    image.src = img;
+    canvas.width = image.width;
+    canvas.height = image.height;
     var ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0);
+    ctx.drawImage(image, 0, 0);
     var dataURL = canvas.toDataURL('image/png');
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
   }
