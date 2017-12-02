@@ -42,7 +42,8 @@ export const acceptSession = (newbieID) => async dispatch => {
   let response = await post('/api/schedule/acceptSession', {
     sessionID: newbieID
   });
-  dispatch(push('/guru/sessions/:' + response.session.id));
+  let json = await response.json();
+  dispatch(push('/guru/sessions/' + json.session.id));
 };
 
 export const getCurrentRequests = () => async dispatch => {
