@@ -64,7 +64,9 @@ const hashPassword = (instance: AccountInstance) => {
 	}
 };
 
-const model: Sequelize.Model<AccountInstance, AccountAttributes> = admin.define<AccountInstance, AccountAttributes>('accounts', attributes);
+const model: Sequelize.Model<AccountInstance, AccountAttributes> = admin.define<AccountInstance, AccountAttributes>('accounts', attributes, {
+	charset: 'utf8'
+});
 model.beforeCreate(hashPassword);
 model.beforeUpdate('blockUserEdit', blockUserEdit);
 model.beforeUpdate('hashPassword', hashPassword);

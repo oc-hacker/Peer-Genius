@@ -90,5 +90,5 @@ session.hasMany(model, {
 	...hookOptions
 });
 
-model.sync(); // Alter when in development mode
+model.sync();
 export default model;
