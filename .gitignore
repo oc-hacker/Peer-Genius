@@ -100,3 +100,4 @@ private/
 backup-*
 
 # Backups
+/server/errors_log
