@@ -54,15 +54,10 @@ export default class UnexpectedErrorDialog extends Component {
           <br />
           Please try refreshing the page, or access Peer Genius at a later time.
           <br />
-          If this problem persists, please contact a developer by creating an issue at
-          <a href="https://github.com/Peer-Genius/Peer-Genius">Our GitHub Repository</a>.
         </DialogContent>
         <DialogActions>
-          {devMode && <Button className={classes.danger} onClick={ignoreUnexpectedError}>
-            Ignore Errors Like This (DEV MODE ONLY)
-          </Button>}
-          <Button color="primary" onClick={closeUnexpectedError}>
-            OK
+          <Button color="primary" onClick={() => location.reload()}>
+            REFRESH
           </Button>
         </DialogActions>
       </Dialog>
