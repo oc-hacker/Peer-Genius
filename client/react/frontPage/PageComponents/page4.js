@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
 
-import { Button, Logo, Text } from '../../components';
+import { Button, Logo, Text, Spacer } from '../../components';
 import Page from './Page';
 
 
@@ -24,7 +24,8 @@ const styles = {
   button: {
     display: 'flex',
     flexDirection: 'column',
-    borderRadius: 10
+    borderRadius: 10,
+    width: '15em'
   }
 };
 
@@ -43,9 +44,8 @@ export default class PageFour extends Component {
         page={4} currentPage={currentPage}
         className={classNames(classes.background, classes.withColor)}
       >
-        <Text type="display2" color="black" className={classes.centerText}>Okay, We Know You Want To</Text>
-        <Text type="display2" color="black" className={classes.centerText}>So Join The Club</Text>
         <Logo
+          imageOnly
           height='256pt'
           width='256pt'
           style={{
@@ -56,6 +56,8 @@ export default class PageFour extends Component {
             marginBottom: 10
           }}
         />
+        <Text type="display2" color="black" className={classes.centerText}>Okay, We Know You Want To</Text>
+        <Spacer height='2%'/>
         <div className={classes.buttons}>
           <Button
             raised
@@ -63,7 +65,7 @@ export default class PageFour extends Component {
             onClick={createAccount}
             style={styles.button}
           >
-            <Text type="button" fontWeight='bold'>Sign Up</Text>
+            <Text type="display2" fontWeight='bold'>Sign Up</Text>
           </Button>
         </div>
       </Page>
