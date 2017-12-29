@@ -32,7 +32,7 @@ export default class SettingsItem extends Component {
         className={classes.root}
         onClick={() => link && push(link)}
       >
-        <SettingsIcon />
+        <Text color="primary">•</Text>
         <Spacer width="1em" />
         <Text color="primary">{text}</Text>
       </Flex>
