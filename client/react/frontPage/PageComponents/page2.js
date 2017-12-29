@@ -88,13 +88,9 @@ export default class PageTwo extends Component {
       >
         <Text type="display2" color="black" className={classes.centerText}>THE NEWBIE</Text>
         <div className={classes.underlinedSection} />
-        <div className={classes.pushDown}>
-          <div className={classes.centerSection}>
-            <Text type="title" color="black" className={classNames(classes.centerText, classes.centerTextSection)}>IANS</Text>
-          </div>
-        </div>
-        <div style={{width: '90%'}}>
-          <div className={classNames(classes.flex, classes.spaceBetween)}>
+        <div className={classes.pushDown}/>
+        <div style={{width: '90%', marginTop: 20}}>
+          <div className={classNames(classes.flex, classes.spaceAround)}>
             <div>
               {awardIcon}
               <Text type="title" color="black" className={classNames(classes.centerText, classes.block)} > Guaranteed Tutoring</Text>
@@ -104,9 +100,6 @@ export default class PageTwo extends Component {
               {ratePersonIcon}
               <Text type="title" color="black" className={classes.centerText}>Rate your Guru</Text>
             </div>
-          </div>
-          <div style={{height: 15}}/>
-          <div className={classNames(classes.flex, classes.spaceAround)}>
             <div>
               {teacherIcon}
               <Text type="title" color="black" className={classes.centerText}>Find the Perfect Guru</Text>
@@ -115,7 +108,7 @@ export default class PageTwo extends Component {
               {handIcon}
               <Text type="title" color="black" className={classes.centerText}>3 Clicks</Text>
             </div>
-          </div>
+            </div>
         </div>
       </Page>
     );
