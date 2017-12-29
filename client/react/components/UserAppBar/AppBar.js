@@ -47,6 +47,7 @@ const UserAppBar =
             <Flex align="center">
               <a href='/'>
                 <PeerGeniusLogo
+                  imageOnly
                   className={classes.logo}
                 />
               </a>

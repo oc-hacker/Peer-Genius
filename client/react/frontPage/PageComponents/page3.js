@@ -134,7 +134,7 @@ export default class PageThree extends Component {
               </Text>
             </div>
             <div className={classes.row}>
-              <Text type="title" color="white" className={classes.centerText}>Customize</Text>
+              <Text type="title" color="white" className={classes.centerText}>Earn the PVSA Award</Text>
             </div>
           </div>
         </div>
