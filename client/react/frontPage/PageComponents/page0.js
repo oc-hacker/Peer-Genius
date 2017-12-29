@@ -24,9 +24,10 @@ const styles = {
   },
   background: {
     backgroundImage: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.6) 100%), url(assets/home_page_1st.jpg)',
-    backgroundSize: 'cover',
-    overflow: 'hidden'
-  },
+    backgroundSize: 'contain',
+    overflow: 'hidden',
+    backgroundPosition: '-50% 0%'
+    },
 };
 
 @withStyles(styles)
