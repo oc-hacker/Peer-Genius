@@ -113,7 +113,7 @@ export default class ChatInput extends Component {
   }
 
   _sendImage = () => {
-    let imgStr = this.getBase64Image(this.webcam.getScreenshot());
+    let imgStr = this.webcam.getScreenshot();
     this.props.sendImage(imgStr);
   };
 
