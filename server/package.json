@@ -6,7 +6,8 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "tslint -p tslint.json",
-		"dev": "nodemon ./entry.ts"
+		"dev": "nodemon ./entry.ts",
+		"start": "ts-node ./entry.ts"
 	},
 	"authors": [
 		"jasonftw",
