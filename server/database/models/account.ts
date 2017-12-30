@@ -20,6 +20,7 @@ export interface AccountInstance extends Sequelize.Instance<AccountAttributes> {
 	email: string;
 	password: string;
 	verified: string;
+	time: number;
 }
 
 const attributes: Sequelize.DefineAttributes = {
@@ -49,6 +50,10 @@ const attributes: Sequelize.DefineAttributes = {
 	verified: {
 		type: Sequelize.BOOLEAN,
 		defaultValue: false
+	},
+	time: {
+		type: Sequelize.BIGINT,
+		defaultValue: 0
 	}
 };
 
