@@ -87,7 +87,7 @@ export default class EditProfile extends Component {
           <div className={classNames(classes.divider, classes.headerUnderline)} />
           <ReduxForm
             form="editProfile" onSubmit={editProfile}
-            initialValues={user}
+            initialValues={user} enableReinitialize={true}
           >
             <Flex align="center" className={classes.row}>
               <FieldIcon />
