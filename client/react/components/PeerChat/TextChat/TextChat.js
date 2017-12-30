@@ -171,7 +171,7 @@ export default class TextChat extends Component {
     socketDetachListener('type_end', this._onIncomingTypeEnd);
   }
 
-  _sendImage(imageStr) {
+  _sendImage = (imageStr) => {
     console.log(this.props);
     let { toId, socketEmit, match: { params } } = this.props;
 
