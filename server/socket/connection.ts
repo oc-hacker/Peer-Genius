@@ -4,6 +4,8 @@ import { UserInstance } from '../database/models/user';
 import { UserSocket } from '../types';
 import * as sequelize from 'sequelize';
 
+import { currentSessionRegistry } from './chat';
+
 interface Registry<V> {
 	[key: string]: V;
 }
@@ -52,7 +54,7 @@ const attach = async (socket: UserSocket, userId: string) => {
 	// Broadcast that a user connected.
 	socket.broadcast.emit('user_connect', userInstance);
 	
-	socket.on('disconnect', () => {
+	socket.on('disconnect', async () => {
 		console.log('User', userId, 'disconnected.');
 		// Remove the registry entry
 		socketRegistry[userId] = socketRegistry[userId].filter(userSocket => userSocket.id !== socket.id);
@@ -62,6 +64,16 @@ const attach = async (socket: UserSocket, userId: string) => {
 			delete onlineUsers[userId];
 			socket.broadcast.emit('user_disconnect', userInstance);
 		}
+
+		// save their volunteer time if applicable
+		const time = currentSessionRegistry.getSession(socket.user);
+			let account = await models.account.find({
+				where: {
+					userId: socket.user
+				}
+			});
+			account.time += time;
+			await account.save();
 	});
 	
 	// Send information about the users currently online
