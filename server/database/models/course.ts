@@ -3,14 +3,16 @@ import * as Sequelize from 'sequelize';
 import { sequelizeAdmin as admin } from '../reference';
 
 export interface CourseAttributes {
-	userId: string;
+	id: string;
+	name: string;
 }
 
 export interface CourseInstance extends Sequelize.Instance<CourseAttributes> {
 	createdAt: Date;
 	updatedAt: Date;
 	
-	userId: string;
+	id: string;
+	name: string;
 }
 
 const attributes: Sequelize.DefineAttributes = {

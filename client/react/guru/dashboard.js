@@ -89,7 +89,7 @@ export default class GuruDashboard extends React.Component {
             type='subheading' color='black'
             style={{ marginLeft: 20, display: 'inline-block' }}
           >
-            {session.course + ' | ' + session.assignment}
+            {session.courseName + ' | ' + session.assignment}
           </Text>
           <Button
             flat color="primary"

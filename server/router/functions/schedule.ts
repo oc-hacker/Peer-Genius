@@ -192,10 +192,16 @@ export const acceptSession: AsyncHandler<AcceptSessionRequest> = async (request,
 			},
 			raw: true
 		});
+		let course = await models.course.find({
+			where: {
+				id: result.course
+			}
+		});
+		let sessOut = { ...sess, courseName: course.name };
 
-		seio.to(result.newbieID).emit('acceptSession', sess);
+		seio.to(result.newbieID).emit('acceptSession', sessOut);
 		console.log("New session " + sess.id + " accepted...");
-		response.status(httpStatus.OK).json({session: sess});
+		response.status(httpStatus.OK).json({session: sessOut});
 	} else {
 		response.status(httpStatus.NOT_FOUND);
 	}
