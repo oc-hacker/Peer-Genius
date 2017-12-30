@@ -63,7 +63,7 @@ export default class MessageDisplay extends Component {
         justify="flex-end"
       >
         {messages.map(({ type, content, timestamp }, index) => {
-          if (content.length <= 10000 /* images will likely be large - super hacky */) {
+          if (!content.includes('data:image') /* images will likely be large - super hacky */) {
             return (
               <TextChatMessage
                 key={timestamp.getTime()}
