@@ -11,6 +11,7 @@ const attach = async (socket: UserSocket) => {
 	// On message events
 	socket.on('sendMessage', async (data: Message) => {
 		let { sessionId, receiverId, message } = data;
+		console.log(sessionId);
 		
 		// Save message to database
 		let messageInstance = await models.message.create({
