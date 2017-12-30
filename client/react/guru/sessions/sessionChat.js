@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { PeerChat } from '../../components';
-import { ifvisible } from 'ifvisible.js';
+import * as ifvisible from 'ifvisible.js';
 
 import { connect } from 'react-redux';
 import { socketEmit } from '../../../redux/actions/creators/socket';
