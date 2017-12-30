@@ -91,14 +91,6 @@ export default class Schedule extends Component {
             </div>
             <div style={{ height: 190, width: 160 }}>
               <Flex column align='center' justify='center' className={classNames(classes.whiteBackground, classes.fullHeight)}>
-                <img src={serverURL + '/assets/calendaricon.png'}/>
-                <Text>Schedule</Text>
-                <div style={{ display: 'block', width: 120, height: 1 }} />
-                <TextField placeholder="Date (MM/DD/YYYY)" value={this.state.schedule} onChange={(event) => this.setState({schedule: event.target.value})} />
-              </Flex>
-            </div>
-            <div style={{ height: 190, width: 160 }}>
-              <Flex column align='center' justify='center' className={classNames(classes.whiteBackground, classes.fullHeight)}>
                 <img src={serverURL + '/assets/timeclockicon.png'}/>
                 <Text>How Long?</Text>
                 <div style={{ display: 'block', width: 120, height: 1 }} />
