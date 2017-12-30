@@ -151,7 +151,7 @@ export default class GuruDashboard extends React.Component {
                 <br />Gold<br />250 Hours</Text>
               <Button
                 flat color="primary"
-                onClick={() => window.location.href = 'https://voluntu.io'}
+                onClick={() => window.open('https://voluntu.io', '_blank')}
                 style={{ display: 'block' }}
               >
                 <Text type="button" weight='bold'>Voluntu.io</Text>
