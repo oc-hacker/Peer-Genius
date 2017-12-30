@@ -107,9 +107,15 @@ export const scheduleSession: AsyncHandler<ScheduleSessionRequest> = async (requ
 		time,
 		duration
 	);
+	let courseObj = await models.course.find({
+		where: {
+			id: course
+		}
+	});
+	let newReqOut = { ...newRequest, courseName: courseObj.name };
 	
 	requestInterface.add(newRequest);
-	seio.to('gurusOnline').emit('newSession', newRequest);
+	seio.to('gurusOnline').emit('newSession', newReqOut);
 	console.log("New session emitted");
 	response.status(httpStatus.OK).end();
 };
