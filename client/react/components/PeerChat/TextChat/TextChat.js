@@ -185,14 +185,10 @@ export default class TextChat extends Component {
     });
 
     // Update own state
-    this.setState(state => ({
-      input: '',
-      messages: state.messages.concat({
-        type: 'out',
-        content: imageStr,
-        timestamp: new Date()
-      })
-    }));
+    this.setState({
+      input: imageStr
+    });
+    this._onSubmit();
   }
 
   render() {
