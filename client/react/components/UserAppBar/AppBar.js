@@ -7,6 +7,7 @@ import AppBar from 'material-ui/AppBar';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
+import Button from '../Button';
 import Flex from '../Flex';
 import Text from '../Text';
 import AccountMenu from './AccountMenu';
@@ -45,13 +46,13 @@ const UserAppBar =
         return (
           <AppBar position="static" className={classNames(classes.appBar, className)}>
             <Flex align="center">
-              <a href='/'>
+              <Button style={{height: '100%'}} onClick={() => push('/newbie')}>
                 <PeerGeniusLogo
                   imageOnly
                   className={classes.logo}
                 />
-              </a>
-              <Text type="title" noSelect className={classes.appBarText}>Peer Genius</Text>
+                <Text type="title" className={classes.appBarText}>Peer Genius</Text>
+              </Button>
             </Flex>
             <Flex align="center">
               <GuruMenu />

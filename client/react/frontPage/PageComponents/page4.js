@@ -25,7 +25,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     borderRadius: 10,
-    width: '15em'
+    width: '12em',
+    height: '3em'
   }
 };
 
@@ -56,7 +57,7 @@ export default class PageFour extends Component {
             marginBottom: 10
           }}
         />
-        <Text type="display2" color="black" className={classes.centerText}>Okay, We Know You Want To</Text>
+        <Text type="display2" color="black" className={classes.centerText}>Okay, We Know You Want To.</Text>
         <Spacer height='2%'/>
         <div className={classes.buttons}>
           <Button
@@ -65,7 +66,7 @@ export default class PageFour extends Component {
             onClick={createAccount}
             style={styles.button}
           >
-            <Text type="display2" fontWeight='bold'>Sign Up</Text>
+            <Text type="button" fontWeight='bold' size='20pt'>JOIN</Text>
           </Button>
         </div>
       </Page>

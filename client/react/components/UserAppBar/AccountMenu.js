@@ -7,6 +7,8 @@ import { push } from 'react-router-redux';
 
 import AppBarMenu from './AppBarMenu';
 
+import Button from '../Button';
+
 import { logOut } from '../../../redux/actions/creators/session';
 
 @connect(null, {
@@ -50,7 +52,7 @@ export default class AccountMenu extends Component {
 
     return (
       <AppBarMenu
-        button={<AccountIcon />}
+        button={<Button style={{height: '100%'}}><AccountIcon /></Button>}
         open={open} onClick={this._openMenu} onRequestClose={this._closeMenu}
       >
         <MenuItem onClick={this._toAccountSettings}>Account Settings</MenuItem>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Color from 'color';
+import { push } from 'react-router-redux';
 
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
@@ -10,12 +11,15 @@ import Flex from '../Flex';
 import PeerGeniusLogo from '../Logo';
 import { FacebookIcon, GooglePlusIcon, LinkedInIcon, TwitterIcon } from './IconComponents';
 import Text from '../Text';
+import Button from '../Button';
+import { connect } from 'react-redux';
 
 const styles = ({ palette: { grey }, spacing }) => ({
   appBar: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
 
     top: 0,
     left: 0,
@@ -26,12 +30,15 @@ const styles = ({ palette: { grey }, spacing }) => ({
     borderBottom: `1px solid ${new Color(grey[700]).alpha(0.6)}`,
     boxSizing: 'border-box'
   },
-  aboutUs: {
-    marginTop: 15,
+  button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
     textDecoration: 'none'
   }
 });
 
+@connect(null, { push })
 @withStyles(styles, { name: 'GuestAppBar' })
 class GuestAppBar extends Component {
   render = () => {
@@ -45,15 +52,15 @@ class GuestAppBar extends Component {
         elevation={0}
         className={classNames(classes.appBar, className)}
       >
-        <a href='/'>
+        <Button className={classes.button} onClick={() => this.props.push('/')}>
           <PeerGeniusLogo fill={color} />
-        </a>
+        </Button>
         <Flex grow={2} />
-        <a href='/aboutUs' className={classes.aboutUs}>
+        <Button className={classes.button} onClick={() => this.props.push('/aboutUs')}>
           <Text type='subheading' color={color}>
             About Us
           </Text>
-        </a>
+        </Button>
         <Flex align="center" justify="space-around" grow={1}>
           <FacebookIcon color={color} />
           <TwitterIcon color={color} />
