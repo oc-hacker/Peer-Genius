@@ -31,10 +31,10 @@ const styles = {
 @connect(state => ({
   hasSocket: state.socket
 }), {
-  socketEmit,
-  socketAttachListener,
-  socketDetachListener
-})
+    socketEmit,
+    socketAttachListener,
+    socketDetachListener
+  })
 @withStyles(styles)
 @waitUntil(props => props.hasSocket)
 export default class TextChat extends Component {
@@ -185,10 +185,14 @@ export default class TextChat extends Component {
     });
 
     // Update own state
-    this.setState({
-      input: imageStr
-    });
-    this._onSubmit();
+    this.setState(state => ({
+      input: '',
+      messages: state.messages.concat({
+        type: 'out',
+        content: imageStr,
+        timestamp: new Date()
+      })
+    }));
   }
 
   render() {
