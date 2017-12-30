@@ -68,7 +68,8 @@ let styles = {
 
 @connect((state) => {
   return {
-    newSessions: state.PGsession.currentRequests
+    newSessions: state.PGsession.currentRequests,
+    currentHours: state.account.time / (1000 * 60 * 60) // 1 hour in milliseconds
   };
 }, dispatch => {
   return {
