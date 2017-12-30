@@ -172,8 +172,8 @@ export default class TextChat extends Component {
   }
 
   _sendImage(imageStr) {
-    let { toId, socketEmit, match: { params } } = this.props;
     console.log(this.props);
+    let { toId, socketEmit, match: { params } } = this.props;
 
     // fix a routing bug?
     let id = params.sessionId;
