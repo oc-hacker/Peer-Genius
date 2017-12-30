@@ -31,6 +31,10 @@ export const socketConnect = jwt => async (dispatch, getState) => {
     // We can assume it's a newbie because socket doesn't push messages to their sender
     dispatch(push('/newbie/sessions/' + sess.id));
   });
+  socket.on('newSession', newRequest => {
+    dispatch(newSession(newRequest));
+    console.log("New session incoming!");
+  });
 };
 
 /**

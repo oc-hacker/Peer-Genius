@@ -4,6 +4,7 @@ import * as models from '../../database/models';
 
 import { Request } from 'express';
 import { AsyncHandler, VerifiedRequest } from '../../types';
+import { seio } from '../../core/server';
 
 import { socketRegistry } from '../../socket/connection';
 
@@ -108,8 +109,8 @@ export const scheduleSession: AsyncHandler<ScheduleSessionRequest> = async (requ
 	);
 	
 	requestInterface.add(newRequest);
-	console.log(socketRegistry[user.id][0]);
-	socketRegistry[user.id][0].to('gurusOnline').emit('newSession', newRequest);
+	seio.to('gurusOnline').emit('newSession', newRequest);
+	console.log("New session emitted");
 	response.status(httpStatus.OK).end();
 };
 
@@ -192,7 +193,7 @@ export const acceptSession: AsyncHandler<AcceptSessionRequest> = async (request,
 			raw: true
 		});
 
-		socketRegistry[result.newbieID][0].emit('acceptSession', sess);
+		seio.to(result.newbieID).emit('acceptSession', sess);
 		console.log("New session " + sess.id + " accepted...");
 		response.status(httpStatus.OK).json({session: sess});
 	} else {

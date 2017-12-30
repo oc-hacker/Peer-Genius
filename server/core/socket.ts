@@ -1,17 +1,18 @@
-import * as sio from 'socket.io';
 import * as jwt from 'jsonwebtoken';
-
-import server from './server';
+import { seio } from './server';
 import { logError } from '../router/misc/utils';
 import { connection, chat, webrtc } from '../socket';
 import { UserSocket } from '../types';
 
 const { JWT_SECRET } = process.env;
 
-export const io = sio(server);
 const secret = new Buffer(JWT_SECRET, 'base64');
 
-io.on('connection', async (socket: UserSocket) => {
+// prevent stuff from breaking
+export const io = seio;
+
+export const onConnect = async (socket: UserSocket) => {
+	console.log("CONNECTION");
 	// Verify valid JWT
 	let { jwt: token } = socket.handshake.query;
 	
@@ -36,4 +37,4 @@ io.on('connection', async (socket: UserSocket) => {
 	catch (error) {
 		console.warn('Unauthorized socket.io connection attempt rejected.');
 	}
-});
+};

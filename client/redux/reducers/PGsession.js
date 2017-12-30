@@ -25,7 +25,7 @@ export default (state = defaultState, action) => {
     }
     case types.INIT_NEW_SESSION_REQUEST: {
       diff = {
-        currentRequests: [...state.currentRequests, payload]
+        currentRequests: [payload, ...state.currentRequests]
       };
       break;
     }
@@ -37,7 +37,7 @@ export default (state = defaultState, action) => {
     }
     case types.INIT_CURRENT_REQUESTS: {
       diff = {
-        currentRequests: payload
+        currentRequests: payload.reverse()
       }
     }
   }

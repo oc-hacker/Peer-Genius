@@ -1,5 +1,9 @@
 import * as path from 'path';
 import * as express from 'express';
+import * as sio from 'socket.io';
+import { onConnect } from './socket';
+
+import { createServer, Server } from 'http';
 import * as cors from 'cors';
 import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
@@ -36,10 +40,12 @@ const app = express();
 initMailer();
 
 // Listen; also get the server.
-const server = app.listen(SERVER_PORT, () => {
+const server = createServer(app);
+server.listen(SERVER_PORT, () => {
 	console.log('Listening on port ' + SERVER_PORT + '!');
 });
-
+export const seio = sio(server);
+seio.on('connection', onConnect);
 // Logger
 app.use(logger);
 
