@@ -77,7 +77,7 @@ export default class TextChat extends Component {
 
     let { toId, socketEmit, match: { params } } = this.props;
     console.log(this.props);
-    let id = params.sessionId.slice(1);
+    let id = params.sessionId;
     // Send submission over socket
     socketEmit('sendMessage', {
       receiverId: toId,
@@ -176,7 +176,7 @@ export default class TextChat extends Component {
     console.log(this.props);
 
     // fix a routing bug?
-    let id = params.sessionId.slice(1);
+    let id = params.sessionId;
     // Send submission over socket
     socketEmit('sendMessage', {
       receiverId: toId,
