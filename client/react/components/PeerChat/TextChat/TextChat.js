@@ -76,6 +76,7 @@ export default class TextChat extends Component {
     // fix a routing bug?
 
     let { toId, socketEmit, match: { params } } = this.props;
+    console.log(this.props);
     let id = params.sessionId.slice(1);
     // Send submission over socket
     socketEmit('sendMessage', {
@@ -172,6 +173,7 @@ export default class TextChat extends Component {
 
   _sendImage(imageStr) {
     let { toId, socketEmit, match: { params } } = this.props;
+    console.log(this.props);
 
     // fix a routing bug?
     let id = params.sessionId.slice(1);
