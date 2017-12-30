@@ -99,23 +99,39 @@ export default class AboutUs extends React.Component {
           <div className={classNames(classes.centerDiv, classes.middleTiles)}>
             <div className={classNames(classes.greyBackground, classes.roundedCorners, classes.middleTile)}>
               <p className={classNames(classes.centerText, classes.sidePadding)}><img src='assets/DKF_icon.png' /></p>
-              <Text type='subheading' color='black' className={classNames(classes.centerText, classes.bottomPadding)}>Dragon
-                Kim Foundation</Text>
+              <Text type='subheading' color='black' className={classNames(classes.centerText, classes.bottomPadding)}>Hana Stauss</Text>
             </div>
             <div className={classNames(classes.greyBackground, classes.roundedCorners, classes.middleTile)}>
               <p className={classNames(classes.centerText, classes.sidePadding)}><img src='assets/ms_icon.png' /></p>
-              <Text type='subheading' color='black' className={classNames(classes.centerText, classes.bottomPadding)}>Month
-                Service</Text>
+              <Text type='subheading' color='black' className={classNames(classes.centerText, classes.bottomPadding)}>Hana Stauss</Text>
             </div>
             <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
               <p className={classNames(classes.centerText, classes.sidePadding)}><img src='assets/hana_icon.png' /></p>
-              <Text type='subheading' color='white' className={classNames(classes.centerText, classes.bottomPadding)}>Hana</Text>
+              <Text type='subheading' color='white' className={classNames(classes.centerText, classes.bottomPadding)}>Dragon Kim Foundation</Text>
             </div>
             <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
-              <p className={classNames(classes.centerText, classes.sidePadding)}><img
-                src='assets/businessguy_icon.png' /></p>
-              <Text type='subheading' color='white' className={classNames(classes.centerText, classes.bottomPadding)}>Month
-                Service</Text>
+              <p className={classNames(classes.centerText, classes.sidePadding)}>
+                <img src='assets/businessguy_icon.png' />
+              </p>
+              <Text type='subheading' color='white' className={classNames(classes.centerText, classes.bottomPadding)}>Hanju Lee</Text>
+            </div>
+            <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
+              <p className={classNames(classes.centerText, classes.sidePadding)}>
+                <img src='' alt='' />
+              </p>
+              <Text type='subheading' color='white' className={classNames(classes.centerText, classes.bottomPadding)}>Jack Sun</Text>
+            </div>
+            <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
+              <p className={classNames(classes.centerText, classes.sidePadding)}>
+                <img src='' alt='' />
+              </p>
+              <Text type='subheading' color='white' className={classNames(classes.centerText, classes.bottomPadding)}>Jeff Guo</Text>
+            </div>
+            <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
+              <p className={classNames(classes.centerText, classes.sidePadding)}>
+                <img src='' alt='' />
+              </p>
+              <Text type='subheading' color='white' className={classNames(classes.centerText, classes.bottomPadding)}>Jason Yu</Text>
             </div>
           </div>
           <div>
