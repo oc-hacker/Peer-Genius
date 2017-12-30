@@ -67,6 +67,7 @@ const styles = ({ palette: { grey }, spacing }) => ({
 export default class EditProfile extends Component {
   render() {
     let { user, editProfile, classes } = this.props;
+    console.log(user);
 		
     const fieldClasses = {
       className: classes.field,

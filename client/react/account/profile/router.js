@@ -11,8 +11,7 @@ export default class ProfileRouter extends Component {
 		
     return (
       <Switch>
-        <Route exact path={url} component={ViewProfile} />
-        <Route path={`${url}/profile`} component={EditProfile} />
+        <Route exact path={url} component={EditProfile} />
       </Switch>
     );
   }
