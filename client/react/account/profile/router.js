@@ -12,7 +12,7 @@ export default class ProfileRouter extends Component {
     return (
       <Switch>
         <Route exact path={url} component={ViewProfile} />
-        <Route path={`${url}/edit`} component={EditProfile} />
+        <Route path={`${url}/profile`} component={EditProfile} />
       </Switch>
     );
   }
