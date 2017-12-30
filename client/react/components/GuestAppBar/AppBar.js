@@ -52,7 +52,7 @@ class GuestAppBar extends Component {
         elevation={0}
         className={classNames(classes.appBar, className)}
       >
-        <Button className={classes.button} onClick={() => this.props.push('/')}>
+        <Button style={styles.button} onClick={() => this.props.push('/')}>
           <PeerGeniusLogo fill={color} />
         </Button>
         <Flex grow={2} />
@@ -62,10 +62,10 @@ class GuestAppBar extends Component {
           </Text>
         </Button>
         <Flex align="center" justify="space-around" grow={1}>
-          <FacebookIcon color={color} />
-          <TwitterIcon color={color} />
-          <GooglePlusIcon color={color} />
-          <LinkedInIcon color={color} />
+          <Button style={styles.button}><FacebookIcon color={color} /></Button>
+          <Button style={styles.button}><TwitterIcon color={color} /></Button>
+          <Button style={styles.button}><GooglePlusIcon color={color} /></Button>
+          <Button style={styles.button}><LinkedInIcon color={color} /></Button>
         </Flex>
       </AppBar>
     );
