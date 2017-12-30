@@ -6,6 +6,7 @@ import { push } from 'react-router-redux';
 
 import AppBarMenu from './AppBarMenu';
 
+import Button from '../Button';
 import Text from '../Text';
 
 @connect(null, { push })
@@ -39,7 +40,11 @@ export default class GuruMenu extends Component {
 
     return (
       <AppBarMenu
-        button={<Text style={{color: 'white', fontFamily: 'sans-serif'}}>Gurus</Text>}
+        button={
+          <Button style={{height: '100%'}} onClick={this._openMenu}>
+            <Text style={{color: 'white', fontFamily: 'sans-serif'}}>Gurus</Text>
+          </Button>
+        }
         open={open} onClick={this._openMenu} onRequestClose={this._closeMenu}
       >
         <MenuItem onClick={this._toGuruSignUp}>Become a Guru</MenuItem>
