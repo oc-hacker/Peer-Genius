@@ -42,7 +42,7 @@ const styles = ({ palette: { grey }, spacing }) => ({
 @withStyles(styles, { name: 'GuestAppBar' })
 class GuestAppBar extends Component {
   render = () => {
-    let { className, classes, color, currentPage } = this.props;
+    let { background, className, classes, color, currentPage } = this.props;
     if (currentPage === 1) {
       color = 'white';
     }
@@ -51,6 +51,7 @@ class GuestAppBar extends Component {
       <AppBar
         elevation={0}
         className={classNames(classes.appBar, className)}
+        style={{backgroundColor: (background == null) ? 'transparent' : background}}
       >
         <Button style={styles.button} onClick={() => this.props.push('/')}>
           <PeerGeniusLogo fill={color} />

@@ -69,10 +69,10 @@ export default class NewbieDashboard extends React.Component {
           >
             YOUR DASHBOARD
           </Text>
-          <Flex justify align column grow={0} >
+          <Flex justify='center' align='center' column grow={0} >
             <Button
               className={classes.buttonContainer}
-              buttonStyle={{borderRadius: '5px'}}
+              style={{borderRadius: '5px'}}
               color="primary"
               onClick={() => push('/newbie/schedule')}
             >

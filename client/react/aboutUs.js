@@ -94,19 +94,24 @@ export default class AboutUs extends React.Component {
     super(props);
 
     this.state = {
-
-    }
+      backgroundColor: 'transparent'
+    };
   }
 
   handleScroll () {
-    console.log(document.documentElement.scrollTop);
+    let newcolor = 'rgba(153, 50, 204, ' + document.documentElement.scrollTop / 300 + ')';
+    this.setState({backgroundColor: newcolor});
+  }
+
+  componentDidMount () {
+    window.onscroll = () => this.handleScroll()
   }
 
   render = () => {
     let { classes } = this.props;
     return (
       <div>
-        <GuestAppBar currentPage={1} />
+        <GuestAppBar currentPage={1} background={this.state.backgroundColor} />
         <div className={classes.backgroundHeader}>
           <Text type='display2' color='white' className={classNames(classes.centerText, classes.topHeaderText)}>ABOUT
             US</Text>
