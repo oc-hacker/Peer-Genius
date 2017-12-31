@@ -63,6 +63,10 @@ export default class RecentChats extends Component {
         })
     });
   };
+  
+  _changeChat = async (mode, session) => {
+    await push(`/${mode}/sessions/${session.id}`);
+  }
 
   componentWillMount() {
     this._loadRecent()
@@ -117,7 +121,7 @@ export default class RecentChats extends Component {
               <ListItem
                 key={session.id}
                 button
-                onClick={() => push(`/${mode}/sessions/${session.id}`)}
+                onClick={this._changeChat(mode, session)}
                 style={{ backgroundColor: selected ? 'lightgrey' : null }}
               >
                 <ListItemText

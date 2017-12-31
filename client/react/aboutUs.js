@@ -152,7 +152,7 @@ export default class AboutUs extends React.Component {
                 <br />
                 Hana and Miya Stauss were awarded the “Dragon Kim Fellowship” opportunity in the early year of 2016.
                 <br />
-                Ever since, 
+                Ever since, they have provided Hana and Miya with a mentor and useful leadership sessions.
               </Text>
             </div>
             <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
@@ -161,11 +161,11 @@ export default class AboutUs extends React.Component {
               </Text>
               <Text type='subheading' color='white' className={classNames(classes.centerText)}>Hanju Lee</Text>
               <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
-                A co-founder of Peer Genius, who is responsible for operations and logistics.
+                Hanju Lee is Hana and Miya’s mentor and graphic designer.
                 <br />
-                As Hana’s job as a hustler, she makes sure everything runs smoothly and does lots of behind the scenes work.
+                He worked with them to create their logo and helped to design page layouts for the website.
                 <br />
-                Hana is also a sophomore at Sage Hill School and finds passion for reaching out to the community and giving back.
+                Hanju has been extremely helpful in helping to guide Peer Genius and give quality advice.
               </Text>
             </div>
             <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
@@ -174,11 +174,11 @@ export default class AboutUs extends React.Component {
               </Text>
               <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jack Sun</Text>
               <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
-                A co-founder of Peer Genius, who is responsible for operations and logistics.
+                line 1
                 <br />
-                As Hana’s job as a hustler, she makes sure everything runs smoothly and does lots of behind the scenes work.
+                line 2
                 <br />
-                Hana is also a sophomore at Sage Hill School and finds passion for reaching out to the community and giving back.
+                line 3
               </Text>
             </div>
             <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
@@ -187,11 +187,11 @@ export default class AboutUs extends React.Component {
               </Text>
               <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jeff Guo</Text>
               <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
-                A co-founder of Peer Genius, who is responsible for operations and logistics.
+                line 1
                 <br />
-                As Hana’s job as a hustler, she makes sure everything runs smoothly and does lots of behind the scenes work.
+                line 2
                 <br />
-                Hana is also a sophomore at Sage Hill School and finds passion for reaching out to the community and giving back.
+                line 3
               </Text>
             </div>
             <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
@@ -200,11 +200,11 @@ export default class AboutUs extends React.Component {
               </Text>
               <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jason Yu</Text>
               <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
-                A co-founder of Peer Genius, who is responsible for operations and logistics.
+                line 1
                 <br />
-                As Hana’s job as a hustler, she makes sure everything runs smoothly and does lots of behind the scenes work.
+                line 2
                 <br />
-                Hana is also a sophomore at Sage Hill School and finds passion for reaching out to the community and giving back.
+                line 3
               </Text>
             </div>
           </div>
