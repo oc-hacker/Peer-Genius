@@ -31,7 +31,15 @@ let styles = {
     borderColor: 'white',
     marginLeft: 'auto',
     marginRight: 'auto',
-    width: '20%'
+    width: '25%'
+  },
+  buttonOutline: {
+    justifyContent: 'center',
+    borderRadius: '5px',
+    borderStyle: 'solid',
+    borderColor: 'white',
+    height: '100%',
+    width: '100%'
   },
   previousSessionContainer: {
     padding: '50px 0'
@@ -40,7 +48,6 @@ let styles = {
     textAlign: 'center'
   }
 };
-
 
 @withStyles(styles)
 @connect(null, {push})
@@ -62,14 +69,23 @@ export default class NewbieDashboard extends React.Component {
           >
             YOUR DASHBOARD
           </Text>
-          <div className={classes.buttonContainer}>
+          <Flex justify align column grow={0} >
             <Button
+              className={classes.buttonContainer}
+              buttonStyle={{borderRadius: '5px'}}
               color="primary"
               onClick={() => push('/newbie/schedule')}
             >
-              <Text type="button" color='white' fontWeight='bold' className={classes.textAlignCenter}>REQUEST FOR ANOTHER SESSION</Text>
+              <Text 
+                type="button"
+                color='white'
+                fontWeight='bold'
+                className={classes.textAlignCenter}
+              >
+                REQUEST FOR ANOTHER SESSION
+              </Text>
             </Button>
-          </div>
+          </Flex>
         </div>
         <PreviousSession/>
       </Flex>

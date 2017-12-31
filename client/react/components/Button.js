@@ -80,6 +80,7 @@ export default class CustomButton extends Component {
     let {
       classes, className,
       theme, sheet, color, colors, round,
+      buttonStyle,
       ...others
     } = this.props;
     let raised = this.props.raised || this.props.fab;
@@ -94,6 +95,7 @@ export default class CustomButton extends Component {
           },
           className
         )}
+        buttonStyle={buttonStyle}
         {...others}
       />
     );

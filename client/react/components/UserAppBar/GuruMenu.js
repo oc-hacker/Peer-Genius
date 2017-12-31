@@ -4,11 +4,16 @@ import { MenuItem } from 'material-ui/Menu';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
+import { selectIsGuru } from '../../../redux/selectors/user';
+
 import AppBarMenu from './AppBarMenu';
 
 import Button from '../Button';
 import Text from '../Text';
 
+@connect(store => ({
+  isGuru: selectIsGuru(store)
+}))
 @connect(null, { push })
 export default class GuruMenu extends Component {
   constructor(props) {
@@ -32,11 +37,34 @@ export default class GuruMenu extends Component {
   };
 
   _toGuruSignUp = () => {
-    this.props.push('/guru/signUp');
+    /* Check to see if the user is a guru or not
+     * if they are, do not let them sign up again
+     * otherwise let them proceed
+     */  
+    if (this.props.isGuru !== undefined) {
+      if (this.props.isGuru) {
+        // TODO: error msg
+      }
+      else {
+        this.props.push('/guru/signUp');
+      }
+    } else return null;
   };
 
   _toGuruDashboard = () => {
-    this.props.push('/guru');
+    /* Check to see if the user is a guru or not
+     * if they are, let them go to the dashboard
+     * otherwise do not
+     */  
+    if (this.props.isGuru !== undefined) {
+      if (this.props.isGuru) {
+        this.props.push('/guru');
+      }
+      else {
+        // TODO: error msg
+        return;
+      }
+    } else return null;
   }
 
   render() {
