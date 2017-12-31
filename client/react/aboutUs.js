@@ -52,7 +52,8 @@ const styles = {
     textAlign: 'center'
   },
   middleTile: {
-    display: 'inline-block'
+    display: 'inline-block',
+    width: '25%'
   },
   topHeaderText: {
     paddingTop: 150,
@@ -76,6 +77,14 @@ const styles = {
   },
   blueBackground: {
     backgroundColor: '#7FB8BF'
+  },
+  textSidePadding: {
+    paddingLeft: '8%',
+    paddingRight: '8%'
+  },
+  imageSize: {
+    height: 156,
+    width: 156
   }
 };
 
@@ -98,40 +107,93 @@ export default class AboutUs extends React.Component {
           </div>
           <div className={classNames(classes.centerDiv, classes.middleTiles)}>
             <div className={classNames(classes.greyBackground, classes.roundedCorners, classes.middleTile)}>
-              <p className={classNames(classes.centerText, classes.sidePadding)}><img src='assets/DKF_icon.png' /></p>
-              <Text type='subheading' color='black' className={classNames(classes.centerText, classes.bottomPadding)}>Hana Stauss</Text>
+              <p className={classNames(classes.sidePadding)}>
+                <img src='assets/DKF_icon.png'className={classes.imageSize} />
+              </p>
+              <Text type='subheading' color='black' className={classNames(classes.centerText)}>Miya Stauss</Text>
+              <p className={classNames(classes.bottomPadding, classes.textSidePadding)}>
+                A co-founder of Peer Genius, who is in charge of marketing and communications. Miya advertises to schools, runs the emails, and organizes meetings.
+                <br />
+                As a sophomore at Sage Hill School, Miya is 16 years old and has a deep passion for educating the youth.
+              </p>
             </div>
             <div className={classNames(classes.greyBackground, classes.roundedCorners, classes.middleTile)}>
-              <p className={classNames(classes.centerText, classes.sidePadding)}><img src='assets/ms_icon.png' /></p>
-              <Text type='subheading' color='black' className={classNames(classes.centerText, classes.bottomPadding)}>Hana Stauss</Text>
-            </div>
-            <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
-              <p className={classNames(classes.centerText, classes.sidePadding)}><img src='assets/hana_icon.png' /></p>
-              <Text type='subheading' color='white' className={classNames(classes.centerText, classes.bottomPadding)}>Dragon Kim Foundation</Text>
-            </div>
-            <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
-              <p className={classNames(classes.centerText, classes.sidePadding)}>
-                <img src='assets/businessguy_icon.png' />
+              <p className={classNames(classes.sidePadding)}>
+                <img src='assets/ms_icon.png'className={classes.imageSize} />
               </p>
-              <Text type='subheading' color='white' className={classNames(classes.centerText, classes.bottomPadding)}>Hanju Lee</Text>
+              <Text type='subheading' color='black' className={classNames(classes.centerText)}>Hana Stauss</Text>
+              <p className={classNames(classes.bottomPadding, classes.textSidePadding)}>
+                A co-founder of Peer Genius, who is responsible for operations and logistics.
+                <br />
+                As Hana’s job as a hustler, she makes sure everything runs smoothly and does lots of behind the scenes work.
+                <br />
+                Hana is also a sophomore at Sage Hill School and finds passion for reaching out to the community and giving back.
+              </p>
             </div>
             <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
-              <p className={classNames(classes.centerText, classes.sidePadding)}>
-                <img src='' alt='' />
+              <p className={classNames(classes.sidePadding)}>
+                <img src='assets/dkf_logo.png' className={classes.imageSize} />
               </p>
-              <Text type='subheading' color='white' className={classNames(classes.centerText, classes.bottomPadding)}>Jack Sun</Text>
+              <Text type='subheading' color='white' className={classNames(classes.centerText)}>Dragon Kim Foundation</Text>
+              <p className={classNames(classes.bottomPadding, classes.textSidePadding)}>
+                The Dragon Kim Foundation has been instrumental in guiding, growing, and making Peer Genius what it is today.
+                <br />
+                Hana and Miya Stauss were awarded the “Dragon Kim Fellowship” opportunity in the early year of 2016.
+                <br />
+                Ever since, 
+              </p>
             </div>
             <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
-              <p className={classNames(classes.centerText, classes.sidePadding)}>
-                <img src='' alt='' />
+              <p className={classNames(classes.sidePadding)}>
+                <img src='assets/businessguy_icon.png'className={classes.imageSize} />
               </p>
-              <Text type='subheading' color='white' className={classNames(classes.centerText, classes.bottomPadding)}>Jeff Guo</Text>
+              <Text type='subheading' color='white' className={classNames(classes.centerText)}>Hanju Lee</Text>
+              <p className={classNames(classes.bottomPadding, classes.textSidePadding)}>
+                A co-founder of Peer Genius, who is responsible for operations and logistics.
+                <br />
+                As Hana’s job as a hustler, she makes sure everything runs smoothly and does lots of behind the scenes work.
+                <br />
+                Hana is also a sophomore at Sage Hill School and finds passion for reaching out to the community and giving back.
+              </p>
             </div>
             <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
-              <p className={classNames(classes.centerText, classes.sidePadding)}>
-                <img src='' alt='' />
+              <p className={classNames(classes.sidePadding)}>
+                <img src='' alt='' className={classes.imageSize} />
               </p>
-              <Text type='subheading' color='white' className={classNames(classes.centerText, classes.bottomPadding)}>Jason Yu</Text>
+              <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jack Sun</Text>
+              <p className={classNames(classes.bottomPadding, classes.textSidePadding)}>
+                A co-founder of Peer Genius, who is responsible for operations and logistics.
+                <br />
+                As Hana’s job as a hustler, she makes sure everything runs smoothly and does lots of behind the scenes work.
+                <br />
+                Hana is also a sophomore at Sage Hill School and finds passion for reaching out to the community and giving back.
+              </p>
+            </div>
+            <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
+              <p className={classNames(classes.sidePadding)}>
+                <img src='' alt='' className={classes.imageSize} />
+              </p>
+              <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jeff Guo</Text>
+              <p className={classNames(classes.bottomPadding, classes.textSidePadding)}>
+                A co-founder of Peer Genius, who is responsible for operations and logistics.
+                <br />
+                As Hana’s job as a hustler, she makes sure everything runs smoothly and does lots of behind the scenes work.
+                <br />
+                Hana is also a sophomore at Sage Hill School and finds passion for reaching out to the community and giving back.
+              </p>
+            </div>
+            <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
+              <p className={classNames(classes.sidePadding)}>
+                <img src='' alt='' className={classes.imageSize} />
+              </p>
+              <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jason Yu</Text>
+              <p className={classNames(classes.bottomPadding, classes.textSidePadding)}>
+                A co-founder of Peer Genius, who is responsible for operations and logistics.
+                <br />
+                As Hana’s job as a hustler, she makes sure everything runs smoothly and does lots of behind the scenes work.
+                <br />
+                Hana is also a sophomore at Sage Hill School and finds passion for reaching out to the community and giving back.
+              </p>
             </div>
           </div>
           <div>
