@@ -72,11 +72,14 @@ export default class GuruMenu extends Component {
      * if they are, let them go to the page
      * otherwise do not
      */  
+    console.log("tocurrentsessions");
     if (this.props.isGuru !== undefined) {
       if (this.props.isGuru) {
+        console.log("Pushing user to guru sessions");
         this.props.push('/guru/sessions');
       }
       else {
+        console.log("error");
         // TODO: error msg
         return;
       }
