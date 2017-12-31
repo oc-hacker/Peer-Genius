@@ -9,6 +9,7 @@ import VideoIcon from 'material-ui-icons/VideoCall';
 import { connect } from 'react-redux';
 
 import Button from '../../Button';
+import Text from '../../Text';
 import Flex from '../../Flex';
 import MessageDisplay from './MessageDisplay';
 import ChatInput from './ChatInput';
@@ -195,6 +196,12 @@ export default class TextChat extends Component {
     }));
   }
 
+  _endSession = () => {
+    // bring up review
+    // close socket
+    // remove chat from list of chats
+  }
+
   render() {
     let { classes, active, setVideo } = this.props;
     let { loading, input, messages, participantName, participantTyping } = this.state;
@@ -216,6 +223,13 @@ export default class TextChat extends Component {
         >
           <Flex>
             {participantName}
+          </Flex>
+          <Flex>
+            <Button raised onClick={this._endSession}>
+              <Text>
+                End Session
+              </Text>
+            </Button>
           </Flex>
           {/*<Flex>*/}
           {/*<IconButton*/}

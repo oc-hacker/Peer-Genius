@@ -67,6 +67,22 @@ export default class GuruMenu extends Component {
     } else return null;
   }
 
+  _toCurrentSessions = () => {
+    /* Check to see if the user is a guru or not
+     * if they are, let them go to the page
+     * otherwise do not
+     */  
+    if (this.props.isGuru !== undefined) {
+      if (this.props.isGuru) {
+        this.props.push('/guru/sessions');
+      }
+      else {
+        // TODO: error msg
+        return;
+      }
+    } else return null;
+  }
+
   render() {
     let { open } = this.state;
 
@@ -81,6 +97,7 @@ export default class GuruMenu extends Component {
       >
         <MenuItem onClick={this._toGuruSignUp}>Become a Guru</MenuItem>
         <MenuItem onClick={this._toGuruDashboard}>Guru Requests</MenuItem>
+        <MenuItem onClikc={this._toCurrentSessions}>Current Sessions</MenuItem>
       </AppBarMenu>
     );
   }
