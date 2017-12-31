@@ -35,6 +35,10 @@ export default class GuruMenu extends Component {
     this.props.push('/guru/signUp');
   };
 
+  _toGuruDashboard = () => {
+    this.props.push('/guru');
+  }
+
   render() {
     let { open } = this.state;
 
@@ -48,7 +52,7 @@ export default class GuruMenu extends Component {
         open={open} onClick={this._openMenu} onRequestClose={this._closeMenu}
       >
         <MenuItem onClick={this._toGuruSignUp}>Become a Guru</MenuItem>
-        <MenuItem>Guru Requests</MenuItem>
+        <MenuItem onClick={this._toGuruDashboard}>Guru Requests</MenuItem>
       </AppBarMenu>
     );
   }
