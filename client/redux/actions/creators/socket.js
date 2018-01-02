@@ -36,6 +36,7 @@ export const socketConnect = jwt => async (dispatch, getState) => {
     console.log("New session incoming!");
   });
   socket.on('removeAcceptedSession', request => {
+    console.log("Removing accepted session!");
     dispatch(removeAcceptedSession(request));
   });
 };
