@@ -42,7 +42,7 @@ export default (state = defaultState, action) => {
     }
     case types.REMOVE_ACCEPTED_SESSION: {
       diff = {
-        currentRequests: currentRequests.filter((request) => {
+        currentRequests: state.currentRequests.filter((request) => {
           if (request.newbieID != payload.newbieID) {
             return request;
           }
