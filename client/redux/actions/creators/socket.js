@@ -35,6 +35,9 @@ export const socketConnect = jwt => async (dispatch, getState) => {
     dispatch(newSession(newRequest));
     console.log("New session incoming!");
   });
+  socket.on('removeAcceptedSession', request => {
+    dispatch(removeAcceptedSession(request));
+  });
 };
 
 /**
@@ -86,6 +89,11 @@ const newSession = newRequest => ({
 const acceptSession = newRequest => ({
   type: types.INIT_SESSION,
   payload: newRequest
+});
+
+const removeAcceptedSession = request => ({
+  type: types.REMOVE_ACCEPTED_SESSION,
+  payload: request
 });
 
 /**
