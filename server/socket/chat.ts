@@ -84,7 +84,7 @@ const attach = async (socket: UserSocket) => {
 			session.user = socket.user;
 			currentSessionRegistry.sessions.push(session);
 		}
-	})
+	});
 };
 
 export default { attach };

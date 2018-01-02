@@ -44,7 +44,9 @@ export default class ChatInput extends Component {
     onTypeEnd: PropTypes.func,
     // Debounce setting
     delay: PropTypes.number, // Amount of time to wait before indicating that the user stopped typing
-    timeout: PropTypes.number // Amount of time to wait before indicating that the user is inactive
+    timeout: PropTypes.number, // Amount of time to wait before indicating that the user is inactive
+  
+    isClosed: PropTypes.bool // is the chat session ended or still ongoing
   };
 
   static defaultProps = {
@@ -82,6 +84,8 @@ export default class ChatInput extends Component {
   _onKeyPress = event => {
     event.persist();
 
+    if (this.props.isClosed) return;
+
     if (event.key === 'Enter') {
       // Slightly hacky XOR
       if (!this.state.autoSubmit !== !event.shiftKey) {
@@ -97,6 +101,14 @@ export default class ChatInput extends Component {
     // Immediately trigger onTypeEnd
     this._onTypeEnd.flush();
   };
+
+  _toggleWebcam = () => {
+    if (this.props.isClosed) {
+      this.setState({ webcam: false });
+      return;
+    }
+    this.setState({ webcam: !this.state.webcam });
+  }
 
   getBase64Image(img) {
     var canvas = document.createElement('canvas');
@@ -150,7 +162,7 @@ export default class ChatInput extends Component {
             </Button>
             <Button
               round color='primary'
-              onClick={() => this.setState({ webcam: false })}
+              onClick={this._toggleWebcam}
             >
               Close
             </Button>
@@ -165,8 +177,8 @@ export default class ChatInput extends Component {
         grow={1}
       >
         <Button
-          round color="primary"
-          onClick={() => this.setState({ webcam: true })}
+          round color={this.props.isClosed ? 'grey' : 'primary'}
+          onClick={this._toggleWebcam}
         >
           <span
             role="img"
@@ -185,7 +197,7 @@ export default class ChatInput extends Component {
           {...others}
         />
         <Button
-          round raised color="primary"
+          round raised color={this.props.isClosed ? 'grey' : 'primary'}
           className={classes.sendButton}
           onClick={this._submit}
         >
