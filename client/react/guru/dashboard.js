@@ -149,14 +149,14 @@ export default class GuruDashboard extends React.Component {
                 style={{ marginLeft: 90 }}>
                 <div>☆</div>
                 <br />Gold<br />250 Hours</Text>
-              <Button
+            </div>
+            <Button
                 flat color="primary"
                 onClick={() => window.open('https://voluntu.io', '_blank')}
                 style={{ display: 'block' }}
               >
                 <Text type="button" weight='bold'>Voluntu.io</Text>
               </Button>
-            </div>
           </div>
         </div>
       </div>
