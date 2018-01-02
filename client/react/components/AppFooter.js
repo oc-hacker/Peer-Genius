@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
 
 import Text from './Text';
+import Button from './Button';
 
 const styles = ({ palette: { primary, getContrastText }, spacing }) => ({
   footer: {
@@ -21,9 +22,11 @@ export default class AppFooter extends Component {
         <Text color="white" align="center">
           Peer Genius &copy; 2017 All Rights Reserved
         </Text>
-        <Text size='8pt' color='white' align='center'>
-          Powered by the Dragon Kim Foundation
-        </Text>
+        <Button onClick={() => window.location.assign('http://dragonkimfoundation.org/')}>
+          <Text size='8pt' color='white' align='center'>
+            Powered by the Dragon Kim Foundation
+          </Text>
+        </Button>
       </footer>
     );
   }
