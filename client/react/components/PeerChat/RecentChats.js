@@ -103,6 +103,10 @@ export default class RecentChats extends Component {
       );
     }
 
+    recent.sort((a, b) => {
+      return (new Date(b.time)).getTime() - (new Date(a.time)).getTime();
+    });
+
     return (
       <Flex
         column
