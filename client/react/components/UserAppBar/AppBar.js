@@ -20,7 +20,8 @@ const styles = ({ palette: { primary, getContrastText }, spacing }) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+    backgroundColor: '#50969F'
   },
   logo: {
     width: 40,
@@ -29,7 +30,7 @@ const styles = ({ palette: { primary, getContrastText }, spacing }) => ({
     marginLeft: 90
   },
   appBarText: {
-    color: getContrastText(primary[500]),
+    color: getContrastText(primary[700]),
     padding: spacing.unit
   },
   appBarButton: {
