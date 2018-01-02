@@ -118,7 +118,7 @@ export default class GuruDashboard extends React.Component {
               {notifications}
             </div>
           </div>
-          <div style={{marginLeft: 20, marginTop: -140}}>
+          <div style={{marginLeft: 20, marginTop: -80}}>
             <Text type='title' color='black' className={classes.textPadding}>HOUR TIMELINE</Text>
             <ProgressBar.Line progress={Math.min(currentHours / 250, 1)} text={currentHours.toFixed(2) + ' hours'} options={{
               color: 'rgb(1,147,172)',
