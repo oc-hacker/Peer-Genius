@@ -11,9 +11,9 @@ export const editProfile = values => async dispatch => {
   let response = await post('/api/user/edit', {
     ...otherValues,
     birthday: {
-      year: birthdate.getFullYear(),
-      month: birthdate.getMonth(),
-      date: birthdate.getDate()
+      year: birthdate.getUTCFullYear(),
+      month: birthdate.getUTCMonth(),
+      date: birthdate.getUTCDate()
     }
   });
 
@@ -23,9 +23,9 @@ export const editProfile = values => async dispatch => {
       payload: {
         ...otherValues,
         birthdate: {
-          year: birthdate.getFullYear(),
-          month: birthdate.getMonth(),
-          date: birthdate.getDate()
+          year: birthdate.getUTCFullYear(),
+          month: birthdate.getUTCMonth(),
+          date: birthdate.getUTCDate()
         }
       }
     });

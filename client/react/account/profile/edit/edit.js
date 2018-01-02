@@ -67,90 +67,95 @@ const styles = ({ palette: { grey }, spacing }) => ({
 export default class EditProfile extends Component {
   render() {
     let { user, editProfile, classes } = this.props;
+    user.birthdate =user.birthdate && {
+      year: user.birthdate.getUTCFullYear(),
+      month: user.birthdate.getUTCMonth(),
+      date: user.birthdate.getUTCDate()
+    };
     console.log(user);
-		
+
     const fieldClasses = {
       className: classes.field,
       inputClass: classes.input,
       labelClass: classes.label
     };
-		
+
     return (
-      <Flex column align="center" grow={1}>
+      <Flex column align='center' grow={1}>
         <Flex column className={classes.main}>
           <Text
-            type="title" className={classes.heading}
-            color="primary" size="2em" weight={600}
+            type='title' className={classes.heading}
+            color='primary' size='2em' weight={600}
           >
-						Update Profile
+            Update Profile
           </Text>
           <div className={classNames(classes.divider, classes.headerUnderline)} />
           <ReduxForm
-            form="editProfile" onSubmit={editProfile}
+            form='editProfile' onSubmit={editProfile}
             initialValues={user} enableReinitialize={true}
           >
-            <Flex align="center" className={classes.row}>
+            <Flex align='center' className={classes.row}>
               <FieldIcon />
-              <Spacer width="1em" />
+              <Spacer width='1em' />
               <TextField
                 {...fieldClasses}
-                name="firstName"
-                label="First Name"
+                name='firstName'
+                label='First Name'
               />
             </Flex>
-            <Flex align="center" className={classes.row}>
+            <Flex align='center' className={classes.row}>
               <FieldIcon />
-              <Spacer width="1em" />
+              <Spacer width='1em' />
               <TextField
                 {...fieldClasses}
-                name="lastName"
-                label="Last Name"
+                name='lastName'
+                label='Last Name'
               />
             </Flex>
-            <Flex align="center" className={classes.row}>
+            <Flex align='center' className={classes.row}>
               <FieldIcon />
-              <Spacer width="1em" />
+              <Spacer width='1em' />
               <DateField
                 {...fieldClasses}
-                name="birthdate"
-                label="Date of Birth"
+                name='birthdate'
+                label='Date of Birth'
               />
             </Flex>
-            <Flex align="center" className={classes.row}>
+            <Flex align='center' className={classes.row}>
               <FieldIcon />
-              <Spacer width="1em" />
+              <Spacer width='1em' />
               <TextField
                 {...fieldClasses}
-                name="email"
-                label="Email address"
+                name='email'
+                label='Email address'
               />
             </Flex>
-            <Flex align="center" className={classes.row}>
+            <Flex align='center' className={classes.row}>
               <FieldIcon />
-              <Spacer width="1em" />
+              <Spacer width='1em' />
               <TextField
                 {...fieldClasses}
-                name="school"
-                label="School district"
+                name='school'
+                label='School district'
               />
             </Flex>
-            <Flex align="flex-start" className={classes.row}>
+            <Flex align='flex-start' className={classes.row}>
               <FieldIcon className={classes.biographyIcon} />
-              <Spacer width="1em" />
+              <Spacer width='1em' />
               <TextField
                 {...fieldClasses}
-                name="biography"
-                label="Your biography"
+                name='biography'
+                label='Your biography'
                 multiline
               />
             </Flex>
             <Flex>
               <Button
                 className={classes.button}
-                raised round color="accent"
-                type="submit"
+                raised round color='accent'
+                type='submit'
               >
-				Save
+                Save
               </Button>
             </Flex>
           </ReduxForm>

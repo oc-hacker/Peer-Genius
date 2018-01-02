@@ -25,25 +25,25 @@ export default class SignUp extends Component {
   render() {
     let { update, user, selectedCourse } = this.props;
 
-    let courses = typeof this.props.courses === 'object' ? this.props.courses.map(course => { return {
+    let courses = typeof this.props.courses === 'object' ? this.props.courses.map(course => ({
       value: course.id,
       label: course.name
-    }}) : [{value: "Loading", label: "Loading"}];
+    })) : [{value: 'Loading', label: 'Loading'}];
 
     let minDate = new Date(), maxDate = new Date();
-    minDate.setFullYear(minDate.getFullYear() - 19);
-    maxDate.setFullYear(maxDate.getFullYear() - 13);
+    minDate.setUTCFullYear(minDate.getUTCFullYear() - 19);
+    maxDate.setUTCFullYear(maxDate.getUTCFullYear() - 13);
 
     return (
       <Paper style={{width: '100%', padding: 50}}>
-        <Typography type="title">Fill out the Form</Typography>
-        <ReduxForm form="becomeAGuru" onSubmit={() => update(user.id, selectedCourse, true)}>
+        <Typography type='title'>Fill out the Form</Typography>
+        <ReduxForm form='becomeAGuru' onSubmit={() => update(user.id, selectedCourse, true)}>
           <DateField
-            name="birthdate"
-            label="Date of Birth"
-            defaultMode="year"
-            minDate={new Date(minDate.getFullYear() - 1, minDate.getMonth(), minDate.getDate())}
-            maxDate={new Date(maxDate.getFullYear() + 1, maxDate.getMonth(), maxDate.getDate())}
+            name='birthdate'
+            label='Date of Birth'
+            defaultMode='year'
+            minDate={new Date(Date.UTC(minDate.getUTCFullYear() - 1, minDate.getUTCMonth(), minDate.getUTCDate()))}
+            maxDate={new Date(Date.UTC(maxDate.getUTCFullYear() + 1, maxDate.getUTCMonth(), maxDate.getUTCDate()))}
             validate={[required`When were you born?`]}
             warn={[range(minDate, maxDate, [true, true], (value, bound) => {
               if (value) {
@@ -55,9 +55,9 @@ export default class SignUp extends Component {
             })`You must be between 13 years and 18 years of age to participate at Peer Genius.`]}
           />
           {/*<SubjectFields />*/}
-          <SelectField name="course" label="Area of Expertise" options={courses}/>
-          <Flex direction="row-reverse">
-            <Button color="primary" type="submit">Done</Button>
+          <SelectField name='course' label='Area of Expertise' options={courses}/>
+          <Flex direction='row-reverse'>
+            <Button color='primary' type='submit'>Done</Button>
           </Flex>
         </ReduxForm>
       </Paper>

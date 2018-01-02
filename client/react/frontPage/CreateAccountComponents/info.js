@@ -20,8 +20,8 @@ export default class InfoFields extends Component {
 
   render() {
     let minDate = new Date(), maxDate = new Date();
-    minDate.setFullYear(minDate.getFullYear() - 19);
-    maxDate.setFullYear(maxDate.getFullYear() - 13);
+    minDate.setUTCFullYear(minDate.getUTCFullYear() - 19);
+    maxDate.setUTCFullYear(maxDate.getUTCFullYear() - 13);
 
     const labelWidth = '10em';
 
@@ -75,8 +75,8 @@ export default class InfoFields extends Component {
           label="Date of Birth"
           labelWidth={labelWidth}
           defaultMode="year"
-          minDate={new Date(minDate.getFullYear() - 1, minDate.getMonth(), minDate.getDate())}
-          maxDate={new Date(maxDate.getFullYear() + 1, maxDate.getMonth(), maxDate.getDate())}
+          minDate={new Date(Date.UTC(minDate.getUTCFullYear() - 1, minDate.getUTCMonth(), minDate.getUTCDate()))}
+          maxDate={new Date(Date.UTC(maxDate.getUTCFullYear() + 1, maxDate.getUTCMonth(), maxDate.getUTCDate()))}
           validate={[required`When were you born?`]}
           warn={[range(minDate, maxDate, [true, true], (value, bound) => {
             if (value) {

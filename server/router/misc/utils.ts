@@ -54,8 +54,7 @@ export const logError = (message: string): Promise<any> => {
 	});
 };
 
-// noinspection JSUnusedLocalSymbols
-export const errorHandler: ErrorRequestHandler = async (error: Error | string, request, response, next) => {
+export const errorHandler: ErrorRequestHandler = async (error: Error | string, request, response, _) => {
 	if (error instanceof ProhibitedEditError) {
 		console.warn([
 			`[${new Date().toUTCString()}]`,
@@ -131,7 +130,7 @@ export const buildStore = async (id: string, loadedInstances: LoadedModels = {})
 		}],
 		attributes: [
 			'id',
-			[sequelize.fn('CONCAT', sequelize.col('firstName'), ' ', sequelize.col('lastName')), 'name'], // CONCAT(`firstName`, ' ', `lastName`)
+			[sequelize.fn('CONCAT', sequelize.col('firstName'), ' ', sequelize.col('lastName')), 'name'], // CONCAT(`firstName`, ' ', `lastName`) AS name
 			[sequelize.fn('MAX', sequelize.col('enabled')), 'isGuru'] // MAX(`enabled`) AS isGuru
 		],
 		group: 'id'

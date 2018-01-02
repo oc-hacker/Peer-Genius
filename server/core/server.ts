@@ -24,7 +24,7 @@ const corsOptions = {
 		if (!origin || origin === 'https://peergenius.io') {
 			cb(null, true);
 		}
-		else if (NODE_ENV === 'dev') {
+		else if (NODE_ENV === 'development') {
 			cb(null, true);
 		}
 		else {

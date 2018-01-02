@@ -58,9 +58,9 @@ export const createAccount = values => async dispatch => {
   const response = await post('/api/createAccount', {
     ...otherValues,
     birthday: {
-      year: birthdate.getFullYear(),
-      month: birthdate.getMonth(),
-      date: birthdate.getDate()
+      year: birthdate.getUTCFullYear(),
+      month: birthdate.getUTCMonth(),
+      date: birthdate.getUTCDate()
     }
   });
 

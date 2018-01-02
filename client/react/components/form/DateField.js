@@ -114,8 +114,8 @@ class DateFieldComponent extends Component {
       console.error(`Minimum date ${minDate} supplied to \`DateField\` is larger than maximum date ${maxDate}!`);
       return null;
     }
-    let minYear = minDate.getFullYear();
-    let maxYear = maxDate.getFullYear();
+    let minYear = minDate.getUTCFullYear();
+    let maxYear = maxDate.getUTCFullYear();
 
     this.setState({
       years: new Array(maxYear - minYear + 1).fill(null).map((_, index) => minYear + index)
@@ -268,8 +268,8 @@ export default class DateField extends Component {
   };
 
   static defaultProps = {
-    minDate: new Date(new Date().setFullYear(new Date().getFullYear() - 50)),
-    maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 50))
+    minDate: new Date(new Date().setUTCFullYear(new Date().getUTCFullYear() - 50)),
+    maxDate: new Date(new Date().setUTCFullYear(new Date().getUTCFullYear() + 50))
   };
 
   _format = value => value || {};
