@@ -121,7 +121,7 @@ export default class RecentChats extends Component {
               <ListItem
                 key={session.id}
                 button
-                onClick={this._changeChat(mode, session)}
+                onClick={() => this._changeChat(mode, session)}
                 style={{ backgroundColor: selected ? 'lightgrey' : null }}
               >
                 <ListItemText
