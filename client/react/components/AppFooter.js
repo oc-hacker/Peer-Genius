@@ -22,11 +22,9 @@ export default class AppFooter extends Component {
         <Text color="white" align="center">
           Peer Genius &copy; 2017 All Rights Reserved
         </Text>
-        <Button onClick={() => window.location.assign('http://dragonkimfoundation.org/')}>
-          <Text size='8pt' color='white' align='center'>
-            Powered by the Dragon Kim Foundation
-          </Text>
-        </Button>
+        <Text size='8pt' color='white' align='center'>
+          <a style={{color: 'white', textDecoration: 'none'}}href='http://dragonkimfoundation.org/'>Powered by the Dragon Kim Foundation</a>
+        </Text>
       </footer>
     );
   }
