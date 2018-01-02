@@ -24,7 +24,7 @@ export const logIn = credentials => async dispatch => {
     if (json.isGuru){
       dispatch(push('/guru'));
     } else {
-      dispatch(push('/newbie'));
+      dispatch(push('/newbie/schedule'));
     }
   }
   else if (response.status === httpStatus.UNAUTHORIZED) {
