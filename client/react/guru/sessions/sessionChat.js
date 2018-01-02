@@ -17,7 +17,7 @@ export default class SessionChat extends Component {
     ifvisible.on('idle', () => {
       this.props.socketEmit('updateVolunteerTime', {
         action: 'stop'
-      })
+      });
     });
     ifvisible.on('wakeup', () => {
       this.props.socketEmit('updateVolunteerTime', {action: 'wakeup'});
