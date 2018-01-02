@@ -129,25 +129,25 @@ export default class GuruDashboard extends React.Component {
                 type='subheading' color='rgb(1,147,172)'
                 className={classNames(classes.inlineDiv, classes.textPadding, classes.centerText)}
                 style={{ marginLeft: 30 }}>
-                <div className={classes.roundedDot} />
+                <div>☆</div>
                 <br />25 Hours</Text>
               <Text
                 type='subheading' color='rgb(1,147,172)'
                 className={classNames(classes.inlineDiv, classes.textPadding, classes.centerText)}
                 style={{ marginLeft: 90 }}>
-                <div className={classes.roundedDot} />
+                <div>☆</div>
                 <br />Bronze<br />100 Hours</Text>
               <Text
                 type='subheading' color='rgb(1,147,172)'
                 className={classNames(classes.inlineDiv, classes.textPadding, classes.centerText)}
                 style={{ marginLeft: 90 }}>
-                <div className={classes.roundedDot} />
+                <div>☆</div>
                 <br />Silver<br />175 Hours</Text>
               <Text
                 type='subheading' color='rgb(1,147,172)'
                 className={classNames(classes.inlineDiv, classes.textPadding, classes.centerText)}
                 style={{ marginLeft: 90 }}>
-                <div className={classes.roundedDot} />
+                <div>☆</div>
                 <br />Gold<br />250 Hours</Text>
               <Button
                 flat color="primary"
