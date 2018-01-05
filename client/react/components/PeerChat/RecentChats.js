@@ -63,10 +63,10 @@ export default class RecentChats extends Component {
         })
     });
   };
-  
-  _changeChat = async (mode, session) => {
+
+  _changeChat = (mode, session) => async () => {
     await push(`/${mode}/sessions/${session.id}`);
-  }
+  };
 
   componentWillMount() {
     this._loadRecent()
@@ -114,6 +114,13 @@ export default class RecentChats extends Component {
           Recent Sessions
         </Text>
         <List>
+          {recent.length ? null : (
+            <ListItem>
+              <ListItemText
+                primary={'No recent chats found.'}
+              />
+            </ListItem>
+          )}
           {recent.map(session => {
             let selected = params.sessionId === session.id;
 
