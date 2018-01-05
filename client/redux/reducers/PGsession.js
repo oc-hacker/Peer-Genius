@@ -40,6 +40,15 @@ export default (state = defaultState, action) => {
         currentRequests: payload.reverse()
       }
     }
+    case types.REMOVE_ACCEPTED_SESSION: {
+      diff = {
+        currentRequests: [...state.currentRequests].filter((request) => {
+          if (request.newbieID != payload.newbieId) {
+            return request;
+          }
+        })
+      }
+    }
   }
 
   return deepmerge(state, diff || {});

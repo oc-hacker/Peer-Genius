@@ -206,6 +206,7 @@ export const acceptSession: AsyncHandler<AcceptSessionRequest> = async (request,
 		let sessOut = { ...sess, courseName: course.name };
 
 		seio.to(result.newbieID).emit('acceptSession', sessOut);
+		seio.to('gurusOnline').emit('removeAcceptedSession', sessOut);
 		console.log("New session " + sess.id + " accepted...");
 		response.status(httpStatus.OK).json({session: sessOut});
 	} else {

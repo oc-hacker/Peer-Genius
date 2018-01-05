@@ -99,7 +99,7 @@ export default class AboutUs extends React.Component {
   }
 
   handleScroll () {
-    let newcolor = 'rgba(153, 50, 204, ' + document.documentElement.scrollTop / 300 + ')';
+    let newcolor = 'rgba(153, 50, 204, ' + document.documentElement.scrollTop / 272 + ')';
     this.setState({backgroundColor: newcolor});
   }
 

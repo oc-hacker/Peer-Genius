@@ -65,6 +65,28 @@ const styles = {
   fullWidth: {
     width: '100%'
   },
+  flex: {
+    flex: 1,
+    display: 'flex'
+  },
+  spaceEvenly: {
+    justifyContent: 'space-evenly'
+  },
+  centerAlign: {
+    alignItems: 'center'
+  },
+  superPush: {
+    marginTop: 200
+  },
+  pushRight: {
+    marginLeft: 50
+  },
+  negative150: {
+    marginTop: -150
+  },
+  smallTopPush: {
+    marginTop: 20
+  }
 };
 
 const infinity = (
@@ -95,6 +117,22 @@ const infinity = (
   </svg>
 );
 
+const star = (
+  <svg fill="white" height="75pt" viewBox="0 0 24 24" width="75pt">
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+    <path d="M0 0h24v24H0z" fill="none" />
+  </svg>
+);
+
+const accessTime = (
+  <svg fill="white" height="75pt" viewBox="0 0 24 24" width="75pt">
+    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+  </svg>
+);
+
 @withStyles(styles)
 export default class PageThree extends Component {
   static propTypes = {
@@ -109,35 +147,36 @@ export default class PageThree extends Component {
         page={3} currentPage={currentPage}
         className={classNames(classes.withColor, classes.background)}
       >
-        <Text type="display2" color="black" className={classes.centerText}>THE GURU</Text>
-        <Text type="display1" color='black' className={classes.centerText}>The Power In Teaching You</Text>
+        <Text type="display2" color="black" className={classNames(classes.centerText, classes.superPush)}>THE GURU</Text>
+        <Text type="display1" color='black' className={classNames(classes.centerText, classes.smallTopPush)}>The Power In Teaching You</Text>
         <div className={classes.underlinedSection} />
-        <div className={classes.pushDown}>
-          <div style={{ marginBottom: 10 }}>
-            <Text type='subheading' color='black' className={classes.boxText}>
-              The Possibilities are Endless...
-            </Text>
-          </div>
-          <div className={classNames(classes.centerSection, classes.boxInfinity)}>
-            {infinity}
+        <div className={classNames(classes.pushDown, classes.fullWidth)}>
+          <div className={classNames(classes.centerAlign, classes.flex, classes.spaceEvenly)} >
+            <div className={classNames(classes.centerSection, classes.boxInfinity)}>
+              {star}
+            </div>
+            <div className={classNames(classes.centerSection, classes.boxInfinity)}>
+              {infinity}
+            </div>
+            <div className={classNames(classes.centerSection, classes.boxInfinity)}>
+              {accessTime}
+            </div>
           </div>
         </div>
         <Spacer height='8%' />
-        <div>
-          <div className={classes.fullWidth}>
-            <div className={classes.row}>
+          <div className={classNames(classes.fullWidth, classes.centerAlign, classes.flex, classes.spaceEvenly, classes.pushRight, classes.negative150)}>
+            <div>
               <Text type="title" color="white" className={classes.centerText}>Gain Volunteer Hours</Text>
             </div>
-            <div className={classes.row}>
+            <div>
               <Text type="title" color="white" className={classes.centerText}>
                 Record Hours on voluntu.io
               </Text>
             </div>
-            <div className={classes.row}>
+            <div>
               <Text type="title" color="white" className={classes.centerText}>Earn the PVSA Award</Text>
             </div>
           </div>
-        </div>
       </Page>
     );
   }

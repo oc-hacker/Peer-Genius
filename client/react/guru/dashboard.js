@@ -12,7 +12,7 @@ import { acceptSession } from '../../redux/actions/creators/PGsession';
 
 let styles = {
   headerBackground: {
-    backgroundImage: 'linear-gradient(to bottom, rgba(244, 252, 0, 0.8) 0%,rgba(0, 174, 183, 0.8) 100%), url(assets/guru_dashboard.jpg)',
+    backgroundImage: 'linear-gradient(to bottom, rgba(234, 247, 52, 1) 0%,rgba(0, 174, 183, 0.8) 100%), url(assets/guru_dashboard.jpg)',
     backgroundSize: 'cover',
     overflow: 'hidden'
   },
@@ -118,9 +118,9 @@ export default class GuruDashboard extends React.Component {
               {notifications}
             </div>
           </div>
-          <div style={{marginLeft: 20, marginTop: -140}}>
+          <div style={{marginLeft: 20, marginTop: -80}}>
             <Text type='title' color='black' className={classes.textPadding}>HOUR TIMELINE</Text>
-            <ProgressBar.Line progress={(currentHours / 250)} text={currentHours + ' hours'} options={{
+            <ProgressBar.Line progress={Math.min(currentHours / 250, 1)} text={currentHours.toFixed(2) + ' hours'} options={{
               color: 'rgb(1,147,172)',
               strokeWidth: 8
             }} initialAnimate={true} containerStyle={{ width: 600, height: 35, marginBottom: 15 }} />
@@ -129,34 +129,34 @@ export default class GuruDashboard extends React.Component {
                 type='subheading' color='rgb(1,147,172)'
                 className={classNames(classes.inlineDiv, classes.textPadding, classes.centerText)}
                 style={{ marginLeft: 30 }}>
-                <div className={classes.roundedDot} />
+                <div>☆</div>
                 <br />25 Hours</Text>
               <Text
                 type='subheading' color='rgb(1,147,172)'
                 className={classNames(classes.inlineDiv, classes.textPadding, classes.centerText)}
                 style={{ marginLeft: 90 }}>
-                <div className={classes.roundedDot} />
+                <div>☆</div>
                 <br />Bronze<br />100 Hours</Text>
               <Text
                 type='subheading' color='rgb(1,147,172)'
                 className={classNames(classes.inlineDiv, classes.textPadding, classes.centerText)}
                 style={{ marginLeft: 90 }}>
-                <div className={classes.roundedDot} />
+                <div>☆</div>
                 <br />Silver<br />175 Hours</Text>
               <Text
                 type='subheading' color='rgb(1,147,172)'
                 className={classNames(classes.inlineDiv, classes.textPadding, classes.centerText)}
                 style={{ marginLeft: 90 }}>
-                <div className={classes.roundedDot} />
+                <div>☆</div>
                 <br />Gold<br />250 Hours</Text>
-              <Button
+            </div>
+            <Button
                 flat color="primary"
                 onClick={() => window.open('https://voluntu.io', '_blank')}
                 style={{ display: 'block' }}
               >
                 <Text type="button" weight='bold'>Voluntu.io</Text>
               </Button>
-            </div>
           </div>
         </div>
       </div>

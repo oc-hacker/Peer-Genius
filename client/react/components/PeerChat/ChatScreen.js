@@ -8,7 +8,12 @@ import { post } from '../../../redux/actions/network';
 import TextChat from './TextChat';
 import VideoChat from './VideoChat';
 
+import { connect } from 'react-redux';
+import { socketEmit } from '../../../redux/actions/creators/socket';
 
+@connect(null, dispatch => {
+  socketEmit
+})
 export default class ChatScreen extends Component {
   constructor(props) {
     super(props);
@@ -32,6 +37,9 @@ export default class ChatScreen extends Component {
 
     // Load session data
     let response = await post('/api/session/info', {
+      sessionId: params.sessionId
+    });
+    this.setState({
       sessionId: params.sessionId
     });
     let { session } = await response.json();
@@ -68,9 +76,25 @@ export default class ChatScreen extends Component {
       });
   }
 
-  render() {
+  render = async () => {
     let { match } = this.props;
     let { loading, error, video, toId } = this.state;
+
+    // refresh page if chat session changed
+    if (match.params.sessionId != this.state.sessionId) {
+      if (this.props.mode == 'guru') {
+        await this.props.socketEmit('updateVolunteerTime', {
+          action: 'stop'
+        });
+        await this._init();
+        await this.props.socketEmit('updateVolunteerTime', {
+          action: 'wakeup'
+        });
+      }
+      await this._init();
+
+    }
+
 
     if (error) {
       return (

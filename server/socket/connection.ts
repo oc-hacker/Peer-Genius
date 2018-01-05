@@ -67,13 +67,13 @@ const attach = async (socket: UserSocket, userId: string) => {
 
 		// save their volunteer time if applicable
 		const time = currentSessionRegistry.getSession(socket.user);
-			let account = await models.account.find({
-				where: {
-					userId: socket.user
-				}
-			});
-			account.time += time;
-			await account.save();
+		let account = await models.account.find({
+			where: {
+				userId: socket.user
+			}
+		});
+		account.time += time;
+		await account.save();
 	});
 	
 	// Send information about the users currently online

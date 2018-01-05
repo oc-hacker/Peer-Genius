@@ -64,9 +64,9 @@ export default class RecentChats extends Component {
     });
   };
 
-  _changeChat = (mode, session) => async () => {
-    await push(`/${mode}/sessions/${session.id}`);
-  };
+  _changeChat = (mode, session) => {
+    this.props.push(`/${mode}/sessions/${session.id}`);
+  }
 
   componentWillMount() {
     this._loadRecent()
@@ -103,6 +103,10 @@ export default class RecentChats extends Component {
       );
     }
 
+    recent.sort((a, b) => {
+      return (new Date(b.time)).getTime() - (new Date(a.time)).getTime();
+    });
+
     return (
       <Flex
         column
@@ -128,7 +132,7 @@ export default class RecentChats extends Component {
               <ListItem
                 key={session.id}
                 button
-                onClick={this._changeChat(mode, session)}
+                onClick={() => this._changeChat(mode, session)}
                 style={{ backgroundColor: selected ? 'lightgrey' : null }}
               >
                 <ListItemText

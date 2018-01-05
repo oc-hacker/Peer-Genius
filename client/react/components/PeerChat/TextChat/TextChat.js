@@ -48,7 +48,8 @@ export default class TextChat extends Component {
       input: '',
       messages: [],
       participantTyping: false,
-      participantName: ''
+      participantName: '',
+      isClosed: false
     };
   }
 
@@ -201,7 +202,11 @@ export default class TextChat extends Component {
   _endSession = () => {
     // bring up review
     // close socket
-    // remove chat from list of chats
+    this.props.socketEmit('updateVolunteerTime', {
+      action: 'stop'
+    });
+    // disable chat
+    this.setState({ isClosed: true });
   };
 
   render() {
@@ -252,6 +257,7 @@ export default class TextChat extends Component {
           onTypeEnd={this._onTypeEnd}
           onSubmit={this._onSubmit}
           sendImage={this._sendImage}
+          closed={this.state.isClosed}
         />
       </Flex>
     );

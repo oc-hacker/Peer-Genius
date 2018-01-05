@@ -18,15 +18,15 @@ class SessionEntry {
 }
 
 class CurrentSessionRegistry {
-	constructor(){
+	constructor() {
 		this.sessions = [];
 	}
 
 	sessions: Array<SessionEntry>;
 
 	getSession(user: string): number {
-		for(let i=0;i<this.sessions.length;i++){
-			if (this.sessions[i].user === user){
+		for (let i = 0; i < this.sessions.length; i++) {
+			if (this.sessions[i].user === user) {
 				const session = this.sessions[i];
 				const end = new Date();
 				const out = this.sessions.splice(i, 1)[0];
@@ -45,14 +45,14 @@ const attach = async (socket: UserSocket) => {
 	socket.on('sendMessage', async (data: Message) => {
 		let { sessionId, receiverId, message } = data;
 		console.log(sessionId);
-		
+
 		// Save message to database
 		let messageInstance = await models.message.create({
 			senderId: socket.user,
 			sessionId,
 			message
 		});
-		
+
 		// Emit to recipient
 		socket.to(receiverId).emit('receiveMessage', {
 			senderId: socket.user,
@@ -67,22 +67,24 @@ const attach = async (socket: UserSocket) => {
 		let { action } = data;
 		console.log("Updating volunteer time status for user " + socket.user);
 
-		if (action === 'idle'){
+		if (action === 'idle') {
 			const time = currentSessionRegistry.getSession(socket.user);
-			let account = await models.account.find({
-				where: {
-					userId: socket.user
-				}
-			});
-			account.time += time;
-			await account.save();
+			if (time <= (1000 * 60 * 60 * 8 /* 8 hours */)) {
+				let account = await models.account.find({
+					where: {
+						userId: socket.user
+					}
+				});
+				account.time += time;
+				await account.save();
+			}
 		} else {
 			let session = new SessionEntry();
 			session.start = new Date();
 			session.user = socket.user;
 			currentSessionRegistry.sessions.push(session);
 		}
-	})
+	});
 };
 
 export default { attach };
