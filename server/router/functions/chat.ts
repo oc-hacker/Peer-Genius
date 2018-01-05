@@ -47,7 +47,7 @@ export const getMessages: AsyncHandler<GetMessagesRequest> = async (request, res
 		})
 	]);
 	
-	// Security nad null check - must be querying for own session that exists
+	// Security and null check - must be querying for own session that exists
 	if (!session) {
 		response.status(httpStatus.BAD_REQUEST).end();
 	}

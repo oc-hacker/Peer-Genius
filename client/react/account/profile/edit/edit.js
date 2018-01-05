@@ -67,7 +67,7 @@ const styles = ({ palette: { grey }, spacing }) => ({
 export default class EditProfile extends Component {
   render() {
     let { user, editProfile, classes } = this.props;
-    user.birthdate =user.birthdate && {
+    user.birthdate = user.birthdate && {
       year: user.birthdate.getUTCFullYear(),
       month: user.birthdate.getUTCMonth(),
       date: user.birthdate.getUTCDate()

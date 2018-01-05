@@ -20,7 +20,8 @@ import { waitUntil } from '../../HOC';
 
 const styles = {
   root: {
-    position: 'relative'
+    position: 'relative',
+    maxHeight: '100%'
   },
   statusBar: {
     borderBottom: '1px solid lightgrey',
@@ -32,10 +33,10 @@ const styles = {
 @connect(state => ({
   hasSocket: state.socket
 }), {
-    socketEmit,
-    socketAttachListener,
-    socketDetachListener
-  })
+  socketEmit,
+  socketAttachListener,
+  socketDetachListener
+})
 @withStyles(styles)
 @waitUntil(props => props.hasSocket)
 export default class TextChat extends Component {
@@ -137,7 +138,8 @@ export default class TextChat extends Component {
     this.setState({
       participantName: nameData.name,
       messages: messageData.messages
-        ? messageData.messages.map(({ createdAt, senderId, message }) => ({
+        ? messageData.messages.map(({ id, createdAt, senderId, message }) => ({
+          id,
           type: senderId === this.props.toId ? 'in' : 'out',
           content: message,
           timestamp: new Date(createdAt)
@@ -194,13 +196,13 @@ export default class TextChat extends Component {
         timestamp: new Date()
       })
     }));
-  }
+  };
 
   _endSession = () => {
     // bring up review
     // close socket
     // remove chat from list of chats
-  }
+  };
 
   render() {
     let { classes, active, setVideo } = this.props;
@@ -218,8 +220,8 @@ export default class TextChat extends Component {
       >
         <Flex
           className={classes.statusBar}
-          align="center"
-          justify="space-between"
+          align='center'
+          justify='space-between'
         >
           <Flex>
             {participantName}

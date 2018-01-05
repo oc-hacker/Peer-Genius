@@ -39,13 +39,14 @@ const Flex =
 Flex.propTypes = {
   className: PropTypes.string,
   component: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  rootRef: PropTypes.func,
   column: PropTypes.bool,
   direction: PropTypes.string,
   align: PropTypes.string,
   justify: PropTypes.string,
   grow: PropTypes.number,
   shrink: PropTypes.number,
-  basis: PropTypes.any
+  basis: PropTypes.any,
 };
 
 Flex.defaultProps = {
