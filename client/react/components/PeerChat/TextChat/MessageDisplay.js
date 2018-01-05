@@ -89,7 +89,10 @@ export default class MessageDisplay extends Component {
               );
             } else {
               return (
-                <img src={content} style={{ maxWidth: 400, maxHeight: 400 }} />
+                <img
+                  src={content}
+                  style={{ maxWidth: 400, maxHeight: 400 }}
+                />
               );
             }
           })}

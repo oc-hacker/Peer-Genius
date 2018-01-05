@@ -11,7 +11,7 @@ import VideoChat from './VideoChat';
 import { connect } from 'react-redux';
 import { socketEmit } from '../../../redux/actions/creators/socket';
 
-@connect(null, dispatch => {
+@connect(null, {
   socketEmit
 })
 export default class ChatScreen extends Component {
@@ -76,24 +76,25 @@ export default class ChatScreen extends Component {
       });
   }
 
-  render = async () => {
+  render() {
     let { match } = this.props;
     let { loading, error, video, toId } = this.state;
 
     // refresh page if chat session changed
-    if (match.params.sessionId != this.state.sessionId) {
-      if (this.props.mode == 'guru') {
-        await this.props.socketEmit('updateVolunteerTime', {
-          action: 'stop'
-        });
-        await this._init();
-        await this.props.socketEmit('updateVolunteerTime', {
-          action: 'wakeup'
-        });
-      }
-      await this._init();
-
-    }
+    // TODO ask Jeff to change this - render can't be async
+    // if (match.params.sessionId !== this.state.sessionId) {
+    //   if (this.props.mode === 'guru') {
+    //     await this.props.socketEmit('updateVolunteerTime', {
+    //       action: 'stop'
+    //     });
+    //     await this._init();
+    //     await this.props.socketEmit('updateVolunteerTime', {
+    //       action: 'wakeup'
+    //     });
+    //   }
+    //   await this._init();
+    //
+    // }
 
 
     if (error) {
