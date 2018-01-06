@@ -66,6 +66,23 @@ export default class ChatScreen extends Component {
     });
   };
 
+  componentWillReceiveProps = async (nextProps) => {
+    //refresh chat if session has changed
+    if (nextProps.match.params.sessionId !== this.state.sessionId) {
+      // these props don't change so it's safe to use them
+       if (this.props.mode === 'guru') {
+         await this.props.socketEmit('updateVolunteerTime', {
+           action: 'stop'
+         });
+         await this._init();
+         await this.props.socketEmit('updateVolunteerTime', {
+           action: 'wakeup'
+         });
+       }
+       await this._init();
+     }
+  }
+
   componentWillMount() {
     this._init()
       .catch(error => {
@@ -76,26 +93,9 @@ export default class ChatScreen extends Component {
       });
   }
 
-  render() {
+  render = () => {
     let { match } = this.props;
     let { loading, error, video, toId } = this.state;
-
-    // refresh page if chat session changed
-    // TODO ask Jeff to change this - render can't be async
-    // if (match.params.sessionId !== this.state.sessionId) {
-    //   if (this.props.mode === 'guru') {
-    //     await this.props.socketEmit('updateVolunteerTime', {
-    //       action: 'stop'
-    //     });
-    //     await this._init();
-    //     await this.props.socketEmit('updateVolunteerTime', {
-    //       action: 'wakeup'
-    //     });
-    //   }
-    //   await this._init();
-    //
-    // }
-
 
     if (error) {
       return (
