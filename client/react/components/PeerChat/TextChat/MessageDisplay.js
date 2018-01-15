@@ -10,8 +10,12 @@ import TextChatMessage from './TextChatMessage';
 const styles = ({ palette: { grey }, spacing }) => ({
   root: {
     overflowY: 'auto',
-    listStyle: 'none',
     padding: 0
+  },
+  messageList: {
+    listStyle: 'none',
+    margin: 0,
+    padding: '16px 0'
   },
   window: {
     overflowX: 'hidden',
@@ -32,11 +36,19 @@ export default class MessageDisplay extends Component {
   static propTypes = {
     loading: PropTypes.bool,
     messages: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
       type: PropTypes.oneOf(['in', 'out']), // Inbound vs outbound messages
       content: PropTypes.string,
       timestamp: PropTypes.instanceOf(Date)
     }))
   };
+
+  componentDidUpdate() {
+    // When component updates - caused by a change in loading status or message - scroll to bottom.
+    if (this._root && this._ul) {
+      console.log(this._root.scrollTop = this._ul.clientHeight - this._root.clientHeight);
+    }
+  }
 
   render() {
     let { classes, loading, messages } = this.props;
@@ -55,30 +67,37 @@ export default class MessageDisplay extends Component {
     }
 
     return (
-      <Flex
-        component="ul"
+      <div
         className={classes.root}
-        column
-        grow={9}
-        justify="flex-end"
+        ref={root => this._root = root}
       >
-        {messages.map(({ type, content, timestamp }, index) => {
-          if (!content.includes('data:image') /* images will likely be large - super hacky */) {
-            return (
-              <TextChatMessage
-                key={timestamp.getTime()}
-                type={type}
-                content={content}
-                timestamp={timestamp}
-              />
-            );
-          } else {
-            return (
-              <img src={content} style={{maxWidth: 400, maxHeight: 400}}/>
-            )
-          }
-        })}
-      </Flex>
+        <Flex
+          component={'ul'}
+          className={classes.messageList}
+          rootRef={ul => this._ul = ul}
+          column
+        >
+          {messages.map(({ id, type, content, timestamp }, index) => {
+            if (!content.includes('data:image')) {
+              return (
+                <TextChatMessage
+                  key={id}
+                  type={type}
+                  content={content}
+                  timestamp={timestamp}
+                />
+              );
+            } else {
+              return (
+                <img
+                  src={content}
+                  style={{ maxWidth: 400, maxHeight: 400 }}
+                />
+              );
+            }
+          })}
+        </Flex>
+      </div>
     );
   }
 }

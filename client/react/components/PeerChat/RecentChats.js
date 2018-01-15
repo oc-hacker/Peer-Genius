@@ -63,7 +63,7 @@ export default class RecentChats extends Component {
         })
     });
   };
-  
+
   _changeChat = (mode, session) => {
     this.props.push(`/${mode}/sessions/${session.id}`);
   }
@@ -118,6 +118,13 @@ export default class RecentChats extends Component {
           Recent Sessions
         </Text>
         <List>
+          {recent.length ? null : (
+            <ListItem>
+              <ListItemText
+                primary={'No recent chats found.'}
+              />
+            </ListItem>
+          )}
           {recent.map(session => {
             let selected = params.sessionId === session.id;
 
