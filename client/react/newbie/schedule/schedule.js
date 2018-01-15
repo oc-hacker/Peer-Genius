@@ -28,13 +28,20 @@ const styles = {
   },
   fullHeight: {
     height: '100%'
+  },
+  dropdown: {
+    border: 'none',
+    width: '80%'
+  },
+  padding: {
+    padding: 10
   }
 };
 
 @withStyles(styles)
-@connect(state => { return { courses: state.config.courses.courses };}, { push, scheduleSession })
+@connect(state => { return { courses: state.config.courses.courses }; }, { push, scheduleSession })
 export default class Schedule extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -72,10 +79,10 @@ export default class Schedule extends Component {
           <Flex row align='center' justify='space-evenly' grow={2} className={classNames(classes.lightGrayBackground, classes.paddingTop)}>
             <div style={{ height: 190, width: 160 }}>
               <Flex column align='center' justify='center' className={classNames(classes.whiteBackground, classes.fullHeight)}>
-                <img src={serverURL + '/assets/teachericon.png'}/>
+                <img src={serverURL + '/assets/teachericon.png'} />
                 <Text className={classes.paddingTop}>Course</Text>
                 <div style={{ display: 'block', width: 120, height: 1 }} />
-                <select value={this.state.course} onChange={(event) => this.setState({course: event.target.value})}>
+                <select value={this.state.course} onChange={(event) => this.setState({ course: event.target.value })} className={classes.dropdown}>
                   <option value=""> </option>
                   {courses ? courses.map((course) => <option value={course.id}>{course.name}</option>) : null}
                 </select>
@@ -83,25 +90,25 @@ export default class Schedule extends Component {
             </div>
             <div style={{ height: 190, width: 160 }}>
               <Flex column align='center' justify='center' className={classNames(classes.whiteBackground, classes.fullHeight)}>
-                <img src={serverURL + '/assets/clipboardicon.png'}/>
+                <img src={serverURL + '/assets/clipboardicon.png'} />
                 <Text>Assignment</Text>
                 <div style={{ display: 'block', width: 120, height: 1 }} />
-                <TextField placeholder="Assignment" value={this.state.assignment} onChange={(event) => this.setState({assignment: event.target.value})} />
+                <TextField placeholder="Assignment" value={this.state.assignment} onChange={(event) => this.setState({ assignment: event.target.value })} className={classes.padding}/>
               </Flex>
             </div>
             <div style={{ height: 190, width: 160 }}>
               <Flex column align='center' justify='center' className={classNames(classes.whiteBackground, classes.fullHeight)}>
-                <img src={serverURL + '/assets/timeclockicon.png'}/>
+                <img src={serverURL + '/assets/timeclockicon.png'} />
                 <Text>How Long?</Text>
                 <div style={{ display: 'block', width: 120, height: 1 }} />
-                <TextField placeholder="Duration (minutes)" value={this.state.duration} onChange={(event) => this.setState({duration: event.target.value})} />
+                <TextField placeholder="Duration (minutes)" value={this.state.duration} onChange={(event) => this.setState({ duration: event.target.value })} className={classes.padding} />
               </Flex>
             </div>
           </Flex>
           <Button
             round
             onClick={() => {
-              this.setState({schedule: new Date(this.state.schedule)})
+              this.setState({ schedule: new Date(this.state.schedule) })
               scheduleSession(this.state.course, this.state.assignment, this.state.time, this.state.duration);
               push('/newbie/finding');
             }}
