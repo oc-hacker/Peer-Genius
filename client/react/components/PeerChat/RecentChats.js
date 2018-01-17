@@ -66,7 +66,7 @@ export default class RecentChats extends Component {
 
   _changeChat = (mode, session) => {
     this.props.push(`/${mode}/sessions/${session.id}`);
-  }
+  };
 
   componentWillMount() {
     this._loadRecent()

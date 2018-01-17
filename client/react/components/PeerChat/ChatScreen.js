@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 
 import { CircularProgress } from 'material-ui/Progress';
 
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+
 import Flex from '../Flex';
 import Text from '../Text';
-import { post } from '../../../redux/actions/network';
 import TextChat from './TextChat';
 import VideoChat from './VideoChat';
 
-import { connect } from 'react-redux';
+import { post } from '../../../redux/actions/network';
 import { socketEmit } from '../../../redux/actions/creators/socket';
 
 @connect(null, {
-  socketEmit
+  socketEmit,
+  push
 })
 export default class ChatScreen extends Component {
   constructor(props) {
@@ -23,6 +26,7 @@ export default class ChatScreen extends Component {
       error: false,
       video: false,
       toId: '',
+      isClosed: false
     };
   }
 
@@ -66,22 +70,35 @@ export default class ChatScreen extends Component {
     });
   };
 
+  _close = () => {
+    let { match, mode, push } = this.props;
+
+    this.setState({
+      isClosed: true
+    });
+
+    if (mode === 'newbie') {
+      // Bring up review screen for newbie
+      push(`${match.url}/review`);
+    }
+  };
+
   componentWillReceiveProps = async (nextProps) => {
     //refresh chat if session has changed
     if (nextProps.match.params.sessionId !== this.state.sessionId) {
       // these props don't change so it's safe to use them
-       if (this.props.mode === 'guru') {
-         await this.props.socketEmit('updateVolunteerTime', {
-           action: 'stop'
-         });
-         await this._init();
-         await this.props.socketEmit('updateVolunteerTime', {
-           action: 'wakeup'
-         });
-       }
-       await this._init();
-     }
-  }
+      if (this.props.mode === 'guru') {
+        await this.props.socketEmit('updateVolunteerTime', {
+          action: 'stop'
+        });
+        await this._init();
+        await this.props.socketEmit('updateVolunteerTime', {
+          action: 'wakeup'
+        });
+      }
+      await this._init();
+    }
+  };
 
   componentWillMount() {
     this._init()
@@ -95,11 +112,11 @@ export default class ChatScreen extends Component {
 
   render = () => {
     let { match } = this.props;
-    let { loading, error, video, toId } = this.state;
+    let { loading, error, video, toId, isClosed } = this.state;
 
     if (error) {
       return (
-        <Text color="error">
+        <Text color='error'>
           Error when initializing chat client. Please reload.
           <br />
           If the problem persists, contact a developer.
@@ -112,8 +129,8 @@ export default class ChatScreen extends Component {
         <Flex
           grow={1}
           column
-          align="center"
-          justify="flex-start"
+          align='center'
+          justify='flex-start'
         >
           <CircularProgress />
         </Flex>
@@ -123,7 +140,7 @@ export default class ChatScreen extends Component {
     return (
       <Flex
         grow={1}
-        align="stretch"
+        align='stretch'
       >
         <VideoChat
           active={video}
@@ -136,8 +153,10 @@ export default class ChatScreen extends Component {
           setVideo={this.setVideo}
           toId={toId}
           match={match}
+          close={this._close}
+          isClosed={isClosed}
         />
       </Flex>
     );
-  }
+  };
 }

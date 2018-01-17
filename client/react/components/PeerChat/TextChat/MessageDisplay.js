@@ -10,7 +10,9 @@ import TextChatMessage from './TextChatMessage';
 const styles = ({ palette: { grey }, spacing }) => ({
   root: {
     overflowY: 'auto',
-    padding: 0
+    padding: 0,
+    flexGrow: 5,
+    flexBasis: 0
   },
   messageList: {
     listStyle: 'none',

@@ -13,6 +13,9 @@ import HelperText from './HelperText';
 const styles = {
   placeholder: {
     color: 'rgba(0,0,0,0.5)'
+  },
+  multiline: {
+    resize: 'none'
   }
 };
 
@@ -34,18 +37,24 @@ class TextFieldClass extends React.Component {
       className: inputClass
     };
     if (multiline) {
-      inputProps.Component = 'div';
-      inputProps.contentEditable = true;
+      inputProps.Component = 'textarea';
+
       if (input.value) {
         inputProps.children = [
           input.value
         ];
+        inputProps.className = classNames(
+          classes.multiline,
+          inputClass
+        );
+        inputProps.rows = Math.max(1, input.value.split('\n').length);
       }
       else if (!meta.active && (placeholder || label)) {
         inputProps.children = [
           placeholder || label
         ];
         inputProps.className = classNames(
+          classes.multiline,
           {
             [classes.placeholder]: true
           },

@@ -174,7 +174,7 @@ export default class ChatInput extends Component {
     return (
       <Flex
         className={classes.root}
-        grow={1}
+        grow={1} basis={0}
       >
         <Button
           round color={this.props.isClosed ? 'grey' : 'primary'}
