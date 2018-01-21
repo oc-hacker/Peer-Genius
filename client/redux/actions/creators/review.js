@@ -23,9 +23,9 @@ export const getReviews = () => async dispatch => {
  * Thunk action creator.
  * Sends review session POST request to the server.
  */
-export const giveReview = (sessionUUID, rating, comment) => async dispatch => {
-  let response = await post(`/api/session/${sessionUUID}/review`, {
-    session: sessionUUID,
+export const giveReview = (sessionId, rating, comment) => async dispatch => {
+  let response = await post(`/api/session/review`, {
+    session: sessionId,
     rating,
     comment
   });

@@ -80,7 +80,7 @@ export default class ChatScreen extends Component {
 
     if (mode === 'newbie') {
       // Bring up review screen for newbie
-      push(`${match.url}/review`);
+      push(match.url + (match.url.endsWith('/') ? 'review' : '/review'));
     }
   };
 
