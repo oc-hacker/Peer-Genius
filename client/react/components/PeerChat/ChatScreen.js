@@ -2,21 +2,27 @@ import React, { Component } from 'react';
 
 import { CircularProgress } from 'material-ui/Progress';
 
+import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
+import { waitUntil } from '../HOC';
 import Flex from '../Flex';
 import Text from '../Text';
 import TextChat from './TextChat';
 import VideoChat from './VideoChat';
 
+import { selectUserId } from '../../../redux/selectors/user';
 import { post } from '../../../redux/actions/network';
 import { socketEmit } from '../../../redux/actions/creators/socket';
 
-@connect(null, {
+@connect(createStructuredSelector({
+  userId: selectUserId
+}), {
   socketEmit,
   push
 })
+@waitUntil(props => props.userId)
 export default class ChatScreen extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +43,7 @@ export default class ChatScreen extends Component {
   };
 
   _getToId = async () => {
-    let { match: { params }, mode } = this.props;
+    let { match: { params }, userId } = this.props;
 
     // Load session data
     let response = await post('/api/session/info', {
@@ -48,13 +54,8 @@ export default class ChatScreen extends Component {
     });
     let { session } = await response.json();
 
-    if (mode === 'newbie') {
-      return session.guruId;
-    }
-    if (mode === 'guru') {
-      return session.newbieId;
-    }
-    return null;
+    console.log(userId, session.guruId, session.newbieId);
+    return userId === session.guruId ? session.newbieId : session.guruId;
   };
 
   _init = async () => {
