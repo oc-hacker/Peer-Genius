@@ -204,7 +204,7 @@ export default class TextChat extends Component {
       action: 'stop'
     });
     // disable chat
-    this.props.close()
+    this.props.close();
   };
 
   render() {

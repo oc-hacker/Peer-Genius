@@ -48,7 +48,7 @@ export default class MessageDisplay extends Component {
   componentDidUpdate() {
     // When component updates - caused by a change in loading status or message - scroll to bottom.
     if (this._root && this._ul) {
-      console.log(this._root.scrollTop = this._ul.clientHeight - this._root.clientHeight);
+      this._root.scrollTop = this._ul.clientHeight - this._root.clientHeight;
     }
   }
 

@@ -104,7 +104,7 @@ export default class RecentChats extends Component {
     }
 
     recent.sort((a, b) => {
-      return (new Date(a.time)).getTime() - (new Date(b.time)).getTime();
+      return new Date(a.time).getTime() - new Date(b.time).getTime();
     });
 
     return (
