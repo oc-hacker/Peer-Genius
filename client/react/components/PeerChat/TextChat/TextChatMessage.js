@@ -17,8 +17,8 @@ const styles = ({ palette: { primary, grey }, spacing }) => ({
     '&:before': {
       position: 'absolute',
       content: '""',
-      top: 'auto',
-      bottom: 'auto',
+      bottom: 8,
+      maxHeight: 0,
       borderWidth: `${spacing.unit}px 0`,
       borderStyle: 'solid',
       borderColor: ` transparent ${grey[200]}`
