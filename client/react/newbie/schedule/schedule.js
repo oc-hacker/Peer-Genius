@@ -39,7 +39,7 @@ const styles = {
 };
 
 @withStyles(styles)
-@connect(state => { return { courses: state.config.courses.courses }; }, { push, scheduleSession })
+@connect(state => { return { courses: state.config.courses }; }, { push, scheduleSession })
 export default class Schedule extends Component {
   constructor(props) {
     super(props);
