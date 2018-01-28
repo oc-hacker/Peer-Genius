@@ -46,6 +46,12 @@ const attach = async (socket: UserSocket, userId: string) => {
 		console.log("GURU JOINED: " + userInstance.dataValues.id);
 		socket.join('gurusOnline');
 	}
+
+	// HACKY: remove all of user's previous sessions when they first connect to prevent stale sessions
+	let time = currentSessionRegistry.getSession(socket.user);
+	while(time != 0) {
+		time = currentSessionRegistry.getSession(socket.user);
+	}
 	
 	// Save the socket id to registry.
 	socket.user = userId;
