@@ -35,6 +35,11 @@ const styles = {
   },
   padding: {
     padding: 10
+  },
+  button: {
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: 10
   }
 };
 
@@ -76,7 +81,7 @@ export default class Schedule extends Component {
           </Text>
         </Flex>
         <Flex column grow={2} className={classNames(classes.lightGrayBackground)}>
-          <Flex row align='center' justify='space-evenly' grow={2} className={classNames(classes.lightGrayBackground, classes.paddingTop)}>
+          <Flex align='center' justify='space-evenly' grow={2} className={classNames(classes.lightGrayBackground, classes.paddingTop)}>
             <div style={{ height: 190, width: 160 }}>
               <Flex column align='center' justify='center' className={classNames(classes.whiteBackground, classes.fullHeight)}>
                 <img src={serverURL + '/assets/teachericon.png'} />
@@ -106,9 +111,11 @@ export default class Schedule extends Component {
             </div>
           </Flex>
           <Button
-            round
+            className={classes.button}
+            raised
+            color='primary'
             onClick={() => {
-              this.setState({ schedule: new Date(this.state.schedule) })
+              this.setState({ schedule: new Date(this.state.schedule) });
               scheduleSession(this.state.course, this.state.assignment, this.state.time, this.state.duration);
               push('/newbie/finding');
             }}
@@ -116,6 +123,7 @@ export default class Schedule extends Component {
             Request
           </Button>
         </Flex>
+        <Spacer height='20px' />
       </Flex>
     );
   }

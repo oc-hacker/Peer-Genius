@@ -27,7 +27,7 @@ const styles = {
     backgroundSize: 'contain',
     overflow: 'hidden',
     backgroundPosition: '-50% 0%'
-    },
+  },
 };
 
 @withStyles(styles)

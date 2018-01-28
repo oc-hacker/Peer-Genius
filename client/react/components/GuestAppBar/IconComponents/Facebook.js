@@ -11,10 +11,6 @@ const FacebookIcon = props => (
   </a>
 );
 
-const _open = () => {
-  window.open('https://facebook.com/peergenius');
-};
-
 FacebookIcon.displayName = 'FacebookIcon';
 
 FacebookIcon.defaultProps = {
