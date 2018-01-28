@@ -82,6 +82,10 @@ export default class ChatScreen extends Component {
       // Bring up review screen for newbie
       push(match.url + (match.url.endsWith('/') ? 'review' : '/review'));
     }
+    else {
+      // Redirect to recent sessions
+      push('/guru');
+    }
   };
 
   componentWillReceiveProps = async (nextProps) => {
