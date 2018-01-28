@@ -1,3 +1,5 @@
+import { push } from 'react-router-redux';
+
 import types from '../types';
 import { post } from '../network';
 import { handleError } from './utils';
@@ -34,6 +36,7 @@ export const giveReview = (sessionId, rating, comment) => async dispatch => {
     dispatch({
       type: types.GIVE_SESSION_REVIEW,
     });
+    dispatch(push(`/newbie`));
   } else {
     dispatch(handleError(response));
   }

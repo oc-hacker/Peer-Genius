@@ -6,15 +6,10 @@ import { handleError } from './utils';
 
 export const editProfile = values => async dispatch => {
   let { birthdate, ...otherValues } = values;
-  birthdate = new Date(values.birthdate);
 
   let response = await post('/api/user/edit', {
     ...otherValues,
-    birthday: {
-      year: birthdate.getUTCFullYear(),
-      month: birthdate.getUTCMonth(),
-      date: birthdate.getUTCDate()
-    }
+    birthday: birthdate
   });
 
   if (response.ok) {
@@ -22,11 +17,7 @@ export const editProfile = values => async dispatch => {
       type: types.EDIT_PROFILE,
       payload: {
         ...otherValues,
-        birthdate: {
-          year: birthdate.getUTCFullYear(),
-          month: birthdate.getUTCMonth(),
-          date: birthdate.getUTCDate()
-        }
+        birthdate
       }
     });
   }

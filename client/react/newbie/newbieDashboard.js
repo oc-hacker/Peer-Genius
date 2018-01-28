@@ -87,7 +87,7 @@ export default class NewbieDashboard extends React.Component {
             </Button>
           </Flex>
         </div>
-        <PreviousSession/>
+        <PreviousSession />
       </Flex>
     );
   };
