@@ -1,7 +1,7 @@
 import React from 'react';
 
 const FacebookIcon = props => (
-  <a href='https://facebook.com/peergenius'>
+  <a style={{display: "table-cell"}} href='https://facebook.com/peergenius' target='_blank' rel='noopener noreferrer'>
     <svg viewBox="0 0 24 24" width={props.size} height={props.size} {...props}>
       <path
         fill={props.color}
@@ -10,6 +10,10 @@ const FacebookIcon = props => (
     </svg>
   </a>
 );
+
+const _open = () => {
+  window.open('https://facebook.com/peergenius');
+};
 
 FacebookIcon.displayName = 'FacebookIcon';
 

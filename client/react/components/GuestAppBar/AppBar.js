@@ -62,12 +62,7 @@ class GuestAppBar extends Component {
             About Us
           </Text>
         </Button>
-        <Flex align="center" justify="space-around" grow={1}>
-          <Button style={styles.button}><FacebookIcon color={color} /></Button>
-          <Button style={styles.button}><TwitterIcon color={color} /></Button>
-          <Button style={styles.button}><GooglePlusIcon color={color} /></Button>
-          <Button style={styles.button}><LinkedInIcon color={color} /></Button>
-        </Flex>
+        <Button style={styles.button}><FacebookIcon color={color} /></Button>
       </AppBar>
     );
   };

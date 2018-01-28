@@ -202,11 +202,11 @@ export default class AboutUs extends React.Component {
               </div>
               <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
                 <Text className={classNames(classes.sidePadding)}>
-                  <img src='' alt='' className={classes.imageSize} />
+                  <img src='/assets/jeff_image.png' alt='' className={classes.imageSize} />
                 </Text>
                 <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jeff Guo</Text>
                 <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
-                  line 1
+                  Jeff is one of the programmers working for Peer Genius.
                   <br />
                   line 2
                   <br />
@@ -221,15 +221,11 @@ export default class AboutUs extends React.Component {
             >
               <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
                 <Text className={classNames(classes.sidePadding)}>
-                  <img src='' alt='' className={classes.imageSize} />
+                  <img src='/assets/jason_image.png' alt='' className={classes.imageSize} />
                 </Text>
                 <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jason Yu</Text>
                 <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
-                  line 1
-                  <br />
-                  line 2
-                  <br />
-                  line 3
+                  Jason is one of the programmers working for Peer Genius.
                 </Text>
               </div>
             </Flex>
