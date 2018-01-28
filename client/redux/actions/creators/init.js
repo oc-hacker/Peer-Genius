@@ -22,13 +22,13 @@ export const initialize = () => async dispatch => {
   ]);
 
   if (courseResponse.ok && configResponse.ok) {
-    let courses = await courseResponse.json();
+    let courseData = await courseResponse.json();
     let serverConfig = await configResponse.json();
 
     dispatch({
       type: types.INIT_CONFIG,
       payload: {
-        courses,
+        courses: courseData.courses,
         serverConfig
       }
     });

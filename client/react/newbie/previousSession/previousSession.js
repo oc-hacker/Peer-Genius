@@ -45,17 +45,27 @@ export default class PreviousSession extends Component {
     let lastSession = sessionData.recentSessions[0];
 
     if (lastSession) {
+      // Load detailed information about last session
       let sessionInfo = await post('/api/session/info', {
-        session: lastSession.id
-      }).then(response => response.json());
+        sessionId: lastSession.id
+      })
+        .then(response => response.json())
+        .then(data => data.session);
 
-      let course = this.props.courses[sessionInfo.courseId];
+      // Parse data
+      let course = this.props.courses.find(course => course.id === sessionInfo.course.id);
       let hour = 3600000;
-      let length = (new Date(sessionInfo.endTime).getTime() - new Date(sessionInfo.startTime).getTime()) / hour;
+      let length = (
+        new Date(sessionInfo.endTime || sessionInfo.scheduledEnd).getTime()
+        - new Date(sessionInfo.startTime || sessionInfo.scheduledStart).getTime()
+      ) / hour;
+
+      // Save to state
       this.setState({
-        guru: lastSession.guruName,
+        guru: sessionInfo.guru.firstName + ' ' + sessionInfo.guru.lastName,
         course: course && course.name,
-        date: new Date(sessionInfo.startTime).toDateString(),
+        assignment: sessionInfo.assignment,
+        date: new Date(sessionInfo.startTime || sessionInfo.scheduledStart).toDateString(),
         length: `${length.toFixed(2)} Hours`,
       });
     }
@@ -68,7 +78,7 @@ export default class PreviousSession extends Component {
 
   componentWillMount() {
     this._loadLastSession()
-      .catch(() => this.setState({ error: true }));
+      .catch(error => this.setState({ error }));
   }
 
   render() {
@@ -78,7 +88,7 @@ export default class PreviousSession extends Component {
     if (!hasLastSession) {
       return (
         <Flex
-          column align="center"
+          column align='center'
           className={classes.root}
         >
           <Text>
@@ -96,17 +106,17 @@ export default class PreviousSession extends Component {
         column grow={1}
         className={classes.root}
       >
-        <Text type="title" align="center">
+        <Text type='title' align='center'>
           PREVIOUS SESSION
         </Text>
         <Flex grow={1}>
-          <Flex grow={2} justify="center">
+          <Flex grow={2} justify='center'>
             <tbody>
-              <DataRow name="GURU" value={guru} />
-              <DataRow name="Assignment" value="TODO" />
-              <DataRow name="Course" value={course} />
-              <DataRow name="Date" value={date} />
-              <DataRow name="Length" value={length} />
+            <DataRow name='GURU' value={guru} />
+            <DataRow name='Course' value={course} />
+            <DataRow name='Assignment' value={assignment} />
+            <DataRow name='Date' value={date} />
+            <DataRow name='Length' value={length} />
             </tbody>
           </Flex>
           <Flex grow={1}>
