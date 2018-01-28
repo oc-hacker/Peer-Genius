@@ -93,11 +93,11 @@ export default class GuruDashboard extends React.Component {
             {session.courseName + ' | ' + session.assignment}
           </Text>
           <Button
-            flat color="primary"
+            flat color='primary'
             onClick={() => acceptSession(session.newbieID)}
             style={{ display: 'inline-block', marginLeft: 25 }}
           >
-            <Text type="button" weight='bold'>✔</Text>
+            <Text type='button' weight='bold'>✔</Text>
           </Button>
         </div>
       );
@@ -107,7 +107,8 @@ export default class GuruDashboard extends React.Component {
       <div style={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
         <div className={classNames(classes.headerText, classes.headerBackground)}>
           <Text type='display1' color='white' className={classNames(classes.centerText, classes.headerText)}>YOUR
-            DASHBOARD</Text>
+            DASHBOARD
+          </Text>
         </div>
         <div className={classNames(classes.flexRow, classes.alignCenter, classes.justifyCenter)}>
           <div>
@@ -118,12 +119,16 @@ export default class GuruDashboard extends React.Component {
               {notifications}
             </div>
           </div>
-          <div style={{marginLeft: 20, marginTop: -80}}>
+          <div style={{ marginLeft: 20, marginTop: -80 }}>
             <Text type='title' color='black' className={classes.textPadding}>HOUR TIMELINE</Text>
-            <ProgressBar.Line progress={Math.min(currentHours / 250, 1)} text={currentHours.toFixed(2) + ' hours'} options={{
-              color: 'rgb(1,147,172)',
-              strokeWidth: 8
-            }} initialAnimate={true} containerStyle={{ width: 600, height: 35, marginBottom: 15 }} />
+            <ProgressBar.Line
+              progress={Math.min(currentHours / 250, 1)}
+              text={currentHours.toFixed(2) + ' hours'}
+              options={{
+                color: 'rgb(1,147,172)',
+                strokeWidth: 8
+              }} initialAnimate={true} containerStyle={{ width: 600, height: 35, marginBottom: 15 }}
+            />
             <div className={classNames(classes.flexRow)}>
               <Text
                 type='subheading' color='rgb(1,147,172)'
@@ -151,12 +156,12 @@ export default class GuruDashboard extends React.Component {
                 <br />Gold<br />250 Hours</Text>
             </div>
             <Button
-                flat color="primary"
-                onClick={() => window.open('https://voluntu.io', '_blank')}
-                style={{ display: 'block' }}
-              >
-                <Text type="button" weight='bold'>Voluntu.io</Text>
-              </Button>
+              flat color='primary'
+              onClick={() => window.open('https://voluntu.io', '_blank')}
+              style={{ display: 'block' }}
+            >
+              <Text type='button' weight='bold'>Voluntu.io</Text>
+            </Button>
           </div>
         </div>
       </div>

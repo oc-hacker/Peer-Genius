@@ -2,11 +2,9 @@ import React from 'react';
 
 import { withStyles } from 'material-ui/styles';
 
-import Text from './components/Text';
+import { Flex, GuestAppBar, Text, Spacer } from './components';
 
 import classNames from 'classnames';
-
-import { GuestAppBar } from './components';
 
 const styles = {
   backgroundHeader: {
@@ -90,7 +88,7 @@ const styles = {
 
 @withStyles(styles)
 export default class AboutUs extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -98,13 +96,13 @@ export default class AboutUs extends React.Component {
     };
   }
 
-  handleScroll () {
+  handleScroll() {
     let newcolor = 'rgba(153, 50, 204, ' + document.documentElement.scrollTop / 272 + ')';
-    this.setState({backgroundColor: newcolor});
+    this.setState({ backgroundColor: newcolor });
   }
 
-  componentDidMount () {
-    window.onscroll = () => this.handleScroll()
+  componentDidMount() {
+    window.onscroll = () => this.handleScroll();
   }
 
   render = () => {
@@ -123,99 +121,123 @@ export default class AboutUs extends React.Component {
             <div className={classNames(classes.line, classes.centerDiv)} />
           </div>
           <div className={classNames(classes.centerDiv, classes.middleTiles)}>
-            <div className={classNames(classes.greyBackground, classes.roundedCorners, classes.middleTile)}>
-              <Text className={classNames(classes.sidePadding)}>
-                <img src='assets/DKF_icon.png'className={classes.imageSize} alt='' />
-              </Text>
-              <Text type='subheading' color='black' className={classNames(classes.centerText)}>Miya Stauss</Text>
-              <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
-                A co-founder of Peer Genius, who is in charge of marketing and communications. Miya advertises to schools, runs the emails, and organizes meetings.
-                <br />
-                As a sophomore at Sage Hill School, Miya is 16 years old and has a deep passion for educating the youth.
-              </Text>
-            </div>
-            <div className={classNames(classes.greyBackground, classes.roundedCorners, classes.middleTile)}>
-              <Text className={classNames(classes.sidePadding)}>
-                <img src='assets/ms_icon.png'className={classes.imageSize} alt='' />
-              </Text>
-              <Text type='subheading' color='black' className={classNames(classes.centerText)}>Hana Stauss</Text>
-              <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
-                A co-founder of Peer Genius, who is responsible for operations and logistics.
-                <br />
-                As Hana’s job as a hustler, she makes sure everything runs smoothly and does lots of behind the scenes work.
-                <br />
-                Hana is also a sophomore at Sage Hill School and finds passion for reaching out to the community and giving back.
-              </Text>
-            </div>
-            <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
-              <Text className={classNames(classes.sidePadding)}>
-                <img src='assets/dkf_logo.png' className={classes.imageSize} alt='' />
-              </Text>
-              <Text type='subheading' color='white' className={classNames(classes.centerText)}>Dragon Kim Foundation</Text>
-              <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
-                The Dragon Kim Foundation has been instrumental in guiding, growing, and making Peer Genius what it is today.
-                <br />
-                Hana and Miya Stauss were awarded the “Dragon Kim Fellowship” opportunity in the early year of 2016.
-                <br />
-                Ever since, they have provided Hana and Miya with a mentor and useful leadership sessions.
-              </Text>
-            </div>
-            <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
-              <Text className={classNames(classes.sidePadding)}>
-                <img src='assets/businessguy_icon.png'className={classes.imageSize} alt='' />
-              </Text>
-              <Text type='subheading' color='white' className={classNames(classes.centerText)}>Hanju Lee</Text>
-              <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
-                Hanju Lee is Hana and Miya’s mentor and graphic designer.
-                <br />
-                He worked with them to create their logo and helped to design page layouts for the website.
-                <br />
-                Hanju has been extremely helpful in helping to guide Peer Genius and give quality advice.
-              </Text>
-            </div>
-            <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
-              <Text className={classNames(classes.sidePadding)}>
-                <img src='' alt='' className={classes.imageSize} />
-              </Text>
-              <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jack Sun</Text>
-              <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
-                line 1
-                <br />
-                line 2
-                <br />
-                line 3
-              </Text>
-            </div>
-            <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
-              <Text className={classNames(classes.sidePadding)}>
-                <img src='' alt='' className={classes.imageSize} />
-              </Text>
-              <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jeff Guo</Text>
-              <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
-                line 1
-                <br />
-                line 2
-                <br />
-                line 3
-              </Text>
-            </div>
-            <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
-              <Text className={classNames(classes.sidePadding)}>
-                <img src='' alt='' className={classes.imageSize} />
-              </Text>
-              <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jason Yu</Text>
-              <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
-                line 1
-                <br />
-                line 2
-                <br />
-                line 3
-              </Text>
-            </div>
+            <Flex
+              align={'stretch'}
+              justify={'center'}
+            >
+              <div className={classNames(classes.greyBackground, classes.roundedCorners, classes.middleTile)}>
+                <Text className={classNames(classes.sidePadding)}>
+                  <img src='/assets/ms_icon.png' className={classes.imageSize} alt='' />
+                </Text>
+                <Text type='subheading' color='black' className={classNames(classes.centerText)}>
+                  Miya Stauss
+                </Text>
+                <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
+                  A co-founder of Peer Genius, who is in charge of marketing and communications. Miya advertises to
+                  schools, runs the emails, and organizes meetings.
+                  <br />
+                  As a sophomore at Sage Hill School, Miya is 16 years old and has a deep passion for educating the
+                  youth.
+                </Text>
+              </div>
+              <div className={classNames(classes.greyBackground, classes.roundedCorners, classes.middleTile)}>
+                <Text className={classNames(classes.sidePadding)}>
+                  <img src='/assets/hana_icon.png' className={classes.imageSize} alt='' />
+                </Text>
+                <Text type='subheading' color='black' className={classNames(classes.centerText)}>Hana Stauss</Text>
+                <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
+                  A co-founder of Peer Genius, who is responsible for operations and logistics.
+                  <br />
+                  As Hana’s job as a hustler, she makes sure everything runs smoothly and does lots of behind the scenes
+                  work.
+                  <br />
+                  Hana is also a sophomore at Sage Hill School and finds passion for reaching out to the community and
+                  giving back.
+                </Text>
+              </div>
+              <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
+                <Text className={classNames(classes.sidePadding)}>
+                  <img src='/assets/dkf_logo.png' className={classes.imageSize} alt='' />
+                </Text>
+                <Text type='subheading' color='white' className={classNames(classes.centerText)}>Dragon Kim
+                  Foundation</Text>
+                <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
+                  The Dragon Kim Foundation has been instrumental in guiding, growing, and making Peer Genius what it is
+                  today.
+                  <br />
+                  Hana and Miya Stauss were awarded the “Dragon Kim Fellowship” opportunity in the early year of 2016.
+                  <br />
+                  Ever since, they have provided Hana and Miya with a mentor and useful leadership sessions.
+                </Text>
+              </div>
+            </Flex>
+            <Spacer height={20} />
+            <Flex
+              align={'stretch'}
+              justify={'center'}
+            >
+              <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
+                <Text className={classNames(classes.sidePadding)}>
+                  <img src='/assets/businessguy_icon.png' className={classes.imageSize} alt='' />
+                </Text>
+                <Text type='subheading' color='white' className={classNames(classes.centerText)}>Hanju Lee</Text>
+                <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
+                  Hanju Lee is Hana and Miya’s mentor and graphic designer.
+                  <br />
+                  He worked with them to create their logo and helped to design page layouts for the website.
+                  <br />
+                  Hanju has been extremely helpful in helping to guide Peer Genius and give quality advice.
+                </Text>
+              </div>
+              <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
+                <Text className={classNames(classes.sidePadding)}>
+                  <img src='/assets/jack_image.png' alt='Jack Sun' className={classes.imageSize} />
+                </Text>
+                <Text type='subheading' color='white' className={classNames(classes.centerText)}>
+                  Jack Sun
+                </Text>
+                <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
+                  Jack is one of the programmers working for Peer Genius.
+                </Text>
+              </div>
+              <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
+                <Text className={classNames(classes.sidePadding)}>
+                  <img src='' alt='' className={classes.imageSize} />
+                </Text>
+                <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jeff Guo</Text>
+                <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
+                  line 1
+                  <br />
+                  line 2
+                  <br />
+                  line 3
+                </Text>
+              </div>
+            </Flex>
+            <Spacer height={20} />
+            <Flex
+              align={'stretch'}
+              justify={'center'}
+            >
+              <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
+                <Text className={classNames(classes.sidePadding)}>
+                  <img src='' alt='' className={classes.imageSize} />
+                </Text>
+                <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jason Yu</Text>
+                <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
+                  line 1
+                  <br />
+                  line 2
+                  <br />
+                  line 3
+                </Text>
+              </div>
+            </Flex>
           </div>
           <div>
-            <Text type='display1' color='#7FB8BF' className={classNames(classes.centerText, classes.topPaddingText)}>SUMMARY
-              OF HOW WE GOT INVOLVED</Text>
+            <Text type='display1' color='#7FB8BF' className={classNames(classes.centerText, classes.topPaddingText)}>
+              SUMMARY OF HOW WE GOT INVOLVED
+            </Text>
             <div className={classNames(classes.line, classes.centerDiv)} />
           </div>
           <div>
@@ -227,6 +249,7 @@ export default class AboutUs extends React.Component {
               It has survived not only five centuries, but also the leap into electronic typesetting.
             </Text>
           </div>
+          <Spacer height={'8em'} />
         </div>
       </div>);
   };
