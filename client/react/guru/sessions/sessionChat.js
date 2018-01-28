@@ -15,13 +15,16 @@ export default class SessionChat extends Component {
     // set up ifvisible.js time detection
     ifvisible.setIdleDuration(300);
     ifvisible.on('idle', () => {
+      console.log("Sleeping...")
       this.props.socketEmit('updateVolunteerTime', {
         action: 'stop'
       });
     });
     ifvisible.on('wakeup', () => {
+      console.log("Waking up...")
       this.props.socketEmit('updateVolunteerTime', {action: 'wakeup'});
     });
+    console.log("Waking up...")
     this.props.socketEmit('updateVolunteerTime', {
       action: 'wakeup'
     });
