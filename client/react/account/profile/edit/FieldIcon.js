@@ -10,6 +10,7 @@ const styles = {
     position: 'relative',
     width: props => props.size,
     height: props => props.size,
+    margin: 'auto',
 
     borderRadius: '50%',
     backgroundColor: props => props.theme.palette.primary[500]
