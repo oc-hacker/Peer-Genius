@@ -15,11 +15,12 @@ import { waitForInit } from '../HOC';
 
 import { post } from '../../../redux/actions/network';
 import { selectUserId } from '../../../redux/selectors/user';
+import { socketEmit } from '../../../redux/actions/creators/socket';
 
 @waitForInit
 @connect(state => ({
   userId: selectUserId(state)
-}), { push })
+}), { push, socketEmit })
 export default class RecentChats extends Component {
   constructor(props) {
     super(props);
@@ -65,7 +66,17 @@ export default class RecentChats extends Component {
   };
 
   _changeChat = (mode, session) => {
+    console.log("Sleeping...")
+    this.props.socketEmit('updateVolunteerTime', {
+      action: 'stop'
+    });
     this.props.push(`/${mode}/sessions/${session.id}`);
+    setTimeout(() => { 
+      console.log("Waking up...")
+      this.props.socketEmit('updateVolunteerTime', {
+        action: 'wakeup'
+      });
+    }, 250);
   };
 
   componentWillMount() {
