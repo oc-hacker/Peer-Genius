@@ -191,7 +191,7 @@ export default class AboutUs extends React.Component {
               </div>
               <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
                 <Text className={classNames(classes.sidePadding)}>
-                  <img src='/assets/jack_image.jpg' alt='Jack Sun' className={classes.imageSize} />
+                  <img src='/assets/jack_image.png' alt='Jack Sun' className={classes.imageSize} />
                 </Text>
                 <Text type='subheading' color='white' className={classNames(classes.centerText)}>
                   Jack Sun
@@ -202,7 +202,7 @@ export default class AboutUs extends React.Component {
               </div>
               <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
                 <Text className={classNames(classes.sidePadding)}>
-                  <img src='/assets/jeff_image.jpg' alt='' className={classes.imageSize} />
+                  <img src='/assets/jeff_image.png' alt='Jeff Guo' className={classes.imageSize} />
                 </Text>
                 <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jeff Guo</Text>
                 <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
@@ -217,7 +217,7 @@ export default class AboutUs extends React.Component {
             >
               <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
                 <Text className={classNames(classes.sidePadding)}>
-                  <img src='/assets/jason_image.png' alt='' className={classes.imageSize} />
+                  <img src='/assets/jason_image.png' alt='Jason Yu' className={classes.imageSize} />
                 </Text>
                 <Text type='subheading' color='white' className={classNames(classes.centerText)}>Jason Yu</Text>
                 <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
