@@ -1,12 +1,10 @@
 import React, { Component, PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
 
-import { Flex, Text } from '../../components/index';
+import { Flex, Text, Spacer } from '../../components';
 import DataRow from './DataRow';
 import { post } from '../../../redux/actions/network';
 import { selectCourses } from '../../../redux/selectors/config';
@@ -101,6 +99,7 @@ export default class PreviousSession extends Component {
       );
     }
 
+    /* eslint-disable */
     return (
       <Flex
         column grow={1}
@@ -109,6 +108,7 @@ export default class PreviousSession extends Component {
         <Text type='title' align='center'>
           PREVIOUS SESSION
         </Text>
+        <Spacer height={'1em'} />
         <Flex grow={1}>
           <Flex grow={2} justify='center'>
             <tbody>
@@ -120,10 +120,11 @@ export default class PreviousSession extends Component {
             </tbody>
           </Flex>
           {/*<Flex grow={1}>*/}
-            {/*TODO profile picture*/}
+          {/*TODO profile picture*/}
           {/*</Flex>*/}
         </Flex>
       </Flex>
     );
+    /* eslint-enable */
   }
 }
