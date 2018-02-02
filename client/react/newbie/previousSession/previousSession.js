@@ -119,9 +119,9 @@ export default class PreviousSession extends Component {
             <DataRow name='Length' value={length} />
             </tbody>
           </Flex>
-          <Flex grow={1}>
-            TODO profile picture
-          </Flex>
+          {/*<Flex grow={1}>*/}
+            {/*TODO profile picture*/}
+          {/*</Flex>*/}
         </Flex>
       </Flex>
     );
