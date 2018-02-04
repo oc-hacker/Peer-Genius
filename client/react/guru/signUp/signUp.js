@@ -17,7 +17,7 @@ const formSelector = formValueSelector('becomeAGuru');
 @connect(state => ({
   user: selectUser(state),
   selectedCourse: formSelector(state, 'course'),
-  courses: state.config.courses ? state.config.courses.courses : []
+  courses: state.config.courses ? state.config.courses : []
 }), {
   update
 })
@@ -25,7 +25,7 @@ export default class SignUp extends Component {
   render() {
     let { update, user, selectedCourse } = this.props;
 
-    let courses = typeof this.props.courses === 'object' ? this.props.courses.map(course => ({
+    let courses = this.props.courses ? this.props.courses.map(course => ({
       value: course.id,
       label: course.name
     })) : [{value: 'Loading', label: 'Loading'}];

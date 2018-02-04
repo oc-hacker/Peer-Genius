@@ -127,7 +127,7 @@ export default class AboutUs extends React.Component {
             >
               <div className={classNames(classes.greyBackground, classes.roundedCorners, classes.middleTile)}>
                 <Text className={classNames(classes.sidePadding)}>
-                  <img src='/assets/ms_icon.png' className={classes.imageSize} alt='' />
+                  <img src='/assets/miya_image.png' className={classes.imageSize} alt='' />
                 </Text>
                 <Text type='subheading' color='black' className={classNames(classes.centerText)}>
                   Miya Stauss
@@ -142,7 +142,7 @@ export default class AboutUs extends React.Component {
               </div>
               <div className={classNames(classes.greyBackground, classes.roundedCorners, classes.middleTile)}>
                 <Text className={classNames(classes.sidePadding)}>
-                  <img src='/assets/hana_icon.png' className={classes.imageSize} alt='' />
+                  <img src='/assets/hana_image.png' className={classes.imageSize} alt='' />
                 </Text>
                 <Text type='subheading' color='black' className={classNames(classes.centerText)}>Hana Stauss</Text>
                 <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
@@ -178,7 +178,7 @@ export default class AboutUs extends React.Component {
             >
               <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
                 <Text className={classNames(classes.sidePadding)}>
-                  <img src='/assets/businessguy_icon.png' className={classes.imageSize} alt='' />
+                  <img src='/assets/bos_media_group.png' className={classes.imageSize} alt='' />
                 </Text>
                 <Text type='subheading' color='white' className={classNames(classes.centerText)}>Hanju Lee</Text>
                 <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
@@ -234,11 +234,14 @@ export default class AboutUs extends React.Component {
           </div>
           <div>
             <Text type='body2' color='gray' className={classNames(classes.centerText, classes.sidePaddingExtreme)}>
-              Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-              industry's standard
-              dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
-              type specimen book.
-              It has survived not only five centuries, but also the leap into electronic typesetting.
+              For twin sisters, Hana and Miya, education has always been fundamental in their upbringing. Whilst in
+              middle school, they shared a buddy at the sister school in Ghana. Comprised of students whom were former
+              child slaves, the school’s motto- “Education is Emancipation,” had a profound effect on the twins. The
+              twins identified the need to strengthen a student’s confidence, particularly, in STEM subjects. Their
+              market research concluded that private tutoring is cost prohibitive and hence, inaccessible.
+              Alternatively, peer tutoring is largely ineffective. Even at their own high school, the Peer Tutoring
+              program dissolved due to scheduling conflicts. Thus, a solution was born: Peer Genius (PG), a free,
+              on-demand webapp, providing high quality peer-to-peer tutorial services to underserved students.
             </Text>
           </div>
           <Spacer height={'8em'} />
