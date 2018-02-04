@@ -234,11 +234,14 @@ export default class AboutUs extends React.Component {
           </div>
           <div>
             <Text type='body2' color='gray' className={classNames(classes.centerText, classes.sidePaddingExtreme)}>
-              Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-              industry's standard
-              dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
-              type specimen book.
-              It has survived not only five centuries, but also the leap into electronic typesetting.
+              For twin sisters, Hana and Miya, education has always been fundamental in their upbringing. Whilst in
+              middle school, they shared a buddy at the sister school in Ghana. Comprised of students whom were former
+              child slaves, the school’s motto- “Education is Emancipation,” had a profound effect on the twins. The
+              twins identified the need to strengthen a student’s confidence, particularly, in STEM subjects. Their
+              market research concluded that private tutoring is cost prohibitive and hence, inaccessible.
+              Alternatively, peer tutoring is largely ineffective. Even at their own high school, the Peer Tutoring
+              program dissolved due to scheduling conflicts. Thus, a solution was born: Peer Genius (PG), a free,
+              on-demand webapp, providing high quality peer-to-peer tutorial services to underserved students.
             </Text>
           </div>
           <Spacer height={'8em'} />
