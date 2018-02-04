@@ -15,6 +15,7 @@ import MessageDisplay from './MessageDisplay';
 import ChatInput from './ChatInput';
 
 import { socketEmit, socketAttachListener, socketDetachListener } from '../../../../redux/actions/creators/socket';
+import { getCurrentRequests } from '../../../../redux/actions/creators/PGsession';
 import { post } from '../../../../redux/actions/network';
 import { waitUntil } from '../../HOC';
 
@@ -35,7 +36,8 @@ const styles = {
 }), {
   socketEmit,
   socketAttachListener,
-  socketDetachListener
+  socketDetachListener,
+  getCurrentRequests
 })
 @withStyles(styles)
 @waitUntil(props => props.hasSocket)
@@ -203,6 +205,7 @@ export default class TextChat extends Component {
     this.props.socketEmit('updateVolunteerTime', {
       action: 'stop'
     });
+    this.props.getCurrentRequests();
     // disable chat
     this.props.close();
   };
