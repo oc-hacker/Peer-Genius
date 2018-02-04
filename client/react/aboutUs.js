@@ -127,7 +127,7 @@ export default class AboutUs extends React.Component {
             >
               <div className={classNames(classes.greyBackground, classes.roundedCorners, classes.middleTile)}>
                 <Text className={classNames(classes.sidePadding)}>
-                  <img src='/assets/ms_icon.png' className={classes.imageSize} alt='' />
+                  <img src='/assets/miya_image.png' className={classes.imageSize} alt='' />
                 </Text>
                 <Text type='subheading' color='black' className={classNames(classes.centerText)}>
                   Miya Stauss
@@ -142,7 +142,7 @@ export default class AboutUs extends React.Component {
               </div>
               <div className={classNames(classes.greyBackground, classes.roundedCorners, classes.middleTile)}>
                 <Text className={classNames(classes.sidePadding)}>
-                  <img src='/assets/hana_icon.png' className={classes.imageSize} alt='' />
+                  <img src='/assets/hana_image.png' className={classes.imageSize} alt='' />
                 </Text>
                 <Text type='subheading' color='black' className={classNames(classes.centerText)}>Hana Stauss</Text>
                 <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
@@ -178,7 +178,7 @@ export default class AboutUs extends React.Component {
             >
               <div className={classNames(classes.blueBackground, classes.roundedCorners, classes.middleTile)}>
                 <Text className={classNames(classes.sidePadding)}>
-                  <img src='/assets/businessguy_icon.png' className={classes.imageSize} alt='' />
+                  <img src='/assets/bos_media_group.png' className={classes.imageSize} alt='' />
                 </Text>
                 <Text type='subheading' color='white' className={classNames(classes.centerText)}>Hanju Lee</Text>
                 <Text className={classNames(classes.bottomPadding, classes.textSidePadding)}>
