@@ -5,6 +5,7 @@ import * as models from '../../database/models/index';
 import { createSessionToken } from '../misc/auth';
 import { buildStore } from '../misc/utils';
 import { AsyncHandler, VerifiedRequest } from '../../types';
+import { fetch } from 'isomorphic-fetch';
 
 const { JWT_EXPIRE } = process.env;
 
@@ -63,3 +64,32 @@ export const refresh: AsyncHandler<VerifiedRequest> = async (request, response) 
 		}
 	});
 };
+
+export const exportHours: AsyncHandler<VerifiedRequest> = async (request, response) => {
+	let account = await models.account.find({
+		where: {
+			userId: request.body.user.id
+		}
+	});
+	let resp = await fetch('https://voluntu.io/api/login', {
+		method: 'POST',
+		headers: {
+			"Origin": "https://voluntu.io"
+		},
+		body: {
+			email: account.voluntuEmail,
+			password: account.voluntuPassword
+		}
+	});
+	let json = <any>await resp.json();
+	await fetch('https://voluntu.io/api/hour/record', {
+		method: 'POST',
+		headers: {
+			'Origin': 'https://voluntu.io',
+			'Cookie': 'sessionJWT=' + json.sessionJWT
+		},
+		body: {
+			
+		}
+	})
+}

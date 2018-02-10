@@ -21,6 +21,8 @@ export interface AccountInstance extends Sequelize.Instance<AccountAttributes> {
 	password: string;
 	verified: string;
 	time: number;
+	voluntuEmail: string;
+	voluntuPassword: string;
 }
 
 const attributes: Sequelize.DefineAttributes = {
@@ -54,6 +56,12 @@ const attributes: Sequelize.DefineAttributes = {
 	time: {
 		type: Sequelize.BIGINT,
 		defaultValue: 0
+	},
+	voluntuEmail: {
+		type: Sequelize.STRING,
+	},
+	voluntuPassword: {
+		type: Sequelize.STRING
 	}
 };
 
