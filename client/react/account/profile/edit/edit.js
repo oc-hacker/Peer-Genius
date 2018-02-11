@@ -101,14 +101,13 @@ export default class EditProfile extends Component {
             Update Profile
           </Text>
           <div className={classNames(classes.divider, classes.headerUnderline)} />
-          <Text>asdlfkj</Text>
           <ReduxForm
             form='editImage' onSubmit={editImage}
             enableReinitialize
           >
             <Flex align='center' className={classes.row}>
               <FieldIcon />
-              <Text></Text>
+              <Text>Profile Picture</Text>
               <Spacer width='1em' />
               <Dropzone
                 accept='image'
