@@ -84,5 +84,4 @@ course.hasMany(model, {
 	onDelete: 'cascade'
 });
 
-model.sync();
 export default model;
