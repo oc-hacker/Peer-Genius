@@ -77,5 +77,4 @@ user.hasOne(model, {
 	onDelete: 'cascade'
 });
 
-model.sync();
 export default model;

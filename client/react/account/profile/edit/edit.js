@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import Dropzone from 'react-dropzone';
 
-import { encodeBase64 } from '../../../../utils';
+import { encodeBase64 } from '../../../utils';
 
 import { Flex, Spacer, Text, Button } from '../../../components';
 import { DateField, ReduxForm, TextField } from '../../../components/form';
@@ -101,12 +101,14 @@ export default class EditProfile extends Component {
             Update Profile
           </Text>
           <div className={classNames(classes.divider, classes.headerUnderline)} />
+          <Text>asdlfkj</Text>
           <ReduxForm
             form='editImage' onSubmit={editImage}
             enableReinitialize
           >
             <Flex align='center' className={classes.row}>
               <FieldIcon />
+              <Text></Text>
               <Spacer width='1em' />
               <Dropzone
                 accept='image'
