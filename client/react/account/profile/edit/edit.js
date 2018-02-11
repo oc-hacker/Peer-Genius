@@ -5,10 +5,14 @@ import { withStyles } from 'material-ui/styles';
 
 import { connect } from 'react-redux';
 
+import Dropzone from 'react-dropzone';
+
+import { encodeBase64 } from '../../../../utils';
+
 import { Flex, Spacer, Text, Button } from '../../../components';
 import { DateField, ReduxForm, TextField } from '../../../components/form';
 
-import { editProfile } from '../../../../redux/actions/creators/user';
+import { editProfile, editImage } from '../../../../redux/actions/creators/user';
 import { selectUser } from '../../../../redux/selectors/user';
 
 import FieldIcon from './FieldIcon';
@@ -61,10 +65,17 @@ const styles = ({ palette: { grey }, spacing }) => ({
 @connect(state => ({
   user: selectUser(state)
 }), {
-  editProfile
+  editProfile,
+  editImage
 })
 @withStyles(styles)
 export default class EditProfile extends Component {
+  // Handle the dropzone image drop
+  _onDrop = async (acceptedFiles) => {
+    const base64 = encodeBase64(acceptedFiles);
+    editImage(base64);
+  }
+
   render() {
     let { user, editProfile, classes } = this.props;
     user.birthdate = user.birthdate && {
@@ -90,6 +101,20 @@ export default class EditProfile extends Component {
             Update Profile
           </Text>
           <div className={classNames(classes.divider, classes.headerUnderline)} />
+          <ReduxForm
+            form='editImage' onSubmit={editImage}
+            enableReinitialize
+          >
+            <Flex align='center' className={classes.row}>
+              <FieldIcon />
+              <Spacer width='1em' />
+              <Dropzone
+                accept='image'
+                onDrop={this._onDrop}
+              >
+              </Dropzone>
+            </Flex>
+          </ReduxForm>
           <ReduxForm
             form='editProfile' onSubmit={editProfile}
             initialValues={user} enableReinitialize={true}
