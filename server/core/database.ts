@@ -5,7 +5,13 @@ import * as models from '../database/models';
 const order = [models.user, models.account, models.session, models.message, models.key, models.guru];
 let index = 0;
 
-async.eachSeries(order, async model => {
+const eachSeries = async () => {
+	for (let model of order) {
+		await model.sync();
+	}
+};
+
+/* async.eachSeries(order, async model => {
 	await model
 			.sync()
 			.then(() => {
@@ -19,3 +25,4 @@ async.eachSeries(order, async model => {
 	}
 	console.log('completed migration');
 });
+*/
