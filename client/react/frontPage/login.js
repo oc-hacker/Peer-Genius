@@ -1,63 +1,66 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import stylesheet from 'react-jss';
 
-import RaisedButton from 'material-ui/RaisedButton';
+import { withStyles } from 'material-ui/styles';
+import Dialog, { DialogContent, DialogTitle } from 'material-ui/Dialog';
 
-import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
-import { StyledForm,  Field } from '../components/form';
-import { email } from '../components/form/validator';
+import { Button } from '../components';
+import { ReduxForm, TextField } from '../components/form';
 
-import { login } from '../../redux/actions/session';
+import { logIn } from '../../redux/actions/creators/session';
 
-const styles = {
-	title: {
-		fontSize: '2em',
-		textAlign: 'center',
-		color: 'black'
-	},
-	buttonContainer: {
-		display: 'flex',
-		justifyContent: 'flex-end',
-		marginTop: '1em'
-	},
-	buttonText: {
-		color: 'white'
-	}
-};
+const styles = ({ palette: { danger, getContrastText } }) => ({
+  buttons: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between'
+  }
+});
 
-export default reduxForm({
-	form: 'login',
-	onSubmit: (values, dispatch) => dispatch(login(values))
-})(stylesheet(styles)(props => {
-	let { handleSubmit, open, onRequestClose, classes } = props;
-	
-	return (
-		<StyledForm
-			dialog
-			dialogProps={{ open, onRequestClose }}
-			onSubmit={handleSubmit}
-		>
-			<p className={classes.title}>Log In</p>
-			<Field.Text
-				name="email"
-				label="Email"
-				warn={[email`'${value => value}' does not look like an email. Are you sure?`]}
-			/>
-			<Field.Text
-				name="password"
-				type="password"
-				label="Password"
-			/>
-			<div className={classes.buttonContainer}>
-				<RaisedButton
-					primary
-					type="submit"
-					label="Log In"
-				/>
-			</div>
-		</StyledForm>
-	);
-}));
+@connect(null, { logIn })
+@withStyles(styles)
+export default class LoginDialog extends Component {
+  static propTypes = {
+    open: PropTypes.bool,
+    onRequestClose: PropTypes.func.isRequired
+  };
+
+  render() {
+    let { classes, open, onRequestClose, logIn } = this.props;
+
+    const labelWidth = '5em';
+
+    return (
+      <Dialog open={open} onRequestClose={onRequestClose}>
+        <DialogTitle>Log In</DialogTitle>
+        <DialogContent>
+          <ReduxForm form="logIn" onSubmit={logIn}>
+            <TextField
+              name="email" label="Email" labelWidth={labelWidth}
+            />
+            <TextField
+              name="password" type="password" label="Password" labelWidth={labelWidth}
+            />
+            <div className={classes.buttons}>
+              <Button
+                raised color="danger"
+                onClick={onRequestClose}
+              >
+                Cancel
+              </Button>
+              <Button
+                raised color="primary"
+                type="submit"
+              >
+                Log In
+              </Button>
+            </div>
+          </ReduxForm>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+}

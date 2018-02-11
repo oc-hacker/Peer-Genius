@@ -1,46 +1,48 @@
 import * as Sequelize from 'sequelize';
 
-import config from '../../core/config';
 import { sequelizeAdmin as admin } from '../reference';
 import user from './user';
+import course from './course';
 import { ProhibitedEditError } from '../errors';
 
 export interface SessionAttributes {
-	id?: string,
-	mentee?: string,
-	mentor?: string,
-	subject?: string,
-	scheduledStart?: Date,
-	scheduledEnd?: Date,
-	startTime?: Date,
-	endTime?: Date,
-	rating?: number,
-	comment?: string
+	id?: string;
+	newbieId?: string;
+	guruId?: string;
+	courseId?: string;
+	scheduledStart?: Date;
+	scheduledEnd?: Date;
+	startTime?: Date;
+	endTime?: Date;
+	rating?: number;
+	comment?: string;
+	assignment: string;
 }
 
 export interface SessionInstance extends Sequelize.Instance<SessionAttributes> {
-	createdAt: Date,
-	updatedAt: Date,
+	createdAt: Date;
+	updatedAt: Date;
 	
-	id: string,
-	mentee: string,
-	mentor?: string,
-	subject: string,
-	scheduledStart: Date,
-	scheduledEnd: Date,
-	startTime?: Date,
-	endTime?: Date,
-	rating?: number,
-	comment?: string
+	id: string;
+	newbieId: string;
+	guruId: string;
+	courseId: string;
+	scheduledStart: Date;
+	scheduledEnd: Date;
+	startTime?: Date;
+	endTime?: Date;
+	rating?: number;
+	comment?: string;
+	assignment: string;
 }
 
-const attributes = {
+const attributes: Sequelize.DefineAttributes = {
 	id: {
 		type: Sequelize.UUID,
 		defaultValue: Sequelize.UUIDV4,
 		primaryKey: true
 	},
-	mentee: {
+	newbieId: {
 		type: Sequelize.UUID,
 		allowNull: false,
 		references: {
@@ -50,12 +52,21 @@ const attributes = {
 			onDelete: 'cascade'
 		}
 	},
-	mentor: {
+	guruId: {
 		type: Sequelize.UUID,
 		allowNull: true,
-		defaultValue: null,
 		references: {
 			model: user,
+			key: 'id',
+			onUpdate: 'cascade',
+			onDelete: 'cascade'
+		}
+	},
+	courseId: {
+		type: Sequelize.UUID,
+		allowNull: false,
+		references: {
+			model: course,
 			key: 'id',
 			onUpdate: 'cascade',
 			onDelete: 'cascade'
@@ -88,20 +99,60 @@ const attributes = {
 		type: Sequelize.STRING,
 		allowNull: true,
 		defaultValue: null
+	},
+	assignment: {
+		type: Sequelize.STRING,
+		allowNull: false
 	}
 };
 
 const blockUserEdit = (instance: SessionInstance) => {
-	if (instance.changed('mentor')) {
-		throw new ProhibitedEditError('Editing the mentor FK of sessions table is prohibited.')
+	if (instance.changed('guruId')) {
+		throw new ProhibitedEditError('Editing the guru FK of sessions table is prohibited.');
 	}
-	if (instance.changed('mentee')) {
-		throw new ProhibitedEditError('Editing the mentee FK of sessions table is prohibited.')
+	if (instance.changed('newbieId')) {
+		throw new ProhibitedEditError('Editing the newbie FK of sessions table is prohibited.');
 	}
 };
 
 const model: Sequelize.Model<SessionInstance, SessionAttributes> = admin.define<SessionInstance, SessionAttributes>('sessions', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync({ alter: config.devMode }); // Alter when in development mode
 
-export default model
+model.belongsTo(user, {
+	as: 'guru',
+	foreignKey: 'newbieId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+user.hasMany(model, {
+	as: 'guruSession',
+	foreignKey: 'newbieId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+
+model.belongsTo(user, {
+	as: 'newbie',
+	foreignKey: 'guruId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+user.hasMany(model, {
+	as: 'newbieSession',
+	foreignKey: 'guruId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+
+model.belongsTo(course, {
+	foreignKey: 'courseId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+course.hasMany(model, {
+	foreignKey: 'courseId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+
+export default model;

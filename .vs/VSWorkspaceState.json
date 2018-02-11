@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\server",
+    "\\server\\core",
+    "\\server\\database",
+    "\\server\\database\\models",
+    "\\server\\router",
+    "\\server\\router\\functions",
+    "\\server\\router\\misc",
+    "\\server\\socket"
+  ],
+  "SelectedNode": "\\server\\router\\api.ts",
+  "PreviewInSolutionExplorer": false
+}

@@ -1,34 +1,35 @@
 import * as Sequelize from 'sequelize';
+import { AssociationOptions } from 'sequelize';
 
-import config from '../../core/config';
 import { sequelizeAdmin as admin } from '../reference';
 import user from './user';
+import session from './session';
 import { ProhibitedEditError } from '../errors';
 
 export interface MessageAttributes {
-	id?: string,
-	from?: string,
-	to?: string,
-	message?: string
+	id?: string;
+	senderId?: string;
+	sessionId?: string;
+	message?: string;
 }
 
 export interface MessageInstance extends Sequelize.Instance<MessageAttributes> {
-	createdAt: Date,
-	updatedAt: Date,
+	createdAt: Date;
+	updatedAt: Date;
 	
-	id: string,
-	from: string,
-	to: string,
-	message: string
+	id: string;
+	senderId: string;
+	sessionId: string;
+	message: string;
 }
 
-const attributes = {
+const attributes: Sequelize.DefineAttributes = {
 	id: {
 		type: Sequelize.UUID,
 		defaultValue: Sequelize.UUIDV4,
 		primaryKey: true
 	},
-	from: {
+	senderId: {
 		type: Sequelize.UUID,
 		references: {
 			model: user,
@@ -37,29 +38,56 @@ const attributes = {
 			onDelete: 'cascade'
 		}
 	},
-	to: {
+	sessionId: {
 		type: Sequelize.UUID,
 		references: {
-			model: user,
+			model: session,
 			key: 'id',
 			onUpdate: 'cascade',
 			onDelete: 'cascade'
 		}
 	},
 	message: {
-		type: Sequelize.STRING,
+		type: Sequelize.TEXT({length: 'medium'}),
 		allowNull: false
 	}
 };
 
 const blockUserEdit = (instance: MessageInstance) => {
-	if (instance.changed('user')) {
-		throw new ProhibitedEditError('Editing the user FK of messages table is prohibited.')
+	if (instance.changed('senderId')) {
+		throw new ProhibitedEditError('Editing the user FK of messages table is prohibited.');
+	}
+	if (instance.changed('sessionId')) {
+		throw new ProhibitedEditError('Editing the session FK of messages table is prohibited.');
 	}
 };
 
 const model: Sequelize.Model<MessageInstance, MessageAttributes> = admin.define<MessageInstance, MessageAttributes>('messages', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync({ alter: config.devMode }); // Alter when in development mode
 
-export default model
+const hookOptions: AssociationOptions = {
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+};
+
+model.belongsTo(user, {
+	as: 'sender',
+	foreignKey: 'senderId',
+	...hookOptions
+});
+user.hasMany(model, {
+	as: 'sentMessages',
+	foreignKey: 'senderId',
+	...hookOptions
+});
+
+model.belongsTo(session, {
+	foreignKey: 'sessionId',
+	...hookOptions
+});
+session.hasMany(model, {
+	foreignKey: 'sessionId',
+	...hookOptions
+});
+
+export default model;

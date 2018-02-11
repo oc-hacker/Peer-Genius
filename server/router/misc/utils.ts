@@ -3,33 +3,20 @@ import * as fs from 'fs';
 import { pick } from 'lodash';
 import * as httpStatus from 'http-status-codes';
 
-import * as models from '../../database/models/index';
+import * as models from '../../database/models';
+import * as sequelize from 'sequelize';
 import { exposedAttributes as userAttributes, UserInstance } from '../../database/models/user';
 import { ProhibitedEditError } from '../../database/errors';
 import { createSessionToken } from './auth';
 import { AccountInstance } from '../../database/models/account';
 
 import { Handler, ErrorRequestHandler, NextFunction, Request, Response } from 'express';
-import { Store, VerifiedRequest } from '../../types';
+import { AsyncHandler, Store, VerifiedRequest } from '../../types';
+
+const { JWT_EXPIRE } = process.env;
 
 export const logger: Handler = (request, response, next) => {
-	console.log(`[${new Date().toUTCString()}]`, 'Request received at', request.originalUrl);
-	next();
-};
-
-let currentCount = 0;
-const limit = 1200; // Per minute
-
-export const throttle: Handler = (request, response, next) => {
-	if (currentCount >= limit) {
-		console.log(`[THROTTLE] Refused request at ${request.originalUrl}`);
-		response.status(418).end();
-		return;
-	}
-	currentCount++;
-	setTimeout(() => {
-		currentCount--;
-	}, 60 * 1000);
+	console.log(`[${new Date().toUTCString()}] ${request.method} request received at ${request.originalUrl}`);
 	next();
 };
 
@@ -40,7 +27,8 @@ export const sendIndex: Handler = (request, response) => {
 export const checkReview = async (request: VerifiedRequest, response: Response, next: NextFunction) => {
 	let unfinishedReview = await models.session.find({
 		where: {
-			mentee: request.body.user.id
+			newbieId: request.body.user.id,
+			rating: null
 		}
 	});
 	
@@ -60,57 +48,67 @@ const errorLogPath = path.resolve(__dirname, '../../errors.log');
 // Clear up error log on start
 fs.writeFileSync(errorLogPath, '');
 
-export const errorHandler: ErrorRequestHandler = (error: Error | string, request, response, next) => {
+export const logError = (message: string): Promise<any> => {
+	return new Promise(resolve => {
+		fs.appendFile(errorLogPath, [message, ''].join('\n'), resolve);
+	});
+};
+
+export const errorHandler: ErrorRequestHandler = async (error: Error | string, request, response, _) => {
 	if (error instanceof ProhibitedEditError) {
 		console.warn([
 			`[${new Date().toUTCString()}]`,
 			`Request at ${request.originalUrl} attempted make a forbidden edit. The request processing has been aborted.`,
 			'Details available in error log.'
 		].join('\n'));
-		fs.appendFile(errorLogPath, [
+		await logError([
 			`[${new Date().toUTCString()}] Blocked edit request:`,
 			`Error message: ${error.message}`,
-			JSON.stringify(request.body, null, '\t'),
-			''
-		].join('\n'), () => {
-			response.status(httpStatus.FORBIDDEN).end()
-		});
+			JSON.stringify(request.body, null, '\t')
+		].join('\n'));
+		response.status(httpStatus.FORBIDDEN).end();
 		
 	}
 	else if (error === 'Request blocked by CORS.') {
 		console.warn(`Request at ${request.originalUrl} blocked by CORS.`);
-		response.status(httpStatus.BAD_REQUEST).end()
+		response.status(httpStatus.BAD_REQUEST).end();
 	}
 	else {
 		const timeStamp: string = new Date().toUTCString();
 		console.error(`[${timeStamp}] Unexpected error when handling request at ${request.originalUrl}\nDetails will be logged to error log.`);
-		fs.appendFile(errorLogPath, [
+		await logError([
 			`[${timeStamp}] Server handling error!`,
 			`Error message:`,
 			`${error}`,
+			`Stacktrace;`,
+			(error instanceof Error
+				? error.stack
+				: 'Not available'),
 			`Request details:`,
-			JSON.stringify(request.body, null, '\t'),
-			''
-		].join('\n'), () => {
-			response.status(httpStatus.INTERNAL_SERVER_ERROR).end();
-		});
-		
+			JSON.stringify(request.body, null, '\t')
+		].join('\n'));
+		response.status(httpStatus.INTERNAL_SERVER_ERROR).end();
 	}
 };
 
-export const endResponse: Handler = (request, response) => {
-	response.end();
+export const notFound: Handler = (request, response) => {
+	response.status(httpStatus.NOT_FOUND).end();
 };
+
+interface LoadedModels {
+	user?: UserInstance;
+	account?: AccountInstance;
+}
 
 /**
  * Note: account.verified indicates whether the account's email has been verified.
  *
  * @param id
- * @param [user]
- * @param [account]
+ * @param [loadedInstances] Instances that have already been loaded to skip searching the database for the instance.
  * @return {Promise.<Store>}
  */
-export const buildInitialStore = async (id: string, user?: UserInstance, account?: AccountInstance): Promise<Store> => {
+export const buildStore = async (id: string, loadedInstances: LoadedModels = {}): Promise<Store> => {
+	let { user, account } = loadedInstances;
 	user = user || await models.user.find({
 		where: {
 			id
@@ -118,28 +116,47 @@ export const buildInitialStore = async (id: string, user?: UserInstance, account
 	});
 	account = account || await models.account.find({
 		where: {
-			user: id
+			userId: id
 		}
+	});
+	
+	let userInstance: any = await models.user.find({
+		where: {
+			id
+		},
+		include: [{
+			model: models.guru,
+			attributes: [],
+		}],
+		attributes: [
+			'id',
+			[sequelize.fn('CONCAT', sequelize.col('firstName'), ' ', sequelize.col('lastName')), 'name'], // CONCAT(`firstName`, ' ', `lastName`) AS name
+			[sequelize.fn('MAX', sequelize.col('enabled')), 'isGuru'] // MAX(`enabled`) AS isGuru
+		],
+		group: 'id'
 	});
 	
 	let store: any = {};
 	
-	store.account = pick(account, ['email', 'verified']);
+	store.account = pick(account, ['email', 'verified', 'time', 'profilePicture']);
 	store.user = pick(user, userAttributes);
-	store.sessionJWT = createSessionToken(id);
+	store.isGuru = userInstance.dataValues.isGuru === 1;
+	store.session = {
+		jwt: createSessionToken(id),
+		expire: parseInt(JWT_EXPIRE) * 1000
+	};
 	
-	return <Store>store;
+	return store as Store;
 };
 
 /**
  * Wraps the handler in a higher order function to catch any error that the handler throws and pass it to express's error handler.
  */
-export const wrapTryCatch = (handler: (Request, Response, NextFunction) => Promise<any>): Handler => async (request: Request, response: Response, next: NextFunction) => {
+export const wrapTryCatch = (handler: AsyncHandler<Request>): AsyncHandler<Request> => async (request, response, next) => {
 	try {
-		await handler(request, response, next)
+		await handler(request, response, next);
 	}
 	catch (error) {
-		next(error)
+		next(error);
 	}
 };
-

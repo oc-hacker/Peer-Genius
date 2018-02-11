@@ -1,28 +1,27 @@
 import * as Sequelize from 'sequelize';
 import * as randomstring from 'randomstring';
 
-import config from '../../core/config';
 import { sequelizeAdmin as admin } from '../reference';
 import user from './user';
 import { ProhibitedEditError } from '../errors';
 
 export interface KeyAttributes {
-	user?: string,
-	verifyEmailKey?: string,
-	nextEmail?: string
+	userId?: string;
+	verifyEmailKey?: string;
+	nextEmail?: string;
 }
 
 export interface KeyInstance extends Sequelize.Instance<KeyAttributes> {
-	createdAt: Date,
-	updatedAt: Date,
+	createdAt: Date;
+	updatedAt: Date;
 	
-	user: string,
-	verifyEmailKey: string,
-	nextEmail: string
+	userId: string;
+	verifyEmailKey: string;
+	nextEmail: string;
 }
 
-const attributes = {
-	user: {
+const attributes: Sequelize.DefineAttributes = {
+	userId: {
 		type: Sequelize.UUID,
 		references: {
 			model: user,
@@ -44,14 +43,13 @@ const attributes = {
 };
 
 const blockUserEdit = (instance: KeyInstance) => {
-	if (instance.changed('user')) {
-		throw new ProhibitedEditError('Editing the user FK of keys table is prohibited.')
+	if (instance.changed('userId')) {
+		throw new ProhibitedEditError('Editing the user FK of keys table is prohibited.');
 	}
 };
 
 const model: Sequelize.Model<KeyInstance, KeyAttributes> = admin.define<KeyInstance, KeyAttributes>('keys', attributes);
 model.beforeUpdate(blockUserEdit);
-model.sync({ alter: config.devMode }); // Alter when in development mode
 
 // Extra utility methods
 /**
@@ -68,4 +66,15 @@ export const uniqueRandom = async (column: string) => {
 	return key;
 };
 
-export default model
+model.belongsTo(user, {
+	foreignKey: 'userId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+user.hasOne(model, {
+	foreignKey: 'userId',
+	onUpdate: 'cascade',
+	onDelete: 'cascade'
+});
+
+export default model;

@@ -8,13 +8,9 @@ const router = Router();
 // Reminder: remember to use wrapTryCatch to enable express error handling on promise rejection errors!
 
 router.use('/', verifySessionToken);
+router.post('/recent', wrapTryCatch(functions.recent));
 router.post('/info', wrapTryCatch(functions.info));
-router.post('/review', wrapTryCatch(functions.review)); // Used for both initial reviews and editing reviews.
-
-router.use('/', wrapTryCatch(checkReview));
-router.post('/request', wrapTryCatch(functions.request));
-router.post('/check', wrapTryCatch(functions.check));
-router.post('/accept', wrapTryCatch(functions.accept));
+router.post('/review', wrapTryCatch(functions.review));
+router.post('/acceptSession', wrapTryCatch(functions.acceptSession));
 
 export default router;
-

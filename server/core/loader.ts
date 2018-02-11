@@ -1,8 +1,8 @@
-import { loadConfig } from './config';
+import * as path from 'path';
+import * as dotenv from 'dotenv';
 
-let run = async () => {
-	await loadConfig();
-	require('./server');
-};
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-run();
+import './server';
+import './backup';
+import './database';

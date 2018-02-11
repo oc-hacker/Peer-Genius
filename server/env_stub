@@ -1,0 +1,23 @@
+# This file shows the values that should be in the .env file and can be used as a template.
+DB_HOST=localhost
+DB_NAME=
+DB_ADMIN_USER=
+DB_ADMIN_PASS=
+
+JWT_SECRET=
+JWT_EXPIRE=
+
+SERVER_PORT=8080
+WEBPACK_DEV_PORT=8081
+PEERJS_KEY=
+
+BACKUP_PATH=
+NODE_ENV=production
+
+XOAUTH2_ACCESS_URL=
+XOAUTH2_HEADERS=
+XOAUTH2_PARAMS=
+
+SLACK_TOKEN=
+DB_SLACK_USER=
+DB_SLACK_PASS=

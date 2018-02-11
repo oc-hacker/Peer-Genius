@@ -1,122 +1,49 @@
 // File for setting up node mysql
-import * as mysql from 'mysql';
-import RowData from 'mysql/lib/protocol/packets/RowDataPacket';
+import * as mysql from 'mysql2/promise';
 import * as Sequelize from 'sequelize';
 
-import config from '../core/config';
+const { DB_HOST, DB_NAME, DB_ADMIN_USER, DB_ADMIN_PASS, DB_SLACK_USER, DB_SLACK_PASS } = process.env;
 
-interface QueryResults extends Array<RowData> {
-	affectedRows: number,
-	changedRows: number,
-	threadId: number
+interface QueryResults extends Array<mysql.RowDataPacket> {
+	affectedRows: number;
+	changedRows: number;
+	threadId: number;
 }
 
-export interface AsyncConnection extends mysql.IConnection {
-	asyncQuery: (string, any?) => Promise<QueryResults>
+export interface AsyncConnection extends mysql.Connection {
+	asyncQuery: (query: string, values?: any) => Promise<QueryResults>;
 }
-
-type ConnectionFactory = (...args: any[]) => Promise<AsyncConnection>;
-
-// Promise-based connection creation
-const getConnection = (pool: mysql.IPool): Promise<mysql.IConnection> => {
-	return new Promise((resolve, reject) => {
-		pool.getConnection((error, connection) => {
-			if (error) {
-				reject(error);
-			}
-			else {
-				resolve(connection);
-			}
-		})
-	});
-};
 
 const adminPool = mysql.createPool({
-	host: 'localhost',
-	database: config.mysqlDatabase,
-	user: config.mysqlAdmin.user,
-	password: config.mysqlAdmin.password,
+	host: DB_HOST,
+	database: DB_NAME,
+	user: DB_ADMIN_USER,
+	password: DB_ADMIN_PASS,
 	timezone: '+00'
 });
 
-
-export const newConnection: ConnectionFactory = async (logSQL?: boolean) => {
-	const connection: mysql.IConnection = await getConnection(adminPool);
-	
-	const asyncQuery = (query: string, values?: any): Promise<QueryResults> => {
-		if (logSQL) {
-			console.log([
-				'[SQL Query Start]',
-				query,
-				'[SQL Query End]'
-			].join('\n'));
-		}
-		return new Promise((resolve, reject) => {
-			if (values) {
-				connection.query(query, values, (err, results, fields) => {
-					if (err) {
-						reject(Error(['Unexpected error: ' + err.message, 'Query:', query].join('\n')));
-					}
-					else {
-						resolve(results);
-					}
-				});
-			}
-			else {
-				connection.query(query, (err, result, fields) => {
-					if (err) {
-						reject(err);
-					}
-					else {
-						resolve(result);
-					}
-				});
-			}
-		});
-	};
-	
-	return {
-		...connection,
-		asyncQuery
-	}
+export const newConnection = async (logSQL?: boolean): Promise<mysql.PoolConnection> => {
+	return await adminPool.getConnection();
 };
 
 const slackPool = mysql.createPool({
-	host: 'localhost',
-	database: config.mysqlDatabase,
-	user: config.mysqlSlack.user,
-	password: config.mysqlSlack.password,
+	host: DB_HOST,
+	database: DB_NAME,
+	user: DB_SLACK_USER,
+	password: DB_SLACK_PASS,
 	timezone: '+00'
 });
 
-export const slackConnection: ConnectionFactory = async () => {
-	const connection: mysql.IConnection = await getConnection(slackPool);
-	
-	const asyncQuery = (query: string): Promise<QueryResults> => {
-		return new Promise((resolve, reject) => {
-			connection.query(query, (err, result, fields) => {
-				if (err) {
-					reject(err);
-				}
-				else {
-					resolve(result);
-				}
-			});
-		});
-	};
-	
-	return {
-		...connection,
-		asyncQuery
-	};
+export const slackConnection = async (): Promise<mysql.PoolConnection> => {
+	return await slackPool.getConnection();
 };
 
 export const sequelizeAdmin: Sequelize.Sequelize = new Sequelize(
-	config.mysqlDatabase,
-	config.mysqlAdmin.user,
-	config.mysqlAdmin.password,
+	DB_NAME,
+	DB_ADMIN_USER,
+	DB_ADMIN_PASS,
 	{
-		host: 'localhost',
+		host: (DB_HOST === 'localhost' ? '127.0.0.1' : DB_HOST),
 		dialect: 'mysql',
 		logging: false,
 		timezone: '+00:00'

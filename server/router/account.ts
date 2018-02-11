@@ -11,6 +11,7 @@ router.use('/', verifySessionToken);
 router.post('/verify', wrapTryCatch(functions.verify));
 router.post('/info', wrapTryCatch(functions.info));
 router.post('/refresh', wrapTryCatch(functions.refresh));
+router.post('/editProfilePicture', wrapTryCatch(functions.editProfilePicture));
 
 router.use('/', wrapTryCatch(checkReview));
 router.post('/edit', wrapTryCatch(functions.edit));
