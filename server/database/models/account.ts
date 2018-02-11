@@ -10,6 +10,7 @@ export interface AccountAttributes {
 	email?: string;
 	password?: string;
 	verified?: boolean;
+	profilePicture: string;
 }
 
 export interface AccountInstance extends Sequelize.Instance<AccountAttributes> {
@@ -23,6 +24,7 @@ export interface AccountInstance extends Sequelize.Instance<AccountAttributes> {
 	time: number;
 	voluntuEmail: string;
 	voluntuPassword: string;
+	profilePicture: string;
 }
 
 const attributes: Sequelize.DefineAttributes = {
@@ -62,6 +64,9 @@ const attributes: Sequelize.DefineAttributes = {
 	},
 	voluntuPassword: {
 		type: Sequelize.STRING
+	},
+	profilePicture: {
+		type: Sequelize.TEXT('medium') // ~12 MB max
 	}
 };
 

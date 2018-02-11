@@ -138,7 +138,7 @@ export const buildStore = async (id: string, loadedInstances: LoadedModels = {})
 	
 	let store: any = {};
 	
-	store.account = pick(account, ['email', 'verified', 'time']);
+	store.account = pick(account, ['email', 'verified', 'time', 'profilePicture']);
 	store.user = pick(user, userAttributes);
 	store.isGuru = userInstance.dataValues.isGuru === 1;
 	store.session = {

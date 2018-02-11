@@ -93,3 +93,32 @@ export const exportHours: AsyncHandler<VerifiedRequest> = async (request, respon
 		}
 	})
 }
+
+interface EditProfilePictureRequest extends VerifiedRequest {
+	body: {
+		user: {
+			id: string;
+		},
+		picture: string;
+	}
+}
+
+/**
+ * Edits a user account's profile picture. Picture is stored and transmitted as a base64 encoded.
+ * @param request 
+ * @param response 
+ */
+export const editProfilePicture: AsyncHandler<EditProfilePictureRequest> = async (request, response) => {
+	const account = await models.account.find({
+		where: {
+			userId: request.body.user.id
+		}
+	});
+	account.profilePicture = request.body.picture;
+	await account.save();
+	if (account) {
+		response.status(httpStatus.OK).end();
+	} else {
+		response.status(httpStatus.UNAUTHORIZED).end();
+	}
+}
