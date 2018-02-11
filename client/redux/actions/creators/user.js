@@ -25,3 +25,22 @@ export const editProfile = values => async dispatch => {
     dispatch(handleError(response));
   }
 };
+
+export const editImage = values => async dispatch => {
+  let { picture } = values;
+
+  let response = await post('/api/account/editProfilePicture', {
+    picture
+  });
+
+  if (response.ok) {
+    dispatch({
+      type: types.EDIT_PROFILE,
+      payload: {
+        picture
+      }
+    });
+  } else {
+    dispatch(handleError(response));
+  }
+};

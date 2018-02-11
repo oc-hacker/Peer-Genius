@@ -68,6 +68,7 @@ export const createAccount: AsyncHandler<CreateAccountRequest> = async (request,
 		// OK
 		let user = await models.user.create(pick(request.body, userAttributes));
 		let account = await models.account.create({
+			profilePicture: null,
 			userId: user.id,
 			email: request.body.email,
 			password: request.body.password

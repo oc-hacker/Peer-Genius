@@ -90,5 +90,4 @@ session.hasMany(model, {
 	...hookOptions
 });
 
-model.sync();
 export default model;
