@@ -76,3 +76,28 @@ export const getConversations = async (request: VerifiedRequest, response: Respo
 	connection.release();
 	response.status(httpStatus.OK).json(conversations);
 };
+
+interface ReportRequest extends VerifiedRequest {
+	body: {
+		user: {
+			id: string;
+		},
+		reported: string;
+		sessionId: string;
+	}
+}
+export const reportUser = async (request: ReportRequest, response: Response) => {
+	let { user: { id }, reported, sessionId } = request.body;
+
+	const report = await models.report.create({
+		sessionId: sessionId,
+		reporterId: id,
+		reportedId: reported
+	});
+
+	if(report) {
+		response.status(httpStatus.OK).end();
+	} else {
+		response.status(httpStatus.INTERNAL_SERVER_ERROR).end();
+	}
+}

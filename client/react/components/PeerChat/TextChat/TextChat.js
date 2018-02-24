@@ -15,7 +15,7 @@ import MessageDisplay from './MessageDisplay';
 import ChatInput from './ChatInput';
 
 import { socketEmit, socketAttachListener, socketDetachListener } from '../../../../redux/actions/creators/socket';
-import { getCurrentRequests } from '../../../../redux/actions/creators/PGsession';
+import { getCurrentRequests, reportUser } from '../../../../redux/actions/creators/PGsession';
 import { post } from '../../../../redux/actions/network';
 import { waitUntil } from '../../HOC';
 
@@ -37,7 +37,8 @@ const styles = {
   socketEmit,
   socketAttachListener,
   socketDetachListener,
-  getCurrentRequests
+  getCurrentRequests,
+  reportUser
 })
 @withStyles(styles)
 @waitUntil(props => props.hasSocket)
@@ -210,6 +211,11 @@ export default class TextChat extends Component {
     this.props.close();
   };
 
+  _reportUser = () => {
+    let { toId, socketEmit, match: { params } } = this.props;
+    this.props.reportUser(params.sessionId, toId);
+  }
+
   render() {
     let { classes, active, setVideo } = this.props;
     let { loading, input, messages, participantName, participantTyping } = this.state;
@@ -236,6 +242,11 @@ export default class TextChat extends Component {
             <Button raised onClick={this._endSession}>
               <Text>
                 End Session
+              </Text>
+            </Button>
+            <Button raised onClick={this._reportUser}>
+              <Text>
+                Report User
               </Text>
             </Button>
           </Flex>

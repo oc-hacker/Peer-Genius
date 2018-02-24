@@ -54,3 +54,10 @@ export const getCurrentRequests = () => async dispatch => {
     payload: json
   });
 }
+
+export const reportUser = (sessionId, reported) => async dispatch => {
+  let response = await post('/api/chat/reportUser', {
+    sessionId: sessionId,
+    reported: reported
+  });
+}
