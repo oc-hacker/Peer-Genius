@@ -58,15 +58,6 @@ const attributes: Sequelize.DefineAttributes = {
   }
 };
 
-const blockUserEdit = (instance: MessageInstance) => {
-	if (instance.changed('senderId')) {
-		throw new ProhibitedEditError('Editing the user FK of messages table is prohibited.');
-	}
-	if (instance.changed('sessionId')) {
-		throw new ProhibitedEditError('Editing the session FK of messages table is prohibited.');
-	}
-};
-
 const model: Sequelize.Model<ReportInstance, ReportAttributes> = admin.define<ReportInstance, ReportAttributes>('messages', attributes);
 
 export default model;
