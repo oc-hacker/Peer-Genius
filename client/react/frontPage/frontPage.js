@@ -124,21 +124,21 @@ export default class FrontPage extends Component {
         className={classes.frontPage}
         //onWheel={this._onScroll}
       >
-            <Scrollbars>
+        <Scrollbars>
 
-        <GuestAppBar />
-        <PageZero
-          openLogIn={this._openLogIn} createAccount={this._openCreateAccount}
-        />
-        <PageOne />
-        <PageTwo  />
-        <PageThree  />
-        <PageFour
-          //currentPage={currentPage}
-          createAccount={this._openCreateAccount}
-        />
-        <LoginDialog open={logInOpen} onRequestClose={this._closeLogIn} />
-        <CreateAccountDialog open={createAccountOpen} onRequestClose={this._closeCreateAccount} />
+          <GuestAppBar background='rgba(255, 255, 255, 1)' loginFunction={this._openLogIn} />
+          <PageZero
+            openLogIn={this._openLogIn} createAccount={this._openCreateAccount}
+          />
+          <PageOne />
+          <PageTwo  />
+          <PageThree  />
+          <PageFour
+            //currentPage={currentPage}
+            createAccount={this._openCreateAccount}
+          />
+          <LoginDialog open={logInOpen} onRequestClose={this._closeLogIn} />
+          <CreateAccountDialog open={createAccountOpen} onRequestClose={this._closeCreateAccount} />
         </Scrollbars>
 
       </div>

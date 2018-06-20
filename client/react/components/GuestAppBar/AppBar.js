@@ -63,6 +63,11 @@ class GuestAppBar extends Component {
           </Text>
         </Button>
         <Button style={styles.button}><FacebookIcon color={color} /></Button>
+        <Button className={classes.button} onClick={this.props.loginFunction}>
+          <Text type='subheading' color={color}>
+            Log In
+          </Text>
+        </Button>
       </AppBar>
     );
   };

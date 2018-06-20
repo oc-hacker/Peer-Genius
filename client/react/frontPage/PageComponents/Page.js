@@ -37,7 +37,7 @@ export default class Page extends Component {
       <div
         className={classNames({
           [classes.page]: true
-                }, className)}
+        }, className)}
         {...divProps}
       />
     );
