@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
+import StyledInput from '../../StyledInput';
 import VideoIcon from 'material-ui-icons/VideoCall';
 
 import { connect } from 'react-redux';
@@ -52,6 +53,8 @@ export default class TextChat extends Component {
       messages: [],
       participantTyping: false,
       participantName: '',
+      reporting: false,
+      reportedWords: ""
     };
   }
 
@@ -245,9 +248,9 @@ export default class TextChat extends Component {
               </Text>
             </Button>
             <Button raised onClick={this._reportUser}>
-              <Text>
+              {this.state.reporting ? <StyledInput value={this.state.reportedWords} onChange={(val) => this.setState({reportedWords: val.target.value})}/> : <Text>
                 Report User
-              </Text>
+              </Text>}
             </Button>
           </Flex>
           {/*<Flex>*/}
