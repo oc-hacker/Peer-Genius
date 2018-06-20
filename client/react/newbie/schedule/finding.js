@@ -16,7 +16,7 @@ const Finding = @withStyles({
         let { classes } = this.props;
         return (
         <div style={{margin: 'auto'}}>
-            <BounceLoader color="black" size="300px" margin="auto" style={{margin: 'auto'}}/>
+            <BounceLoader color="black" size="100px" margin="auto" style={{margin: 'auto'}}/>
             <Text style={{textAlign: 'center', paddingTop: 20}}><b>Finding a guru...</b></Text>
         </div>
         );
