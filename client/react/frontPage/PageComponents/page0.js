@@ -25,7 +25,7 @@ const styles = {
     borderColor: 'rgba(249,202,120, 0.9)'
   },
   background: {
-    backgroundImage: 'linear-gradient(to bottom, rgba(200, 200, 200, 0.6) 0%, rgba(255, 255, 255, 0.6) 100%), url(assets/home_page_1st.jpg)',
+    backgroundImage: 'linear-gradient(to bottom, rgba(50, 50, 50, 0.6) 0%, rgba(50, 50, 50, 0.6) 100%), url(assets/home_page_1st.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     overflow: 'hidden',
