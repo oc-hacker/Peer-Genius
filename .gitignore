@@ -75,7 +75,7 @@ fabric.properties
 
 # Created by .ignore support plugin (hsz.mobi)
 
-public/app.js*
+app.js*
 /server/core/config.json
 /client/config.js
 private/
