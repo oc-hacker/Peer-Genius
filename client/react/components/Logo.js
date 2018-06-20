@@ -25,7 +25,7 @@ export default class PeerGeniusLogo extends React.Component {
     if (imageOnly) {
       return (
         <svg
-          viewBox="0 0 356 374.5"
+          viewBox="0 0 356 300"
           data-name="Layer 1"
           id="Layer_1"
           height={this.props.height ? this.props.height : '38pt'} width={this.props.width ? this.props.width : '38pt'}

@@ -17,12 +17,14 @@ import PageFour from './PageComponents/page4';
 import LoginDialog from './login';
 import CreateAccountDialog from './CreateAccountComponents';
 
+import { Scrollbars } from 'react-custom-scrollbars';
+
+
 const styles = {
   frontPage: {
     position: 'relative',
     width: '100%',
-    height: '100%',
-    overflow: 'hidden'
+    height: '100%'
   }
 };
 
@@ -52,7 +54,6 @@ export default class FrontPage extends Component {
     super(props);
 
     this.state = {
-      page: 0,
       logInOpen: false,
       createAccountOpen: false
     };
@@ -121,29 +122,25 @@ export default class FrontPage extends Component {
     return (
       <div
         className={classes.frontPage}
-        onWheel={this._onScroll}
+        //onWheel={this._onScroll}
       >
-        <GuestAppBar currentPage={currentPage} />
+            <Scrollbars>
+
+        <GuestAppBar />
         <PageZero
-          currentPage={currentPage}
           openLogIn={this._openLogIn} createAccount={this._openCreateAccount}
         />
-        <PageOne
-          currentPage={currentPage}
-          next={this._nextPage}
-        />
-        <PageTwo currentPage={currentPage} />
-        <PageThree currentPage={currentPage} />
+        <PageOne />
+        <PageTwo  />
+        <PageThree  />
         <PageFour
-          currentPage={currentPage}
+          //currentPage={currentPage}
           createAccount={this._openCreateAccount}
-        />
-        <PageRadio
-          currentPage={currentPage}
-          setPage={this._setPage}
         />
         <LoginDialog open={logInOpen} onRequestClose={this._closeLogIn} />
         <CreateAccountDialog open={createAccountOpen} onRequestClose={this._closeCreateAccount} />
+        </Scrollbars>
+
       </div>
     );
   }

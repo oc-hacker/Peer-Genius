@@ -11,5 +11,6 @@ router.use('/', verifySessionToken);
 
 router.post('/getMessages', wrapTryCatch(functions.getMessages));
 router.post('/getConversations', wrapTryCatch(functions.getConversations));
+router.post('/reportUser', wrapTryCatch(functions.reportUser));
 
 export default router;

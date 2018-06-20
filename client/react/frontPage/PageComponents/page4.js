@@ -57,7 +57,7 @@ export default class PageFour extends Component {
             marginBottom: 10
           }}
         />
-        <Text type="display2" color="black" className={classes.centerText}>Okay, We Know You Want To.</Text>
+        <Text type="display2" color="black" className={classes.centerText}>Get started for free!</Text>
         <Spacer height='2%'/>
         <div className={classes.buttons}>
           <Button
@@ -66,7 +66,7 @@ export default class PageFour extends Component {
             onClick={createAccount}
             style={styles.button}
           >
-            <Text type="button" fontWeight='bold' size='20pt'>JOIN</Text>
+            <Text type="button" fontWeight='bold' size='12pt'>Create Account</Text>
           </Button>
         </div>
       </Page>
