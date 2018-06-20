@@ -16,14 +16,16 @@ const styles = {
   },
   buttonContainer: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    marginTop: 70,
+    marginBottom: -20
   },
   button: {
     borderRadius: 10,
     borderColor: 'rgba(249,202,120, 0.9)'
   },
   background: {
-    backgroundImage: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.6) 100%), url(assets/home_page_1st.jpg)',
+    backgroundImage: 'linear-gradient(to bottom, rgba(200, 200, 200, 0.6) 0%, rgba(255, 255, 255, 0.6) 100%), url(assets/home_page_1st.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     overflow: 'hidden',
@@ -47,7 +49,8 @@ export default class PageZero extends Component {
         page={0} currentPage={currentPage}
         className={classNames(classes.withColor, classes.background)}
       >
-        <PeerGeniusLogo height="50%" width="50%" />
+        <PeerGeniusLogo height="25%" width="25%" imageOnly style={{marginBottom: 20}}/>
+        <Text type="button" color="white" size="350%" fontWeight="light">P E E R G E N I U S</Text>
         <Text type="button" color="rgb(1,147,172)" size="200%" fontWeight="bold">ELIMINATE THE GRIND</Text>
         <Spacer height='3%' />
         <div className={classes.buttonContainer}>
