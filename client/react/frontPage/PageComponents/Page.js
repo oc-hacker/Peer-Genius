@@ -6,7 +6,7 @@ import { withStyles } from 'material-ui/styles';
 
 const styles = {
   page: {
-    position: 'absolute',
+    position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -15,8 +15,7 @@ const styles = {
     height: '100%',
     left: 0,
     right: 0,
-    top: 0,
-    transition: 'all 1s ease'
+    top: 0
   },
   next: {
     top: '100%'
@@ -29,18 +28,16 @@ export default class Page extends Component {
     className: PropTypes.string,
     bg: PropTypes.string,
     page: PropTypes.number.isRequired,
-    currentPage: PropTypes.number.isRequired
   };
 
   render() {
-    const { className, classes, page, currentPage, bg, ...divProps } = this.props;
-
+    let { className, classes, page, currentPage, bg, ...divProps } = this.props;
+    currentPage = null;
     return (
       <div
         className={classNames({
-          [classes.page]: true,
-          [classes.next]: currentPage < page
-        }, className)}
+          [classes.page]: true
+                }, className)}
         {...divProps}
       />
     );
