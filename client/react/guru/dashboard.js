@@ -158,7 +158,7 @@ export default class GuruDashboard extends React.Component {
             <Button
               flat color='primary'
               onClick={() => window.open('https://voluntu.io', '_blank')}
-              style={{ display: 'block' }}
+              style={{ display: 'block', height: 100, width: 200 }}
             >
               <Text type='button' weight='bold'>Voluntu.io</Text>
             </Button>
