@@ -14,7 +14,7 @@ const eachSeries = async () => {
 	console.log('Database sync complete.');
 };
 
-// eachSeries();
+eachSeries();
 
 /* async.eachSeries(order, async model => {
 	await model
