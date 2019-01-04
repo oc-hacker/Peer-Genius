@@ -41,7 +41,9 @@ const blockUserEdit = (instance: NotificationInstance) => {
 	}
 };
 
-const model: Sequelize.Model<NotificationInstance, NotificationAttributes> = admin.define<NotificationInstance, NotificationAttributes>('messages', attributes);
+const model: Sequelize.Model<NotificationInstance, NotificationAttributes> = admin.define<NotificationInstance, NotificationAttributes>('messages', attributes, {
+	charset: 'utf8'
+});
 model.beforeUpdate(blockUserEdit);
 
 model.belongsTo(user, {

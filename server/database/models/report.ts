@@ -58,6 +58,8 @@ const attributes: Sequelize.DefineAttributes = {
   }
 };
 
-const model: Sequelize.Model<ReportInstance, ReportAttributes> = admin.define<ReportInstance, ReportAttributes>('messages', attributes);
+const model: Sequelize.Model<ReportInstance, ReportAttributes> = admin.define<ReportInstance, ReportAttributes>('messages', attributes, {
+  charset: 'utf8'
+});
 
 export default model;

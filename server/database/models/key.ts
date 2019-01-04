@@ -48,7 +48,9 @@ const blockUserEdit = (instance: KeyInstance) => {
 	}
 };
 
-const model: Sequelize.Model<KeyInstance, KeyAttributes> = admin.define<KeyInstance, KeyAttributes>('keys', attributes);
+const model: Sequelize.Model<KeyInstance, KeyAttributes> = admin.define<KeyInstance, KeyAttributes>('keys', attributes, {
+	charset: 'utf8'
+});
 model.beforeUpdate(blockUserEdit);
 
 // Extra utility methods

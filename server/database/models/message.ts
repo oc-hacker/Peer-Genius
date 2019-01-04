@@ -62,7 +62,9 @@ const blockUserEdit = (instance: MessageInstance) => {
 	}
 };
 
-const model: Sequelize.Model<MessageInstance, MessageAttributes> = admin.define<MessageInstance, MessageAttributes>('messages', attributes);
+const model: Sequelize.Model<MessageInstance, MessageAttributes> = admin.define<MessageInstance, MessageAttributes>('messages', attributes, {
+	charset: 'utf8'
+});
 model.beforeUpdate(blockUserEdit);
 
 const hookOptions: AssociationOptions = {

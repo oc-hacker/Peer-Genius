@@ -59,7 +59,9 @@ const blockUserEdit = (instance: GuruInstance) => {
 	}
 };
 
-const model: Sequelize.Model<GuruInstance, GuruAttributes> = admin.define<GuruInstance, GuruAttributes>('gurus', attributes);
+const model: Sequelize.Model<GuruInstance, GuruAttributes> = admin.define<GuruInstance, GuruAttributes>('gurus', attributes, {
+	charset: 'utf8'
+});
 model.beforeUpdate(blockUserEdit);
 
 model.belongsTo(user, {
