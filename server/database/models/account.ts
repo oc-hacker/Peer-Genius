@@ -89,15 +89,22 @@ model.beforeCreate(hashPassword);
 model.beforeUpdate('blockUserEdit', blockUserEdit);
 model.beforeUpdate('hashPassword', hashPassword);
 
+// model.belongsTo(user, {
+// 	foreignKey: 'id',
+// 	onUpdate: 'cascade',
+// 	onDelete: 'cascade'
+// });
+// user.hasOne(model, {
+// 	foreignKey: 'id',
+// 	onUpdate: 'cascade',
+// 	onDelete: 'cascade'
+// });
+
+user.hasMany(model);
 model.belongsTo(user, {
-	foreignKey: 'userId',
-	onUpdate: 'cascade',
-	onDelete: 'cascade'
-});
-user.hasOne(model, {
-	foreignKey: 'userId',
-	onUpdate: 'cascade',
-	onDelete: 'cascade'
+	as: 'Current',
+	foreignKey: 'id',
+	constraints: false
 });
 
 export default model;

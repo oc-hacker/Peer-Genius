@@ -115,7 +115,9 @@ const blockUserEdit = (instance: SessionInstance) => {
 	}
 };
 
-const model: Sequelize.Model<SessionInstance, SessionAttributes> = admin.define<SessionInstance, SessionAttributes>('sessions', attributes);
+const model: Sequelize.Model<SessionInstance, SessionAttributes> = admin.define<SessionInstance, SessionAttributes>('sessions', attributes, {
+	charset: 'utf8'
+});
 model.beforeUpdate(blockUserEdit);
 
 model.belongsTo(user, {

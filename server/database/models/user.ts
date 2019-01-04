@@ -59,7 +59,9 @@ const blockIdEdit = (instance: UserInstance) => {
 	}
 };
 
-const model: Sequelize.Model<UserInstance, UserAttributes> = admin.define<UserInstance, UserAttributes>('users', attributes);
+const model: Sequelize.Model<UserInstance, UserAttributes> = admin.define<UserInstance, UserAttributes>('users', attributes, {
+	charset: 'utf8'
+});
 model.beforeUpdate(blockIdEdit);
 
 export default model;
