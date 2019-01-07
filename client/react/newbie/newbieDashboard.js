@@ -1,5 +1,4 @@
 import React from 'react';
-import ProgressBar from 'react-progressbar.js';
 import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
