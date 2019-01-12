@@ -38,6 +38,11 @@ const styles = {
     borderColor: 'white',
     height: '100%',
     width: '100%'
+  },
+  center: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center'
   }
 };
 
@@ -91,11 +96,11 @@ export default class StreamDashboard extends Component {
             </Text>
           </Button>
         </div>
-        <div>
+        <div className={classes.center}>
           <iframe
             title='AMC 10 Digital Office Hours'
-            width='1280'
-            height='720'
+            width='960'
+            height='540'
             src='https://www.youtube.com/embed/kAfy3x6rN-8'
             frameborder='0'
             allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
