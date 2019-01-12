@@ -27,7 +27,6 @@ export const logIn = credentials => async dispatch => {
       console.log('redirecting to newbie dashboard');
       dispatch(push('/newbie'));
     }
-    window.location.reload(true);
   }
   else if (response.status === httpStatus.UNAUTHORIZED) {
     // Throw login error. Let redux form handle error display.
