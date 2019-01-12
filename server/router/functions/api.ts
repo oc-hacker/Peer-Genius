@@ -5,7 +5,7 @@ import * as argon2 from 'argon2';
 import { buildStore } from '../misc/utils';
 import * as models from '../../database/models';
 import { uniqueRandom as uniqueRandomKey } from '../../database/models/key';
-import { exposedAttributes as userAttributes } from '../../database/models/user';
+import { exposedAttributes as userAttributes, UserAttributes } from '../../database/models/user';
 
 import { Request } from 'express';
 import { AsyncHandler, Store } from '../../types';
@@ -66,7 +66,7 @@ export const createAccount: AsyncHandler<CreateAccountRequest> = async (request,
 		response.status(httpStatus.CONFLICT).end();
 	} else {
 		// OK
-		let user = await models.user.create(pick(request.body, userAttributes));
+		let user = await models.user.create(pick(request.body, userAttributes) as UserAttributes);
 		let account = await models.account.create({
 			profilePicture: null,
 			userId: user.id,

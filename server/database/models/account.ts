@@ -10,7 +10,7 @@ export interface AccountAttributes {
 	email?: string;
 	password?: string;
 	verified?: boolean;
-	profilePicture: string;
+	profilePicture?: string;
 }
 
 export interface AccountInstance extends Sequelize.Instance<AccountAttributes> {
