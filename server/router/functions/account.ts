@@ -58,13 +58,13 @@ export const info: AsyncHandler<VerifiedRequest> = async (request, response) => 
 
 export const refresh: AsyncHandler<VerifiedRequest> = async (request, response) => {
 	const jwt = createSessionToken(request.body.user.id);
+	response.cookie('sessionJWT', jwt, { maxAge: (parseInt(JWT_EXPIRE) * 1000) });
 	response.status(httpStatus.OK).json({
 		session: {
 			jwt,
 			expire: parseInt(JWT_EXPIRE) * 1000
 		}
 	});
-	response.cookie('sessionJWT', jwt, { maxAge: (parseInt(JWT_EXPIRE) * 1000) });
 };
 
 export const exportHours: AsyncHandler<VerifiedRequest> = async (request, response) => {
@@ -76,25 +76,22 @@ export const exportHours: AsyncHandler<VerifiedRequest> = async (request, respon
 	let resp = await fetch('https://voluntu.io/api/login', {
 		method: 'POST',
 		headers: {
-			"Origin": "https://voluntu.io"
+			Origin: 'https://voluntu.io'
 		},
 		body: {
 			email: account.voluntuEmail,
 			password: account.voluntuPassword
 		}
 	});
-	let json = <any>await resp.json();
+	let json = await resp.json() as any;
 	await fetch('https://voluntu.io/api/hour/record', {
 		method: 'POST',
 		headers: {
-			'Origin': 'https://voluntu.io',
-			'Cookie': 'sessionJWT=' + json.sessionJWT
-		},
-		body: {
-			
+			Origin: 'https://voluntu.io',
+			Cookie: 'sessionJWT=' + json.sessionJWT
 		}
-	})
-}
+	});
+};
 
 interface EditProfilePictureRequest extends VerifiedRequest {
 	body: {
