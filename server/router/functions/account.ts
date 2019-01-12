@@ -57,12 +57,14 @@ export const info: AsyncHandler<VerifiedRequest> = async (request, response) => 
 };
 
 export const refresh: AsyncHandler<VerifiedRequest> = async (request, response) => {
+	const jwt = createSessionToken(request.body.user.id);
 	response.status(httpStatus.OK).json({
 		session: {
-			jwt: createSessionToken(request.body.user.id),
+			jwt,
 			expire: parseInt(JWT_EXPIRE) * 1000
 		}
 	});
+	response.cookie('sessionJWT', jwt, { maxAge: (parseInt(JWT_EXPIRE) * 1000) });
 };
 
 export const exportHours: AsyncHandler<VerifiedRequest> = async (request, response) => {

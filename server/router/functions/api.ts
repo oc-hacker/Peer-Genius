@@ -102,7 +102,9 @@ export const verifyLogin: AsyncHandler<LoginRequest> = async (request, response)
 	});
 	
 	if (account && await argon2.verify(account.password, request.body.password)) {
-		response.status(httpStatus.OK).json(await buildStore(account.userId, { account }));
+		const store = await buildStore(account.userId, { account });
+		response.status(httpStatus.OK).json(buildStore);
+		response.cookie('sessionJWT', store.session.jwt, { maxAge: store.session.expire });
 	}
 	else {
 		response.status(httpStatus.UNAUTHORIZED).end();
