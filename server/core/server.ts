@@ -21,7 +21,7 @@ const corsOptions = {
 	origin: (origin: string, cb: CORSCallback) => {
 		// console.log(origin);
 		// If origin is null or peergenius.io, it's good.
-		if (!origin || origin === 'https://peergenius.io') {
+		if (!origin || origin === 'https://peergenius.io' || origin === 'https://www.peergenius.io') {
 			cb(null, true);
 		}
 		else if (NODE_ENV === 'development') {
