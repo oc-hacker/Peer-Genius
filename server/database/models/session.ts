@@ -16,7 +16,7 @@ export interface SessionAttributes {
 	endTime?: Date;
 	rating?: number;
 	comment?: string;
-	assignment: string;
+	assignment?: string;
 }
 
 export interface SessionInstance extends Sequelize.Instance<SessionAttributes> {
@@ -147,7 +147,7 @@ user.hasMany(model, {
 });
 
 model.belongsTo(course, {
-	foreignKey: 'courseId',
+	foreignKey: 'id',
 	onUpdate: 'cascade',
 	onDelete: 'cascade'
 });
