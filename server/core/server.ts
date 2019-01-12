@@ -31,7 +31,7 @@ const corsOptions = {
 			cb(`Request blocked by CORS.`);
 		}
 	},
-	allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+	allowedHeaders: ['Origin', 'X-Requested-With', 'Cookies', 'Content-Type', 'Accept'],
 	credentials: true
 };
 
