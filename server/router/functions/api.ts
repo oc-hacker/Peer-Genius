@@ -105,7 +105,7 @@ export const verifyLogin: AsyncHandler<LoginRequest> = async (request, response)
 		const store = await buildStore(account.userId, { account });
 		response.status(httpStatus.OK);
 		response.cookie('sessionJWT', store.session.jwt, { maxAge: store.session.expire });
-		response.json(buildStore);
+		response.json(store);
 	}
 	else {
 		response.status(httpStatus.UNAUTHORIZED).end();
