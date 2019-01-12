@@ -99,6 +99,21 @@ export default class NewbieDashboard extends React.Component {
                 Download AMC 10 Mock Exam #1
               </Text>
             </Button>
+            <Button
+              className={classes.buttonContainer}
+              style={{borderRadius: '5px'}}
+              color="primary"
+              onClick={() => push('/stream')}
+            >
+              <Text
+                type='button'
+                color='white'
+                fontWeight='bold'
+                className={classes.textAlignCenter}
+              >
+                AMC 10 Mock Exam Office Hours
+              </Text>
+            </Button>
           </Flex>
         </div>
         <PreviousSession />
