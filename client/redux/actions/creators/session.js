@@ -17,11 +17,11 @@ export const logIn = credentials => async dispatch => {
   let response = await post('/api/login', credentials);
   console.log(response);
   if (response.ok) {
-    console.log(response.ok);
     // Log in successful. Save store and redirect to user page.
     let json = await response.json();
-    console.log(json);
+    console.log('json:' + json);
     dispatch(handleStore(json));
+    console.log('finished dispatch');
     if (json.isGuru){
       dispatch(push('/guru'));
     } else {
