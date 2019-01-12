@@ -8,8 +8,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import { scheduleSession } from '../../redux/actions/creators/PGsession';
-
-const { STREAM_LINK } = process.env;
+import { STREAM_LINK } from '../../config';
 
 const styles = {
   headerBackground: {
