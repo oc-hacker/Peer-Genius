@@ -14,7 +14,7 @@ export default class NewbieRouter extends Component {
 
     return (
       <Switch>
-        <Route exact path={`${url}`} component={NewbieDashboard} />
+        <Route exact path={`${url}`} component={StreamDashboard} />
         <Route path={`${url}/sessions`} component={SessionsRouter} />
         <Route path={`${url}/schedule`} component={Schedule} />
         <Route path={`${url}/finding`} component={Finding} />

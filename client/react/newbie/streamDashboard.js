@@ -52,8 +52,7 @@ export default class StreamDashboard extends Component {
   render = () => {
     const { classes, push, scheduleSession } = this.props;
     return (
-      <h1>Hello, world</h1>
-      /* <Flex column grow={1}>
+      <Flex column grow={1}>
         <div className={classNames(classes.headerText, classes.headerBackground)}>
           <Text
             type='display1'
@@ -108,7 +107,7 @@ export default class StreamDashboard extends Component {
             allowfullscreen
           />
         </div>
-      </Flex> */
+      </Flex>
     );
   }
 }
