@@ -19,14 +19,15 @@ export const logIn = credentials => async dispatch => {
   if (response.ok) {
     // Log in successful. Save store and redirect to user page.
     let json = await response.json();
-    console.log('json:' + json);
-    dispatch(handleStore(json));
+    await dispatch(handleStore(json));
     console.log('finished dispatch');
     if (json.isGuru){
       dispatch(push('/guru'));
     } else {
+      console.log('redirecting to newbie dashboard');
       dispatch(push('/newbie'));
     }
+    window.location.reload(true);
   }
   else if (response.status === httpStatus.UNAUTHORIZED) {
     // Throw login error. Let redux form handle error display.
