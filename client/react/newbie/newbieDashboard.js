@@ -10,6 +10,7 @@ import Text from '../components/Text';
 import Button from '../components/Button';
 import { Flex } from '../components';
 import PreviousSession from './previousSession';
+import StreamDashboard from './streamDashboard';
 
 let styles = {
   headerBackground: {
@@ -59,7 +60,7 @@ export default class NewbieDashboard extends React.Component {
     let notifications = null;
 
     return (
-      <Flex column grow={1}>
+      /* <Flex column grow={1}>
         <div className={classNames(classes.headerText, classes.headerBackground)}>
           <Text
             type='display1'
@@ -117,7 +118,8 @@ export default class NewbieDashboard extends React.Component {
           </Flex>
         </div>
         <PreviousSession />
-      </Flex>
+      </Flex> */
+      <StreamDashboard />
     );
   };
 }

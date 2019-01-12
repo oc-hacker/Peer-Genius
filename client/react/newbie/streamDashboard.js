@@ -58,6 +58,21 @@ export default class StreamDashboard extends Component {
           </Text>
           <Button
             className={classes.buttonContainer}
+            style={{borderRadius: '5px'}}
+            color="primary"
+            onClick={() => window.open('https://res.cloudinary.com/jasonftw/image/upload/fl_attachment/v1546620326/MOCK_AMC10_1.pdf', '_blank')}
+          >
+            <Text
+              type='button'
+              color='white'
+              fontWeight='bold'
+              className={classes.textAlignCenter}
+            >
+              Download AMC 10 Mock Exam #1
+            </Text>
+          </Button>
+          <Button
+            className={classes.buttonContainer}
             raised
             color='primary'
             onClick={() => {
