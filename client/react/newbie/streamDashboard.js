@@ -81,7 +81,6 @@ export default class StreamDashboard extends Component {
             raised
             color='primary'
             onClick={() => {
-              this.setState({ schedule: new Date(this.state.schedule) });
               scheduleSession('AMC 10 Mock Exam #1', '', new Date(), '10');
               push('/newbie/finding');
             }}
