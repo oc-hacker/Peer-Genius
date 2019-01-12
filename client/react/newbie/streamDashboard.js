@@ -100,7 +100,7 @@ export default class StreamDashboard extends Component {
             title='AMC 10 Digital Office Hours'
             width='960'
             height='540'
-            src='https://www.youtube.com/embed/live_stream?channel=UCT4GpehrFcTNCJGcIeLATuQ'
+            src='https://www.youtube.com/embed/Vc4MLl03CTw'
             frameborder='0'
             allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
             allowfullscreen
