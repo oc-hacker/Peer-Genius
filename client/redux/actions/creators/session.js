@@ -17,6 +17,7 @@ export const logIn = credentials => async dispatch => {
   let response = await post('/api/login', credentials);
   console.log(response);
   if (response.ok) {
+    console.log(response.ok);
     // Log in successful. Save store and redirect to user page.
     let json = await response.json();
     console.log(json);
