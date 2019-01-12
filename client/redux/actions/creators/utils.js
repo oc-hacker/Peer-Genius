@@ -13,8 +13,8 @@ import { getCurrentRequests } from './PGsession';
  * @param json
  */
 export const handleStore = json => async dispatch => {
-  let { session: { jwt, expire }, user: { birthday, ...user }, isGuru, ...otherData } = json;
-  // await cookies.set('sessionJWT', jwt, { expires: new Date(Date.now() + expire) });
+  let { session: { jwt, expire }, user: { birthday, ...user }, isGuru, ...otherData } = await json;
+  await cookies.set('sessionJWT', jwt, { expires: new Date(Date.now() + expire) });
 
   // Process user - server stores birthday in UTC, without timezone conversion, so the UTC values are the actually correct values.
   birthday = new Date(birthday);
