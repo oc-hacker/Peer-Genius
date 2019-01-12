@@ -73,6 +73,17 @@ export default class StreamDashboard extends Component {
             </Text>
           </Button>
         </div>
+        <div>
+          <iframe
+            title='AMC 10 Digital Office Hours'
+            width='1280'
+            height='720'
+            src='https://www.youtube.com/embed/kAfy3x6rN-8'
+            frameborder='0'
+            allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+            allowfullscreen
+          />
+        </div>
       </Flex>
     );
   }
