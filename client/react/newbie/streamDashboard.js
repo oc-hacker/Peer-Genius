@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Flex, Text, Button } from '../components';
 import classNames from 'classnames';
+
 import { withStyles } from 'material-ui/styles';
+
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+
 import { scheduleSession } from '../../redux/actions/creators/PGsession';
 
 const styles = {
@@ -41,7 +44,7 @@ const styles = {
 @withStyles(styles)
 @connect(null, { push, scheduleSession })
 export default class StreamDashboard extends Component {
-  render () {
+  render = () => {
     const { classes, push, scheduleSession } = this.props;
     return (
       <Flex column grow={1}>
