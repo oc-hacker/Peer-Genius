@@ -15,7 +15,7 @@ import { handleStore } from './utils';
  */
 export const logIn = credentials => async dispatch => {
   let response = await post('/api/login', credentials);
-
+  console.log(response);
   if (response.ok) {
     // Log in successful. Save store and redirect to user page.
     let json = await response.json();
@@ -24,7 +24,7 @@ export const logIn = credentials => async dispatch => {
     if (json.isGuru){
       dispatch(push('/guru'));
     } else {
-      dispatch(push('/newbie/schedule'));
+      dispatch(push('/newbie'));
     }
   }
   else if (response.status === httpStatus.UNAUTHORIZED) {
