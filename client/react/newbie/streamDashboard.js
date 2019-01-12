@@ -42,7 +42,7 @@ const styles = {
 @connect(null, { push, scheduleSession })
 export default class StreamDashboard extends Component {
   render () {
-    const { classes } = this.props;
+    const { classes, push, scheduleSession } = this.props;
     return (
       <Flex column grow={1}>
         <div className={classNames(classes.headerText, classes.headerBackground)}>
