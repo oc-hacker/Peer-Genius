@@ -9,6 +9,8 @@ import { push } from 'react-router-redux';
 
 import { scheduleSession } from '../../redux/actions/creators/PGsession';
 
+const { STREAM_LINK } = process.env;
+
 const styles = {
   headerBackground: {
     backgroundImage: 'linear-gradient(to bottom, rgba(0, 113, 255, 1) 0%, rgba(0, 173, 255, 1) 100%)',
@@ -100,7 +102,7 @@ export default class StreamDashboard extends Component {
             title='AMC 10 Digital Office Hours'
             width='960'
             height='540'
-            src='https://www.youtube.com/embed/Vc4MLl03CTw'
+            src={STREAM_LINK}
             frameborder='0'
             allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
             allowfullscreen
