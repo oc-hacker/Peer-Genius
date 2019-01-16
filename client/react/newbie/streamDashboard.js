@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Flex, Text, Button } from '../components';
+import { Flex, Text, Button, Spacer } from '../components';
 import classNames from 'classnames';
 
 import { withStyles } from 'material-ui/styles';
@@ -66,7 +66,7 @@ export default class StreamDashboard extends Component {
             className={classes.buttonContainer}
             style={{borderRadius: '5px'}}
             color="primary"
-            onClick={() => window.open('https://res.cloudinary.com/jasonftw/image/upload/fl_attachment/v1546620326/MOCK_AMC10_1.pdf', '_blank')}
+            onClick={() => window.open('https://res.cloudinary.com/jasonftw/image/upload/fl_attachment/v1547625044/MOCK_AMC10_b.pdf', '_blank')}
           >
             <Text
               type='button'
@@ -82,7 +82,7 @@ export default class StreamDashboard extends Component {
             raised
             color='primary'
             onClick={() => {
-              scheduleSession('amc10', 'Mock Exam 1', new Date(), '10');
+              scheduleSession('amc10', '', new Date(), '10');
               push('/newbie/finding');
             }}
           >
@@ -95,6 +95,7 @@ export default class StreamDashboard extends Component {
               Request a 1:1 Tutor
             </Text>
           </Button>
+          <Spacer height='20px' />
         </div>
         <div className={classes.center}>
           <iframe
