@@ -45,9 +45,9 @@ Post your issues in the *Issues* tab and HAPPY DEVELOPING!
 If you see a blank page in the localhost website, follow this direction:  
 Locate Peer-Genius/client/react/guru/index.js and hit Ctrl+S (save).  
 
-### Help? (do not follow this guide yet)
+### Help? (be cautious when following this guide)
 
-Here is a detailed instructions guide on how to set up stuff like mysql functionally.
+Here is a detailed instructions guide on how to set up stuff like mysql functionally. [Click this](https://github.com/oc-hacker/Peer-Genius/blob/develop/Instructions.md)
 
 ### Argon 2 / Node.js
 
