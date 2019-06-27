@@ -28,7 +28,7 @@ Please ensure you have the following installed on your system before attempting 
 
 3. Fill in environment variables
    1. Server: copy contents of `env_stub` into a file named `.env`. Fill out all relevant information. (in this branch .env should already be filled out for you)
-   2. Client: copy contents of `config.stub.js` into a file called `config.js` and fill out all relevant information.
+   2. Client: copy contents of `config.stub.js` into a file called `config.js` and fill out all relevant information. (best to not touch it though)
 
 4. Run development servers on both client and server by opening two different Terminal windows:
 
