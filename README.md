@@ -7,16 +7,10 @@
 Please ensure you have the following installed on your system before attempting to run or build `Peer-Genius`:
 
 - python 2.7
-- mysql with a running local mysql database
+- mysql with a running local mysql database (for development purposes, mysql 5.7 is a very good version to use. also, set up mysql by changing user to "root" and password to "pass" for simplification reasons.)
+- vscode
 
 1. Clone the repository:
-   1. Using `ssh`:
-
-      ```bash
-      git clone git@github.com:Peer-Genius/Peer-Genius.git/
-      ```
-
-   2. OR alternatively, using `https`:
 
       ```bash
       git clone https://github.com/Peer-Genius/Peer-Genius.git/
@@ -33,14 +27,22 @@ Please ensure you have the following installed on your system before attempting 
     ```
 
 3. Fill in environment variables
-   1. Server: copy contents of `env_stub` into a file named `.env`. Fill out all relevant information.
+   1. Server: copy contents of `env_stub` into a file named `.env`. Fill out all relevant information. (in this branch .env should already be filled out for you)
    2. Client: copy contents of `config.stub.js` into a file called `config.js` and fill out all relevant information.
 
-4. Run development servers:
+4. Run development servers on both client and server by opening two different Terminal windows:
 
    ```bash
    yarn dev
    ```
+5. By now you should be able to see the website running on localhost:8081.
+
+Post your issues in the *Issues* tab and HAPPY DEVELOPING!
+
+### **Important**
+If you see a blank page in the localhost website, follow this direction:
+Locate Peer-Genius/client/react/guru/index.js and hit Ctrl+S (save). 
+
 
 ### Argon 2
 
