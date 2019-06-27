@@ -1,6 +1,6 @@
 # Peer-Genius
 
-## Building and Installing
+## Building and Installing (read all of me)
 
 ### Pre-Installation
 
@@ -35,14 +35,19 @@ Please ensure you have the following installed on your system before attempting 
    ```bash
    yarn dev
    ```
+   
 5. By now you should be able to see the website running on localhost:8081.
 
 Post your issues in the *Issues* tab and HAPPY DEVELOPING!
 
 ### **Important**
-If you see a blank page in the localhost website, follow this direction:
-Locate Peer-Genius/client/react/guru/index.js and hit Ctrl+S (save). 
 
+If you see a blank page in the localhost website, follow this direction:  
+Locate Peer-Genius/client/react/guru/index.js and hit Ctrl+S (save).  
+
+### Help? (do not follow this guide yet)
+
+Here is a detailed instructions guide on how to set up stuff like mysql functionally.
 
 ### Argon 2
 
