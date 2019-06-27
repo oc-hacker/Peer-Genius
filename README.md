@@ -49,6 +49,7 @@ Locate Peer-Genius/client/react/guru/index.js and hit Ctrl+S (save).
 
 Here is a detailed instructions guide on how to set up stuff like mysql functionally.
 
-### Argon 2
+### Argon 2 / Node.js
 
-If you have errors with `argon2`, go to node-gyp's GitHub site [https://github.com/nodejs/node-gyp] and follow installation instructions there before trying to install argon2.
+If you used code from this branch (develop), you should not experience any issues regarding Argon 2 or Node.js because of supplementary code inside the server folder.
+If you have errors with `argon2` or `node.js`, go to node-gyp's GitHub site [https://github.com/nodejs/node-gyp] and follow installation instructions there before trying to install argon2.
