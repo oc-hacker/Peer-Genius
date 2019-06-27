@@ -75,13 +75,11 @@ fabric.properties
 
 # Created by .ignore support plugin (hsz.mobi)
 
-app.js*
 /server/core/config.json
 /client/config.js
 private/
 /Invoice.docx
 /server-files/
-/public/app.js.map
 /server/**/*.js
 /server/**/*.js.map
 /build/

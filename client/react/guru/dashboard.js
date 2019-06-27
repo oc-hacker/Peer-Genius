@@ -1,27 +1,28 @@
-import React from 'react';
+import React from "react";
 
-import { withStyles } from 'material-ui/styles';
-import classNames from 'classnames';
+import { withStyles } from "material-ui/styles";
+import classNames from "classnames";
 
-import Text from '../components/Text';
-import ProgressBar from 'react-progressbar.js';
-import Button from '../components/Button';
+import Text from "../components/Text";
+import ProgressBar from "react-progressbar.js";
+import Button from "../components/Button";
 
-import { connect } from 'react-redux';
-import { acceptSession } from '../../redux/actions/creators/PGsession';
+import { connect } from "react-redux";
+import { acceptSession } from "../../redux/actions/creators/PGsession";
 
 let styles = {
   headerBackground: {
-    backgroundImage: 'linear-gradient(to bottom, rgba(234, 247, 52, 1) 0%,rgba(0, 174, 183, 0.8) 100%), url(assets/guru_dashboard.jpg)',
-    backgroundSize: 'cover',
-    overflow: 'hidden'
+    backgroundImage:
+      "linear-gradient(to bottom, rgba(234, 247, 52, 1) 0%,rgba(0, 174, 183, 0.8) 100%), url(assets/guru_dashboard.jpg)",
+    backgroundSize: "cover",
+    overflow: "hidden"
   },
   headerText: {
     paddingTop: 50,
     paddingBottom: 50
   },
   centerText: {
-    textAlign: 'center'
+    textAlign: "center"
   },
   textPadding: {
     paddingTop: 10,
@@ -33,11 +34,11 @@ let styles = {
     paddingBottom: 7
   },
   darkGreyBackground: {
-    backgroundColor: 'rgb(244, 244, 244)',
+    backgroundColor: "rgb(244, 244, 244)",
     width: 200
   },
   lightGreyBackground: {
-    backgroundColor: 'rgb(252, 252, 252)',
+    backgroundColor: "rgb(252, 252, 252)",
     height: 300
   },
   sidePadding: {
@@ -49,33 +50,36 @@ let styles = {
   },
   roundedDot: {
     width: 10,
-    borderRadius: '50%',
-    backgroundColor: 'black',
+    borderRadius: "50%",
+    backgroundColor: "black",
     paddingBottom: 10,
-    marginLeft: 'auto',
-    marginRight: 'auto'
+    marginLeft: "auto",
+    marginRight: "auto"
   },
   flexRow: {
-    display: 'inline-flex'
+    display: "inline-flex"
   },
   alignCenter: {
-    alignItems: 'center'
+    alignItems: "center"
   },
   justifyCenter: {
-    justifyContent: 'center'
+    justifyContent: "center"
   }
 };
 
-@connect((state) => {
-  return {
-    newSessions: state.PGsession.currentRequests,
-    currentHours: state.account.time / (1000 * 60 * 60) // 1 hour in milliseconds
-  };
-}, dispatch => {
-  return {
-    acceptSession: async (newbieID) => dispatch(acceptSession(newbieID))
-  };
-})
+@connect(
+  state => {
+    return {
+      newSessions: state.PGsession.currentRequests,
+      currentHours: state.account.time / (1000 * 60 * 60) // 1 hour in milliseconds
+    };
+  },
+  dispatch => {
+    return {
+      acceptSession: async newbieID => dispatch(acceptSession(newbieID))
+    };
+  }
+)
 @withStyles(styles)
 export default class GuruDashboard extends React.Component {
   render = () => {
@@ -83,84 +87,151 @@ export default class GuruDashboard extends React.Component {
     if (!currentHours) {
       currentHours = 0;
     }
-    let notifications = newSessions.map((session) => {
+    let notifications = newSessions.map(session => {
       return (
         <div>
           <Text
-            type='subheading' color='black'
-            style={{ marginLeft: 20, display: 'inline-block' }}
+            type="subheading"
+            color="black"
+            style={{ marginLeft: 20, display: "inline-block" }}
           >
-            {session.courseName + ' | ' + session.assignment}
+            {session.courseName + " | " + session.assignment}
           </Text>
           <Button
-            flat color='primary'
+            flat
+            color="primary"
             onClick={() => acceptSession(session.newbieID)}
-            style={{ display: 'inline-block', marginLeft: 25 }}
+            style={{ display: "inline-block", marginLeft: 25 }}
           >
-            <Text type='button' weight='bold'>✔</Text>
+            <Text type="button" weight="bold">
+              ✔
+            </Text>
           </Button>
         </div>
       );
     });
 
     return (
-      <div style={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
-        <div className={classNames(classes.headerText, classes.headerBackground)}>
-          <Text type='display1' color='white' className={classNames(classes.centerText, classes.headerText)}>YOUR
-            DASHBOARD
+      <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+        <div
+          className={classNames(classes.headerText, classes.headerBackground)}
+        >
+          <Text
+            type="display1"
+            color="white"
+            className={classNames(classes.centerText, classes.headerText)}
+          >
+            YOUR DASHBOARD
           </Text>
         </div>
-        <div className={classNames(classes.flexRow, classes.alignCenter, classes.justifyCenter)}>
+        <div
+          className={classNames(
+            classes.flexRow,
+            classes.alignCenter,
+            classes.justifyCenter
+          )}
+        >
           <div>
             <div className={classNames(classes.darkGreyBackground)}>
-              <Text type='subheading' color='black' className={classes.leftPadding1}>Notification</Text>
+              <Text
+                type="subheading"
+                color="black"
+                className={classes.leftPadding1}
+              >
+                Notification
+              </Text>
             </div>
             <div className={classNames(classes.lightGreyBackground)}>
               {notifications}
             </div>
           </div>
           <div style={{ marginLeft: 20, marginTop: -80 }}>
-            <Text type='title' color='black' className={classes.textPadding}>HOUR TIMELINE</Text>
+            <Text type="title" color="black" className={classes.textPadding}>
+              HOUR TIMELINE
+            </Text>
             <ProgressBar.Line
               progress={Math.min(currentHours / 250, 1)}
-              text={currentHours.toFixed(2) + ' hours'}
+              text={currentHours.toFixed(2) + " hours"}
               options={{
-                color: 'rgb(1,147,172)',
+                color: "rgb(1,147,172)",
                 strokeWidth: 8
-              }} initialAnimate={true} containerStyle={{ width: 600, height: 35, marginBottom: 15 }}
+              }}
+              initialAnimate={true}
+              containerStyle={{ width: 600, height: 35, marginBottom: 15 }}
             />
             <div className={classNames(classes.flexRow)}>
               <Text
-                type='subheading' color='rgb(1,147,172)'
-                className={classNames(classes.inlineDiv, classes.textPadding, classes.centerText)}
-                style={{ marginLeft: 30 }}>
+                type="subheading"
+                color="rgb(1,147,172)"
+                className={classNames(
+                  classes.inlineDiv,
+                  classes.textPadding,
+                  classes.centerText
+                )}
+                style={{ marginLeft: 30 }}
+              >
                 <div>☆</div>
-                <br />25 Hours</Text>
+                <br />
+                25 Hours
+              </Text>
               <Text
-                type='subheading' color='rgb(1,147,172)'
-                className={classNames(classes.inlineDiv, classes.textPadding, classes.centerText)}
-                style={{ marginLeft: 90 }}>
+                type="subheading"
+                color="rgb(1,147,172)"
+                className={classNames(
+                  classes.inlineDiv,
+                  classes.textPadding,
+                  classes.centerText
+                )}
+                style={{ marginLeft: 90 }}
+              >
                 <div>☆</div>
-                <br />Bronze<br />100 Hours</Text>
+                <br />
+                Bronze
+                <br />
+                100 Hours
+              </Text>
               <Text
-                type='subheading' color='rgb(1,147,172)'
-                className={classNames(classes.inlineDiv, classes.textPadding, classes.centerText)}
-                style={{ marginLeft: 90 }}>
+                type="subheading"
+                color="rgb(1,147,172)"
+                className={classNames(
+                  classes.inlineDiv,
+                  classes.textPadding,
+                  classes.centerText
+                )}
+                style={{ marginLeft: 90 }}
+              >
                 <div>☆</div>
-                <br />Silver<br />175 Hours</Text>
+                <br />
+                Silver
+                <br />
+                175 Hours
+              </Text>
               <Text
-                type='subheading' color='rgb(1,147,172)'
-                className={classNames(classes.inlineDiv, classes.textPadding, classes.centerText)}
-                style={{ marginLeft: 90 }}>
+                type="subheading"
+                color="rgb(1,147,172)"
+                className={classNames(
+                  classes.inlineDiv,
+                  classes.textPadding,
+                  classes.centerText
+                )}
+                style={{ marginLeft: 90 }}
+              >
                 <div>☆</div>
-                <br />Gold<br />250 Hours</Text>
+                <br />
+                Gold
+                <br />
+                250 Hours
+              </Text>
             </div>
             <Button
-              flat color='primary'
-              onClick={() => window.open('https://voluntu.io', '_blank')}
-              style={{ display: 'block' }}
+              flat
+              color="primary"
+              onClick={() => window.open("https://voluntu.io", "_blank")}
+              style={{ display: "block" }}
             >
-              <Text type='button' weight='bold' style={{fontSize: 24}}>Voluntu.io</Text>
+              <Text type="button" weight="bold" style={{ fontSize: 24 }}>
+                Voluntu.io
+              </Text>
             </Button>
           </div>
         </div>
