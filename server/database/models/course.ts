@@ -28,7 +28,7 @@ const attributes: Sequelize.DefineAttributes = {
 	}
 };
 
-const model: Sequelize.Model<CourseInstance, CourseAttributes> = admin.define<CourseInstance, CourseAttributes>('courses', attributes, {
+const model: Sequelize.Model<CourseInstance, CourseAttributes> = admin.define<CourseInstance, CourseAttributes>('courses', attributes as Sequelize.DefineModelAttributes<CourseAttributes>, {
 	charset: 'utf8'
 });
 
