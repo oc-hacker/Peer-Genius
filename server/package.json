@@ -30,7 +30,7 @@
 		"mysql2": "^1.4.2",
 		"nodemailer": "^4.1.0",
 		"randomstring": "^1.1.5",
-		"sequelize": "^4.8.4",
+		"sequelize": "^5.15.1",
 		"server-static": "^2.0.5",
 		"socket.io": "^2.0.3",
 		"xoauth2": "^1.2.0"
